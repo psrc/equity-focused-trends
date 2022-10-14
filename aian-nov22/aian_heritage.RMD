@@ -1,0 +1,399 @@
+---
+output: 
+  pdf_document:
+    latex_engine: lualatex
+fontsize: 12pt
+  
+header-includes:
+  - \usepackage{xcolor}
+  - \usepackage{fancyhdr}
+   \pagestyle{fancy}
+   \setlength{\headheight}{60pt}
+   \setlength{\textheight}{600pt}
+   \fancyhead[L]{\includegraphics[width=6in]{trends-header-v1.png}}
+   \fancyfoot[C]{\scriptsize{1011 Western Ave, Suite 500, Seattle WA 98104-1035} \textcolor[HTML]{F05A28}. 206.464.7532 \textcolor[HTML]{F05A28}. www.psrc.org \textcolor[HTML]{F05A28}. November 2022}
+   \fancyfoot[R]{\textcolor[HTML]{F05A28}\thepage}
+   \fancyfoot[L]{}
+   \renewcommand{\headrulewidth}{0pt}
+   \renewcommand{\footrulewidth}{4pt}
+   \renewcommand{\footrule}{\hbox to \headwidth{\color[HTML]{BCBEC0}\leaders\hrule height \footrulewidth\hfill}}
+  - \usepackage{fontspec}
+
+---
+\setmainfont{Poppins}
+## Celebrating Native American Heritage Month
+
+```{r setup, include=FALSE}
+library(psrcplot)
+library(psrccensus)
+library(tidyverse)
+library(knitr)
+
+install_psrc_fonts()
+
+create_static_column_chart <- function(t, x, y, fill,
+                                       pos="dodge", est="percent", moe=NULL,
+                                       href=NULL, hrefnm=NULL, hrefcl=NULL,
+                                       title="", subtitle="", source="", alt="", 
+                                       dec = 0, color="psrc_dark") {
+  
+  # Determine the Maximum Value to ensure bar labels are not cut-off
+  max_item <- t %>% dplyr::select(.data[[y]]) %>% pull() %>% max()
+  
+  # Create a color palette from PSRC palette
+  grps <- t %>% dplyr::select(.data[[fill]]) %>% unique() %>% dplyr::pull()
+  num.grps <- length(grps)
+  l.colors <- unlist(psrcplot::psrc_colors[color])
+  l.colors <- l.colors[1:num.grps]
+  cols <- stats::setNames(l.colors, grps)
+  
+  # Estimate type determines the labels for the axis and the format of the number for the hover-text
+  if (est=="percent") {
+    scale_max <- max_item * 1.1
+    fac=100
+    p=""
+    s="%"
+    lab=scales::label_percent()
+    annot = 0.01
+    
+  } else if (est=="currency") {
+    scale_max <- max_item * 1.1
+    fac=1
+    p="$"
+    s=""
+    lab=scales::label_dollar()
+    annot = 1
+    
+  } else {
+    scale_max <- max_item * 1.1
+    fac=1
+    p=""
+    s=""
+    lab=scales::label_comma()
+    annot = 1
+  }
+  
+  # First Create the Static Chart
+  c <- ggplot2::ggplot(data=t,
+                       ggplot2::aes(x=get(eval(x)),
+                                    y=get(eval(y)),
+                                    text=paste0(get(eval(fill)), ": ", p, prettyNum(round(get(eval(y))*fac, dec), big.mark = ","),s),
+                                    fill = get(eval(fill)))) +
+    ggplot2::geom_bar(position=pos, stat="identity") +
+    ggplot2::scale_fill_manual(values=cols)  +
+    ggplot2::scale_y_continuous(labels = lab, limits = c(0, scale_max), expand = c(0, 0)) +
+    ggplot2::labs(title=title, subtitle = subtitle, caption = source, alt = alt) +
+    psrcplot::psrc_style()
+  
+  # If there is a MOE value then error bars are added to the plot
+  if (!(is.null(moe))) {
+    c <- c + ggplot2::geom_errorbar(ggplot2::aes(ymin=get(eval(y))-get(eval(moe)), ymax=get(eval(y))+get(eval(moe))),width=0.2, position = ggplot2::position_dodge(0.9))
+  }
+  
+  # Add Bar Labels if there is no Error Bar
+  if (is.null(moe)) {
+    c <- c + ggplot2::geom_text(aes(x=get(eval(x)), 
+                                    y=get(eval(y)), 
+                                    label=paste0(p,prettyNum(round(get(eval(y))*fac,dec), big.mark = ","),s)),
+                                check_overlap = TRUE,
+                                position = position_dodge(0.9),
+                                vjust = -0.25,
+                                size = 11*0.36,
+                                family="Poppins")
+  }
+  
+  # Add reference lines if they are included 
+  if (!(is.null(href))) {
+    c <- c + 
+      ggplot2::geom_hline(yintercept = href, color=hrefcl, linetype='solid', size=2, show.legend = FALSE) +
+      ggplot2::annotate("text", x = 1, y = href+annot, label = hrefnm)
+  }
+  
+  if (num.grps == 1) {
+    
+    c <- c + ggplot2::theme(legend.position = "none")
+    
+  }
+  
+  c <- c + ggplot2::theme(
+
+    #Text format:
+    #This sets the font, size, type and color of text for the chart's title
+    plot.title = ggplot2::element_text(family="Poppins",
+                                       size=14,
+                                       face="bold",
+                                       color="#4C4C4C"),
+
+    #This sets the font, size, type and color of text for the chart's subtitle, as well as setting a margin between the title and the subtitle
+    plot.subtitle = ggplot2::element_text(family="Poppins",
+                                          size=12,
+                                          margin=ggplot2::margin(9,0,9,0)),
+
+    #This leaves the caption text element empty, because it is set elsewhere in the finalise plot function
+    plot.caption =  ggplot2::element_text(family="Poppins",
+                                          size=10,
+                                          face="italic",
+                                          color="#4C4C4C"))
+
+  return(c)
+}
+
+create_static_treemap_chart <- function(t, area, fill, title="", subtitle="", source="", alt="", est="percent", dec=0, color="psrc_light") {
+  
+  tot <- t %>% dplyr::select(.data[[area]]) %>% dplyr::pull() %>% sum()
+  t <- t %>% dplyr::mutate(total_share = .data[[area]]/tot)
+  
+  # Estimate type determines the labels
+  if (est=="percent") {
+    factor=100
+    p=""
+    s="%"
+    
+  } else if (est=="currency") {
+    factor=1
+    p="$"
+    s=""
+    
+  } else {
+    factor=1
+    p=""
+    s=""
+  }
+  
+  if (est=="percent") {
+    c <- ggplot2::ggplot(t,
+                         ggplot2::aes(area = get(eval(area)),
+                                      fill = get(eval(fill)), 
+                                      label = paste(get(eval(fill)), 
+                                                    paste0(p, prettyNum(round(get(eval(area))*factor,dec), big.mark = ","), s),
+                                                    sep = "\n"))) +
+      treemapify::geom_treemap() +
+      treemapify::geom_treemap_text(colour = "white",
+                                    place = "centre",
+                                    size = 28) +
+      psrc_style() +
+      ggplot2::theme(legend.position = "none") +
+      scale_fill_discrete_psrc(color) +
+      ggplot2::labs(title=title, subtitle = subtitle, caption = source, alt = alt)
+    
+  } else {
+    
+    c <- ggplot2::ggplot(t,
+                         ggplot2::aes(area = get(eval(area)),
+                                      fill = get(eval(fill)), 
+                                      label = paste(get(eval(fill)), 
+                                                    paste0(p, prettyNum(round(get(eval(area))*factor,dec), big.mark = ","), s),
+                                                    paste0(prettyNum(round(.data$total_share*100,0), big.mark = ","), "%"), 
+                                                    sep = "\n"))) +
+      treemapify::geom_treemap() +
+      treemapify::geom_treemap_text(colour = "white",
+                                    place = "centre",
+                                    size = 28) +
+      psrc_style() +
+      ggplot2::theme(legend.position = "none") +
+      scale_fill_discrete_psrc(color) +
+      ggplot2::labs(title=title, subtitle = subtitle, caption = source, alt = alt)
+    
+  }
+  
+    c <- c + ggplot2::theme(
+
+    #Text format:
+    #This sets the font, size, type and color of text for the chart's title
+    plot.title = ggplot2::element_text(family="Poppins",
+                                       size=14,
+                                       face="bold",
+                                       color="#4C4C4C"),
+
+    #This sets the font, size, type and color of text for the chart's subtitle, as well as setting a margin between the title and the subtitle
+    plot.subtitle = ggplot2::element_text(family="Poppins",
+                                          size=12,
+                                          margin=ggplot2::margin(9,0,9,0)),
+
+    #This leaves the caption text element empty, because it is set elsewhere in the finalise plot function
+    plot.caption =  ggplot2::element_text(family="Poppins",
+                                          size=10,
+                                          face="italic",
+                                          color="#4C4C4C"))
+  
+  return(c)
+}
+
+# Load Data or Generate if not already processed
+if(file.exists("aian_hertitage_data.csv")) {
+  data <- read.csv("aian_hertitage_data.csv") %>% mutate(year=as.character(year)) %>% mutate(race = str_wrap(race, width = 20))
+} else {
+  source("data-processing.R")
+  data <- read.csv("aian_hertitage_data.csv") %>% mutate(year=as.character(year)) %>% mutate(race = str_wrap(race, width = 20))
+}
+
+
+```
+
+```{r tribal-groupings-calculation, include=FALSE}
+
+tbl <- data %>%
+  filter(concept=="Tribal Groupings" & year=="2020") %>%
+  arrange(desc(estimate))
+  
+tbl_order <- tbl %>% select(label) %>% pull()
+tbl <- tbl %>% mutate(label = factor(x=label, levels=tbl_order))
+
+ps_salish <- tbl %>% filter(label=="Puget Sound Salish") %>% select(estimate) %>% pull()
+
+# Create Visuals
+tribal_groupings_chart <- create_static_treemap_chart(t = tbl, area="estimate", fill="label", est="number", dec=-1,
+                                                      title = "Tribal Groupings with 1,000 or more Population",
+                                                      source = "Source: U.S. Census Bureau, 2016-2020 ACS 5-Year Estimates, table B02014",
+                                                      color = "psrc_light") + 
+  ggplot2::theme(axis.text.x = ggplot2::element_blank(),
+                 axis.text.y = ggplot2::element_blank(),
+                 axis.text = ggplot2::element_text(family="Poppins",
+                                      size=11,
+                                      color="#2f3030"),
+                 panel.grid.major.x = ggplot2::element_blank(),
+                 panel.grid.major.y = ggplot2::element_blank(),
+                 panel.grid.minor.x = ggplot2::element_blank(),
+                 panel.grid.minor.y = ggplot2::element_blank(),
+                 plot.caption = element_text(hjust=0),
+                 axis.line.x = ggplot2::element_line(color="#cbcbcb"),
+                 axis.line.y = ggplot2::element_blank(),
+                 legend.text = ggplot2::element_text(family="Poppins",
+                                        size=10,
+                                        color="#4C4C4C")) 
+
+rm(tbl)
+```
+
+This month, PSRC delves into data on the region’s American Indian and Alaska Native population. People with First Nations heritage in our region are very diverse, with over 50 Tribal groups represented. About **`r toString(prettyNum(round(ps_salish,-2), big.mark = ","))`** of the region’s residents identify as Puget Sound Salish. The American Community Survey groups Tribes who have original homelands in the four-county region under the name Puget Sound Salish. The region’s second most common Tribal grouping is Tlingit-Haida, who are Alaska Native peoples. 
+\hfill\break 
+
+```{r tribal-groupings-chart, echo=FALSE, fig.alt="Bar chart with the numnber of people by Tribal Grouping with more than 1000 people in the Puget Sound Region", fig.height = 4, fig.width = 8}
+tribal_groupings_chart
+```
+*[View the full Dataset](https://data.census.gov/cedsci/table?q=B02014&g=0500000US53033,53035,53053,53061&tid=ACSDT5Y2020.B02014&hidePreview=true)*  
+\hfill\break 
+PSRC celebrates the diverse, rich cultures of people with American Indian and Alaska Native heritage. We also recognize the suffering that members of these groups have experienced in the past and continue to endure due to historical policies and practices.
+
+Economic inequities persist for American Indian and Alaska Native residents. Disparities exist for home ownership, access to health care, educational opportunities and income.  
+
+
+\newpage
+
+## Access To Health Insurance
+
+```{r health-insurance-calculation, include=FALSE}
+
+health_insurance_chart <- create_static_column_chart(t = data %>% filter(concept=="Health Insurance"),
+                                                     x = "race", y = "share", fill = "year",
+                                                     title = "People without Health Insurance",
+                                                     source = "Source: U.S. Census Bureau, ACS 1-Year Estimates, tables C27001H, C27001C",
+                                                     color = "OrGn") + 
+  ggplot2::theme(axis.text.y = ggplot2::element_blank(),
+                 axis.text = ggplot2::element_text(family="Poppins",
+                                      size=11,
+                                      color="#2f3030"),
+                 panel.grid.major.x = ggplot2::element_blank(),
+                 panel.grid.major.y = ggplot2::element_blank(),
+                 panel.grid.minor.x = ggplot2::element_blank(),
+                 panel.grid.minor.y = ggplot2::element_blank(),
+                 plot.caption = element_text(hjust=0),
+                 axis.line.x = ggplot2::element_line(color="#cbcbcb"),
+                 axis.line.y = ggplot2::element_blank()) 
+  
+```
+
+American Indian and Alaska Native residents are almost 4 times more likely to lack health insurance than White residents.
+\hfill\break 
+```{r health-insurance-chart, echo=FALSE, fig.alt="Bar chart with the % of people without Health Insurance by year for people who identify as American Indian and Alaska Native or White"}
+health_insurance_chart
+```
+\newpage
+
+## Home Ownership
+
+```{r home-ownership-calculation, include=FALSE}
+
+home_ownership_chart <- create_static_column_chart(t = data %>% filter(concept=="Home Ownership"),
+                                                   x = "race", y = "share", fill = "year",
+                                                   title = "People who Own their Home",
+                                                   source = "Source: U.S. Census Bureau, ACS 1-Year Estimates, tables B25003H, B25003C",
+                                                   color = "LtPrDkPr") + 
+  ggplot2::theme(axis.text.y = ggplot2::element_blank(),
+                 axis.text = ggplot2::element_text(family="Poppins",
+                                      size=11,
+                                      color="#2f3030"),
+                 panel.grid.major.x = ggplot2::element_blank(),
+                 panel.grid.major.y = ggplot2::element_blank(),
+                 panel.grid.minor.x = ggplot2::element_blank(),
+                 panel.grid.minor.y = ggplot2::element_blank(),
+                 plot.caption = element_text(hjust=0),
+                 axis.line.x = ggplot2::element_line(color="#cbcbcb"),
+                 axis.line.y = ggplot2::element_blank())   
+```
+
+The home ownership among American Indian and Alaska Native residents is a third lower than the rate for White residents.
+\hfill\break 
+```{r home-ownership-chart, echo=FALSE, fig.alt="Bar chart with the % of households that own their own home by year for people who identify as American Indian and Alaska Native or White"}
+home_ownership_chart
+```
+
+\newpage
+
+## Educational Attainment
+
+```{r educational-attainment-calculation, include=FALSE}
+
+educational_attainment_chart <- create_static_column_chart(t = data %>% filter(concept == "Educational Attainment"),
+                                                           x = "race", y = "share", fill = "year",
+                                                           title = "People with at least a Bachelors Degree",
+                                                           source = "Source: U.S. Census Bureau, ACS 1-Year Estimates, tables C15002H, C15002C",
+                                                           color = "psrc_dark") + 
+  ggplot2::theme(axis.text.y = ggplot2::element_blank(),
+                 axis.text = ggplot2::element_text(family="Poppins",
+                                      size=11,
+                                      color="#2f3030"),
+                 panel.grid.major.x = ggplot2::element_blank(),
+                 panel.grid.major.y = ggplot2::element_blank(),
+                 panel.grid.minor.x = ggplot2::element_blank(),
+                 panel.grid.minor.y = ggplot2::element_blank(),
+                 plot.caption = element_text(hjust=0),
+                 axis.line.x = ggplot2::element_line(color="#cbcbcb"),
+                 axis.line.y = ggplot2::element_blank())   
+```
+
+The percent of American Indian and Alaska Native residents with a least a Bachelor's Degree has increased in the past 5 years but is still less than half the rate for White residents.
+\hfill\break 
+```{r educational-attainment-chart, echo=FALSE, fig.alt="Bar chart with the % of people with at least a Bachelors Degree by year for people who identify as American Indian and Alaska Native or White"}
+educational_attainment_chart
+```
+
+\newpage
+
+## Poverty
+
+```{r poverty-calculation, include=FALSE}
+
+poverty_chart <- create_static_column_chart(t = data %>% filter(concept == "Poverty"),
+                                            x = "race", y = "share", fill = "year",
+                                            title = "People experiencing Poverty",
+                                            source = "Source: U.S. Census Bureau, ACS 1-Year Estimates, tables B17020H, B17020C",                                                                         color = "psrc_light") + 
+  ggplot2::theme(axis.text.y = ggplot2::element_blank(),
+                 axis.text = ggplot2::element_text(family="Poppins",
+                                      size=11,
+                                      color="#2f3030"),
+                 panel.grid.major.x = ggplot2::element_blank(),
+                 panel.grid.major.y = ggplot2::element_blank(),
+                 panel.grid.minor.x = ggplot2::element_blank(),
+                 panel.grid.minor.y = ggplot2::element_blank(),
+                 plot.caption = element_text(hjust=0),
+                 axis.line.x = ggplot2::element_line(color="#cbcbcb"),
+                 axis.line.y = ggplot2::element_blank())   
+```
+
+The percent of American Indian and Alaska Native residents living in poverty has decreased in the past 5 years but is still three times the rate for White residents.
+\hfill\break 
+```{r poverty-chart, echo=FALSE, fig.alt="Bar chart with the % of people in poverty for people who identify as American Indian and Alaska Native or White"}
+poverty_chart
+```
+
