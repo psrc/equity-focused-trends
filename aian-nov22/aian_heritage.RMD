@@ -8,9 +8,11 @@ header-includes:
   - \usepackage{xcolor}
   - \usepackage{fancyhdr}
    \pagestyle{fancy}
-   \setlength{\headheight}{60pt}
+   \setlength{\headheight}{75pt}
    \setlength{\textheight}{600pt}
-   \fancyhead[L]{\includegraphics[width=6in]{trends-header-v1.png}}
+   \fancyhead[C]{}
+   \fancyhead[L]{\includegraphics{trends-header.png}}
+   \fancyhead[R]{}
    \fancyfoot[C]{\scriptsize{1011 Western Ave, Suite 500, Seattle WA 98104-1035} \textcolor[HTML]{F05A28}. 206.464.7532 \textcolor[HTML]{F05A28}. www.psrc.org \textcolor[HTML]{F05A28}. November 2022}
    \fancyfoot[R]{\textcolor[HTML]{F05A28}\thepage}
    \fancyfoot[L]{}
@@ -28,6 +30,16 @@ library(psrcplot)
 library(psrccensus)
 library(tidyverse)
 library(knitr)
+library(magick)
+
+# Create Image 
+image1 <- image_read("X:/DSA/shiny-uploads/images/51391430801_092ce43bba_o.jpg")
+image2 <- image_read("X:/DSA/shiny-uploads/images/49092499676_b78e820bbc_o.jpg")
+image3 <- image_read("X:/DSA/shiny-uploads/images/51391685878_3179b31fd1_o.jpg")
+
+input <- c(image_scale(image1, "x200"), image_scale(image2, "x200"), image_scale(image3, "x200"))
+trend_image_header <- image_append(input)
+image_write(trend_image_header, path="trend_image_header.png", format="png")
 
 install_psrc_fonts()
 
@@ -120,9 +132,8 @@ create_static_column_chart <- function(t, x, y, fill,
     #Text format:
     #This sets the font, size, type and color of text for the chart's title
     plot.title = ggplot2::element_text(family="Poppins",
-                                       size=14,
-                                       face="bold",
-                                       color="#4C4C4C"),
+                                       size=12,
+                                       color="#999999"),
 
     #This sets the font, size, type and color of text for the chart's subtitle, as well as setting a margin between the title and the subtitle
     plot.subtitle = ggplot2::element_text(family="Poppins",
@@ -133,7 +144,7 @@ create_static_column_chart <- function(t, x, y, fill,
     plot.caption =  ggplot2::element_text(family="Poppins",
                                           size=10,
                                           face="italic",
-                                          color="#4C4C4C"))
+                                          color="#999999"))
 
   return(c)
 }
@@ -201,9 +212,8 @@ create_static_treemap_chart <- function(t, area, fill, title="", subtitle="", so
     #Text format:
     #This sets the font, size, type and color of text for the chart's title
     plot.title = ggplot2::element_text(family="Poppins",
-                                       size=14,
-                                       face="bold",
-                                       color="#4C4C4C"),
+                                       size=12,
+                                       color="#999999"),
 
     #This sets the font, size, type and color of text for the chart's subtitle, as well as setting a margin between the title and the subtitle
     plot.subtitle = ggplot2::element_text(family="Poppins",
@@ -214,7 +224,7 @@ create_static_treemap_chart <- function(t, area, fill, title="", subtitle="", so
     plot.caption =  ggplot2::element_text(family="Poppins",
                                           size=10,
                                           face="italic",
-                                          color="#4C4C4C"))
+                                          color="#999999"))
   
   return(c)
 }
@@ -229,6 +239,8 @@ if(file.exists("aian_hertitage_data.csv")) {
 
 
 ```
+
+![](trend_image_header.png){width=100%}
 
 ```{r tribal-groupings-calculation, include=FALSE}
 
@@ -245,7 +257,7 @@ ps_salish <- tbl %>% filter(label=="Puget Sound Salish") %>% select(estimate) %>
 tribal_groupings_chart <- create_static_treemap_chart(t = tbl, area="estimate", fill="label", est="number", dec=-1,
                                                       title = "Tribal Groupings with 1,000 or more Population",
                                                       source = "Source: U.S. Census Bureau, 2016-2020 ACS 5-Year Estimates, table B02014",
-                                                      color = "psrc_light") + 
+                                                      color = "gnbopgy_10") + 
   ggplot2::theme(axis.text.x = ggplot2::element_blank(),
                  axis.text.y = ggplot2::element_blank(),
                  axis.text = ggplot2::element_text(family="Poppins",
@@ -273,12 +285,15 @@ tribal_groupings_chart
 ```
 *[View the full Dataset](https://data.census.gov/cedsci/table?q=B02014&g=0500000US53033,53035,53053,53061&tid=ACSDT5Y2020.B02014&hidePreview=true)*  
 \hfill\break 
+
+\newpage
+
 PSRC celebrates the diverse, rich cultures of people with American Indian and Alaska Native heritage. We also recognize the suffering that members of these groups have experienced in the past and continue to endure due to historical policies and practices.
 
 Economic inequities persist for American Indian and Alaska Native residents. Disparities exist for home ownership, access to health care, educational opportunities and income.  
 
 
-\newpage
+
 
 ## Access To Health Insurance
 
@@ -288,7 +303,7 @@ health_insurance_chart <- create_static_column_chart(t = data %>% filter(concept
                                                      x = "race", y = "share", fill = "year",
                                                      title = "People without Health Insurance",
                                                      source = "Source: U.S. Census Bureau, ACS 1-Year Estimates, tables C27001H, C27001C",
-                                                     color = "OrGn") + 
+                                                     color = "obgnpgy_5") + 
   ggplot2::theme(axis.text.y = ggplot2::element_blank(),
                  axis.text = ggplot2::element_text(family="Poppins",
                                       size=11,
@@ -318,7 +333,7 @@ home_ownership_chart <- create_static_column_chart(t = data %>% filter(concept==
                                                    x = "race", y = "share", fill = "year",
                                                    title = "People who Own their Home",
                                                    source = "Source: U.S. Census Bureau, ACS 1-Year Estimates, tables B25003H, B25003C",
-                                                   color = "LtPrDkPr") + 
+                                                   color = "pgnobgy_5") + 
   ggplot2::theme(axis.text.y = ggplot2::element_blank(),
                  axis.text = ggplot2::element_text(family="Poppins",
                                       size=11,
@@ -348,7 +363,7 @@ educational_attainment_chart <- create_static_column_chart(t = data %>% filter(c
                                                            x = "race", y = "share", fill = "year",
                                                            title = "People with at least a Bachelors Degree",
                                                            source = "Source: U.S. Census Bureau, ACS 1-Year Estimates, tables C15002H, C15002C",
-                                                           color = "psrc_dark") + 
+                                                           color = "pognbgy_5") + 
   ggplot2::theme(axis.text.y = ggplot2::element_blank(),
                  axis.text = ggplot2::element_text(family="Poppins",
                                       size=11,
@@ -377,7 +392,7 @@ educational_attainment_chart
 poverty_chart <- create_static_column_chart(t = data %>% filter(concept == "Poverty"),
                                             x = "race", y = "share", fill = "year",
                                             title = "People experiencing Poverty",
-                                            source = "Source: U.S. Census Bureau, ACS 1-Year Estimates, tables B17020H, B17020C",                                                                         color = "psrc_light") + 
+                                            source = "Source: U.S. Census Bureau, ACS 1-Year Estimates, tables B17020H, B17020C",                                                                         color = "gnbopgy_5") + 
   ggplot2::theme(axis.text.y = ggplot2::element_blank(),
                  axis.text = ggplot2::element_text(family="Poppins",
                                       size=11,
