@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.15.0 (TeX Live 2022)  (format=lualatex 2022.10.11)  14 OCT 2022 11:16
+This is LuaHBTeX, Version 1.15.0 (TeX Live 2022)  (format=lualatex 2022.10.11)  17 OCT 2022 11:59
  restricted system commands enabled.
 **aian_heritage.tex
 (./aian_heritage.tex
@@ -35,8 +35,8 @@ Inserting `luaotfload.aux.set_xheight' at position 5 in `luaotfload.patch_font'.
 Inserting `luaotfload.rewrite_fontname' at position 6 in `luaotfload.patch_font'. L3 programming layer <2022-09-28>
 Inserting `tracingstacklevels' at position 1 in `input_level_string'. (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
-(c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size12.clo
-File: size12.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
+(c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 luaotfload | db : Font names database loaded from C:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-var/luatex-cache/generic/names/luaotfload-names.luc.gz)
 \c@part=\count183
 \c@section=\count184
@@ -258,32 +258,7 @@ Package graphics Info: Driver file: luatex.def on input line 107.
 )
 \Gin@req@height=\dimen158
 \Gin@req@width=\dimen159
-) (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
-Package: fancyhdr 2022/05/18 v4.0.3 Extensive control of page headers and footers
-\f@nch@headwidth=\skip52
-\f@nch@O@elh=\skip53
-\f@nch@O@erh=\skip54
-\f@nch@O@olh=\skip55
-\f@nch@O@orh=\skip56
-\f@nch@O@elf=\skip57
-\f@nch@O@erf=\skip58
-\f@nch@O@olf=\skip59
-\f@nch@O@orf=\skip60
-) (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/lualatex/selnolig/selnolig.sty
-=== Package selnolig, Version 0.302, Date 2015/10/26 ===
-Package: selnolig 2015/10/26
-(c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/ifluatex.sty
-Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
-) (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/luatex/luatexbase/luatexbase.sty
-Package: luatexbase 2015/10/04 v1.3 luatexbase interface to LuaTeX 
-(c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/luatex/ctablestack/ctablestack.sty
-Package: ctablestack 2015/10/01 v1.0 Catcode table stable support
-\@catcodetablestackcnt=\count288
-)
-\CatcodeTableOther=\catcodetable12
-\CatcodeTableExpl=\catcodetable13
-)
-Inserting `Suppress ligatures selectively' at position 1 in `ligaturing'.) (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
+) (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2022-09-22 v7.00t Hypertext links for LaTeX
 (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
@@ -317,11 +292,11 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
-\c@section@level=\count289
+\c@section@level=\count288
 )
 \@linkdim=\dimen160
-\Hy@linkcounter=\count290
-\Hy@pagecounter=\count291
+\Hy@linkcounter=\count289
+\Hy@pagecounter=\count290
 (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2022-09-22 v7.00t Hyperref: PDFDocEncoding definition (HO)
 ) (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
@@ -329,7 +304,7 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 ) (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmds.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
-\Hy@SavedSpaceFactor=\count292
+\Hy@SavedSpaceFactor=\count291
 (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2022-09-22 v7.00t Hyperref: PDF Unicode definition (HO)
 )
@@ -343,7 +318,7 @@ Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 \stockwidth=\dimen161
 \stockheight=\dimen162
 Package hyperref Info: Bookmarks ON on input line 4410.
-\c@Hy@tempcnt=\count293
+\c@Hy@tempcnt=\count292
 (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip18
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
@@ -355,7 +330,7 @@ Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
-\Fld@menulength=\count294
+\Fld@menulength=\count293
 \Field@Width=\dimen164
 \Fld@charsize=\dimen165
 Package hyperref Info: Hyper figures OFF on input line 6027.
@@ -369,9 +344,9 @@ Package hyperref Info: PDF/A mode OFF on input line 6057.
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
-\Hy@abspage=\count295
-\c@Item=\count296
-\c@Hfootnote=\count297
+\Hy@abspage=\count294
+\c@Item=\count295
+\c@Hfootnote=\count296
 )
 Package hyperref Info: Driver (autodetected): hluatex.
 (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hluatex.def
@@ -382,8 +357,8 @@ Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
 with kernel methods
 )
-\Fld@listcount=\count298
-\c@bookmark@seq@number=\count299
+\Fld@listcount=\count297
+\c@bookmark@seq@number=\count298
 (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
 (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
@@ -391,52 +366,77 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
 )
-\Hy@SectionHShift=\skip61
-) (./aian_heritage.aux)
+\Hy@SectionHShift=\skip52
+) (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
+Package: fancyhdr 2022/05/18 v4.0.3 Extensive control of page headers and footers
+\f@nch@headwidth=\skip53
+\f@nch@O@elh=\skip54
+\f@nch@O@erh=\skip55
+\f@nch@O@olh=\skip56
+\f@nch@O@orh=\skip57
+\f@nch@O@elf=\skip58
+\f@nch@O@erf=\skip59
+\f@nch@O@olf=\skip60
+\f@nch@O@orf=\skip61
+) (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/lualatex/selnolig/selnolig.sty
+=== Package selnolig, Version 0.302, Date 2015/10/26 ===
+Package: selnolig 2015/10/26
+(c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/ifluatex.sty
+Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
+) (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/luatex/luatexbase/luatexbase.sty
+Package: luatexbase 2015/10/04 v1.3 luatexbase interface to LuaTeX 
+(c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/luatex/ctablestack/ctablestack.sty
+Package: ctablestack 2015/10/01 v1.0 Catcode table stable support
+\@catcodetablestackcnt=\count299
+)
+\CatcodeTableOther=\catcodetable12
+\CatcodeTableExpl=\catcodetable13
+)
+Inserting `Suppress ligatures selectively' at position 1 in `ligaturing'.) (./aian_heritage.aux)
 \openout1 = aian_heritage.aux
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 71.
+(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 72.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 71.
+(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 72.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 71.
+(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 72.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 71.
+(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 72.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 71.
+(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 72.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 71.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 72.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 71.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 72.
 
-Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
-
-
-Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+Package fontspec Info: latinmodern-math scale = 0.9999967668407183.
 
 
-Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+Package fontspec Info: latinmodern-math scale = 0.9999967668407183.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999967668407183.
 
 
 Package fontspec Info: Font family 'latinmodern-math.otf(0)' created for font
@@ -448,246 +448,246 @@ Package fontspec Info: Font family 'latinmodern-math.otf(0)' created for font
 (fontspec)             series/shapes:
 (fontspec)              
 (fontspec)             - 'normal' (m/n) with NFSS spec.:
-(fontspec)             <->s*[0.9999970497384594]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;"
+(fontspec)             <->s*[0.9999967668407183]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;"
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 (fontspec)             and font adjustment code:
 (fontspec)             \__um_luatex_copy_fontdimens: 
 (fontspec)             - 'bold' (b/n) with NFSS spec.:
-(fontspec)             <->s*[0.9999970497384594]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;"
+(fontspec)             <->s*[0.9999967668407183]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 (fontspec)             and font adjustment code:
 (fontspec)             \__um_luatex_copy_fontdimens: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 71.
+(Font)              scaled to size 10.95pt on input line 72.
 
-Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
-
-
-Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+Package fontspec Info: latinmodern-math scale = 0.9999967668407183.
 
 
-Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+Package fontspec Info: latinmodern-math scale = 0.9999967668407183.
 
 
-Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+Package fontspec Info: latinmodern-math scale = 0.9999967668407183.
 
 
-Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+Package fontspec Info: latinmodern-math scale = 0.9999967668407183.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999967668407183.
 
 
 Package fontspec Info: Font family 'latinmodern-math.otf(1)' created for font
 (fontspec)             'latinmodern-math.otf' with options
-(fontspec)             [Scale=MatchLowercase,Renderer=Basic,BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.2-10.2,Font=latinmodern-math.otf,Style=MathScript},{Size=-7.2,Font=latinmodern-math.otf,Style=MathScriptScript}},FontAdjustment={\__um_luatex_copy_fontdimens:
+(fontspec)             [Scale=MatchLowercase,Renderer=Basic,BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=9.3075-},{Size=6.57-9.3075,Font=latinmodern-math.otf,Style=MathScript},{Size=-6.57,Font=latinmodern-math.otf,Style=MathScriptScript}},FontAdjustment={\__um_luatex_copy_fontdimens:
 (fontspec)             },BoldFont={latinmodern-math.otf}].
 (fontspec)              
 (fontspec)              This font family consists of the following NFSS
 (fontspec)             series/shapes:
 (fontspec)              
 (fontspec)             - 'normal' (m/n) with NFSS spec.:
-(fontspec)             <10.2->s*[0.9999970497384594]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;"<7.2-10.2>s*[0.9999970497384594]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;+ssty=0;"<-7.2>s*[0.9999970497384594]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;+ssty=1;"
+(fontspec)             <9.3075->s*[0.9999967668407183]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;"<6.57-9.3075>s*[0.9999967668407183]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;+ssty=0;"<-6.57>s*[0.9999967668407183]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;+ssty=1;"
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 (fontspec)             and font adjustment code:
 (fontspec)             \__um_luatex_copy_fontdimens: 
 (fontspec)             - 'bold' (b/n) with NFSS spec.:
-(fontspec)             <->s*[0.9999970497384594]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;"
+(fontspec)             <->s*[0.9999967668407183]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 (fontspec)             and font adjustment code:
 (fontspec)             \__um_luatex_copy_fontdimens: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 71.
+(Font)              scaled to size 10.95pt on input line 72.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 71.
+(Font)              `operators' in the math version `normal' on input line 72.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 71.
+(Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 72.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 71.
+(Font)              `operators' in the math version `bold' on input line 72.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 71.
+(Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 72.
 
-Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
-
-
-Package fontspec Info: latinmodern-math scale = 1.000097049443433.
+Package fontspec Info: latinmodern-math scale = 0.9999967668407183.
 
 
-Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+Package fontspec Info: latinmodern-math scale = 1.000096766517402.
 
 
-Package fontspec Info: latinmodern-math scale = 1.000097049443433.
+Package fontspec Info: latinmodern-math scale = 0.9999967668407183.
 
 
-Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+Package fontspec Info: latinmodern-math scale = 1.000096766517402.
 
 
-Package fontspec Info: latinmodern-math scale = 1.000097049443433.
+Package fontspec Info: latinmodern-math scale = 0.9999967668407183.
 
 
-Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+Package fontspec Info: latinmodern-math scale = 1.000096766517402.
 
 
-Package fontspec Info: latinmodern-math scale = 1.000097049443433.
+Package fontspec Info: latinmodern-math scale = 0.9999967668407183.
 
 
-Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+Package fontspec Info: latinmodern-math scale = 1.000096766517402.
 
 
-Package fontspec Info: latinmodern-math scale = 1.000097049443433.
+Package fontspec Info: latinmodern-math scale = 0.9999967668407183.
+
+
+Package fontspec Info: latinmodern-math scale = 1.000096766517402.
 
 
 Package fontspec Info: Font family 'latinmodern-math.otf(2)' created for font
 (fontspec)             'latinmodern-math.otf' with options
-(fontspec)             [Scale=MatchLowercase,Renderer=Basic,BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.2-10.2,Font=latinmodern-math.otf,Style=MathScript},{Size=-7.2,Font=latinmodern-math.otf,Style=MathScriptScript}},FontAdjustment={\__um_luatex_copy_fontdimens:
+(fontspec)             [Scale=MatchLowercase,Renderer=Basic,BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=9.3075-},{Size=6.57-9.3075,Font=latinmodern-math.otf,Style=MathScript},{Size=-6.57,Font=latinmodern-math.otf,Style=MathScriptScript}},FontAdjustment={\__um_luatex_copy_fontdimens:
 (fontspec)             },BoldFont={latinmodern-math.otf},ScaleAgain=1.0001,FontAdjustment={\fontdimen
-(fontspec)             8\font =8.124pt\relax \fontdimen 9\font =4.728pt\relax
-(fontspec)             \fontdimen 10\font =5.32799pt\relax \fontdimen 11\font
-(fontspec)             =8.232pt\relax \fontdimen 12\font =4.14pt\relax
-(fontspec)             \fontdimen 13\font =4.35599pt\relax \fontdimen 14\font
-(fontspec)             =4.35599pt\relax \fontdimen 15\font =3.46799pt\relax
-(fontspec)             \fontdimen 16\font =2.96399pt\relax \fontdimen 17\font
-(fontspec)             =2.96399pt\relax \fontdimen 18\font =3.0pt\relax
-(fontspec)             \fontdimen 19\font =2.4pt\relax \fontdimen 22\font
-(fontspec)             =3.0pt\relax \fontdimen 20\font =0pt\relax \fontdimen
-(fontspec)             21\font =0pt\relax }].
+(fontspec)             8\font =7.41315pt\relax \fontdimen 9\font
+(fontspec)             =4.31429pt\relax \fontdimen 10\font =4.86179pt\relax
+(fontspec)             \fontdimen 11\font =7.51169pt\relax \fontdimen 12\font
+(fontspec)             =3.77774pt\relax \fontdimen 13\font =3.97484pt\relax
+(fontspec)             \fontdimen 14\font =3.97484pt\relax \fontdimen 15\font
+(fontspec)             =3.16454pt\relax \fontdimen 16\font =2.70464pt\relax
+(fontspec)             \fontdimen 17\font =2.70464pt\relax \fontdimen 18\font
+(fontspec)             =2.73749pt\relax \fontdimen 19\font =2.18999pt\relax
+(fontspec)             \fontdimen 22\font =2.73749pt\relax \fontdimen 20\font
+(fontspec)             =0pt\relax \fontdimen 21\font =0pt\relax }].
 (fontspec)              
 (fontspec)              This font family consists of the following NFSS
 (fontspec)             series/shapes:
 (fontspec)              
 (fontspec)             - 'normal' (m/n) with NFSS spec.:
-(fontspec)             <10.2->s*[1.000097049443433]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;"<7.2-10.2>s*[1.000097049443433]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;+ssty=0;"<-7.2>s*[1.000097049443433]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;+ssty=1;"
+(fontspec)             <9.3075->s*[1.000096766517402]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;"<6.57-9.3075>s*[1.000096766517402]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;+ssty=0;"<-6.57>s*[1.000096766517402]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;+ssty=1;"
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 (fontspec)             and font adjustment code:
 (fontspec)             \__um_luatex_copy_fontdimens: \fontdimen 8\font
-(fontspec)             =8.124pt\relax \fontdimen 9\font =4.728pt\relax
-(fontspec)             \fontdimen 10\font =5.32799pt\relax \fontdimen 11\font
-(fontspec)             =8.232pt\relax \fontdimen 12\font =4.14pt\relax
-(fontspec)             \fontdimen 13\font =4.35599pt\relax \fontdimen 14\font
-(fontspec)             =4.35599pt\relax \fontdimen 15\font =3.46799pt\relax
-(fontspec)             \fontdimen 16\font =2.96399pt\relax \fontdimen 17\font
-(fontspec)             =2.96399pt\relax \fontdimen 18\font =3.0pt\relax
-(fontspec)             \fontdimen 19\font =2.4pt\relax \fontdimen 22\font
-(fontspec)             =3.0pt\relax \fontdimen 20\font =0pt\relax \fontdimen
-(fontspec)             21\font =0pt\relax 
+(fontspec)             =7.41315pt\relax \fontdimen 9\font =4.31429pt\relax
+(fontspec)             \fontdimen 10\font =4.86179pt\relax \fontdimen 11\font
+(fontspec)             =7.51169pt\relax \fontdimen 12\font =3.77774pt\relax
+(fontspec)             \fontdimen 13\font =3.97484pt\relax \fontdimen 14\font
+(fontspec)             =3.97484pt\relax \fontdimen 15\font =3.16454pt\relax
+(fontspec)             \fontdimen 16\font =2.70464pt\relax \fontdimen 17\font
+(fontspec)             =2.70464pt\relax \fontdimen 18\font =2.73749pt\relax
+(fontspec)             \fontdimen 19\font =2.18999pt\relax \fontdimen 22\font
+(fontspec)             =2.73749pt\relax \fontdimen 20\font =0pt\relax
+(fontspec)             \fontdimen 21\font =0pt\relax 
 (fontspec)             - 'bold' (b/n) with NFSS spec.:
-(fontspec)             <->s*[1.000097049443433]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;"
+(fontspec)             <->s*[1.000096766517402]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 (fontspec)             and font adjustment code:
 (fontspec)             \__um_luatex_copy_fontdimens: \fontdimen 8\font
-(fontspec)             =8.124pt\relax \fontdimen 9\font =4.728pt\relax
-(fontspec)             \fontdimen 10\font =5.32799pt\relax \fontdimen 11\font
-(fontspec)             =8.232pt\relax \fontdimen 12\font =4.14pt\relax
-(fontspec)             \fontdimen 13\font =4.35599pt\relax \fontdimen 14\font
-(fontspec)             =4.35599pt\relax \fontdimen 15\font =3.46799pt\relax
-(fontspec)             \fontdimen 16\font =2.96399pt\relax \fontdimen 17\font
-(fontspec)             =2.96399pt\relax \fontdimen 18\font =3.0pt\relax
-(fontspec)             \fontdimen 19\font =2.4pt\relax \fontdimen 22\font
-(fontspec)             =3.0pt\relax \fontdimen 20\font =0pt\relax \fontdimen
-(fontspec)             21\font =0pt\relax 
+(fontspec)             =7.41315pt\relax \fontdimen 9\font =4.31429pt\relax
+(fontspec)             \fontdimen 10\font =4.86179pt\relax \fontdimen 11\font
+(fontspec)             =7.51169pt\relax \fontdimen 12\font =3.77774pt\relax
+(fontspec)             \fontdimen 13\font =3.97484pt\relax \fontdimen 14\font
+(fontspec)             =3.97484pt\relax \fontdimen 15\font =3.16454pt\relax
+(fontspec)             \fontdimen 16\font =2.70464pt\relax \fontdimen 17\font
+(fontspec)             =2.70464pt\relax \fontdimen 18\font =2.73749pt\relax
+(fontspec)             \fontdimen 19\font =2.18999pt\relax \fontdimen 22\font
+(fontspec)             =2.73749pt\relax \fontdimen 20\font =0pt\relax
+(fontspec)             \fontdimen 21\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 71.
+(Font)              `symbols' in the math version `normal' on input line 72.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
-(Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 71.
+(Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 72.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 71.
+(Font)              `symbols' in the math version `bold' on input line 72.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
-(Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 71.
+(Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 72.
 
-Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
-
-
-Package fontspec Info: latinmodern-math scale = 0.9998970500334856.
+Package fontspec Info: latinmodern-math scale = 0.9999967668407183.
 
 
-Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+Package fontspec Info: latinmodern-math scale = 0.9998967671640342.
 
 
-Package fontspec Info: latinmodern-math scale = 0.9998970500334856.
+Package fontspec Info: latinmodern-math scale = 0.9999967668407183.
 
 
-Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+Package fontspec Info: latinmodern-math scale = 0.9998967671640342.
 
 
-Package fontspec Info: latinmodern-math scale = 0.9998970500334856.
+Package fontspec Info: latinmodern-math scale = 0.9999967668407183.
 
 
-Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+Package fontspec Info: latinmodern-math scale = 0.9998967671640342.
 
 
-Package fontspec Info: latinmodern-math scale = 0.9998970500334856.
+Package fontspec Info: latinmodern-math scale = 0.9999967668407183.
 
 
-Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+Package fontspec Info: latinmodern-math scale = 0.9998967671640342.
 
 
-Package fontspec Info: latinmodern-math scale = 0.9998970500334856.
+Package fontspec Info: latinmodern-math scale = 0.9999967668407183.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9998967671640342.
 
 
 Package fontspec Info: Font family 'latinmodern-math.otf(3)' created for font
 (fontspec)             'latinmodern-math.otf' with options
-(fontspec)             [Scale=MatchLowercase,Renderer=Basic,BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.2-10.2,Font=latinmodern-math.otf,Style=MathScript},{Size=-7.2,Font=latinmodern-math.otf,Style=MathScriptScript}},FontAdjustment={\__um_luatex_copy_fontdimens:
+(fontspec)             [Scale=MatchLowercase,Renderer=Basic,BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=9.3075-},{Size=6.57-9.3075,Font=latinmodern-math.otf,Style=MathScript},{Size=-6.57,Font=latinmodern-math.otf,Style=MathScriptScript}},FontAdjustment={\__um_luatex_copy_fontdimens:
 (fontspec)             },BoldFont={latinmodern-math.otf},ScaleAgain=0.9999,FontAdjustment={\fontdimen
-(fontspec)             8\font =0.48pt\relax \fontdimen 9\font =2.4pt\relax
-(fontspec)             \fontdimen 10\font =2.004pt\relax \fontdimen 11\font
-(fontspec)             =1.33199pt\relax \fontdimen 12\font =7.2pt\relax
-(fontspec)             \fontdimen 13\font =0pt\relax }].
+(fontspec)             8\font =0.43799pt\relax \fontdimen 9\font
+(fontspec)             =2.18999pt\relax \fontdimen 10\font =1.82864pt\relax
+(fontspec)             \fontdimen 11\font =1.21544pt\relax \fontdimen 12\font
+(fontspec)             =6.56999pt\relax \fontdimen 13\font =0pt\relax }].
 (fontspec)              
 (fontspec)              This font family consists of the following NFSS
 (fontspec)             series/shapes:
 (fontspec)              
 (fontspec)             - 'normal' (m/n) with NFSS spec.:
-(fontspec)             <10.2->s*[0.9998970500334856]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;"<7.2-10.2>s*[0.9998970500334856]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;+ssty=0;"<-7.2>s*[0.9998970500334856]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;+ssty=1;"
+(fontspec)             <9.3075->s*[0.9998967671640342]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;"<6.57-9.3075>s*[0.9998967671640342]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;+ssty=0;"<-6.57>s*[0.9998967671640342]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;+ssty=1;"
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 (fontspec)             and font adjustment code:
 (fontspec)             \__um_luatex_copy_fontdimens: \fontdimen 8\font
-(fontspec)             =0.48pt\relax \fontdimen 9\font =2.4pt\relax \fontdimen
-(fontspec)             10\font =2.004pt\relax \fontdimen 11\font
-(fontspec)             =1.33199pt\relax \fontdimen 12\font =7.2pt\relax
+(fontspec)             =0.43799pt\relax \fontdimen 9\font =2.18999pt\relax
+(fontspec)             \fontdimen 10\font =1.82864pt\relax \fontdimen 11\font
+(fontspec)             =1.21544pt\relax \fontdimen 12\font =6.56999pt\relax
 (fontspec)             \fontdimen 13\font =0pt\relax 
 (fontspec)             - 'bold' (b/n) with NFSS spec.:
-(fontspec)             <->s*[0.9998970500334856]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;"
+(fontspec)             <->s*[0.9998967671640342]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 (fontspec)             and font adjustment code:
 (fontspec)             \__um_luatex_copy_fontdimens: \fontdimen 8\font
-(fontspec)             =0.48pt\relax \fontdimen 9\font =2.4pt\relax \fontdimen
-(fontspec)             10\font =2.004pt\relax \fontdimen 11\font
-(fontspec)             =1.33199pt\relax \fontdimen 12\font =7.2pt\relax
+(fontspec)             =0.43799pt\relax \fontdimen 9\font =2.18999pt\relax
+(fontspec)             \fontdimen 10\font =1.82864pt\relax \fontdimen 11\font
+(fontspec)             =1.21544pt\relax \fontdimen 12\font =6.56999pt\relax
 (fontspec)             \fontdimen 13\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `normal' on input line 71.
+(Font)              `largesymbols' in the math version `normal' on input line 72.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
-(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 71.
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 72.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 71.
+(Font)              `largesymbols' in the math version `bold' on input line 72.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
-(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 71.
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 72.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 8.4pt on input line 71.
+(Font)              scaled to size 7.665pt on input line 72.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 71.
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 71.
+(Font)              scaled to size 5.475pt on input line 72.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 72.
 (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 12.0011pt on input line 71.
+(Font)              scaled to size 10.95099pt on input line 72.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 8.40076pt on input line 71.
+(Font)              scaled to size 7.66568pt on input line 72.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 6.00055pt on input line 71.
+(Font)              scaled to size 5.4755pt on input line 72.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 11.99872pt on input line 71.
+(Font)              scaled to size 10.94882pt on input line 72.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 8.3991pt on input line 71.
+(Font)              scaled to size 7.66417pt on input line 72.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.99936pt on input line 71.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 71.
+(Font)              scaled to size 5.47441pt on input line 72.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 72.
 (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 71.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 72.
 (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
@@ -715,12 +715,12 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 * \topmargin=-37.0pt
 * \headheight=75.0pt
 * \headsep=25.0pt
-* \topskip=12.0pt
+* \topskip=11.0pt
 * \footskip=30.0pt
-* \marginparwidth=44.0pt
+* \marginparwidth=59.0pt
 * \marginparsep=10.0pt
 * \columnsep=10.0pt
-* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -730,7 +730,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 71.
+Package hyperref Info: Link coloring OFF on input line 72.
 (./aian_heritage.out) (./aian_heritage.out)
 \@outlinefile=\write3
 
@@ -738,22 +738,22 @@ Package hyperref Info: Link coloring OFF on input line 71.
 luaotfload | cache : Lookup cache loaded from C:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-var/luatex-cache/generic/names/luaotfload-lookup-cache.luc.
 luaotfload | aux : font no 39 (nil) defines no feature for script latn
 
-Package fontspec Info: Poppins scale = 0.7864935981028666.
+Package fontspec Info: Poppins scale = 0.7864953109424904.
 
 
-Package fontspec Info: Poppins scale = 0.7864935981028666.
+Package fontspec Info: Poppins scale = 0.7864953109424904.
 
 luaotfload | aux : font no 39 (nil) does not define feature smcp for script dflt with language dflt
 
-Package fontspec Info: Poppins/B scale = 0.772399334594262.
+Package fontspec Info: Poppins/B scale = 0.772398878214333.
 
 luaotfload | aux : font no 44 (nil) does not define feature smcp for script dflt with language dflt
 
-Package fontspec Info: Poppins/I scale = 0.7864935981028666.
+Package fontspec Info: Poppins/I scale = 0.7864953109424904.
 
 luaotfload | aux : font no 45 (nil) does not define feature smcp for script dflt with language dflt
 
-Package fontspec Info: Poppins/BI scale = 0.772399334594262.
+Package fontspec Info: Poppins/BI scale = 0.772398878214333.
 
 luaotfload | aux : font no 46 (nil) does not define feature smcp for script dflt with language dflt
 
@@ -779,24 +779,24 @@ Package fontspec Info: Font family 'Poppins(0)' created for font 'Poppins'
 
 luaotfload | aux : font no 48 (nil) defines no feature for script latn
 LaTeX Font Info:    Font shape `TU/Poppins(0)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 74.
+(Font)              scaled to size 10.95pt on input line 75.
 
-Package fontspec Info: Poppins scale = 0.9999976796313398.
+Package fontspec Info: Poppins scale = 0.9999974571271641.
 
 
-Package fontspec Info: Poppins scale = 0.9999976796313398.
+Package fontspec Info: Poppins scale = 0.9999974571271641.
 
 luaotfload | aux : font no 48 (nil) does not define feature smcp for script dflt with language dflt
 
-Package fontspec Info: Poppins/B scale = 0.9820773420231068.
+Package fontspec Info: Poppins/B scale = 0.9820744044571753.
 
 luaotfload | aux : font no 54 (nil) does not define feature smcp for script dflt with language dflt
 
-Package fontspec Info: Poppins/I scale = 0.9999976796313398.
+Package fontspec Info: Poppins/I scale = 0.9999974571271641.
 
 luaotfload | aux : font no 55 (nil) does not define feature smcp for script dflt with language dflt
 
-Package fontspec Info: Poppins/BI scale = 0.9820773420231068.
+Package fontspec Info: Poppins/BI scale = 0.9820744044571753.
 
 luaotfload | aux : font no 56 (nil) does not define feature smcp for script dflt with language dflt
 
@@ -807,62 +807,60 @@ Package fontspec Info: Font family 'Poppins(1)' created for font 'Poppins'
 (fontspec)             series/shapes:
 (fontspec)              
 (fontspec)             - 'normal' (m/n) with NFSS spec.:
-(fontspec)             <->s*[0.9999976796313398]"Poppins:mode=base;script=DFLT;language=dflt;"
+(fontspec)             <->s*[0.9999974571271641]"Poppins:mode=base;script=DFLT;language=dflt;"
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 (fontspec)             - 'bold' (b/n) with NFSS spec.:
-(fontspec)             <->s*[0.9820773420231068]"Poppins/B:mode=base;script=DFLT;language=dflt;"
+(fontspec)             <->s*[0.9820744044571753]"Poppins/B:mode=base;script=DFLT;language=dflt;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 (fontspec)             - 'italic' (m/it) with NFSS spec.:
-(fontspec)             <->s*[0.9999976796313398]"Poppins/I:mode=base;script=DFLT;language=dflt;"
+(fontspec)             <->s*[0.9999974571271641]"Poppins/I:mode=base;script=DFLT;language=dflt;"
 (fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.: 
 (fontspec)             - 'bold italic' (b/it) with NFSS spec.:
-(fontspec)             <->s*[0.9820773420231068]"Poppins/BI:mode=base;script=DFLT;language=dflt;"
+(fontspec)             <->s*[0.9820744044571753]"Poppins/BI:mode=base;script=DFLT;language=dflt;"
 (fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
 
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  TU/lmr/m/n --> TU/Poppins(1)/m/n on input line 74.
+(Font)                  TU/lmr/m/n --> TU/Poppins(1)/m/n on input line 75.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  TU/lmr/m/it --> TU/Poppins(1)/m/it on input line 74.
+(Font)                  TU/lmr/m/it --> TU/Poppins(1)/m/it on input line 75.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  TU/lmr/bx/n --> TU/Poppins(1)/b/n on input line 74.
+(Font)                  TU/lmr/bx/n --> TU/Poppins(1)/b/n on input line 75.
 LaTeX Font Info:    Font shape `TU/Poppins(0)/m/n' will be
-(Font)              scaled to size 14.4pt on input line 77.
+(Font)              scaled to size 12.0pt on input line 78.
 LaTeX Font Info:    Font shape `TU/Poppins(0)/b/n' will be
-(Font)              scaled to size 14.4pt on input line 77.
-<trend_image_header.png, id=24, 208.8603pt x 48.18pt>
+(Font)              scaled to size 12.0pt on input line 78.
+<trend_image_header.png, id=24, 216.81pt x 48.18pt>
 File: trend_image_header.png Graphic file (type png)
 <use trend_image_header.png>
-Package luatex.def Info: trend_image_header.png  used on input line 79.
-(luatex.def)             Requested size: 469.78792pt x 108.37085pt.
+Package luatex.def Info: trend_image_header.png  used on input line 80.
+(luatex.def)             Requested size: 469.81448pt x 104.40315pt.
 LaTeX Font Info:    Font shape `TU/Poppins(0)/b/n' will be
-(Font)              scaled to size 12.0pt on input line 84.
-
-Underfull \hbox (badness 10000) in paragraph at lines 81--89
-
- []
-
-<aian_heritage_files/figure-latex/tribal-groupings-chart-1.pdf, id=25, 578.16pt x 289.08pt>
+(Font)              scaled to size 10.95pt on input line 83.
+<aian_heritage_files/figure-latex/tribal-groupings-chart-1.pdf, id=25, 578.16pt x 361.35pt>
 File: aian_heritage_files/figure-latex/tribal-groupings-chart-1.pdf Graphic file (type pdf)
 <use aian_heritage_files/figure-latex/tribal-groupings-chart-1.pdf>
-Package luatex.def Info: aian_heritage_files/figure-latex/tribal-groupings-chart-1.pdf  used on input line 90.
-(luatex.def)             Requested size: 469.75385pt x 234.8769pt.
-LaTeX Font Info:    Font shape `TU/Poppins(0)/m/it' will be
-(Font)              scaled to size 12.0pt on input line 92.
-
-Underfull \hbox (badness 10000) in paragraph at lines 90--94
-[][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 90--94
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 90--94
-
- []
-
+Package luatex.def Info: aian_heritage_files/figure-latex/tribal-groupings-chart-1.pdf  used on input line 86.
+(luatex.def)             Requested size: 469.75385pt x 293.59616pt.
+LaTeX Font Info:    Font shape `TU/Poppins(0)/m/n' will be
+(Font)              scaled to size 8.0pt on input line 90.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 8.0pt on input line 91.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 6.0pt on input line 91.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 5.0pt on input line 91.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 8.00073pt on input line 91.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 6.00055pt on input line 91.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 5.00046pt on input line 91.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 7.99915pt on input line 91.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 5.99936pt on input line 91.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 4.99947pt on input line 91.
 <trends-header.png, id=27, 677.62839pt x 135.21484pt>
 File: trends-header.png Graphic file (type png)
 <use trends-header.png>
@@ -870,98 +868,92 @@ Package luatex.def Info: trends-header.png  used on input line 95.
 (luatex.def)             Requested size: 469.75613pt x 93.73573pt.
 
 Package fancyhdr Warning: \headheight is too small (75.0pt): 
-(fancyhdr)                Make it at least 98.08577pt, for example:
-(fancyhdr)                \setlength{\headheight}{98.08577pt}.
+(fancyhdr)                Make it at least 97.81577pt, for example:
+(fancyhdr)                \setlength{\headheight}{97.81577pt}.
 (fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-23.08577pt}.
+(fancyhdr)                \addtolength{\topmargin}{-22.81577pt}.
 
-LaTeX Font Info:    Font shape `TU/Poppins(0)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 95.
 [1
 
 {c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}<./trends-header.png><./trend_image_header.png><./aian_heritage_files/figure-latex/tribal-groupings-chart-1.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 110--112
-
- []
-
 <aian_heritage_files/figure-latex/health-insurance-chart-1.pdf, id=41, 469.755pt x 325.215pt>
 File: aian_heritage_files/figure-latex/health-insurance-chart-1.pdf Graphic file (type pdf)
 <use aian_heritage_files/figure-latex/health-insurance-chart-1.pdf>
-Package luatex.def Info: aian_heritage_files/figure-latex/health-insurance-chart-1.pdf  used on input line 113.
+Package luatex.def Info: aian_heritage_files/figure-latex/health-insurance-chart-1.pdf  used on input line 107.
 (luatex.def)             Requested size: 469.75386pt x 325.2142pt.
 File: trends-header.png Graphic file (type png)
 <use trends-header.png>
-Package luatex.def Info: trends-header.png  used on input line 114.
+Package luatex.def Info: trends-header.png  used on input line 108.
 (luatex.def)             Requested size: 469.75613pt x 93.73573pt.
 
 Package fancyhdr Warning: \headheight is too small (75.0pt): 
-(fancyhdr)                Make it at least 98.08577pt, for example:
-(fancyhdr)                \setlength{\headheight}{98.08577pt}.
+(fancyhdr)                Make it at least 97.81577pt, for example:
+(fancyhdr)                \setlength{\headheight}{97.81577pt}.
 (fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-23.08577pt}.
+(fancyhdr)                \addtolength{\topmargin}{-22.81577pt}.
 
 [2<./aian_heritage_files/figure-latex/health-insurance-chart-1.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 119--121
+Underfull \hbox (badness 10000) in paragraph at lines 113--115
 
  []
 
 <aian_heritage_files/figure-latex/home-ownership-chart-1.pdf, id=49, 469.755pt x 325.215pt>
 File: aian_heritage_files/figure-latex/home-ownership-chart-1.pdf Graphic file (type pdf)
 <use aian_heritage_files/figure-latex/home-ownership-chart-1.pdf>
-Package luatex.def Info: aian_heritage_files/figure-latex/home-ownership-chart-1.pdf  used on input line 122.
+Package luatex.def Info: aian_heritage_files/figure-latex/home-ownership-chart-1.pdf  used on input line 116.
 (luatex.def)             Requested size: 469.75386pt x 325.2142pt.
 File: trends-header.png Graphic file (type png)
 <use trends-header.png>
-Package luatex.def Info: trends-header.png  used on input line 124.
+Package luatex.def Info: trends-header.png  used on input line 118.
 (luatex.def)             Requested size: 469.75613pt x 93.73573pt.
 
 Package fancyhdr Warning: \headheight is too small (75.0pt): 
-(fancyhdr)                Make it at least 98.08577pt, for example:
-(fancyhdr)                \setlength{\headheight}{98.08577pt}.
+(fancyhdr)                Make it at least 97.81577pt, for example:
+(fancyhdr)                \setlength{\headheight}{97.81577pt}.
 (fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-23.08577pt}.
+(fancyhdr)                \addtolength{\topmargin}{-22.81577pt}.
 
 [3<./aian_heritage_files/figure-latex/home-ownership-chart-1.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 129--132
+Underfull \hbox (badness 10000) in paragraph at lines 123--126
 
  []
 
 <aian_heritage_files/figure-latex/educational-attainment-chart-1.pdf, id=57, 469.755pt x 325.215pt>
 File: aian_heritage_files/figure-latex/educational-attainment-chart-1.pdf Graphic file (type pdf)
 <use aian_heritage_files/figure-latex/educational-attainment-chart-1.pdf>
-Package luatex.def Info: aian_heritage_files/figure-latex/educational-attainment-chart-1.pdf  used on input line 133.
+Package luatex.def Info: aian_heritage_files/figure-latex/educational-attainment-chart-1.pdf  used on input line 127.
 (luatex.def)             Requested size: 469.75386pt x 325.2142pt.
 File: trends-header.png Graphic file (type png)
 <use trends-header.png>
-Package luatex.def Info: trends-header.png  used on input line 135.
+Package luatex.def Info: trends-header.png  used on input line 129.
 (luatex.def)             Requested size: 469.75613pt x 93.73573pt.
 
 Package fancyhdr Warning: \headheight is too small (75.0pt): 
-(fancyhdr)                Make it at least 98.08577pt, for example:
-(fancyhdr)                \setlength{\headheight}{98.08577pt}.
+(fancyhdr)                Make it at least 97.81577pt, for example:
+(fancyhdr)                \setlength{\headheight}{97.81577pt}.
 (fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-23.08577pt}.
+(fancyhdr)                \addtolength{\topmargin}{-22.81577pt}.
 
 [4<./aian_heritage_files/figure-latex/educational-attainment-chart-1.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 140--143
+Underfull \hbox (badness 10000) in paragraph at lines 134--137
 
  []
 
 <aian_heritage_files/figure-latex/poverty-chart-1.pdf, id=65, 469.755pt x 325.215pt>
 File: aian_heritage_files/figure-latex/poverty-chart-1.pdf Graphic file (type pdf)
 <use aian_heritage_files/figure-latex/poverty-chart-1.pdf>
-Package luatex.def Info: aian_heritage_files/figure-latex/poverty-chart-1.pdf  used on input line 144.
+Package luatex.def Info: aian_heritage_files/figure-latex/poverty-chart-1.pdf  used on input line 138.
 (luatex.def)             Requested size: 469.75386pt x 325.2142pt.
 File: trends-header.png Graphic file (type png)
 <use trends-header.png>
-Package luatex.def Info: trends-header.png  used on input line 146.
+Package luatex.def Info: trends-header.png  used on input line 140.
 (luatex.def)             Requested size: 469.75613pt x 93.73573pt.
 
 Package fancyhdr Warning: \headheight is too small (75.0pt): 
-(fancyhdr)                Make it at least 98.08577pt, for example:
-(fancyhdr)                \setlength{\headheight}{98.08577pt}.
+(fancyhdr)                Make it at least 97.81577pt, for example:
+(fancyhdr)                \setlength{\headheight}{97.81577pt}.
 (fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-23.08577pt}.
+(fancyhdr)                \addtolength{\topmargin}{-22.81577pt}.
 
 [5<./aian_heritage_files/figure-latex/poverty-chart-1.pdf>] (./aian_heritage.aux)
 Package rerunfilecheck Info: File `aian_heritage.out' has not changed.
@@ -969,19 +961,19 @@ Package rerunfilecheck Info: File `aian_heritage.out' has not changed.
 )
 
 Here is how much of LuaTeX's memory you used:
- 17960 strings out of 477352
+ 17980 strings out of 477352
  100000,953878 words of node,token memory allocated
- 507 words of node memory still in use:
-   6 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 7 attribute, 55 glue_spec, 7 attribute_list, 1 write, 1 user_defined nodes
-   avail lists: 2:208,3:120,4:45,5:57,6:31,7:2412,8:16,9:267,10:15,11:150
- 38459 multiletter control sequences out of 65536+600000
- 61 fonts using 10318043 bytes
- 86i,15n,122p,748b,377s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/Windows/Fonts/Poppins-Italic.ttf><c:/Windows/Fonts/Poppins-Regular.ttf><c:/Windows/Fonts/Poppins-Bold.ttf>
-Output written on aian_heritage.pdf (5 pages, 1256251 bytes).
+ 526 words of node memory still in use:
+   6 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 9 attribute, 56 glue_spec, 9 attribute_list, 1 write, 1 user_defined, 1 pdf_action nodes
+   avail lists: 2:247,3:179,4:57,5:65,6:34,7:3334,8:124,9:272,10:21,11:178
+ 38479 multiletter control sequences out of 65536+600000
+ 78 fonts using 15437027 bytes
+ 86i,15n,122p,862b,436s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/Windows/Fonts/Poppins-Regular.ttf><c:/Windows/Fonts/Poppins-Bold.ttf>
+Output written on aian_heritage.pdf (5 pages, 1245441 bytes).
 
-PDF statistics: 96 PDF objects out of 1000 (max. 8388607)
- 66 compressed objects within 1 object stream
+PDF statistics: 90 PDF objects out of 1000 (max. 8388607)
+ 63 compressed objects within 1 object stream
  16 named destinations out of 1000 (max. 131072)
  41 words of extra memory for PDF output out of 10000 (max. 100000000)
 

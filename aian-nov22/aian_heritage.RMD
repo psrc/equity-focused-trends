@@ -2,10 +2,11 @@
 output: 
   pdf_document:
     latex_engine: lualatex
-fontsize: 12pt
+fontsize: 11pt
   
 header-includes:
   - \usepackage{xcolor}
+  - \usepackage{hyperref}
   - \usepackage{fancyhdr}
    \pagestyle{fancy}
    \setlength{\headheight}{75pt}
@@ -34,10 +35,11 @@ library(magick)
 
 # Create Image 
 image1 <- image_read("X:/DSA/shiny-uploads/images/51391430801_092ce43bba_o.jpg")
-image2 <- image_read("X:/DSA/shiny-uploads/images/49092499676_b78e820bbc_o.jpg")
+image2 <- image_read("X:/DSA/shiny-uploads/images/Indigenous_Peoples_Day_Art.jpg")
 image3 <- image_read("X:/DSA/shiny-uploads/images/51391685878_3179b31fd1_o.jpg")
 
 input <- c(image_scale(image1, "x200"), image_scale(image2, "x200"), image_scale(image3, "x200"))
+
 trend_image_header <- image_append(input)
 image_write(trend_image_header, path="trend_image_header.png", format="png")
 
@@ -94,7 +96,7 @@ create_static_column_chart <- function(t, x, y, fill,
     ggplot2::geom_bar(position=pos, stat="identity") +
     ggplot2::scale_fill_manual(values=cols)  +
     ggplot2::scale_y_continuous(labels = lab, limits = c(0, scale_max), expand = c(0, 0)) +
-    ggplot2::labs(title=title, subtitle = subtitle, caption = source, alt = alt) +
+    ggplot2::labs(title=expr(underline(!!title)), subtitle = subtitle, caption = source, alt = alt) +
     psrcplot::psrc_style()
   
   # If there is a MOE value then error bars are added to the plot
@@ -132,19 +134,18 @@ create_static_column_chart <- function(t, x, y, fill,
     #Text format:
     #This sets the font, size, type and color of text for the chart's title
     plot.title = ggplot2::element_text(family="Poppins",
-                                       size=12,
-                                       color="#999999"),
+                                       size=11),
 
     #This sets the font, size, type and color of text for the chart's subtitle, as well as setting a margin between the title and the subtitle
     plot.subtitle = ggplot2::element_text(family="Poppins",
-                                          size=12,
+                                          size=11,
                                           margin=ggplot2::margin(9,0,9,0)),
 
     #This leaves the caption text element empty, because it is set elsewhere in the finalise plot function
     plot.caption =  ggplot2::element_text(family="Poppins",
-                                          size=10,
+                                          size=8,
                                           face="italic",
-                                          color="#999999"))
+                                          color="#4C4C4C"))
 
   return(c)
 }
@@ -178,14 +179,15 @@ create_static_treemap_chart <- function(t, area, fill, title="", subtitle="", so
                                       label = paste(get(eval(fill)), 
                                                     paste0(p, prettyNum(round(get(eval(area))*factor,dec), big.mark = ","), s),
                                                     sep = "\n"))) +
-      treemapify::geom_treemap() +
+      treemapify::geom_treemap(colour = "white", size = 3) +
       treemapify::geom_treemap_text(colour = "white",
                                     place = "centre",
-                                    size = 28) +
+                                    size = 16,
+                                    grow = FALSE) +
       psrc_style() +
       ggplot2::theme(legend.position = "none") +
       scale_fill_discrete_psrc(color) +
-      ggplot2::labs(title=title, subtitle = subtitle, caption = source, alt = alt)
+      ggplot2::labs(title=expr(underline(!!title)), subtitle = subtitle, caption = source, alt = alt)
     
   } else {
     
@@ -196,14 +198,15 @@ create_static_treemap_chart <- function(t, area, fill, title="", subtitle="", so
                                                     paste0(p, prettyNum(round(get(eval(area))*factor,dec), big.mark = ","), s),
                                                     paste0(prettyNum(round(.data$total_share*100,0), big.mark = ","), "%"), 
                                                     sep = "\n"))) +
-      treemapify::geom_treemap() +
+      treemapify::geom_treemap(colour = "white", size = 3) +
       treemapify::geom_treemap_text(colour = "white",
                                     place = "centre",
-                                    size = 28) +
+                                    size = 16,
+                                    grow = FALSE) +
       psrc_style() +
       ggplot2::theme(legend.position = "none") +
       scale_fill_discrete_psrc(color) +
-      ggplot2::labs(title=title, subtitle = subtitle, caption = source, alt = alt)
+      ggplot2::labs(title=expr(underline(!!title)), subtitle = subtitle, caption = source, alt = alt)
     
   }
   
@@ -212,19 +215,18 @@ create_static_treemap_chart <- function(t, area, fill, title="", subtitle="", so
     #Text format:
     #This sets the font, size, type and color of text for the chart's title
     plot.title = ggplot2::element_text(family="Poppins",
-                                       size=12,
-                                       color="#999999"),
+                                       size=11),
 
     #This sets the font, size, type and color of text for the chart's subtitle, as well as setting a margin between the title and the subtitle
     plot.subtitle = ggplot2::element_text(family="Poppins",
-                                          size=12,
+                                          size=11,
                                           margin=ggplot2::margin(9,0,9,0)),
 
     #This leaves the caption text element empty, because it is set elsewhere in the finalise plot function
     plot.caption =  ggplot2::element_text(family="Poppins",
-                                          size=10,
+                                          size=8,
                                           face="italic",
-                                          color="#999999"))
+                                          color="#4C4C4C"))
   
   return(c)
 }
@@ -246,7 +248,8 @@ if(file.exists("aian_hertitage_data.csv")) {
 
 tbl <- data %>%
   filter(concept=="Tribal Groupings" & year=="2020") %>%
-  arrange(desc(estimate))
+  arrange(desc(estimate)) %>%
+  mutate(label=str_wrap(label,width=20))
   
 tbl_order <- tbl %>% select(label) %>% pull()
 tbl <- tbl %>% mutate(label = factor(x=label, levels=tbl_order))
@@ -277,23 +280,24 @@ tribal_groupings_chart <- create_static_treemap_chart(t = tbl, area="estimate", 
 rm(tbl)
 ```
 
-This month, PSRC delves into data on the region’s American Indian and Alaska Native population. People with First Nations heritage in our region are very diverse, with over 50 Tribal groups represented. About **`r toString(prettyNum(round(ps_salish,-2), big.mark = ","))`** of the region’s residents identify as Puget Sound Salish. The American Community Survey groups Tribes who have original homelands in the four-county region under the name Puget Sound Salish. The region’s second most common Tribal grouping is Tlingit-Haida, who are Alaska Native peoples. 
-\hfill\break 
+\begin{flushleft}
+This month, PSRC delves into data on the region’s American Indian and Alaska Native population. People with First Nations heritage in our region are very diverse, with over 50 Tribal groups represented. About \textbf{`r toString(prettyNum(round(ps_salish,-2), big.mark = ","))`} of the region’s residents identify as Puget Sound Salish. The American Community Survey groups Tribes who have original homelands in the four-county region under the name Puget Sound Salish. The region’s second most common Tribal grouping is Tlingit-Haida, who are Alaska Native peoples. 
+\end{flushleft}
 
-```{r tribal-groupings-chart, echo=FALSE, fig.alt="Bar chart with the numnber of people by Tribal Grouping with more than 1000 people in the Puget Sound Region", fig.height = 4, fig.width = 8}
+```{r tribal-groupings-chart, echo=FALSE, fig.alt="Bar chart with the numnber of people by Tribal Grouping with more than 1000 people in the Puget Sound Region", fig.height = 5, fig.width = 8}
 tribal_groupings_chart
 ```
-*[View the full Dataset](https://data.census.gov/cedsci/table?q=B02014&g=0500000US53033,53035,53053,53061&tid=ACSDT5Y2020.B02014&hidePreview=true)*  
-\hfill\break 
 
-\newpage
+\begin{flushleft}
+To view the full data set from the US Census, please go to: 
+\begin{scriptsize}
+\url{https://data.census.gov/cedsci/table?q=B02014&g=0500000US53033,53035,53053,53061&tid=ACSDT5Y2020.B02014&hidePreview=true}
+\end{scriptsize}
 
 PSRC celebrates the diverse, rich cultures of people with American Indian and Alaska Native heritage. We also recognize the suffering that members of these groups have experienced in the past and continue to endure due to historical policies and practices.
 
 Economic inequities persist for American Indian and Alaska Native residents. Disparities exist for home ownership, access to health care, educational opportunities and income.  
-
-
-
+\end{flushleft}
 
 ## Access To Health Insurance
 
@@ -318,8 +322,10 @@ health_insurance_chart <- create_static_column_chart(t = data %>% filter(concept
   
 ```
 
+\begin{flushleft}
 American Indian and Alaska Native residents are almost 4 times more likely to lack health insurance than White residents.
-\hfill\break 
+\end{flushleft}
+
 ```{r health-insurance-chart, echo=FALSE, fig.alt="Bar chart with the % of people without Health Insurance by year for people who identify as American Indian and Alaska Native or White"}
 health_insurance_chart
 ```
