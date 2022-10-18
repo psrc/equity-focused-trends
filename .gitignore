@@ -41,3 +41,5 @@ vignettes/*.pdf
 # Input and Outputs
 *.csv
 *.pdf
+/aian-nov22
+
