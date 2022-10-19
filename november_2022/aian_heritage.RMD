@@ -13,7 +13,7 @@ header-includes:
    \setlength{\headheight}{75pt}
    \setlength{\textheight}{600pt}
    \fancyhead[C]{}
-   \fancyhead[L]{\includegraphics{X:/DSA/shiny-uploads/images/trends-header.png}}
+   \fancyhead[L]{\includegraphics{X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png}}
    \fancyhead[R]{}
    \fancyfoot[C]{\scriptsize{1011 Western Ave, Suite 500, Seattle WA 98104} \textcolor[HTML]{F05A28}. 206.464.7532 \textcolor[HTML]{F05A28}. www.psrc.org \textcolor[HTML]{F05A28}. November 2022}
    \fancyfoot[R]{\textcolor[HTML]{F05A28}\thepage}
@@ -309,17 +309,17 @@ PSRC celebrates the diverse, rich cultures of people with American Indian and Al
 Economic inequities persist for American Indian and Alaska Native residents. Disparities exist for home ownership, access to health care, educational opportunities and income.  
 \end{flushleft}
 
-## Access to Health Insurance
+## Median Income
 
-```{r health-insurance-calculation, include=FALSE}
+```{r income-calculation, include=FALSE}
 
-health_insurance_chart <- create_static_column_chart(t = data %>% filter(concept=="Health Insurance"),
-                                                     x = "race", y = "share", fill = "year",
-                                                     title = "People Without Health Insurance",
-                                                     source = paste("Source: U.S. Census Bureau, ACS 1-Year Estimates, tables C27001H, C27001C",
-                                                                    "for King, Kitsap, Pierce and Snohomish counties.",
-                                                                    sep = "\n"),
-                                                     color = "obgnpgy_5") + 
+median_income_chart <- create_static_column_chart(t = data %>% filter(concept=="Median Income"),
+                                                  x = "race", y = "estimate", fill = "year", est = "currency", dec = -2,
+                                                  title = "Median Income",
+                                                  source = paste("Source: U.S. Census Bureau, Public Use Microdata Sample 5-Year Estimates, variable HINCP",
+                                                                 "for King, Kitsap, Pierce and Snohomish counties.",
+                                                                 sep = "\n"),
+                                                  color = "gnbopgy_5") + 
   ggplot2::theme(axis.text.y = ggplot2::element_blank(),
                  axis.text = ggplot2::element_text(family="Poppins",
                                       size=11,
@@ -332,15 +332,52 @@ health_insurance_chart <- create_static_column_chart(t = data %>% filter(concept
                  axis.line.x = ggplot2::element_line(color="#cbcbcb"),
                  axis.line.y = ggplot2::element_blank()) 
 
-ggsave("health_insurance_chart.png", health_insurance_chart, width = 8, height = 6, dpi = 86)
+ggsave("median_income_chart.png", median_income_chart, width = 8, height = 6, dpi = 86)
   
 ```
 
 \begin{flushleft}
-American Indian and Alaska Native residents are almost 4 times more likely to lack health insurance than white residents.
+American Indian and Alaska Native residents have incomes that are half of white residents.
 \end{flushleft}
 
-\pdftooltip{\includegraphics{health_insurance_chart.png}}{People without Health Insurance for people who identify as American Indian and Alaska Native or white}
+\pdftooltip{\includegraphics{median_income_chart.png}}{Median Annual Household Income for people who identify as American Indian and Alaska Native or white}
+
+\newpage
+
+## Poverty
+
+```{r poverty-calculation, include=FALSE}
+
+poverty_chart <- create_static_column_chart(t = data %>% filter(concept == "Poverty"),
+                                            x = "race", y = "share", fill = "year",
+                                            title = "People Experiencing Poverty",
+                                            source = paste("Source: U.S. Census Bureau, 2016-2020 ACS 5-Year Estimates, tables B17020H, B17020C", 
+                                                           "for King, Kitsap, Pierce and Snohomish counties.",
+                                                                          sep = "\n"),
+                                            color = "gnbopgy_5") + 
+  ggplot2::theme(axis.text.y = ggplot2::element_blank(),
+                 axis.text = ggplot2::element_text(family="Poppins",
+                                      size=11,
+                                      color="#2f3030"),
+                 panel.grid.major.x = ggplot2::element_blank(),
+                 panel.grid.major.y = ggplot2::element_blank(),
+                 panel.grid.minor.x = ggplot2::element_blank(),
+                 panel.grid.minor.y = ggplot2::element_blank(),
+                 plot.caption = element_text(hjust=0),
+                 axis.line.x = ggplot2::element_line(color="#cbcbcb"),
+                 axis.line.y = ggplot2::element_blank()) 
+
+ggsave("poverty_chart.png", poverty_chart, width = 8, height = 6, dpi = 86)
+
+```
+
+\begin{flushleft}
+The percent of American Indian and Alaska Native residents living in poverty has decreased in the past 5 years but is still three times the rate for white residents.
+\end{flushleft}
+
+\pdftooltip{\includegraphics{poverty_chart.png}}{People in poverty for people who identify as American Indian and Alaska Native or white}
+
+\newpage
 
 ## Home Ownership
 
@@ -374,6 +411,41 @@ The home ownership among American Indian and Alaska Native residents is a third 
 \end{flushleft}
 
 \pdftooltip{\includegraphics{home_ownership_chart.png}}{Share of households that own their own home for people who identify as American Indian and Alaska Native or white}
+
+\newpage
+
+## Home Value
+
+```{r home-value-calculation, include=FALSE}
+
+home_value_chart <- create_static_column_chart(t = data %>% filter(concept=="Median Home Value"),
+                                                   x = "race", y = "estimate", fill = "year", est = "currency", dec = -2,
+                                                   title = "Median Home Value",
+                                                   source = paste("Source: U.S. Census Bureau, Public Use Microdata Sample 5-Year Estimates, variable VALP",
+                                                                  "for King, Kitsap, Pierce and Snohomish counties.",
+                                                                  sep = "\n"),
+                                                   color = "pgnobgy_5") + 
+  ggplot2::theme(axis.text.y = ggplot2::element_blank(),
+                 axis.text = ggplot2::element_text(family="Poppins",
+                                      size=11,
+                                      color="#2f3030"),
+                 panel.grid.major.x = ggplot2::element_blank(),
+                 panel.grid.major.y = ggplot2::element_blank(),
+                 panel.grid.minor.x = ggplot2::element_blank(),
+                 panel.grid.minor.y = ggplot2::element_blank(),
+                 plot.caption = element_text(hjust=0),
+                 axis.line.x = ggplot2::element_line(color="#cbcbcb"),
+                 axis.line.y = ggplot2::element_blank())  
+
+ggsave("home_value_chart.png", home_value_chart, width = 8, height = 6, dpi = 86)
+
+```
+
+\begin{flushleft}
+The value in homes owned by American Indian and Alaska Native residents is a third lower than the rate for white residents.
+\end{flushleft}
+
+\pdftooltip{\includegraphics{home_value_chart.png}}{Median Home Value for people who identify as American Indian and Alaska Native or white and own their own homes}
 
 \newpage
 
@@ -411,18 +483,17 @@ The percent of American Indian and Alaska Native residents with a least a Bachel
 \pdftooltip{\includegraphics{educational_attainment_chart.png}}{People with at least a Bachelors Degree for people who identify as American Indian and Alaska Native or white}
 
 \newpage 
+## Access to Health Insurance
 
-## Poverty
+```{r health-insurance-calculation, include=FALSE}
 
-```{r poverty-calculation, include=FALSE}
-
-poverty_chart <- create_static_column_chart(t = data %>% filter(concept == "Poverty"),
-                                            x = "race", y = "share", fill = "year",
-                                            title = "People Experiencing Poverty",
-                                            source = paste("Source: U.S. Census Bureau, ACS 1-Year Estimates, tables B17020H, B17020C", 
-                                                           "for King, Kitsap, Pierce and Snohomish counties.",
-                                                                          sep = "\n"),
-                                            color = "gnbopgy_5") + 
+health_insurance_chart <- create_static_column_chart(t = data %>% filter(concept=="Health Insurance"),
+                                                     x = "race", y = "share", fill = "year",
+                                                     title = "People Without Health Insurance",
+                                                     source = paste("Source: U.S. Census Bureau, ACS 1-Year Estimates, tables C27001H, C27001C",
+                                                                    "for King, Kitsap, Pierce and Snohomish counties.",
+                                                                    sep = "\n"),
+                                                     color = "obgnpgy_5") + 
   ggplot2::theme(axis.text.y = ggplot2::element_blank(),
                  axis.text = ggplot2::element_text(family="Poppins",
                                       size=11,
@@ -435,15 +506,53 @@ poverty_chart <- create_static_column_chart(t = data %>% filter(concept == "Pove
                  axis.line.x = ggplot2::element_line(color="#cbcbcb"),
                  axis.line.y = ggplot2::element_blank()) 
 
-ggsave("poverty_chart.png", poverty_chart, width = 8, height = 6, dpi = 86)
-
+ggsave("health_insurance_chart.png", health_insurance_chart, width = 8, height = 6, dpi = 86)
+  
 ```
 
 \begin{flushleft}
-The percent of American Indian and Alaska Native residents living in poverty has decreased in the past 5 years but is still three times the rate for white residents.
+American Indian and Alaska Native residents are almost 4 times more likely to lack health insurance than white residents.
 \end{flushleft}
 
-\pdftooltip{\includegraphics{poverty_chart.png}}{People in poverty for people who identify as American Indian and Alaska Native or white}
+\pdftooltip{\includegraphics{health_insurance_chart.png}}{People without Health Insurance for people who identify as American Indian and Alaska Native or white}
+
+\newpage
+
+## Life Expectancy
+
+```{r life-expectancy-calculation, include=FALSE}
+
+life_expectancy_chart <- create_static_column_chart(t = data %>% filter(concept=="Life Expectancy" & year %in% c("2015", "2020")),
+                                                     x = "race", y = "estimate", fill = "year", est = "number", dec=1,
+                                                     title = "Life Expectancy",
+                                                     source = paste("Source: Washington State Department of Health, Center for Health Statistics,",
+                                                                    "Death Certificate Data 2020, Community Health Assessment Tool (Chat), December 2021",
+                                                                    sep = "\n"),
+                                                     color = "obgnpgy_5") + 
+  ggplot2::theme(axis.text.y = ggplot2::element_blank(),
+                 axis.text = ggplot2::element_text(family="Poppins",
+                                      size=11,
+                                      color="#2f3030"),
+                 panel.grid.major.x = ggplot2::element_blank(),
+                 panel.grid.major.y = ggplot2::element_blank(),
+                 panel.grid.minor.x = ggplot2::element_blank(),
+                 panel.grid.minor.y = ggplot2::element_blank(),
+                 plot.caption = element_text(hjust=0),
+                 axis.line.x = ggplot2::element_line(color="#cbcbcb"),
+                 axis.line.y = ggplot2::element_blank()) 
+
+ggsave("life_expectancy_chart.png",life_expectancy_chart, width = 8, height = 6, dpi = 86)
+  
+```
+
+\begin{flushleft}
+The average life expectancy for American Indian and Alaska Native residents are almost 10 years less than white residents.
+\end{flushleft}
+
+\pdftooltip{\includegraphics{life_expectancy_chart.png}}{Life expectancy for people who identify as American Indian and Alaska Native or white}
+
+
+
 
 \newpage 
 

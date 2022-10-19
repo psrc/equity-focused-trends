@@ -45,23 +45,48 @@ hh.vars <- c("HINCP","VALP","HRACE")
 ######################################################################################################################
 # PUMS Data
 ######################################################################################################################
-median_income = NULL
+pums_data = NULL
 acs_type <- 5
 census_yrs <- census_5yr
 
 for (yrs in census_yrs) {
+  
   pums_hh <- get_psrc_pums(span=5, dyear=yrs, level="h", vars=hh.vars)
-  t1 <- psrc_pums_median(so=pums_hh, stat_var="HINCP", group_vars = "HRACE")
-  t2 <- psrc_pums_median(so=pums_hh, stat_var="HINCP", group_vars = "HRACE")
   
+  # Median Income
+  t1 <- psrc_pums_median(so=pums_hh, stat_var="HINCP", group_vars = "HRACE") %>%
+    rename(name=COUNTY, year=DATA_YEAR, race=HRACE, estimate=HINCP_median, moe=HINCP_median_moe) %>%
+    mutate(table="PUMS", variable="HINCP", label="Median Income", concept="Median Income", acs_type="acs5")
   
+  tot <- t1 %>% filter(race=="Total") %>% select(estimate) %>% pull()
+  
+  t1 <- t1 %>% 
+    mutate(total=tot, share=estimate/tot) %>%
+    filter(race %in% c("American Indian or Alaskan Native Alone", "White alone")) %>%
+    mutate(race = str_replace_all(race, "American Indian or Alaskan Native Alone", "American Indian and Alaska Native")) %>%
+    mutate(race = str_replace_all(race, "White alone", "White"))
+  
+  # Median Home Value
+  t2 <- psrc_pums_median(so=pums_hh, stat_var="VALP", group_vars = "HRACE") %>%
+    rename(name=COUNTY, year=DATA_YEAR, race=HRACE, estimate=VALP_median, moe=VALP_median_moe) %>%
+    mutate(table="PUMS", variable="VALP", label="Median Home Value", concept="Median Home Value", acs_type="acs5")
+  
+  tot <- t2 %>% filter(race=="Total") %>% select(estimate) %>% pull()
+  
+  t2 <- t2 %>% 
+    mutate(total=tot, share=estimate/tot) %>%
+    filter(race %in% c("American Indian or Alaskan Native Alone", "White alone")) %>%
+    mutate(race = str_replace_all(race, "American Indian or Alaskan Native Alone", "American Indian and Alaska Native")) %>%
+    mutate(race = str_replace_all(race, "White alone", "White"))
+  
+  ifelse(is.null(pums_data), pums_data <- bind_rows(list(t1,t2)), pums_data <- bind_rows(list(pums_data, t1, t2)))
+  
+  rm(t1, t2, tot)
   
 }
 
-
-
 ######################################################################################################################
-# Census Data Downloads stored into lists
+# ACS Data
 ######################################################################################################################
 census_data = NULL
 
@@ -152,5 +177,28 @@ totals <- tribal_groupings %>% select(year,estimate) %>% group_by(year) %>% summ
 tribal_groupings <- left_join(tribal_groupings, totals, by=c("year")) %>% mutate(share=estimate/total)
 rm(totals) 
 
-aian <- bind_rows(list(education,health_insurance, ownership, poverty, tribal_groupings))
+######################################################################################################################
+# Health Outcomes
+######################################################################################################################
+life_expectancy <- read.csv("X:/DSA/shiny-uploads/data/life_expectancy_by_race.csv") %>%
+  filter(Race %in% c("All","American Indian/Alaskan Native Only-NH","White Only-NH")) %>%
+  mutate(moe = `Upper.CI` - Rate) %>%
+  rename(name=Geography, year=Year, race=Race, estimate=Rate) %>%
+  select(name, year, race, estimate, moe) %>%
+  mutate(table="Life Expectancy", variable="LERate", label="Life Expectancy", concept="Life Expectancy", acs_type="DOH-1yr") %>%
+  mutate(race = str_replace_all(race, "American Indian/Alaskan Native Only-NH", "American Indian and Alaska Native")) %>%
+  mutate(race = str_replace_all(race, "White Only-NH", "White")) %>%
+  mutate(name = str_replace_all(name, "State Total", "Washington")) %>%
+  filter(year >=2004) %>%
+  distinct()
+  
+tot <- life_expectancy %>% filter(race=="All") %>% select(year, estimate) %>% rename(total=estimate)
+
+life_expectancy <- left_join(life_expectancy, tot, by=c("year")) %>% mutate(share=estimate/total) %>% filter(race!="All")
+rm(tot)
+
+######################################################################################################################
+# Final Data to Output
+######################################################################################################################
+aian <- bind_rows(list(education,health_insurance, ownership, poverty, tribal_groupings, pums_data, life_expectancy))
 write.csv(aian, paste0("aian_hertitage_data.csv"))

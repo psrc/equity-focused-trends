@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.15.0 (TeX Live 2022)  (format=lualatex 2022.10.11)  19 OCT 2022 08:09
+This is LuaHBTeX, Version 1.15.0 (TeX Live 2022)  (format=lualatex 2022.10.11)  19 OCT 2022 15:21
  restricted system commands enabled.
 **aian_heritage.tex
 (./aian_heritage.tex
@@ -919,14 +919,14 @@ LaTeX Font Info:    Font shape `TU/Poppins(0)/m/n' will be
 (Font)              scaled to size 17.28pt on input line 79.
 LaTeX Font Info:    Font shape `TU/Poppins(0)/b/n' will be
 (Font)              scaled to size 17.28pt on input line 79.
-<trend_image_header.png, id=24, 216.81pt x 48.18pt>
+<trend_image_header.png, id=36, 216.81pt x 48.18pt>
 File: trend_image_header.png Graphic file (type png)
 <use trend_image_header.png>
 Package luatex.def Info: trend_image_header.png  used on input line 81.
 (luatex.def)             Requested size: 469.81448pt x 104.40315pt.
 LaTeX Font Info:    Font shape `TU/Poppins(0)/b/n' will be
 (Font)              scaled to size 12.0pt on input line 84.
-<tribal_groupings_chart.png, id=25, 578.16pt x 361.35pt>
+<tribal_groupings_chart.png, id=37, 578.16pt x 361.35pt>
 File: tribal_groupings_chart.png Graphic file (type png)
 <use tribal_groupings_chart.png>
 Package luatex.def Info: tribal_groupings_chart.png  used on input line 87.
@@ -943,17 +943,17 @@ File: tribal_groupings_chart.png Graphic file (type png)
 <use tribal_groupings_chart.png>
 Package luatex.def Info: tribal_groupings_chart.png  used on input line 87.
 (luatex.def)             Requested size: 469.75385pt x 293.59616pt.
-<X:/DSA/shiny-uploads/images/trends-header.png, id=28, 677.62839pt x 135.21484pt>
-File: X:/DSA/shiny-uploads/images/trends-header.png Graphic file (type png)
-<use X:/DSA/shiny-uploads/images/trends-header.png>
-Package luatex.def Info: X:/DSA/shiny-uploads/images/trends-header.png  used on input line 93.
-(luatex.def)             Requested size: 469.75613pt x 93.73573pt.
+<X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png, id=40, 503.9628pt x 89.3739pt>
+File: X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png Graphic file (type png)
+<use X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png>
+Package luatex.def Info: X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png  used on input line 93.
+(luatex.def)             Requested size: 469.7725pt x 83.3105pt.
 
 Package fancyhdr Warning: \headheight is too small (75.0pt): 
-(fancyhdr)                Make it at least 98.08577pt, for example:
-(fancyhdr)                \setlength{\headheight}{98.08577pt}.
+(fancyhdr)                Make it at least 87.66054pt, for example:
+(fancyhdr)                \setlength{\headheight}{87.66054pt}.
 (fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-23.08577pt}.
+(fancyhdr)                \addtolength{\topmargin}{-12.66054pt}.
 
 LaTeX Font Info:    Font shape `TU/Poppins(0)/m/n' will be
 (Font)              scaled to size 8.0pt on input line 93.
@@ -961,145 +961,232 @@ LaTeX Font Info:    Font shape `TU/Poppins(0)/m/n' will be
 
 
 \openout3 = aian_heritage.upa
-{c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}<x:/DSA/shiny-uploads/images/trends-header.png><./trend_image_header.png><./tribal_groupings_chart.png>]
+{c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}<x:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png><./trend_image_header.png><./tribal_groupings_chart.png>]
 LaTeX Font Info:    Font shape `TU/Poppins(0)/m/n' will be
-(Font)              scaled to size 14.4pt on input line 99.
+(Font)              scaled to size 14.4pt on input line 98.
 LaTeX Font Info:    Font shape `TU/Poppins(0)/b/n' will be
-(Font)              scaled to size 14.4pt on input line 99.
-<health_insurance_chart.png, id=39, 578.16pt x 433.62pt>
-File: health_insurance_chart.png Graphic file (type png)
-<use health_insurance_chart.png>
-Package luatex.def Info: health_insurance_chart.png  used on input line 105.
+(Font)              scaled to size 14.4pt on input line 98.
+<median_income_chart.png, id=51, 578.16pt x 433.62pt>
+File: median_income_chart.png Graphic file (type png)
+<use median_income_chart.png>
+Package luatex.def Info: median_income_chart.png  used on input line 104.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: health_insurance_chart.png Graphic file (type png)
-<use health_insurance_chart.png>
-Package luatex.def Info: health_insurance_chart.png  used on input line 105.
+File: median_income_chart.png Graphic file (type png)
+<use median_income_chart.png>
+Package luatex.def Info: median_income_chart.png  used on input line 104.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: health_insurance_chart.png Graphic file (type png)
-<use health_insurance_chart.png>
-Package luatex.def Info: health_insurance_chart.png  used on input line 105.
+File: median_income_chart.png Graphic file (type png)
+<use median_income_chart.png>
+Package luatex.def Info: median_income_chart.png  used on input line 104.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: health_insurance_chart.png Graphic file (type png)
-<use health_insurance_chart.png>
-Package luatex.def Info: health_insurance_chart.png  used on input line 105.
+File: median_income_chart.png Graphic file (type png)
+<use median_income_chart.png>
+Package luatex.def Info: median_income_chart.png  used on input line 104.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: X:/DSA/shiny-uploads/images/trends-header.png Graphic file (type png)
-<use X:/DSA/shiny-uploads/images/trends-header.png>
-Package luatex.def Info: X:/DSA/shiny-uploads/images/trends-header.png  used on input line 112.
-(luatex.def)             Requested size: 469.75613pt x 93.73573pt.
+File: X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png Graphic file (type png)
+<use X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png>
+Package luatex.def Info: X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png  used on input line 106.
+(luatex.def)             Requested size: 469.7725pt x 83.3105pt.
 
 Package fancyhdr Warning: \headheight is too small (75.0pt): 
-(fancyhdr)                Make it at least 98.08577pt, for example:
-(fancyhdr)                \setlength{\headheight}{98.08577pt}.
+(fancyhdr)                Make it at least 87.66054pt, for example:
+(fancyhdr)                \setlength{\headheight}{87.66054pt}.
 (fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-23.08577pt}.
+(fancyhdr)                \addtolength{\topmargin}{-12.66054pt}.
 
-[2<./health_insurance_chart.png>]
-<home_ownership_chart.png, id=48, 578.16pt x 433.62pt>
-File: home_ownership_chart.png Graphic file (type png)
-<use home_ownership_chart.png>
-Package luatex.def Info: home_ownership_chart.png  used on input line 114.
-(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: home_ownership_chart.png Graphic file (type png)
-<use home_ownership_chart.png>
-Package luatex.def Info: home_ownership_chart.png  used on input line 114.
-(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: home_ownership_chart.png Graphic file (type png)
-<use home_ownership_chart.png>
-Package luatex.def Info: home_ownership_chart.png  used on input line 114.
-(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: home_ownership_chart.png Graphic file (type png)
-<use home_ownership_chart.png>
-Package luatex.def Info: home_ownership_chart.png  used on input line 114.
-(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: X:/DSA/shiny-uploads/images/trends-header.png Graphic file (type png)
-<use X:/DSA/shiny-uploads/images/trends-header.png>
-Package luatex.def Info: X:/DSA/shiny-uploads/images/trends-header.png  used on input line 116.
-(luatex.def)             Requested size: 469.75613pt x 93.73573pt.
-
-Package fancyhdr Warning: \headheight is too small (75.0pt): 
-(fancyhdr)                Make it at least 98.08577pt, for example:
-(fancyhdr)                \setlength{\headheight}{98.08577pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-23.08577pt}.
-
-[3<./home_ownership_chart.png>]
-<educational_attainment_chart.png, id=55, 578.16pt x 433.62pt>
-File: educational_attainment_chart.png Graphic file (type png)
-<use educational_attainment_chart.png>
-Package luatex.def Info: educational_attainment_chart.png  used on input line 125.
-(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: educational_attainment_chart.png Graphic file (type png)
-<use educational_attainment_chart.png>
-Package luatex.def Info: educational_attainment_chart.png  used on input line 125.
-(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: educational_attainment_chart.png Graphic file (type png)
-<use educational_attainment_chart.png>
-Package luatex.def Info: educational_attainment_chart.png  used on input line 125.
-(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: educational_attainment_chart.png Graphic file (type png)
-<use educational_attainment_chart.png>
-Package luatex.def Info: educational_attainment_chart.png  used on input line 125.
-(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: X:/DSA/shiny-uploads/images/trends-header.png Graphic file (type png)
-<use X:/DSA/shiny-uploads/images/trends-header.png>
-Package luatex.def Info: X:/DSA/shiny-uploads/images/trends-header.png  used on input line 127.
-(luatex.def)             Requested size: 469.75613pt x 93.73573pt.
-
-Package fancyhdr Warning: \headheight is too small (75.0pt): 
-(fancyhdr)                Make it at least 98.08577pt, for example:
-(fancyhdr)                \setlength{\headheight}{98.08577pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-23.08577pt}.
-
-[4<./educational_attainment_chart.png>]
-<poverty_chart.png, id=63, 578.16pt x 433.62pt>
+[2<./median_income_chart.png>]
+<poverty_chart.png, id=59, 578.16pt x 433.62pt>
 File: poverty_chart.png Graphic file (type png)
 <use poverty_chart.png>
-Package luatex.def Info: poverty_chart.png  used on input line 136.
+Package luatex.def Info: poverty_chart.png  used on input line 115.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
 File: poverty_chart.png Graphic file (type png)
 <use poverty_chart.png>
-Package luatex.def Info: poverty_chart.png  used on input line 136.
+Package luatex.def Info: poverty_chart.png  used on input line 115.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
 File: poverty_chart.png Graphic file (type png)
 <use poverty_chart.png>
-Package luatex.def Info: poverty_chart.png  used on input line 136.
+Package luatex.def Info: poverty_chart.png  used on input line 115.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
 File: poverty_chart.png Graphic file (type png)
 <use poverty_chart.png>
-Package luatex.def Info: poverty_chart.png  used on input line 136.
+Package luatex.def Info: poverty_chart.png  used on input line 115.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: X:/DSA/shiny-uploads/images/trends-header.png Graphic file (type png)
-<use X:/DSA/shiny-uploads/images/trends-header.png>
-Package luatex.def Info: X:/DSA/shiny-uploads/images/trends-header.png  used on input line 138.
-(luatex.def)             Requested size: 469.75613pt x 93.73573pt.
+File: X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png Graphic file (type png)
+<use X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png>
+Package luatex.def Info: X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png  used on input line 117.
+(luatex.def)             Requested size: 469.7725pt x 83.3105pt.
 
 Package fancyhdr Warning: \headheight is too small (75.0pt): 
-(fancyhdr)                Make it at least 98.08577pt, for example:
-(fancyhdr)                \setlength{\headheight}{98.08577pt}.
+(fancyhdr)                Make it at least 87.66054pt, for example:
+(fancyhdr)                \setlength{\headheight}{87.66054pt}.
 (fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-23.08577pt}.
+(fancyhdr)                \addtolength{\topmargin}{-12.66054pt}.
 
-[5<./poverty_chart.png>] (./aian_heritage.aux)
+[3<./poverty_chart.png>]
+<home_ownership_chart.png, id=67, 578.16pt x 433.62pt>
+File: home_ownership_chart.png Graphic file (type png)
+<use home_ownership_chart.png>
+Package luatex.def Info: home_ownership_chart.png  used on input line 126.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: home_ownership_chart.png Graphic file (type png)
+<use home_ownership_chart.png>
+Package luatex.def Info: home_ownership_chart.png  used on input line 126.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: home_ownership_chart.png Graphic file (type png)
+<use home_ownership_chart.png>
+Package luatex.def Info: home_ownership_chart.png  used on input line 126.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: home_ownership_chart.png Graphic file (type png)
+<use home_ownership_chart.png>
+Package luatex.def Info: home_ownership_chart.png  used on input line 126.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png Graphic file (type png)
+<use X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png>
+Package luatex.def Info: X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png  used on input line 128.
+(luatex.def)             Requested size: 469.7725pt x 83.3105pt.
+
+Package fancyhdr Warning: \headheight is too small (75.0pt): 
+(fancyhdr)                Make it at least 87.66054pt, for example:
+(fancyhdr)                \setlength{\headheight}{87.66054pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-12.66054pt}.
+
+[4<./home_ownership_chart.png>]
+<home_value_chart.png, id=75, 578.16pt x 433.62pt>
+File: home_value_chart.png Graphic file (type png)
+<use home_value_chart.png>
+Package luatex.def Info: home_value_chart.png  used on input line 137.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: home_value_chart.png Graphic file (type png)
+<use home_value_chart.png>
+Package luatex.def Info: home_value_chart.png  used on input line 137.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: home_value_chart.png Graphic file (type png)
+<use home_value_chart.png>
+Package luatex.def Info: home_value_chart.png  used on input line 137.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: home_value_chart.png Graphic file (type png)
+<use home_value_chart.png>
+Package luatex.def Info: home_value_chart.png  used on input line 137.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png Graphic file (type png)
+<use X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png>
+Package luatex.def Info: X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png  used on input line 139.
+(luatex.def)             Requested size: 469.7725pt x 83.3105pt.
+
+Package fancyhdr Warning: \headheight is too small (75.0pt): 
+(fancyhdr)                Make it at least 87.66054pt, for example:
+(fancyhdr)                \setlength{\headheight}{87.66054pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-12.66054pt}.
+
+[5<./home_value_chart.png>]
+<educational_attainment_chart.png, id=83, 578.16pt x 433.62pt>
+File: educational_attainment_chart.png Graphic file (type png)
+<use educational_attainment_chart.png>
+Package luatex.def Info: educational_attainment_chart.png  used on input line 148.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: educational_attainment_chart.png Graphic file (type png)
+<use educational_attainment_chart.png>
+Package luatex.def Info: educational_attainment_chart.png  used on input line 148.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: educational_attainment_chart.png Graphic file (type png)
+<use educational_attainment_chart.png>
+Package luatex.def Info: educational_attainment_chart.png  used on input line 148.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: educational_attainment_chart.png Graphic file (type png)
+<use educational_attainment_chart.png>
+Package luatex.def Info: educational_attainment_chart.png  used on input line 148.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png Graphic file (type png)
+<use X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png>
+Package luatex.def Info: X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png  used on input line 150.
+(luatex.def)             Requested size: 469.7725pt x 83.3105pt.
+
+Package fancyhdr Warning: \headheight is too small (75.0pt): 
+(fancyhdr)                Make it at least 87.66054pt, for example:
+(fancyhdr)                \setlength{\headheight}{87.66054pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-12.66054pt}.
+
+[6<./educational_attainment_chart.png>]
+<health_insurance_chart.png, id=91, 578.16pt x 433.62pt>
+File: health_insurance_chart.png Graphic file (type png)
+<use health_insurance_chart.png>
+Package luatex.def Info: health_insurance_chart.png  used on input line 160.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: health_insurance_chart.png Graphic file (type png)
+<use health_insurance_chart.png>
+Package luatex.def Info: health_insurance_chart.png  used on input line 160.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: health_insurance_chart.png Graphic file (type png)
+<use health_insurance_chart.png>
+Package luatex.def Info: health_insurance_chart.png  used on input line 160.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: health_insurance_chart.png Graphic file (type png)
+<use health_insurance_chart.png>
+Package luatex.def Info: health_insurance_chart.png  used on input line 160.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png Graphic file (type png)
+<use X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png>
+Package luatex.def Info: X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png  used on input line 162.
+(luatex.def)             Requested size: 469.7725pt x 83.3105pt.
+
+Package fancyhdr Warning: \headheight is too small (75.0pt): 
+(fancyhdr)                Make it at least 87.66054pt, for example:
+(fancyhdr)                \setlength{\headheight}{87.66054pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-12.66054pt}.
+
+[7<./health_insurance_chart.png>]
+<life_expectancy_chart.png, id=99, 578.16pt x 433.62pt>
+File: life_expectancy_chart.png Graphic file (type png)
+<use life_expectancy_chart.png>
+Package luatex.def Info: life_expectancy_chart.png  used on input line 171.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: life_expectancy_chart.png Graphic file (type png)
+<use life_expectancy_chart.png>
+Package luatex.def Info: life_expectancy_chart.png  used on input line 171.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: life_expectancy_chart.png Graphic file (type png)
+<use life_expectancy_chart.png>
+Package luatex.def Info: life_expectancy_chart.png  used on input line 171.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: life_expectancy_chart.png Graphic file (type png)
+<use life_expectancy_chart.png>
+Package luatex.def Info: life_expectancy_chart.png  used on input line 171.
+(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+File: X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png Graphic file (type png)
+<use X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png>
+Package luatex.def Info: X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png  used on input line 173.
+(luatex.def)             Requested size: 469.7725pt x 83.3105pt.
+
+Package fancyhdr Warning: \headheight is too small (75.0pt): 
+(fancyhdr)                Make it at least 87.66054pt, for example:
+(fancyhdr)                \setlength{\headheight}{87.66054pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-12.66054pt}.
+
+[8<./life_expectancy_chart.png>] (./aian_heritage.aux)
 Package rerunfilecheck Info: File `aian_heritage.out' has not changed.
-(rerunfilecheck)             Checksum: 84136107158506E3A6DC616A06EA0A8A;842.
+(rerunfilecheck)             Checksum: 7B1D23E3D6F10BDE6327C581993E775E;1203.
 )
 
 Here is how much of LuaTeX's memory you used:
- 22758 strings out of 477352
+ 22857 strings out of 477352
  125189,1144653 words of node,token memory allocated
  563 words of node memory still in use:
    7 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 2 glyph, 8 attribute, 61 glue_spec, 8 attribute_list, 2 write, 1 close, 1 user_defined nodes
-   avail lists: 1:1,2:295,3:128,4:68,5:69,6:35,7:2751,8:19,9:287,10:17,11:172
- 43052 multiletter control sequences out of 65536+600000
- 63 fonts using 10494967 bytes
- 86i,15n,122p,1465b,472s stack positions out of 10000i,1000n,20000p,200000b,200000s
+   avail lists: 1:1,2:276,3:128,4:68,5:69,6:35,7:2751,8:19,9:287,10:17,11:172
+ 43076 multiletter control sequences out of 65536+600000
+ 63 fonts using 10494887 bytes
+ 86i,15n,122p,1483b,472s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Windows/Fonts/Poppins-Regular.ttf><c:/Windows/Fonts/Poppins-Bold.ttf>
-Output written on aian_heritage.pdf (5 pages, 590322 bytes).
+Output written on aian_heritage.pdf (8 pages, 653200 bytes).
 
-PDF statistics: 88 PDF objects out of 1000 (max. 8388607)
- 66 compressed objects within 1 object stream
- 16 named destinations out of 1000 (max. 131072)
- 41 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 124 PDF objects out of 1000 (max. 8388607)
+ 96 compressed objects within 1 object stream
+ 25 named destinations out of 1000 (max. 131072)
+ 65 words of extra memory for PDF output out of 10000 (max. 100000000)
 
