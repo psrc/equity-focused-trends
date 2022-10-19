@@ -42,4 +42,7 @@ vignettes/*.pdf
 *.csv
 *.pdf
 /aian-nov22
+*.png
+*.up*
+*.log
 

@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.15.0 (TeX Live 2022)  (format=lualatex 2022.10.11)  18 OCT 2022 08:58
+This is LuaHBTeX, Version 1.15.0 (TeX Live 2022)  (format=lualatex 2022.10.11)  19 OCT 2022 08:09
  restricted system commands enabled.
 **aian_heritage.tex
 (./aian_heritage.tex
@@ -943,10 +943,10 @@ File: tribal_groupings_chart.png Graphic file (type png)
 <use tribal_groupings_chart.png>
 Package luatex.def Info: tribal_groupings_chart.png  used on input line 87.
 (luatex.def)             Requested size: 469.75385pt x 293.59616pt.
-<trends-header.png, id=28, 677.62839pt x 135.21484pt>
-File: trends-header.png Graphic file (type png)
-<use trends-header.png>
-Package luatex.def Info: trends-header.png  used on input line 93.
+<X:/DSA/shiny-uploads/images/trends-header.png, id=28, 677.62839pt x 135.21484pt>
+File: X:/DSA/shiny-uploads/images/trends-header.png Graphic file (type png)
+<use X:/DSA/shiny-uploads/images/trends-header.png>
+Package luatex.def Info: X:/DSA/shiny-uploads/images/trends-header.png  used on input line 93.
 (luatex.def)             Requested size: 469.75613pt x 93.73573pt.
 
 Package fancyhdr Warning: \headheight is too small (75.0pt): 
@@ -961,7 +961,7 @@ LaTeX Font Info:    Font shape `TU/Poppins(0)/m/n' will be
 
 
 \openout3 = aian_heritage.upa
-{c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}<./trends-header.png><./trend_image_header.png><./tribal_groupings_chart.png>]
+{c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}<x:/DSA/shiny-uploads/images/trends-header.png><./trend_image_header.png><./tribal_groupings_chart.png>]
 LaTeX Font Info:    Font shape `TU/Poppins(0)/m/n' will be
 (Font)              scaled to size 14.4pt on input line 99.
 LaTeX Font Info:    Font shape `TU/Poppins(0)/b/n' will be
@@ -983,9 +983,9 @@ File: health_insurance_chart.png Graphic file (type png)
 <use health_insurance_chart.png>
 Package luatex.def Info: health_insurance_chart.png  used on input line 105.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: trends-header.png Graphic file (type png)
-<use trends-header.png>
-Package luatex.def Info: trends-header.png  used on input line 112.
+File: X:/DSA/shiny-uploads/images/trends-header.png Graphic file (type png)
+<use X:/DSA/shiny-uploads/images/trends-header.png>
+Package luatex.def Info: X:/DSA/shiny-uploads/images/trends-header.png  used on input line 112.
 (luatex.def)             Requested size: 469.75613pt x 93.73573pt.
 
 Package fancyhdr Warning: \headheight is too small (75.0pt): 
@@ -1012,9 +1012,9 @@ File: home_ownership_chart.png Graphic file (type png)
 <use home_ownership_chart.png>
 Package luatex.def Info: home_ownership_chart.png  used on input line 114.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: trends-header.png Graphic file (type png)
-<use trends-header.png>
-Package luatex.def Info: trends-header.png  used on input line 116.
+File: X:/DSA/shiny-uploads/images/trends-header.png Graphic file (type png)
+<use X:/DSA/shiny-uploads/images/trends-header.png>
+Package luatex.def Info: X:/DSA/shiny-uploads/images/trends-header.png  used on input line 116.
 (luatex.def)             Requested size: 469.75613pt x 93.73573pt.
 
 Package fancyhdr Warning: \headheight is too small (75.0pt): 
@@ -1041,9 +1041,9 @@ File: educational_attainment_chart.png Graphic file (type png)
 <use educational_attainment_chart.png>
 Package luatex.def Info: educational_attainment_chart.png  used on input line 125.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: trends-header.png Graphic file (type png)
-<use trends-header.png>
-Package luatex.def Info: trends-header.png  used on input line 127.
+File: X:/DSA/shiny-uploads/images/trends-header.png Graphic file (type png)
+<use X:/DSA/shiny-uploads/images/trends-header.png>
+Package luatex.def Info: X:/DSA/shiny-uploads/images/trends-header.png  used on input line 127.
 (luatex.def)             Requested size: 469.75613pt x 93.73573pt.
 
 Package fancyhdr Warning: \headheight is too small (75.0pt): 
@@ -1070,9 +1070,9 @@ File: poverty_chart.png Graphic file (type png)
 <use poverty_chart.png>
 Package luatex.def Info: poverty_chart.png  used on input line 136.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: trends-header.png Graphic file (type png)
-<use trends-header.png>
-Package luatex.def Info: trends-header.png  used on input line 138.
+File: X:/DSA/shiny-uploads/images/trends-header.png Graphic file (type png)
+<use X:/DSA/shiny-uploads/images/trends-header.png>
+Package luatex.def Info: X:/DSA/shiny-uploads/images/trends-header.png  used on input line 138.
 (luatex.def)             Requested size: 469.75613pt x 93.73573pt.
 
 Package fancyhdr Warning: \headheight is too small (75.0pt): 
@@ -1087,14 +1087,14 @@ Package rerunfilecheck Info: File `aian_heritage.out' has not changed.
 )
 
 Here is how much of LuaTeX's memory you used:
- 22748 strings out of 477352
+ 22758 strings out of 477352
  125189,1144653 words of node,token memory allocated
  563 words of node memory still in use:
    7 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 2 glyph, 8 attribute, 61 glue_spec, 8 attribute_list, 2 write, 1 close, 1 user_defined nodes
    avail lists: 1:1,2:295,3:128,4:68,5:69,6:35,7:2751,8:19,9:287,10:17,11:172
  43052 multiletter control sequences out of 65536+600000
- 63 fonts using 10494887 bytes
- 86i,15n,122p,1437b,470s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 63 fonts using 10494967 bytes
+ 86i,15n,122p,1465b,472s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Windows/Fonts/Poppins-Regular.ttf><c:/Windows/Fonts/Poppins-Bold.ttf>
 Output written on aian_heritage.pdf (5 pages, 590322 bytes).
 

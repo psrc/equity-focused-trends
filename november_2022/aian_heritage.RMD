@@ -13,7 +13,7 @@ header-includes:
    \setlength{\headheight}{75pt}
    \setlength{\textheight}{600pt}
    \fancyhead[C]{}
-   \fancyhead[L]{\includegraphics{trends-header.png}}
+   \fancyhead[L]{\includegraphics{X:/DSA/shiny-uploads/images/trends-header.png}}
    \fancyhead[R]{}
    \fancyfoot[C]{\scriptsize{1011 Western Ave, Suite 500, Seattle WA 98104} \textcolor[HTML]{F05A28}. 206.464.7532 \textcolor[HTML]{F05A28}. www.psrc.org \textcolor[HTML]{F05A28}. November 2022}
    \fancyfoot[R]{\textcolor[HTML]{F05A28}\thepage}

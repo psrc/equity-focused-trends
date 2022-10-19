@@ -40,6 +40,25 @@ poverty_variables <- c("B17020C_001","B17020C_002","B17020H_001","B17020H_002")
 ownership_variables <- c("B25003C_001","B25003C_002","B25003H_001","B25003H_002")
 education_variables <- c("C15002C_001", "C15002C_006", "C15002C_011", "C15002H_001", "C15002H_006", "C15002H_011")
 health_insurance_variables <- c("C27001C_001", "C27001C_004", "C27001C_007", "C27001C_010", "C27001H_001", "C27001H_004", "C27001H_007", "C27001H_010")
+hh.vars <- c("HINCP","VALP","HRACE")
+
+######################################################################################################################
+# PUMS Data
+######################################################################################################################
+median_income = NULL
+acs_type <- 5
+census_yrs <- census_5yr
+
+for (yrs in census_yrs) {
+  pums_hh <- get_psrc_pums(span=5, dyear=yrs, level="h", vars=hh.vars)
+  t1 <- psrc_pums_median(so=pums_hh, stat_var="HINCP", group_vars = "HRACE")
+  t2 <- psrc_pums_median(so=pums_hh, stat_var="HINCP", group_vars = "HRACE")
+  
+  
+  
+}
+
+
 
 ######################################################################################################################
 # Census Data Downloads stored into lists
