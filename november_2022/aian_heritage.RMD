@@ -301,21 +301,37 @@ This month, PSRC delves into data on the region’s American Indian and Alaska N
 
 \pdftooltip{\includegraphics{tribal_groupings_chart.png}}{Number of people by Tribal Grouping with more than 1000 people in the Puget Sound Region}
 
-\begin{flushleft}
 \href{https://data.census.gov/cedsci/table?q=B02014&g=0500000US53033,53035,53053,53061&tid=ACSDT5Y2020.B02014&hidePreview=true}{\underline{\textcolor{blue}{View the full data set here}}}
 
-PSRC celebrates the diverse, rich cultures of people with American Indian and Alaska Native heritage. We also recognize the suffering that members of these groups have experienced in the past and continue to endure due to historical policies and practices.
+\newpage
 
-Economic inequities persist for American Indian and Alaska Native residents. Disparities exist for home ownership, access to health care, educational opportunities and income.  
+## Wealth & Income Disparities
+
+\begin{flushleft}
+PSRC celebrates the diverse, rich cultures of people with American Indian and Alaska Native heritage. We also recognize the suffering that members of these groups have experienced in the past and continue to endure due to historical policies and practices. Economic inequities persist for people with American Indian and Alaska Native heritage and lead to disparities in income and home ownership.  
 \end{flushleft}
 
-## Median Income
+\setlength{\headheight}{25pt}
+\setlength{\textheight}{650pt}
+\fancyhead[L]{}
 
 ```{r income-calculation, include=FALSE}
 
+aian_income_2015 <- data %>% filter(concept=="Median Income" & year=="2015" & race=="American Indian and\nAlaska Native") %>% select(estimate) %>% pull()
+aian_income_2020 <- data %>% filter(concept=="Median Income" & year=="2020" & race=="American Indian and\nAlaska Native") %>% select(estimate) %>% pull()
+
+white_income_2015 <- data %>% filter(concept=="Median Income" & year=="2015" & race=="white") %>% select(estimate) %>% pull()
+white_income_2020 <- data %>% filter(concept=="Median Income" & year=="2020" & race=="white") %>% select(estimate) %>% pull()
+
+aian_ratio_2015 <- aian_income_2015/white_income_2015
+aian_ratio_2020 <- aian_income_2020/white_income_2020
+
+aian_income <- prettyNum(round(aian_income_2020,-2), big.mark = ",")
+aian_income_share <- prettyNum(round(aian_ratio_2020*100,0), big.mark = ",")
+
 median_income_chart <- create_static_column_chart(t = data %>% filter(concept=="Median Income"),
-                                                  x = "race", y = "estimate", fill = "year", est = "currency", dec = -2,
-                                                  title = "Median Income",
+                                                  x = "race", y = "estimate", fill = "year", est = "currency", dec = -3,
+                                                  title = "Median Annual Household Income",
                                                   source = paste("Source: U.S. Census Bureau, Public Use Microdata Sample 5-Year Estimates, variable HINCP",
                                                                  "for King, Kitsap, Pierce and Snohomish counties.",
                                                                  sep = "\n"),
@@ -337,24 +353,34 @@ ggsave("median_income_chart.png", median_income_chart, width = 8, height = 6, dp
 ```
 
 \begin{flushleft}
-American Indian and Alaska Native residents have incomes that are half of white residents.
+Between 2015 and 2020, incomes grew for both American Indian and Alaska Native households and white ones. Despite growing slightly faster than white households, the 2020 Median Annual Income for an American Indian and Alaska Native household of \$`r aian_income` was still `r aian_income_share`\% that of a white household. 
 \end{flushleft}
 
-\pdftooltip{\includegraphics{median_income_chart.png}}{Median Annual Household Income for people who identify as American Indian and Alaska Native or white}
+\pdftooltip{\includegraphics{median_income_chart.png}}{Median annual household income for people who identify as American Indian and Alaska Native or white}
 
 \newpage
 
-## Poverty
-
 ```{r poverty-calculation, include=FALSE}
+
+aian_poverty_2015 <- data %>% filter(concept=="Poverty" & year=="2015" & race=="American Indian and\nAlaska Native") %>% select(share) %>% pull()
+aian_poverty_2020 <- data %>% filter(concept=="Poverty" & year=="2020" & race=="American Indian and\nAlaska Native") %>% select(share) %>% pull()
+
+white_poverty_2015 <- data %>% filter(concept=="Poverty" & year=="2015" & race=="white") %>% select(share) %>% pull()
+white_poverty_2020 <- data %>% filter(concept=="Poverty" & year=="2020" & race=="white") %>% select(share) %>% pull()
+
+aian_ratio_2015 <- aian_poverty_2015/white_poverty_2015
+aian_ratio_2020 <- aian_poverty_2020/white_poverty_2020
+
+aian_poverty <- prettyNum(round(aian_poverty_2020*100,0), big.mark = ",")
+aian_poverty_share <- prettyNum(round(aian_ratio_2020,1), big.mark = ",")
 
 poverty_chart <- create_static_column_chart(t = data %>% filter(concept == "Poverty"),
                                             x = "race", y = "share", fill = "year",
-                                            title = "People Experiencing Poverty",
+                                            title = "Percentage of Households Experiencing Poverty",
                                             source = paste("Source: U.S. Census Bureau, 2016-2020 ACS 5-Year Estimates, tables B17020H, B17020C", 
                                                            "for King, Kitsap, Pierce and Snohomish counties.",
                                                                           sep = "\n"),
-                                            color = "gnbopgy_5") + 
+                                            color = "pgnobgy_5") + 
   ggplot2::theme(axis.text.y = ggplot2::element_blank(),
                  axis.text = ggplot2::element_text(family="Poppins",
                                       size=11,
@@ -372,24 +398,80 @@ ggsave("poverty_chart.png", poverty_chart, width = 8, height = 6, dpi = 86)
 ```
 
 \begin{flushleft}
-The percent of American Indian and Alaska Native residents living in poverty has decreased in the past 5 years but is still three times the rate for white residents.
+Similar to median incomes, the percentage of American Indian and Alaska Native households living in poverty decreased to `r aian_poverty`\% in 2020 but it is still `r aian_poverty_share` times the rate for white households. The Federal poverty level (FPL) is a measure of income issued every year by the Department of Health and Human Services (HHS) and are used to determine eligibility for certain programs and benefits, including savings on Marketplace health insurance, and Medicaid and CHIP coverage. The FPL varies by household size and was \$26,500 for a family of four in 2020.
 \end{flushleft}
 
-\pdftooltip{\includegraphics{poverty_chart.png}}{People in poverty for people who identify as American Indian and Alaska Native or white}
+\pdftooltip{\includegraphics{poverty_chart.png}}{Percentage of households below the federal poverty line for people who identify as American Indian and Alaska Native or white}
 
-\newpage
+```{r educational-attainment-calculation, include=FALSE}
 
-## Home Ownership
+aian_education_2015 <- data %>% filter(concept=="Educational Attainment" & year=="2015" & race=="American Indian and\nAlaska Native") %>% select(share) %>% pull()
+aian_education_2021 <- data %>% filter(concept=="Educational Attainment" & year=="2021" & race=="American Indian and\nAlaska Native") %>% select(share) %>% pull()
+
+white_education_2015 <- data %>% filter(concept=="Educational Attainment" & year=="2015" & race=="white") %>% select(share) %>% pull()
+white_education_2021 <- data %>% filter(concept=="Educational Attainment" & year=="2021" & race=="white") %>% select(share) %>% pull()
+
+aian_ratio_2015 <- aian_education_2015/white_education_2015
+aian_ratio_2021 <- aian_education_2021/white_education_2021
+
+aian_education <- prettyNum(round(aian_education_2021*100,0), big.mark = ",")
+aian_education_share <- prettyNum(round(aian_ratio_2021*100,0), big.mark = ",")
+
+educational_attainment_chart <- create_static_column_chart(t = data %>% filter(concept == "Educational Attainment"),
+                                                           x = "race", y = "share", fill = "year",
+                                                           title = "Share of the Population With at Least a Bachelors Degree",
+                                                           source = paste("Source: U.S. Census Bureau, ACS 1-Year Estimates, tables C15002H, C15002C",
+                                                                          "for King, Kitsap, Pierce and Snohomish counties.",
+                                                                          sep = "\n"),
+                                                           color = "pognbgy_5") + 
+  ggplot2::theme(axis.text.y = ggplot2::element_blank(),
+                 axis.text = ggplot2::element_text(family="Poppins",
+                                      size=11,
+                                      color="#2f3030"),
+                 panel.grid.major.x = ggplot2::element_blank(),
+                 panel.grid.major.y = ggplot2::element_blank(),
+                 panel.grid.minor.x = ggplot2::element_blank(),
+                 panel.grid.minor.y = ggplot2::element_blank(),
+                 plot.caption = element_text(hjust=0),
+                 axis.line.x = ggplot2::element_line(color="#cbcbcb"),
+                 axis.line.y = ggplot2::element_blank())   
+
+ggsave("educational_attainment_chart.png", educational_attainment_chart, width = 8, height = 6, dpi = 86)
+
+```
+
+\begin{flushleft}
+Education unlocks opportunities to the highest income jobs and ensures that people have the chance to benefit from the PSRC region's strong economy. In order to compete for high-tech jobs in the region, people increasingly need at least a Bachelor's Degree. The percentage of American Indian and Alaska Native people with a least a Bachelor's Degree has increased since 2015 to approximately `r aian_education`\% in 2021 however like income metrics it is significantly lower (`r aian_education_share`\%) than the rates of white residents with at least a Bachelor's Degree. Disparities in funding for schools, access to Science, Technology, Engineering and Math (STEM) programs continue to provide barriers to economic growth for American Indian and Alaska Native people.
+\end{flushleft}
+
+\pdftooltip{\includegraphics{educational_attainment_chart.png}}{People with at least a Bachelors Degree for people who identify as American Indian and Alaska Native or white}
+
+## Disparities in Home Ownership
 
 ```{r home-ownership-calculation, include=FALSE}
 
+aian_ownership_2015 <- data %>% filter(concept=="Home Ownership" & year=="2015" & race=="American Indian and\nAlaska Native") %>% select(share) %>% pull()
+aian_ownership_2021 <- data %>% filter(concept=="Home Ownership" & year=="2021" & race=="American Indian and\nAlaska Native") %>% select(share) %>% pull()
+
+white_ownership_2015 <- data %>% filter(concept=="Home Ownership" & year=="2015" & race=="white") %>% select(share) %>% pull()
+white_ownership_2021 <- data %>% filter(concept=="Home Ownership" & year=="2021" & race=="white") %>% select(share) %>% pull()
+
+aian_ratio_2015 <- aian_ownership_2015/white_ownership_2015
+aian_ratio_2021 <- aian_ownership_2021/white_ownership_2021
+
+aian_ownership <- prettyNum(round(aian_ownership_2021*100,0), big.mark = ",")
+aian_ownership_share <- prettyNum(round(aian_ratio_2021*100,0), big.mark = ",")
+
+aian_ownership_15 <- prettyNum(round(aian_ownership_2015*100,0), big.mark = ",")
+aian_ownership_share_15 <- prettyNum(round(100-(aian_ratio_2015*100),0), big.mark = ",")
+
 home_ownership_chart <- create_static_column_chart(t = data %>% filter(concept=="Home Ownership"),
                                                    x = "race", y = "share", fill = "year",
-                                                   title = "People who own Their Home",
+                                                   title = "Share of Households That own Their Home",
                                                    source = paste("Source: U.S. Census Bureau, ACS 1-Year Estimates, Tables B25003H, B25003C",
                                                                   "for King, Kitsap, Pierce and Snohomish counties.",
                                                                   sep = "\n"),
-                                                   color = "pgnobgy_5") + 
+                                                   color = "gnbopgy_5") + 
   ggplot2::theme(axis.text.y = ggplot2::element_blank(),
                  axis.text = ggplot2::element_text(family="Poppins",
                                       size=11,
@@ -407,19 +489,33 @@ ggsave("home_ownership_chart.png", home_ownership_chart, width = 8, height = 6, 
 ```
 
 \begin{flushleft}
-The home ownership among American Indian and Alaska Native residents is a third lower than the rate for white residents.
+Home ownership is a key to wealth in the United States. For decades, lending practices have benefited white people and have led to large wealth disparities between people of color and white households. As home values sky-rocket, access to low-rate mortgages are a key to affording a home. In 2015 an American Indian and Alaska Native household was `r aian_ownership_share_15`\% less likely to own their own home than a white household. By 2021, with rapidly rising home values pricing out many, the home ownership rate for American Indian and Alaska Native households dropped slightly to `r aian_ownership`\%.
 \end{flushleft}
 
-\pdftooltip{\includegraphics{home_ownership_chart.png}}{Share of households that own their own home for people who identify as American Indian and Alaska Native or white}
-
-\newpage
-
-## Home Value
+\pdftooltip{\includegraphics{home_ownership_chart.png}}{Percentage of households that own their own home for people who identify as American Indian and Alaska Native or white}
 
 ```{r home-value-calculation, include=FALSE}
 
+aian_value_2015 <- data %>% 
+  filter(concept=="Median Home Value" & year=="2015" & race=="American Indian and\nAlaska Native") %>% select(estimate) %>% pull() %>% as.integer()
+
+aian_value_2020 <- data %>% 
+  filter(concept=="Median Home Value" & year=="2020" & race=="American Indian and\nAlaska Native") %>% select(estimate) %>% pull() %>% as.integer()
+
+white_value_2015 <- data %>% filter(concept=="Median Home Value" & year=="2015" & race=="white") %>% select(estimate) %>% pull() %>% as.integer()
+white_value_2020 <- data %>% filter(concept=="Median Home Value" & year=="2020" & race=="white") %>% select(estimate) %>% pull() %>% as.integer()
+
+aian_ratio_2015 <- aian_value_2015/white_value_2015
+aian_ratio_2020 <- aian_value_2020/white_value_2020
+
+aian_value <- prettyNum(round(aian_value_2020,-2), big.mark = ",")
+aian_value_share <- prettyNum(round(aian_ratio_2020*100,0), big.mark = ",")
+
+aian_value_15 <- prettyNum(round(aian_value_2015,0), big.mark = ",")
+aian_value_share_15 <- prettyNum(round(100-(aian_ratio_2015*100),0), big.mark = ",")
+
 home_value_chart <- create_static_column_chart(t = data %>% filter(concept=="Median Home Value"),
-                                                   x = "race", y = "estimate", fill = "year", est = "currency", dec = -2,
+                                                   x = "race", y = "estimate", fill = "year", est = "currency", dec = -3,
                                                    title = "Median Home Value",
                                                    source = paste("Source: U.S. Census Bureau, Public Use Microdata Sample 5-Year Estimates, variable VALP",
                                                                   "for King, Kitsap, Pierce and Snohomish counties.",
@@ -445,45 +541,11 @@ ggsave("home_value_chart.png", home_value_chart, width = 8, height = 6, dpi = 86
 The value in homes owned by American Indian and Alaska Native residents is a third lower than the rate for white residents.
 \end{flushleft}
 
-\pdftooltip{\includegraphics{home_value_chart.png}}{Median Home Value for people who identify as American Indian and Alaska Native or white and own their own homes}
+\pdftooltip{\includegraphics{home_value_chart.png}}{Median Home Value for people who identify as American Indian and Alaska Native or white who own their own home}
 
 \newpage
 
-## Educational Attainment
-
-```{r educational-attainment-calculation, include=FALSE}
-
-educational_attainment_chart <- create_static_column_chart(t = data %>% filter(concept == "Educational Attainment"),
-                                                           x = "race", y = "share", fill = "year",
-                                                           title = "People With at Least a Bachelors Degree",
-                                                           source = paste("Source: U.S. Census Bureau, ACS 1-Year Estimates, tables C15002H, C15002C",
-                                                                          "for King, Kitsap, Pierce and Snohomish counties.",
-                                                                          sep = "\n"),
-                                                           color = "pognbgy_5") + 
-  ggplot2::theme(axis.text.y = ggplot2::element_blank(),
-                 axis.text = ggplot2::element_text(family="Poppins",
-                                      size=11,
-                                      color="#2f3030"),
-                 panel.grid.major.x = ggplot2::element_blank(),
-                 panel.grid.major.y = ggplot2::element_blank(),
-                 panel.grid.minor.x = ggplot2::element_blank(),
-                 panel.grid.minor.y = ggplot2::element_blank(),
-                 plot.caption = element_text(hjust=0),
-                 axis.line.x = ggplot2::element_line(color="#cbcbcb"),
-                 axis.line.y = ggplot2::element_blank())   
-
-ggsave("educational_attainment_chart.png", educational_attainment_chart, width = 8, height = 6, dpi = 86)
-
-```
-
-\begin{flushleft}
-The percent of American Indian and Alaska Native residents with a least a Bachelor's Degree has increased in the past 5 years but is still less than half the rate for white residents.
-\end{flushleft}
-
-\pdftooltip{\includegraphics{educational_attainment_chart.png}}{People with at least a Bachelors Degree for people who identify as American Indian and Alaska Native or white}
-
-\newpage 
-## Access to Health Insurance
+## Health Disparities
 
 ```{r health-insurance-calculation, include=FALSE}
 
@@ -517,8 +579,6 @@ American Indian and Alaska Native residents are almost 4 times more likely to la
 \pdftooltip{\includegraphics{health_insurance_chart.png}}{People without Health Insurance for people who identify as American Indian and Alaska Native or white}
 
 \newpage
-
-## Life Expectancy
 
 ```{r life-expectancy-calculation, include=FALSE}
 

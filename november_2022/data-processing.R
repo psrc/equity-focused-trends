@@ -67,8 +67,8 @@ for (yrs in census_yrs) {
     mutate(race = str_replace_all(race, "White alone", "White"))
   
   # Median Home Value
-  t2 <- psrc_pums_median(so=pums_hh, stat_var="VALP", group_vars = "HRACE") %>%
-    rename(name=COUNTY, year=DATA_YEAR, race=HRACE, estimate=VALP_median, moe=VALP_median_moe) %>%
+  t2 <- psrc_pums_mean(so=pums_hh, stat_var="VALP", group_vars = "HRACE") %>%
+    rename(name=COUNTY, year=DATA_YEAR, race=HRACE, estimate=VALP_mean, moe=VALP_mean_moe) %>%
     mutate(table="PUMS", variable="VALP", label="Median Home Value", concept="Median Home Value", acs_type="acs5")
   
   tot <- t2 %>% filter(race=="Total") %>% select(estimate) %>% pull()
