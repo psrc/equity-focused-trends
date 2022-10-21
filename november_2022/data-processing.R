@@ -197,8 +197,89 @@ tot <- life_expectancy %>% filter(race=="All") %>% select(year, estimate) %>% re
 life_expectancy <- left_join(life_expectancy, tot, by=c("year")) %>% mutate(share=estimate/total) %>% filter(race!="All")
 rm(tot)
 
+births <- read.csv("X:/DSA/shiny-uploads/data/births-by-race.csv") %>%
+  filter(Race %in% c("All","American Indian/Alaskan Native Only-NH","White Only-NH")) %>%
+  rename(name=Geography, year=Year, race=Race) %>%
+  select(name, year, race, estimate) %>%
+  mutate(estimate = as.integer(gsub(",","",estimate))) %>%
+  mutate(table="Births", variable="Births", label="Births", concept="Births", acs_type="DOH-1yr", moe=0) %>%
+  mutate(race = str_replace_all(race, "American Indian/Alaskan Native Only-NH", "American Indian and Alaska Native")) %>%
+  mutate(race = str_replace_all(race, "White Only-NH", "White")) %>%
+  mutate(name = str_replace_all(name, "State Total", "Washington")) %>%
+  distinct()
+
+tot <- births %>% filter(race=="All") %>% select(year, estimate) %>% rename(total=estimate)
+
+births <- left_join(births, tot, by=c("year")) %>% mutate(share=estimate/total) %>% filter(race!="All")
+rm(tot)
+
+infant_deaths <- read.csv("X:/DSA/shiny-uploads/data/infant-deaths-by-race.csv") %>%
+  filter(Race %in% c("All","American Indian/Alaskan Native Only-NH","White Only-NH") & Metric=="Count") %>%
+  select(-`Cause.Of.Death`, -Gender, -Age, -Metric) %>%
+  pivot_longer(cols=contains("X"), names_to="year", values_to="estimate") %>%
+  mutate(year = as.integer(gsub("X","",year))) %>%
+  mutate(estimate = as.integer(estimate)) %>%
+  mutate(estimate = replace_na(estimate, 0)) %>%
+  rename(name=Geography, race=Race) %>%
+  mutate(table="Deaths", variable="Age 0-1", label="Infant Deaths", concept="Infant Deaths", acs_type="DOH-1yr", moe=0) %>%
+  mutate(race = str_replace_all(race, "American Indian/Alaskan Native Only-NH", "American Indian and Alaska Native")) %>%
+  mutate(race = str_replace_all(race, "White Only-NH", "White")) %>%
+  mutate(name = str_replace_all(name, "State Total", "Washington")) %>%
+  distinct()
+
+tot <- infant_deaths %>% filter(race=="All") %>% select(year, estimate) %>% rename(total=estimate)
+
+infant_deaths <- left_join(infant_deaths, tot, by=c("year")) %>% mutate(share=estimate/total) %>% filter(race!="All")
+rm(tot)
+
+deaths <- read.csv("X:/DSA/shiny-uploads/data/all-deaths-by-race.csv") %>%
+  filter(Race %in% c("All","American Indian/Alaskan Native Only-NH","White Only-NH") & X=="Count") %>%
+  select(-`Cause.Of.Death`, -Gender, -Age, -X) %>%
+  pivot_longer(cols=contains("X"), names_to="year", values_to="estimate") %>%
+  mutate(year = as.integer(gsub("X","",year))) %>%
+  mutate(estimate = as.integer(gsub(",","",estimate))) %>%
+  rename(name=Geography, race=Race) %>%
+  mutate(table="Deaths", variable="All Ages", label="Deaths", concept="Deaths", acs_type="DOH-1yr", moe=0) %>%
+  mutate(race = str_replace_all(race, "American Indian/Alaskan Native Only-NH", "American Indian and Alaska Native")) %>%
+  mutate(race = str_replace_all(race, "White Only-NH", "White")) %>%
+  mutate(name = str_replace_all(name, "State Total", "Washington")) %>%
+  distinct()
+
+tot <- deaths %>% filter(race=="All") %>% select(year, estimate) %>% rename(total=estimate)
+
+deaths <- left_join(deaths, tot, by=c("year")) %>% mutate(share=estimate/total) %>% filter(race!="All")
+rm(tot)
+
+years <- seq(2008,2020,by=1)
+infant_deaths_5year = NULL
+for(yr in years) {
+  t1 <- infant_deaths %>% filter(year >= yr-4 & year <= yr) %>%
+    group_by(race) %>%
+    summarise(estimate=sum(estimate)) %>%
+    as_tibble %>%
+    mutate(name="Washington",year=yr, table="Deaths", variable="Age 0-1", label="5-yr Infant Deaths", concept="Infant Mortality", acs_type="DOH-1yr", moe=0, total=0, share=0)
+  
+  t2 <- births %>% filter(year >= yr-4 & year <= yr) %>%
+    group_by(race) %>%
+    summarise(estimate=sum(estimate)) %>%
+    as_tibble %>%
+    mutate(name="Washington",year=yr, table="Births", variable="Births", label="5-yr Births", concept="Infant Mortality", acs_type="DOH-1yr", moe=0, total=0, share=0)
+  
+  
+  ifelse(is.null(infant_deaths_5year), infant_deaths_5year <- bind_rows(list(t1,t2)), infant_deaths_5year <- bind_rows(list(infant_deaths_5year, t1, t2)))
+  rm(t1,t2)
+}
+
+t1 <- infant_deaths_5year %>%filter(label=="5-yr Infant Deaths") %>% select(year, race, estimate) %>% rename(deaths=estimate)
+t2 <- infant_deaths_5year %>%filter(label=="5-yr Births") %>% select(year, race, estimate) %>% rename(births=estimate)
+
+infant_mortality <- left_join(t1,t2, by=c("year","race")) %>%
+  mutate(estimate = deaths/(births/1000)) %>%
+  mutate(name="Washington",table="Infant Mortality", variable="Infant Mortality", label="5-yr Infant Mortality", concept="Infant Mortality", acs_type="DOH-1yr", moe=0, total=0, share=0) %>%
+  select(-births,-deaths)
+
 ######################################################################################################################
 # Final Data to Output
 ######################################################################################################################
-aian <- bind_rows(list(education,health_insurance, ownership, poverty, tribal_groupings, pums_data, life_expectancy))
+aian <- bind_rows(list(education,health_insurance, ownership, poverty, tribal_groupings, pums_data, life_expectancy, births, infant_deaths, deaths, infant_mortality))
 write.csv(aian, paste0("aian_hertitage_data.csv"))

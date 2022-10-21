@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.15.0 (TeX Live 2022)  (format=lualatex 2022.10.11)  20 OCT 2022 16:06
+This is LuaHBTeX, Version 1.15.0 (TeX Live 2022)  (format=lualatex 2022.10.11)  21 OCT 2022 16:52
  restricted system commands enabled.
 **aian_heritage.tex
 (./aian_heritage.tex
@@ -919,14 +919,14 @@ LaTeX Font Info:    Font shape `TU/Poppins(0)/m/n' will be
 (Font)              scaled to size 17.28pt on input line 79.
 LaTeX Font Info:    Font shape `TU/Poppins(0)/b/n' will be
 (Font)              scaled to size 17.28pt on input line 79.
-<trend_image_header.png, id=20, 216.81pt x 48.18pt>
+<trend_image_header.png, id=24, 216.81pt x 48.18pt>
 File: trend_image_header.png Graphic file (type png)
 <use trend_image_header.png>
 Package luatex.def Info: trend_image_header.png  used on input line 81.
 (luatex.def)             Requested size: 469.81448pt x 104.40315pt.
 LaTeX Font Info:    Font shape `TU/Poppins(0)/b/n' will be
 (Font)              scaled to size 12.0pt on input line 84.
-<tribal_groupings_chart.png, id=21, 578.16pt x 361.35pt>
+<tribal_groupings_chart.png, id=25, 578.16pt x 361.35pt>
 File: tribal_groupings_chart.png Graphic file (type png)
 <use tribal_groupings_chart.png>
 Package luatex.def Info: tribal_groupings_chart.png  used on input line 87.
@@ -943,7 +943,7 @@ File: tribal_groupings_chart.png Graphic file (type png)
 <use tribal_groupings_chart.png>
 Package luatex.def Info: tribal_groupings_chart.png  used on input line 87.
 (luatex.def)             Requested size: 469.75385pt x 293.59616pt.
-<X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png, id=24, 503.9628pt x 89.3739pt>
+<X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png, id=28, 503.9628pt x 89.3739pt>
 File: X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png Graphic file (type png)
 <use X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png>
 Package luatex.def Info: X:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png  used on input line 91.
@@ -963,10 +963,10 @@ LaTeX Font Info:    Font shape `TU/Poppins(0)/m/n' will be
 \openout3 = aian_heritage.upa
 {c:/Users/chelmann/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}<x:/DSA/shiny-uploads/images/PST_Equity_Edition-Trend_header.png><./trend_image_header.png><./tribal_groupings_chart.png>]
 LaTeX Font Info:    Font shape `TU/Poppins(0)/m/n' will be
-(Font)              scaled to size 14.4pt on input line 95.
+(Font)              scaled to size 14.4pt on input line 99.
 LaTeX Font Info:    Font shape `TU/Poppins(0)/b/n' will be
-(Font)              scaled to size 14.4pt on input line 95.
-<median_income_chart.png, id=35, 578.16pt x 433.62pt>
+(Font)              scaled to size 14.4pt on input line 99.
+<median_income_chart.png, id=39, 578.16pt x 433.62pt>
 File: median_income_chart.png Graphic file (type png)
 <use median_income_chart.png>
 Package luatex.def Info: median_income_chart.png  used on input line 109.
@@ -984,7 +984,7 @@ File: median_income_chart.png Graphic file (type png)
 Package luatex.def Info: median_income_chart.png  used on input line 109.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
 [2<./median_income_chart.png>]
-<poverty_chart.png, id=43, 578.16pt x 433.62pt>
+<poverty_chart.png, id=47, 578.16pt x 433.62pt>
 File: poverty_chart.png Graphic file (type png)
 <use poverty_chart.png>
 Package luatex.def Info: poverty_chart.png  used on input line 117.
@@ -1001,7 +1001,7 @@ File: poverty_chart.png Graphic file (type png)
 <use poverty_chart.png>
 Package luatex.def Info: poverty_chart.png  used on input line 117.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-<educational_attainment_chart.png, id=45, 578.16pt x 433.62pt>
+<educational_attainment_chart.png, id=49, 578.16pt x 433.62pt>
 File: educational_attainment_chart.png Graphic file (type png)
 <use educational_attainment_chart.png>
 Package luatex.def Info: educational_attainment_chart.png  used on input line 123.
@@ -1019,7 +1019,7 @@ File: educational_attainment_chart.png Graphic file (type png)
 Package luatex.def Info: educational_attainment_chart.png  used on input line 123.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
 [3<./poverty_chart.png>]
-<home_ownership_chart.png, id=52, 578.16pt x 433.62pt>
+<home_ownership_chart.png, id=56, 578.16pt x 433.62pt>
 File: home_ownership_chart.png Graphic file (type png)
 <use home_ownership_chart.png>
 Package luatex.def Info: home_ownership_chart.png  used on input line 133.
@@ -1037,7 +1037,7 @@ File: home_ownership_chart.png Graphic file (type png)
 Package luatex.def Info: home_ownership_chart.png  used on input line 133.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
 [4<./educational_attainment_chart.png>]
-<home_value_chart.png, id=60, 578.16pt x 433.62pt>
+<home_value_chart.png, id=64, 578.16pt x 433.62pt>
 File: home_value_chart.png Graphic file (type png)
 <use home_value_chart.png>
 Package luatex.def Info: home_value_chart.png  used on input line 139.
@@ -1054,61 +1054,85 @@ File: home_value_chart.png Graphic file (type png)
 <use home_value_chart.png>
 Package luatex.def Info: home_value_chart.png  used on input line 139.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-[5<./home_ownership_chart.png>] [6<./home_value_chart.png>]
-<health_insurance_chart.png, id=72, 578.16pt x 433.62pt>
+[5<./home_ownership_chart.png>]
+<health_insurance_chart.png, id=71, 578.16pt x 433.62pt>
 File: health_insurance_chart.png Graphic file (type png)
 <use health_insurance_chart.png>
-Package luatex.def Info: health_insurance_chart.png  used on input line 150.
+Package luatex.def Info: health_insurance_chart.png  used on input line 148.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
 File: health_insurance_chart.png Graphic file (type png)
 <use health_insurance_chart.png>
-Package luatex.def Info: health_insurance_chart.png  used on input line 150.
+Package luatex.def Info: health_insurance_chart.png  used on input line 148.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
 File: health_insurance_chart.png Graphic file (type png)
 <use health_insurance_chart.png>
-Package luatex.def Info: health_insurance_chart.png  used on input line 150.
+Package luatex.def Info: health_insurance_chart.png  used on input line 148.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
 File: health_insurance_chart.png Graphic file (type png)
 <use health_insurance_chart.png>
-Package luatex.def Info: health_insurance_chart.png  used on input line 150.
+Package luatex.def Info: health_insurance_chart.png  used on input line 148.
 (luatex.def)             Requested size: 469.75385pt x 352.31538pt.
+[6<./home_value_chart.png>]
+<life_expectancy_chart.png, id=79, 578.16pt x 361.35pt>
+File: life_expectancy_chart.png Graphic file (type png)
+<use life_expectancy_chart.png>
+Package luatex.def Info: life_expectancy_chart.png  used on input line 157.
+(luatex.def)             Requested size: 469.75385pt x 293.59616pt.
+File: life_expectancy_chart.png Graphic file (type png)
+<use life_expectancy_chart.png>
+Package luatex.def Info: life_expectancy_chart.png  used on input line 157.
+(luatex.def)             Requested size: 469.75385pt x 293.59616pt.
+File: life_expectancy_chart.png Graphic file (type png)
+<use life_expectancy_chart.png>
+Package luatex.def Info: life_expectancy_chart.png  used on input line 157.
+(luatex.def)             Requested size: 469.75385pt x 293.59616pt.
+File: life_expectancy_chart.png Graphic file (type png)
+<use life_expectancy_chart.png>
+Package luatex.def Info: life_expectancy_chart.png  used on input line 157.
+(luatex.def)             Requested size: 469.75385pt x 293.59616pt.
 [7<./health_insurance_chart.png>]
-<life_expectancy_chart.png, id=80, 578.16pt x 433.62pt>
-File: life_expectancy_chart.png Graphic file (type png)
-<use life_expectancy_chart.png>
-Package luatex.def Info: life_expectancy_chart.png  used on input line 158.
-(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: life_expectancy_chart.png Graphic file (type png)
-<use life_expectancy_chart.png>
-Package luatex.def Info: life_expectancy_chart.png  used on input line 158.
-(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: life_expectancy_chart.png Graphic file (type png)
-<use life_expectancy_chart.png>
-Package luatex.def Info: life_expectancy_chart.png  used on input line 158.
-(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-File: life_expectancy_chart.png Graphic file (type png)
-<use life_expectancy_chart.png>
-Package luatex.def Info: life_expectancy_chart.png  used on input line 158.
-(luatex.def)             Requested size: 469.75385pt x 352.31538pt.
-[8<./life_expectancy_chart.png>] (./aian_heritage.aux)
+Underfull \hbox (badness 10000) in paragraph at lines 159--160
+
+ []
+
+<infant_mortality_chart.png, id=86, 578.16pt x 361.35pt>
+File: infant_mortality_chart.png Graphic file (type png)
+<use infant_mortality_chart.png>
+Package luatex.def Info: infant_mortality_chart.png  used on input line 161.
+(luatex.def)             Requested size: 469.75385pt x 293.59616pt.
+File: infant_mortality_chart.png Graphic file (type png)
+<use infant_mortality_chart.png>
+Package luatex.def Info: infant_mortality_chart.png  used on input line 161.
+(luatex.def)             Requested size: 469.75385pt x 293.59616pt.
+File: infant_mortality_chart.png Graphic file (type png)
+<use infant_mortality_chart.png>
+Package luatex.def Info: infant_mortality_chart.png  used on input line 161.
+(luatex.def)             Requested size: 469.75385pt x 293.59616pt.
+File: infant_mortality_chart.png Graphic file (type png)
+<use infant_mortality_chart.png>
+Package luatex.def Info: infant_mortality_chart.png  used on input line 161.
+(luatex.def)             Requested size: 469.75385pt x 293.59616pt.
+[8<./life_expectancy_chart.png><./infant_mortality_chart.png>] [9] (./aian_heritage.aux * soulpos - computing points - it may take a few seconds *
+\openout3 = aian_heritage.upb
+ (./aian_heritage.upa))
 Package rerunfilecheck Info: File `aian_heritage.out' has not changed.
-(rerunfilecheck)             Checksum: 0E0CBA3B6D0425318DA90AA08E6A09BD;822.
+(rerunfilecheck)             Checksum: DE4BFB4B89AD151CE38D28EE0B2CDBC4;997.
 )
 
 Here is how much of LuaTeX's memory you used:
- 22799 strings out of 477352
+ 22837 strings out of 477352
  125189,1144653 words of node,token memory allocated
- 558 words of node memory still in use:
-   7 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 2 glyph, 8 attribute, 60 glue_spec, 8 attribute_list, 2 write, 1 close, 1 user_defined nodes
-   avail lists: 1:1,2:258,3:120,4:63,5:60,6:34,7:3170,8:19,9:279,10:18,11:244
- 43068 multiletter control sequences out of 65536+600000
+ 552 words of node memory still in use:
+   7 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 2 glyph, 8 attribute, 60 glue_spec, 8 attribute_list, 1 write, 1 user_defined nodes
+   avail lists: 1:1,2:258,3:122,4:63,5:60,6:34,7:4469,8:19,9:279,10:18,11:353
+ 43078 multiletter control sequences out of 65536+600000
  63 fonts using 10494927 bytes
  86i,15n,122p,1483b,411s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Windows/Fonts/Poppins-Regular.ttf><c:/Windows/Fonts/Poppins-Bold.ttf>
-Output written on aian_heritage.pdf (8 pages, 657538 bytes).
+Output written on aian_heritage.pdf (9 pages, 667785 bytes).
 
-PDF statistics: 104 PDF objects out of 1000 (max. 8388607)
- 76 compressed objects within 1 object stream
- 17 named destinations out of 1000 (max. 131072)
- 33 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 119 PDF objects out of 1000 (max. 8388607)
+ 87 compressed objects within 1 object stream
+ 20 named destinations out of 1000 (max. 131072)
+ 41 words of extra memory for PDF output out of 10000 (max. 100000000)
 
