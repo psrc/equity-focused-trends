@@ -935,10 +935,7 @@ for (c in concepts) {
   
 }
 
-## setup a workbook with 3 worksheets
-
 saveWorkbook(wb=wb, file=xlsx_file, overwrite = TRUE)
-
 
 ```
 
