@@ -34,6 +34,10 @@ library(psrccensus)
 library(tidyverse)
 library(knitr)
 library(magick)
+library(openxlsx)
+
+# File name for Trend Data file to be created
+xlsx_file <- "trend-equity-202211.xlsx"
 
 # Create Image 
 image1 <- image_read("X:/DSA/shiny-uploads/images/51391430801_092ce43bba_o.jpg")
@@ -438,8 +442,6 @@ create_static_line_chart <- function(t, x, y, fill,
   return(g)
 }
 
-
-
 # Load Data or Generate if not already processed
 if(file.exists("aian_hertitage_data.csv")) {
   data <- read.csv("aian_hertitage_data.csv") %>% mutate(year=as.character(year)) %>% mutate(race = str_wrap(race, width = 20))
@@ -454,7 +456,8 @@ data <- data %>%
   mutate(label = str_replace_all(label, "All other American Indian Tribes with only one Tribe reported", "All Other Tribes with only one Tribe reported")) %>%
   mutate(label = str_replace_all(label, "American Indian and Alaska Native Tribes where Tribe Not Specified", "Tribe Not Specified")) %>%
   mutate(label = str_replace_all(label, "American Indian Tribes with fewer than 1000 people", "Tribes with fewer than 1000 people")) %>%
-  mutate(label = str_replace_all(label, "Two or More American Indian and Alaska Native Tribes", "Two or More Tribes"))
+  mutate(label = str_replace_all(label, "Two or More American Indian and Alaska Native Tribes", "Two or More Tribes")) %>%
+  select(-X)
 
 ```
 
@@ -913,4 +916,29 @@ PSRC is working to advance opportunities for people of American Indian and Alask
 \href{https://www.psrc.org/media/7082}{\underline{\textcolor{blue}{Click here to Download the Data used in this Trend}}} 
 
 \end{flushleft}
+
+```{r create-final-data-file, include=FALSE}
+
+concepts <- data %>% select(concept) %>% pull() %>% unique()
+
+wb <- createWorkbook()
+i <- 1
+for (c in concepts) {
+  
+  temp <- data %>% filter(concept==c)
+  
+  addWorksheet(wb = wb, sheetName = c, gridLines = FALSE)
+  writeDataTable(wb = wb, sheet = i, x = temp)
+  i <- i+1
+  
+  rm(temp)
+  
+}
+
+## setup a workbook with 3 worksheets
+
+saveWorkbook(wb=wb, file=xlsx_file, overwrite = TRUE)
+
+
+```
 
