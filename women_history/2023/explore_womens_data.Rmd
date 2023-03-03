@@ -1,0 +1,43 @@
+---
+title: "explore_womens_history"
+author: "suzanne"
+date: "2023-01-20"
+output: html_document
+---
+
+```{r load_libraries}
+library(devtools)
+library(sf)
+library(dplyr)
+library(psrccensus)
+library(ggplot2)
+library(psrcplot)
+library(tidycensus)
+Sys.getenv("CENSUS_API_KEY")
+```
+
+```{r}
+var_list<- load_variables(2019, "acs5", cache = TRUE)
+```
+
+
+
+```{r pressure, echo=FALSE}
+
+earnings_df <- get_acs_recs(geography = 'county',
+             table.names = c('B20017'),
+             years=c(2021),
+             acs.type = 'acs5')
+
+earnings_df_ft<- earnings_df %>% 
+filter(label %in% c('Estimate!!Median earnings in the past 12 months (in 2021 inflation-adjusted dollars) --!!Total (dollars):!!Female --!!Total (dollars)!!Worked full-time, year-round in the past 12 months (dollars)',  'Estimate!!Median earnings in the past 12 months (in 2021 inflation-adjusted dollars) --!!Total (dollars):!!Male --!!Total (dollars)!!Worked full-time, year-round in the past 12 months (dollars)'))%>%
+mutate(label = recode(label, 'Estimate!!Median earnings in the past 12 months (in 2021 inflation-adjusted dollars) --!!Total (dollars):!!Female --!!Total (dollars)!!Worked full-time, year-round in the past 12 months (dollars)'= 'Female', 
+'Estimate!!Median earnings in the past 12 months (in 2021 inflation-adjusted dollars) --!!Total (dollars):!!Male --!!Total (dollars)!!Worked full-time, year-round in the past 12 months (dollars)' = 'Male'))
+```
+```{r}
+earnings<- static_column_chart(t=earnings_df_ft, y='estimate', x= 'name', fill="label", moe='moe', color='psrc_light', est='currency')
+earnings
+write.csv(earnings_df_ft, 'earnings.csv')
+
+```
+
