@@ -27,84 +27,84 @@ library(magrittr)
 
 # Census and PUMS data about women, age, and employment##################################################
 
-pvars <- c("ESR","SEX", "AGEP", "BIN_AGE", "PRACE", "PINCP")
-hvars <- c("BINCOME", "HRACE")
-ftr_int <- function(x){as.integer(as.character(x))} 
-
-pums19 <- get_psrc_pums(1, 2019, "p", pvars) 
-
-pums19 %<>% mutate(
-  ESR= factor(
-    case_when(grepl("^(Civilian|Armed) ", as.character(ESR)) ~ "Employed",
-              !is.na(ESR) ~ "Not employed")),
-  AGE = factor(
-    case_when(between(ftr_int(AGEP), 18, 25) ~ '18-25',
-              between(ftr_int(AGEP), 26, 35) ~ '26-35',
-              between(ftr_int(AGEP), 36, 45) ~ '36-45',
-              AGEP >= 46 ~ "46+")),
-  PRACE= factor(
-    case_when(grepl("^(Indian|Asian|Black|Hispanic|Hawaiian|Other|Two)", as.character(PRACE)) ~ "POC",
-            !is.na(PRACE) ~ "White")))
-
-#pums19 %>% 
- # mutate(PRACE = factor(case_when(PRACE %in% c("American Indian or Alaskan Native Alone", "Asian alone", 
-  #                                    "Black or African American alone", 
-   #                                   "Hispanic or Latino", "Native Hawaiian and Other Pacific Islander alone",
-    #                                  "Some Other Race alone", "Two or More Races") ~ "POC",
-     #                    PRACE == "White alone" ~ "White")))
-
-pums19_all <- psrc_pums_count(pums19, group_vars = c("ESR", "SEX"), incl_na=FALSE)%>%
-  filter(ESR != "Total")%>%
-  filter(SEX != "Total")%>%
-  rename(
-    survey = DATA_YEAR
-  )
-
-pums19_race <- psrc_pums_count(pums19, group_vars = c("ESR", "PRACE", "SEX"), incl_na=FALSE)%>%
-  filter(ESR != "Total")%>%
-  filter(SEX != "Total")%>%
-  filter(PRACE != "Total")%>%
-  rename(
-    survey = DATA_YEAR
-  )
-
-
-pums21 <- get_psrc_pums(1, 2021, "p", pvars) 
-
-pums21 %<>% mutate(
-  ESR= factor(
-    case_when(ESR %in% c(1,2,4,5) ~ "Employed",
-              !is.na(ESR) ~ "Not employed")),
-  AGE = factor(
-    case_when(between(ftr_int(AGEP), 18, 25) ~ '18-25',
-              between(ftr_int(AGEP), 26, 35) ~ '26-35',
-              between(ftr_int(AGEP), 36, 45) ~ '36-45',
-              AGEP >= 46 ~ "46+")))
-
-pums21_all <- psrc_pums_count(pums21, group_vars = c("ESR", "SEX"),incl_na=FALSE)%>%
-  rename(
-    survey = DATA_YEAR
-  )
-
-
-
-
-pums19_sex_age <- psrc_pums_count(pums19, group_vars = c("SEX", "BIN_AGE"),incl_na=FALSE)%>%
-  filter(SEX != "Total")%>%
-  filter(BIN_AGE != "Total")%>%
-  filter(BIN_AGE == c("between 65 and 75 years", "between 75 and 85 years", "85 years and over"))%>%
-  rename(
-    survey = DATA_YEAR
-  )
-
-
-pums21_sex_age <- psrc_pums_count(pums21, group_vars = c("SEX", "BIN_AGE"),incl_na=FALSE)%>%
-  filter(SEX != "Total")%>%
-  filter(BIN_AGE != "Total")%>%
-  filter(BIN_AGE == c("between 65 and 75 years", "between 75 and 85 years", "85 years and over"))%>%
-  rename(
-    survey = DATA_YEAR
-  )
+# pvars <- c("ESR","SEX", "AGEP", "BIN_AGE", "PRACE", "PINCP")
+# hvars <- c("BINCOME", "HRACE")
+# ftr_int <- function(x){as.integer(as.character(x))} 
+# 
+# pums19 <- get_psrc_pums(1, 2019, "p", pvars) 
+# 
+# pums19 %<>% mutate(
+#   ESR= factor(
+#     case_when(grepl("^(Civilian|Armed) ", as.character(ESR)) ~ "Employed",
+#               !is.na(ESR) ~ "Not employed")),
+#   AGE = factor(
+#     case_when(between(ftr_int(AGEP), 18, 25) ~ '18-25',
+#               between(ftr_int(AGEP), 26, 35) ~ '26-35',
+#               between(ftr_int(AGEP), 36, 45) ~ '36-45',
+#               AGEP >= 46 ~ "46+")),
+#   PRACE= factor(
+#     case_when(grepl("^(Indian|Asian|Black|Hispanic|Hawaiian|Other|Two)", as.character(PRACE)) ~ "POC",
+#             !is.na(PRACE) ~ "White")))
+# 
+# #pums19 %>% 
+#  # mutate(PRACE = factor(case_when(PRACE %in% c("American Indian or Alaskan Native Alone", "Asian alone", 
+#   #                                    "Black or African American alone", 
+#    #                                   "Hispanic or Latino", "Native Hawaiian and Other Pacific Islander alone",
+#     #                                  "Some Other Race alone", "Two or More Races") ~ "POC",
+#      #                    PRACE == "White alone" ~ "White")))
+# 
+# pums19_all <- psrc_pums_count(pums19, group_vars = c("ESR", "SEX"), incl_na=FALSE)%>%
+#   filter(ESR != "Total")%>%
+#   filter(SEX != "Total")%>%
+#   rename(
+#     survey = DATA_YEAR
+#   )
+# 
+# pums19_race <- psrc_pums_count(pums19, group_vars = c("ESR", "PRACE", "SEX"), incl_na=FALSE)%>%
+#   filter(ESR != "Total")%>%
+#   filter(SEX != "Total")%>%
+#   filter(PRACE != "Total")%>%
+#   rename(
+#     survey = DATA_YEAR
+#   )
+# 
+# 
+# pums21 <- get_psrc_pums(1, 2021, "p", pvars) 
+# 
+# pums21 %<>% mutate(
+#   ESR= factor(
+#     case_when(ESR %in% c(1,2,4,5) ~ "Employed",
+#               !is.na(ESR) ~ "Not employed")),
+#   AGE = factor(
+#     case_when(between(ftr_int(AGEP), 18, 25) ~ '18-25',
+#               between(ftr_int(AGEP), 26, 35) ~ '26-35',
+#               between(ftr_int(AGEP), 36, 45) ~ '36-45',
+#               AGEP >= 46 ~ "46+")))
+# 
+# pums21_all <- psrc_pums_count(pums21, group_vars = c("ESR", "SEX"),incl_na=FALSE)%>%
+#   rename(
+#     survey = DATA_YEAR
+#   )
+# 
+# 
+# 
+# 
+# pums19_sex_age <- psrc_pums_count(pums19, group_vars = c("SEX", "BIN_AGE"),incl_na=FALSE)%>%
+#   filter(SEX != "Total")%>%
+#   filter(BIN_AGE != "Total")%>%
+#   filter(BIN_AGE == c("between 65 and 75 years", "between 75 and 85 years", "85 years and over"))%>%
+#   rename(
+#     survey = DATA_YEAR
+#   )
+# 
+# 
+# pums21_sex_age <- psrc_pums_count(pums21, group_vars = c("SEX", "BIN_AGE"),incl_na=FALSE)%>%
+#   filter(SEX != "Total")%>%
+#   filter(BIN_AGE != "Total")%>%
+#   filter(BIN_AGE == c("between 65 and 75 years", "between 75 and 85 years", "85 years and over"))%>%
+#   rename(
+#     survey = DATA_YEAR
+#   )
 
 
 
@@ -589,8 +589,8 @@ work_loc_trend<-rbind(travel_by_gender_17_19, travel_by_gender_21)%>% mutate(yea
 
 ## updates for income for race and gender (PUMS) from 2021 to include for 2023
 
-inc_sex_srvyr_obj<-get_psrc_pums(span=5, dyear=2021, level="p", vars=c("SEX","PINCP","WKHP", 'PRACE'))%>% filter(WKHP>30)
-inc_sex_2021<-psrc_pums_median(inc_sex_srvyr_obj, stat_var='PINCP',group_vars = c("SEX",'PRACE'))%>%filter(COUNTY=='Region')
+#inc_sex_srvyr_obj<-get_psrc_pums(span=5, dyear=2021, level="p", vars=c("SEX","PINCP","WKHP", 'PRACE'))%>% filter(WKHP>30)
+#inc_sex_2021<-psrc_pums_median(inc_sex_srvyr_obj, stat_var='PINCP',group_vars = c("SEX",'PRACE'))%>%filter(COUNTY=='Region')
 
 
 
