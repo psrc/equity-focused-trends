@@ -1,0 +1,34 @@
+---
+title: "map change in racial composition by tract"
+author: "suzanne"
+date: "2023-03-31"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(psrccensus)
+library(sf)
+library(dplyr)
+library(psrcelmer)
+```
+
+
+
+```{r cars}
+tract.big.tbl.21 <- psrccensus::get_acs_recs(geography='tract',table.names=c('B02011'),years=c(2021))
+```
+
+```{r pressure, echo=FALSE}
+
+tract.lyr <- st_read_elmergeo('TRACT2020_NOWATER')
+```
+
+
+```{r}
+
+create_tract_map(tract.tbl=tract.big.tbl.21, tract.lyr=tract.lyr,
+map.title.position='topleft', legend.title='Asian Alone or in Combination Population',
+legend.subtitle='ACS 2021 (5 yr)')
+
+```
+
