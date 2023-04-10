@@ -7,21 +7,576 @@ output: html_notebook
 library(psrc.travelsurvey)
 library(psrccensus)
 library(psrcplot)
-library(psrctrends)
 library(tidycensus)
 library(psrcelmer)
+library(psrcctpp)
 
 library(tidyverse)
-library(stringr)
-library(rlang)
-library(chron)
-library(scales)
 library(gridExtra)
 library(sf)
 
 install_psrc_fonts()
 
-vars_meta$variable
+options(scipen=999)
+# vars_meta$variable
 
 ```
 
+```{r}
+tract.asian <-get_acs_recs(geography='tract',table.names=c('B02011'),years=c(2021))
+tract.na.pi <-get_acs_recs(geography='tract',table.names=c('B02012'),years=c(2021))
+
+tract.lyr <- st_read_elmergeo('TRACT2020_NOWATER')
+
+create_tract_map(tract.tbl=tract.asian, tract.lyr=tract.lyr,
+map.title.position='topleft', legend.title='Asian Alone or in Combination Population',
+legend.subtitle='ACS 2021 (5 yr)')
+```
+
+
+```{r}
+create_tract_map(tract.tbl=tract.na.pi, tract.lyr=tract.lyr,
+map.title.position='topleft', legend.title='Native Hawaiian and other Pacific Islander alone or in Combination Population',
+legend.subtitle='ACS 2021 (5 yr)')
+```
+
+# transit and walking frequency
+```{r}
+
+trans <- hhts_count(per_data_17_19, 
+                   group_vars=c("race_aapi", "transit_freq2"),
+                   spec_wgt = "hh_weight_2017_2019_adult",
+           incl_na = FALSE) %>%
+  add_row(hhts_count(per_data_21, 
+                   group_vars=c("race_aapi", "transit_freq2"),
+                   spec_wgt = "person_adult_weight_2021",
+           incl_na = FALSE)) %>%
+  filter(transit_freq2=="at least 1 day/week",
+         #race_aapi %in% c("Asian or Pacific Islander","White only")
+         )
+
+tele <- hhts_count(per_data_17_19,
+           group_vars=c("race_aapi", "workplace_travel"),
+           spec_wgt = "hh_weight_2017_2019_adult",
+           incl_na = FALSE) %>%
+  add_row(
+    hhts_count(per_data_21,
+               group_vars=c("race_aapi", "workplace_travel"),
+               spec_wgt = "person_adult_weight_2021",
+               incl_na = FALSE)) %>%
+  filter(#race_aapi %in% c("Asian or Pacific Islander","White only"),
+         workplace_travel=="Works at home")
+
+ggplot(trans, aes(x=race_aapi, y=share, fill=survey)) +
+  geom_col(position = "dodge")+  
+  # facet_wrap(~race_aapi)+
+  moe_bars+
+  scale_y_continuous(labels=percent) +
+  scale_fill_discrete_psrc ("gnbopgy_5")+
+  labs(title="Transit usage at least 1 day/week by race", caption = "2017/2019 and 2021 PSRC Household Travel Surveys")+
+  psrc_style() + 
+  theme(axis.title.x= element_blank(),
+          axis.title.y= element_blank(),
+          axis.text.x = element_text(angle=15,vjust=0.9,hjust=0.6))
+
+
+ggplot(tele, aes(x=race_aapi, y=share, fill=survey)) +
+  geom_col(position = "dodge")+
+  # facet_wrap(~race_aapi)+
+  moe_bars+
+  scale_y_continuous(labels=percent) +
+  scale_fill_discrete_psrc ("gnbopgy_5")+
+  labs(title="Telework by race", caption = "2017/2019 and 2021 PSRC Household Travel Surveys")+
+  psrc_style() +
+  theme(axis.title.x= element_blank(),
+          axis.title.y= element_blank(),
+          axis.text.x = element_text(angle=15,vjust=0.9,hjust=0.6))
+
+
+
+```
+
+
+
+# trip mode share by race
+```{r}
+ggplot(hts_mode_by_race_4cat, 
+       aes(x= mode_simple, y= share, fill= survey)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~race_4cat)+
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_fill_manual(values = psrc_colors$pognbgy_10)+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                          width=0.2, position = position_dodge(0.9))+
+  labs(title="Trip Mode Share", caption = "2017/2019 and 2021 PSRC Household Travel Surveys")+
+  psrc_style() +
+  theme(axis.title.x= element_blank(),
+        axis.title.y= element_blank(),
+          axis.text.x = element_text(angle=45,vjust=1.1, hjust=1.05))
+ggplot(hts_mode_by_race_3cat, 
+       aes(x= mode_simple, y= share, fill= survey)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~race_3cat)+
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_fill_manual(values = psrc_colors$pognbgy_10)+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                          width=0.2, position = position_dodge(0.9))+
+  labs(title="Trip Mode Share", caption = "2017/2019 and 2021 PSRC Household Travel Surveys")+
+  psrc_style() +
+  theme(axis.title.x= element_blank(),
+        axis.title.y= element_blank(),
+          axis.text.x = element_text(angle=45,vjust=1.1, hjust=1.05))
+
+```
+
+# trip mode share by race (each mode)
+```{r}
+all_modes <- list("Drive","Transit","Walk","Bike")
+
+# commute mode share (no WFH) by race (4 categories)
+plot_trip_mode_share_by_race <- function(plot_mode){
+  
+    ggplot(hts_mode_by_race_4cat %>% filter(mode_simple == plot_mode), 
+           aes(x= race_4cat, y= share, fill= survey)) +
+      geom_col(position = "dodge") +
+      scale_y_continuous(labels = scales::label_percent()) +
+      scale_fill_manual(values = psrc_colors$purples_inc[c(2,4)])+
+      geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                              width=0.2, position = position_dodge(0.9))+
+      labs(title=paste("Trip Mode Share (", plot_mode, ") by race", sep=""),
+      caption = "2017/2019 and 2021 PSRC Household Travel Surveys")+
+      psrc_style() +
+      theme(axis.title.x= element_blank(),
+            axis.title.y= element_blank(),
+            axis.text.x = element_text(angle=15, hjust=0.7))
+}
+for (mode in all_modes){print(plot_trip_mode_share_by_race(mode))}
+
+# commute mode share (no WFH) by race (3 categories)
+plot_trip_mode_share_by_race <- function(plot_mode){
+  
+    ggplot(hts_mode_by_race_3cat %>% filter(mode_simple == plot_mode), 
+           aes(x= race_3cat, y= share, fill= survey)) +
+      geom_col(position = "dodge") +
+      scale_y_continuous(labels = scales::label_percent()) +
+      scale_fill_manual(values = psrc_colors$blues_inc[c(3,5)])+
+      geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                              width=0.2, position = position_dodge(0.9))+
+      labs(title=paste("Trip Mode Share (", plot_mode, ") by race", sep=""),
+      caption = "2017/2019 and 2021 PSRC Household Travel Surveys")+
+      psrc_style() +
+      theme(axis.title.x= element_blank(),
+            axis.title.y= element_blank())
+}
+for (mode in all_modes){print(plot_trip_mode_share_by_race(mode))}
+```
+
+
+# commute mode share by race
+```{r}
+ggplot(pums_race_commute_19_4cat %>%
+         add_row(pums_race_commute_21_4cat) %>% 
+         filter(!mode %in% c("Total",NA,"Other"),
+                race_4cat %in% c("Asian or Pacific Islander","White alone")), 
+       aes(x= mode, y= share, fill= factor(DATA_YEAR))) +
+  geom_col(position = "dodge") +
+  facet_wrap(~race_4cat)+
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_fill_manual(values = psrc_colors$pognbgy_10)+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                          width=0.2, position = position_dodge(0.9))+
+  labs(title="Commute Mode Share", caption = "2019 and 2021 Public Use Microsample Census data")+
+  psrc_style() +
+  theme(axis.title.x= element_blank(),
+        axis.title.y= element_blank(),
+          axis.text.x = element_text(angle=45,vjust=1.1, hjust=1.05))
+
+ggplot(pums_race_commute_19_no_wfm_4cat %>%
+         add_row(pums_race_commute_21_no_wfm_4cat) %>% 
+         filter(!mode %in% c("Total","Drive",NA,"Other"),
+                race_4cat %in% c("Asian or Pacific Islander","White alone")), 
+       aes(x= mode, y= share, fill= factor(DATA_YEAR))) +
+  geom_col(position = "dodge") +
+  facet_wrap(~race_4cat)+
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_fill_manual(values = psrc_colors$pognbgy_10)+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                          width=0.2, position = position_dodge(0.9))+
+  labs(title="Commute Mode Share", caption = "2019 and 2021 Public Use Microsample Census data")+
+  psrc_style() +
+  theme(axis.title.x= element_blank(),
+        axis.title.y= element_blank(),
+          axis.text.x = element_text(angle=45,vjust=1.1, hjust=1.05))
+```
+
+# commute mode share by race [each mode]
+```{r}
+
+# share of WFH by race (AAPI and other races)
+ggplot(pums_race_commute_19_4cat %>%
+         add_row(pums_race_commute_21_4cat) %>% 
+         filter(mode %in% c("Worked from home")), 
+       aes(x= race_4cat, y= share, fill= factor(DATA_YEAR))) +
+  geom_col(position = "dodge") +
+  # facet_wrap(~race_aapi)+
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_fill_manual(values = psrc_colors$oranges_inc[c(2,4)])+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                          width=0.2, position = position_dodge(0.9))+
+  labs(title="Share of Telework by race", caption = "2019 and 2021 Public Use Microsample Census data")+
+  psrc_style() +
+  theme(axis.title.x= element_blank(),
+        axis.title.y= element_blank(),
+              axis.text.x = element_text(angle=15, hjust=0.7))
+
+# share of WFH by race (AAPI, other POC and white)
+ggplot(pums_race_commute_19_3cat  %>%
+         add_row(pums_race_commute_21_3cat ) %>% 
+         filter(mode %in% c("Worked from home")), 
+       aes(x= race_3cat, y= share, fill= factor(DATA_YEAR))) +
+  geom_col(position = "dodge") +
+  # facet_wrap(~race_aapi)+
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_fill_manual(values = psrc_colors$oranges_inc[c(2,4)])+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                          width=0.2, position = position_dodge(0.9))+
+  labs(title="Share of Telework by race", caption = "2019 and 2021 Public Use Microsample Census data")+
+  psrc_style() +
+  theme(axis.title.x= element_blank(),
+        axis.title.y= element_blank())
+
+all_modes <- list("Drive","Public Transit","Walked","Bicycle")
+
+# commute mode share (no WFH) by race (4 categories)
+plot_commute_mode_share_by_race <- function(plot_mode){
+  
+  return(
+    ggplot(pums_race_commute_19_no_wfm_4cat  %>%
+           add_row(pums_race_commute_21_no_wfm_4cat ) %>% 
+           filter(mode %in% c(plot_mode)), 
+           aes(x= race_4cat, y= share, fill= factor(DATA_YEAR))) +
+      geom_col(position = "dodge") +
+      # facet_wrap(~mode,ncol = 4,scales = "free_y")+
+      scale_y_continuous(labels = scales::label_percent()) +
+      scale_fill_manual(values = psrc_colors$purples_inc[c(2,4)])+
+      geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                              width=0.2, position = position_dodge(0.9))+
+      labs(title=paste("Commute Mode Share (", plot_mode, ") by race", sep=""), 
+           caption = "2019 and 2021 Public Use Microsample Census data")+
+      psrc_style() +
+      theme(axis.title.x= element_blank(),
+            axis.title.y= element_blank(),
+              axis.text.x = element_text(angle=15, hjust=0.7))
+    )
+
+}
+for (mode in all_modes){print(plot_commute_mode_share_by_race(mode))}
+
+
+# commute mode share (no WFH) by race (3 categories)
+plot_commute_mode_share_by_race <- function(plot_mode){
+  
+  return(
+    ggplot(pums_race_commute_19_no_wfm_3cat %>%
+           add_row(pums_race_commute_21_no_wfm_3cat) %>% 
+           filter(mode %in% c(plot_mode)), 
+           aes(x= race_3cat, y= share, fill= factor(DATA_YEAR))) +
+      geom_col(position = "dodge") +
+      # facet_wrap(~mode,ncol = 4,scales = "free_y")+
+      scale_y_continuous(labels = scales::label_percent()) +
+      scale_fill_manual(values = psrc_colors$blues_inc[c(3,5)])+
+      geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                              width=0.2, position = position_dodge(0.9))+
+      labs(title=paste("Commute Mode Share (", plot_mode, ") by race", sep=""), 
+           caption = "2019 and 2021 Public Use Microsample Census data")+
+      psrc_style() +
+      theme(axis.title.x= element_blank(),
+            axis.title.y= element_blank())
+    )
+
+}
+for (mode in all_modes){print(plot_commute_mode_share_by_race(mode))}
+
+```
+
+# telework share by race by county
+```{r}
+# share of WFH by race (AAPI and other races)
+ggplot(pums_race_commute_19_3cat_county %>%
+         add_row(pums_race_commute_21_3cat_county) %>% 
+         filter(mode %in% c("Worked from home")), 
+       aes(x= race_3cat, y= share, fill= factor(DATA_YEAR))) +
+  geom_col(position = "dodge") +
+  facet_wrap(~COUNTY,ncol = 4)+
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_fill_manual(values = psrc_colors$oranges_inc[c(2,4)])+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                          width=0.2, position = position_dodge(0.9))+
+  labs(title="Share of Telework by race by county", caption = "2019 and 2021 Public Use Microsample Census data")+
+  psrc_style() +
+  theme(axis.title.x= element_blank(),
+        axis.title.y= element_blank(),
+          axis.text.x = element_text(angle=15,vjust=1.1, hjust=1.05))
+
+plot_commute_mode_share_by_race_by_county <- function(plot_mode){
+  
+  return(
+    ggplot(pums_race_commute_19_no_wfm_3cat_county %>%
+             add_row(pums_race_commute_21_no_wfm_3cat_county) %>% 
+             filter(mode %in% c(plot_mode)), 
+             aes(x= race_3cat, y= share, fill= factor(DATA_YEAR))) +
+      geom_col(position = "dodge") +
+      facet_wrap(~COUNTY,ncol = 4)+
+      scale_y_continuous(labels = scales::label_percent()) +
+      scale_fill_manual(values = psrc_colors$blues_inc[c(3,5)])+
+      geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                              width=0.2, position = position_dodge(0.9))+
+      labs(title=paste("Commute Mode Share (",plot_mode,") by race", sep=""), 
+           caption = "2019 and 2021 Public Use Microsample Census data")+
+      psrc_style() +
+      theme(axis.title.x= element_blank(),
+            axis.title.y= element_blank(),
+              axis.text.x = element_text(angle=15,vjust=1.1, hjust=1.05))
+  )
+
+}
+
+all_modes <- list("Drive","Public Transit")
+
+for (mode in all_modes){print(plot_commute_mode_share_by_race_by_county(mode))}
+```
+
+# demographic characteristics
+```{r}
+
+# share of WFH by race (AAPI and other races)
+ggplot(pums_race_veh_21 %>%
+         filter(vehicle == "No vehicle"), 
+       aes(x= race_3cat, y= share, fill= factor(DATA_YEAR))) +
+  geom_col(position = "dodge") +
+  # facet_wrap(~race_aapi)+
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_fill_manual(values = psrc_colors$greens_inc[c(4)])+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                          width=0.2, position = position_dodge(0.9))+
+  labs(title="Car-free household by race", caption = "2021 Public Use Microsample Census data")+
+  psrc_style() +
+  theme(axis.title.x= element_blank(),
+        axis.title.y= element_blank())
+
+
+ggplot(pums_race_veh_21_county %>%
+         filter(vehicle == "No vehicle"), 
+       aes(x= race_3cat, y= share, fill= factor(DATA_YEAR))) +
+  geom_col(position = "dodge") +
+  facet_wrap(~COUNTY,ncol = 4)+
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_fill_manual(values = psrc_colors$greens_inc[c(4)])+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                          width=0.2, position = position_dodge(0.9))+
+  labs(title="Car-free household by race by county", caption = "2021 Public Use Microsample Census data")+
+  psrc_style() +
+  theme(axis.title.x= element_blank(),
+        axis.title.y= element_blank(),
+          axis.text.x = element_text(angle=15,vjust=1.1, hjust=1))
+```
+
+
+```{r}
+
+# share of WFH by race (AAPI and other races)
+ggplot(pums_race_migrate_21 %>%
+         filter(mode %in% c("Worked from home"),
+                share_moe>0,
+                share>0.4) %>%
+         mutate(migrate = fct_reorder(migrate, desc(share))), 
+       aes(x= migrate, y= share, fill= factor(DATA_YEAR))) +
+  geom_col(position = "dodge") +
+  # facet_wrap(~race_aapi)+
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_fill_manual(values = psrc_colors$oranges_inc[c(4)])+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                          width=0.2, position = position_dodge(0.9))+
+  labs(title="[AAPI] Share of Telework by Place of Birth", caption = "2021 Public Use Microsample Census data")+
+  psrc_style() +
+  theme(axis.title.x= element_blank(),
+        axis.title.y= element_blank(),
+          axis.text.x = element_text(angle=15, hjust=0.8))
+
+```
+
+
+```{r}
+
+ggplot(purpose_plot %>% filter(race_aapi %in% c("Asian or Pacific Islander","White only")), 
+            aes(x=simple_purpose, y=trips_per_person, fill=survey)) +
+  geom_col(position = "dodge")+  
+  facet_wrap(~race_aapi)+
+  geom_errorbar(aes(ymin=trips_per_person-moe_trips_person, ymax=trips_per_person+moe_trips_person),
+                width=0.2, position = position_dodge(0.9))+
+  scale_y_continuous(limits = c(0,2))+
+  scale_fill_discrete_psrc ("gnbopgy_5")+
+  labs(title="Trip Purpose", caption = "2017/2019 and 2021 PSRC Household Travel Surveys")+
+  psrc_style()+
+  theme(axis.title.x= element_blank(),
+        axis.title.y= element_blank(),
+          axis.text.x = element_text(angle=45,vjust=1.1, hjust=1.05))
+
+ggplot(purpose_plot %>% filter(!race_aapi %in% c("Asian or Pacific Islander","White only")), 
+            aes(x=simple_purpose, y=trips_per_person, fill=survey)) +
+  geom_col(position = "dodge")+  
+  facet_wrap(~race_aapi)+
+  geom_errorbar(aes(ymin=trips_per_person-moe_trips_person, ymax=trips_per_person+moe_trips_person),
+                width=0.2, position = position_dodge(0.9))+
+  scale_y_continuous(limits = c(0,2))+
+  scale_fill_discrete_psrc ("gnbopgy_5")+
+  labs(title="Trip Purpose", caption = "2017/2019 and 2021 PSRC Household Travel Surveys")+
+  psrc_style()+
+  theme(axis.title.x= element_blank(),
+        axis.title.y= element_blank(),
+          axis.text.x = element_text(angle=45,vjust=1.1, hjust=1.05))
+```
+
+```{r}
+ggplot(acs_race_occupation_5year %>% 
+         filter(name=="Region",
+                occupation!="Total" ) %>%
+         wrap_axis(occupation,20) %>%
+         mutate(race = stringr::str_wrap(race, width=15)), 
+       aes(x= fct_rev(cat), y= occupation_share, fill= race)) +
+  geom_col(position = "dodge") +
+  scale_y_continuous(labels = label_percent()) +
+  scale_fill_manual(values = psrc_colors$pognbgy_10)+
+  geom_errorbar(aes(ymin=occupation_share-occupation_moe, ymax=occupation_share+occupation_moe),
+                          width=0.2, position = position_dodge(0.9))+
+  coord_flip()+
+  psrc_style() +
+  labs(title="Share of Workers by Industry", caption = "2021 Public Use Microsample Census data")+
+  theme(axis.title.x= element_blank(),
+        axis.title.y= element_blank(),
+        panel.grid.major.y = element_blank(),
+      panel.grid.major.x = element_line(color="#cbcbcb"),
+      legend.position = "right")
+
+```
+
+
+```{r}
+
+```
+
+
+```{r difference between 1 and 5 year data}
+diff <- race_commute_5year %>%
+  ungroup() %>%
+  add_row(race_commute_1year %>%
+  ungroup()) %>%
+  filter(race %in% c("Asian only","Native Hawaiian and other Pacific Islander alone"),
+         name == "Region",
+         mode!="Total")%>%
+  mutate(mode = factor(mode, levels=c("Drove alone",
+                                       "Carpooled",
+                                       "Public transit",
+                                       "Walked",
+                                       "Other",
+                                       "Work from home")),
+         acs_type = factor(acs_type,levels=c("acs5","acs1")))
+
+ggplot(diff, aes(x=mode,y=estimate,fill=acs_type))+
+  geom_col(position="dodge")+
+  scale_fill_manual(values = psrc_colors$pognbgy_10)+
+  geom_errorbar(aes(ymin=estimate-moe, ymax=estimate+moe),
+                            width=0.2, position = position_dodge(0.9))+
+    facet_wrap(~race, scales = "free_y")+
+  psrc_style()+
+  theme(axis.title.x= element_blank(),
+          axis.title.y= element_blank(),
+          axis.text.x = element_text(angle=45,vjust=1.1, hjust=1.05))
+```
+
+# Place of Birth by race
+```{r}
+test <- get_acs_recs(geography = "county", table.names = 'B06004I', years = 2021, acs.type = 'acs5')
+  
+plot_acs_birth <- function(.data, acs_type){
+  .plot_data <- .data %>% 
+   mutate(born = stringr::str_wrap(born, width=11),
+          race = stringr::str_wrap(race, width=22),
+          born = factor(born, levels = c("Born in WA\nstate",
+                                         "Born in\nother state",
+                                         "Native:\nborn\noutside the\nUS",
+                                         "Foreign\nborn")),
+          race = factor(race,levels = c("American Indian and\nAlaska Native alone",
+                                        "Asian only",
+                                        "Black or African\nAmerican alone",
+                                        "Hispanic or Latino",
+                                        "Native Hawaiian and\nother Pacific Islander\nalone",
+                                        "White alone")),
+          born_moe = ifelse(is.na(born_moe),0,born_moe))
+  ggplot(.plot_data %>% filter(name=="Region"), 
+       aes(x= born, y= born_share, fill= race)) +
+    geom_col(position = "dodge") +
+    scale_y_continuous(labels = label_percent()) +
+    scale_fill_manual(values = psrc_colors$pognbgy_10)+
+    geom_errorbar(aes(ymin=born_share-born_moe, ymax=born_share+born_moe),
+                            width=0.2, position = position_dodge(0.9))+
+    psrc_style() +
+    labs(title = paste("Place of birth share by race - ACS 2021 [", acs_type, "year] data"))+
+    theme(axis.title.x= element_blank(),
+          axis.title.y= element_blank())
+}
+plot_acs_birth(race_birthplace_5year, "5")
+plot_acs_birth(race_birthplace_1year, "1")
+```
+#old analysis
+```{r}
+plot <- data_commute %>% 
+   filter(!commute_mode2 %in% c("NA", "Total", "Other modes")) %>%
+   wrap_axis(commute_mode2, w=15) %>%
+   mutate(cat = factor(cat, levels = c("Drive alone","HOV modes",
+                "Public transit","Walk","Bike or micro-\nmobility")))
+
+
+ggplot(plot, aes(x= cat, y= share, fill= race_aapi)) +
+  geom_col(position = "dodge") +
+  scale_y_continuous(labels = label_percent()) +
+  scale_fill_manual(values = psrc_colors$pognbgy_10)+
+  moe_bars+
+  psrc_style() +
+  labs(title = "Commute mode share by race")+
+  theme(axis.title.x= element_blank())
+```
+
+```{r ACS commute by race}
+# TODO: change to facet like diff charts
+plot_acs_commute <- function(.data, acs_type){
+  .plot_data <- .data %>% 
+   filter(!mode %in% c("Total")) %>%
+   mutate(race = stringr::str_wrap(race, width=22),
+          race = factor(race,levels = c("American Indian and\nAlaska Native alone",
+                                        "Asian only",
+                                        "Black or African\nAmerican alone",
+                                        "Hispanic or Latino",
+                                        "Native Hawaiian and\nother Pacific Islander\nalone",
+                                        "White alone")),
+          mode = factor(mode, levels=c("Drove alone",
+                                       "Carpooled",
+                                       "Public transit",
+                                       "Walked",
+                                       "Other",
+                                       "Work from home")))
+
+  ggplot(.plot_data %>% filter(name=="Region"), aes(x= mode, y= mode_share, fill= race)) +
+    geom_col(position = "dodge") +
+    scale_y_continuous(labels = label_percent()) +
+    scale_fill_manual(values = psrc_colors$pognbgy_10)+
+    geom_errorbar(aes(ymin=mode_share-mode_moe, ymax=mode_share+mode_moe),
+                            width=0.2, position = position_dodge(0.9))+
+    psrc_style() +
+    labs(title = paste("Commute mode share by race - ACS 2021 [", acs_type, "year] data"))+
+    theme(axis.title.x= element_blank(),
+          axis.title.y= element_blank())
+}
+plot_acs_commute(race_commute_5year, "5")
+plot_acs_commute(race_commute_1year, "1")
+```
