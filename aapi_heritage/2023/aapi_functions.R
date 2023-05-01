@@ -28,7 +28,7 @@ get_acs_all_race <- function(name,year,data_type){
 aapi_pums_recode <- function(.pums){
   
   .pums <- .pums %>% 
-    filter(JWTRNS!="Total", !is.na(JWTRNS)) %>%
+    # filter(JWTRNS!="Total", !is.na(JWTRNS)) %>%
     mutate(
       race_aapi = case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
                             PRACE == "White alone" ~ "White alone",
@@ -43,19 +43,29 @@ aapi_pums_recode <- function(.pums){
                                     PRACE == "Black or African American alone" ~ "Black or African American alone",
                                     TRUE ~ "Some Other Race(s)"),
                           levels = c("Asian or Pacific Islander","Black or African American alone","Hispanic or Latino","White alone","Some Other Race(s)")),
-      mode = factor(case_when(JWTRNS %in% c("Car, truck, or van",
-                                            "Motorcycle")~"Drive",
+      mode = case_when(JWTRNS %in% c("Car, truck, or van")~"Drive",
                               JWTRNS %in% c("Bus",
                                             "Light rail, streetcar, or trolley",
                                             "Long-distance train or commuter train",
                                             "Subway or elevated rail",
-                                            "Ferryboat")~"Public Transit",
-                              JWTRNS == "Taxicab" ~"Ridehail/Taxi",
+                                            "Ferryboat",
+                                            "Long-distance train or commuter rail")~"Public Transit",
                               JWTRNS == "Bicycle" ~"Bicycle",
                               JWTRNS == "Walked" ~"Walked",
                               JWTRNS == "Worked from home" ~"Worked from home",
-                              JWTRNS == "Other method" | is.na(JWTRNS) ~"Other"),
-                    c("Drive","Public Transit","Walked","Bicycle","Ridehail/Taxi","Worked from home","Other")),
+                              JWTRNS %in% c("Motorcycle","Taxicab","Other method") ~"Other",
+                              TRUE~JWTRNS),
+      mode_hts = case_when(JWTRNS %in% c("Car, truck, or van")~"Drive",
+                              JWTRNS %in% c("Bus",
+                                            "Light rail, streetcar, or trolley",
+                                            "Long-distance train or commuter train",
+                                            "Subway or elevated rail",
+                                            "Ferryboat",
+                                            "Long-distance train or commuter rail")~"Transit",
+                              JWTRNS %in% c("Walked","Bicycle") ~"Walk/Bike",
+                              JWTRNS == "Worked from home" ~"Worked from home",
+                              JWTRNS %in% c("Motorcycle","Taxicab","Other method") ~"Other",
+                              TRUE~JWTRNS),
       vehicle = factor(case_when(VEH == "No vehicles"~ "No vehicle",
                                  VEH %in% c("1 vehicle",
                                             "2 vehicles",
@@ -66,10 +76,88 @@ aapi_pums_recode <- function(.pums){
                        levels = c("No vehicle","1+ vehicle(s)")),
       migrate = case_when(POBP=="Washington/WA"~"Born in state of residence",
                           grepl("/",POBP) | POBP == "Other US Island Areas, Oceania, Not Specified, or At Sea" ~"Born in other state in the United States",
-                          TRUE~POBP))
+                          TRUE~POBP),
+      age = factor(case_when(AGEP < 18 ~ "Under 18 years",
+                             AGEP < 25 ~ "18-24 years",
+                             AGEP < 35 ~ "25-34 years",
+                             AGEP < 45 ~ "35-44 years",
+                             AGEP < 55 ~ "45-54 years",
+                             AGEP < 65 ~ "55-64 years",
+                             AGEP >64 ~ "65 years and above"),
+                   levels = c("Under 18 years",
+                              "18-24 years",
+                              "25-34 years",
+                              "35-44 years",
+                              "45-54 years",
+                              "55-64 years",
+                              "65 years and above")))
+}
+aapi_pums_recode_17 <- function(.pums){
+  
+  .pums <- .pums %>% 
+    # filter(JWTR!="Total", !is.na(JWTR)) %>%
+    mutate(
+      race_aapi = case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
+                            PRACE == "White alone" ~ "White alone",
+                            TRUE ~ PRACE),
+      race_3cat =  factor(case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
+                                    PRACE == "White alone" ~ "White alone",
+                                    TRUE ~ "Other people of color"),
+                          levels = c("Asian or Pacific Islander","Other people of color","White alone")),
+      race_4cat =  factor(case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
+                                    PRACE == "White alone" ~ "White alone",
+                                    PRACE == "Hispanic or Latino" ~ "Hispanic or Latino",
+                                    PRACE == "Black or African American alone" ~ "Black or African American alone",
+                                    TRUE ~ "Some Other Race(s)"),
+                          levels = c("Asian or Pacific Islander","Black or African American alone","Hispanic or Latino","White alone","Some Other Race(s)")),
+      mode = case_when(JWTR %in% c("Car, truck, or van")~"Drive",
+                              JWTR %in% c("Bus or trolley bus","Ferryboat","Railroad",
+                                          "Streetcar or trolley car (carro publico in Puerto Rico)",
+                                          "Subway or elevated")~"Public Transit",
+                              JWTR == "Bicycle" ~"Bicycle",
+                              JWTR == "Walked" ~"Walked",
+                              JWTR == "Worked at home" ~"Worked from home",
+                              JWTR %in% c("Motorcycle","Taxicab","Other method")~"Other",
+                       TRUE~JWTR),
+      mode_hts = case_when(JWTR %in% c("Car, truck, or van")~"Drive",
+                                  JWTR %in% c("Bus or trolley bus","Ferryboat","Railroad",
+                                                "Streetcar or trolley car (carro publico in Puerto Rico)",
+                                                "Subway or elevated")~"Transit",
+                                  JWTR %in% c("Walked","Bicycle") ~"Walk/Bike",
+                                  JWTR == "Worked at home" ~"Worked from home",
+                                  JWTR %in% c("Motorcycle","Taxicab","Other method") ~"Other",
+                           TRUE~JWTR),
+      vehicle = factor(case_when(VEH == "No vehicles"~ "No vehicle",
+                                 VEH %in% c("1 vehicle",
+                                            "2 vehicles",
+                                            "3 vehicles",
+                                            "4 vehicles",
+                                            "5 vehicles",
+                                            "6 or more vehicles") ~ "1+ vehicle(s)"),
+                       levels = c("No vehicle","1+ vehicle(s)")),
+      migrate = case_when(POBP=="Washington/WA"~"Born in state of residence",
+                          grepl("/",POBP) | POBP == "Other US Island Areas, Oceania, Not Specified, or At Sea" ~"Born in other state in the United States",
+                          TRUE~POBP),
+      age = factor(case_when(AGEP < 18 ~ "Under 18 years",
+                             AGEP < 25 ~ "18-24 years",
+                             AGEP < 35 ~ "25-34 years",
+                             AGEP < 45 ~ "35-44 years",
+                             AGEP < 55 ~ "45-54 years",
+                             AGEP < 65 ~ "55-64 years",
+                             AGEP >64 ~ "65 years and above"),
+                   levels = c("Under 18 years",
+                              "18-24 years",
+                              "25-34 years",
+                              "35-44 years",
+                              "45-54 years",
+                              "55-64 years",
+                              "65 years and above")))
 }
 
-
+rgc_hct <- c("Auburn","Bellevue","Bothell Canyon Park","Burien",
+             "Everett","Federal Way","Kent","Kirkland Totem Lake",
+             "Redmond-Overlake","Redmond Downtown","Renton",
+             "Seattle South Lake Union","Seattle Uptown","Tukwila")
 # HTS[household]: group fields ####
 hh_group_data <- function(.data){
   .data <- .data %>%
@@ -111,7 +199,10 @@ hh_group_data <- function(.data){
                                                         "$75,000-$99,999")~ "$25,000 - $99,999",
                                   hhincome_broad %in% c("$100,000-$199,000",
                                                         "$200,000 or more","$100,000 or more") ~ "$100,000 and over",
-                                  TRUE ~ hhincome_broad)
+                                  TRUE ~ hhincome_broad),
+      home_in_HCT = case_when(final_home_rgcnum %in% rgc_hct ~ "centers with HTC",
+                              !is.na(final_home_rgcnum) ~ "other centers",
+                              TRUE~ "not in centers")
     )
   
   .data$vehicle_count <- factor(.data$vehicle_count, levels=c("No vehicle","1","2 or more"))
@@ -186,8 +277,27 @@ per_group_data <- function(.data,hh_data){
                                                     "Carpool with other people not in household (may also include household members)",
                                                     "Vanpool",
                                                     "Private bus or shuttle") ~ "HOV modes",
-                                is.na(commute_mode) ~ "NA",
+                                is.na(commute_mode) ~ NA,
                                 TRUE ~ "Other modes"),
+      commute_mode3 = case_when(commute_mode %in% c("Vanpool","Private bus or shuttle","Paratransit","Ferry or water taxi",
+                                                    "Bus (public transit)","Urban rail (Link light rail, monorail, streetcar)",
+                                                    "Commuter rail (Sounder, Amtrak)","Streetcar","Urban rail (Link light rail, monorail)") ~"Transit",
+                               commute_mode %in% c("Carpool ONLY with other household members",
+                                                   "Carpool with other people not in household (may also include household members)")~"Carpool",
+                               commute_mode %in% c("Bicycle or e-bike", "Walk, jog, or wheelchair")~"Walk/Bike",
+                               commute_mode == "Drive alone"~"Drive Alone",
+                               is.na(commute_mode) ~ NA,
+                               TRUE~ "Other"),
+      commute_mode_compare_pums = case_when(commute_mode %in% c("Vanpool","Private bus or shuttle","Paratransit","Ferry or water taxi",
+                                                    "Bus (public transit)","Urban rail (Link light rail, monorail, streetcar)",
+                                                    "Commuter rail (Sounder, Amtrak)","Streetcar","Urban rail (Link light rail, monorail)") ~"Transit",
+                                commute_mode %in% c("Drive alone",
+                                                    "Carpool ONLY with other household members",
+                                                    "Carpool with other people not in household (may also include household members)") | 
+                                  workplace == "Drives for a living (e.g., bus driver, salesperson)"~"Drive",
+                                commute_mode %in% c("Bicycle or e-bike", "Walk, jog, or wheelchair")~"Walk/Bike",
+                                is.na(commute_mode) ~ NA,
+                                TRUE~ "Other"),
       telecommute_freq = case_when(telecommute_freq %in% c("1 day a week","2 days a week", "1-2 days")~"1-2 days",
                                    telecommute_freq %in% c("3 days a week","4 days a week", "3-4 days")~"3-4 days",
                                    telecommute_freq %in% c("5 days a week","6-7 days a week", "5+ days")~"5+ days",
@@ -205,8 +315,8 @@ per_group_data <- function(.data,hh_data){
     ) %>%
     # add household data
     left_join(hh_data %>%
-                select(survey_year:hhincome_broad,vehicle_binary:hhincome_binary), 
-              by = c("household_id"="hhid")) 
+                select(survey_year:hhincome_broad,household_id:hhincome_binary,home_in_HCT), 
+              by = "household_id") 
   
   # .data$race_eth_broad <- factor(.data$race_eth_broad, 
   #                                levels=c("Asian only",
@@ -253,6 +363,9 @@ per_group_data <- function(.data,hh_data){
                                                              NA))
   .data$commute_mode2 <- factor(.data$commute_mode2, level = c("Drive alone","HOV modes","Public transit",
                                                                "Walk","Bike or micro-mobility","Other modes","NA"))
+  
+  .data$commute_mode3 <- factor(.data$commute_mode3, level = c("Drive Alone","Transit","Carpool",
+                                                               "Walk/Bike","Other"))
   
   .freq <- c("I never do this",
              "1 day/week",
@@ -312,7 +425,8 @@ trip_group_data <- function(.data,per_data){
                 select(survey_year,person_id,sample_county:vehicle_count,vehicle_binary,
                        hhincome_broad,hhincome_binary,have_child,
                        gender,age,age_category,race_eth_broad,race_4cat,race_3cat,
-                       education,education2,workplace:license,commute_mode2), 
+                       education,education2,workplace:license,commute_mode2,commute_mode3,commute_mode_compare_pums,
+                       home_in_HCT), 
               by = "person_id")
   
   .data$simple_purpose <- factor(.data$simple_purpose, 
