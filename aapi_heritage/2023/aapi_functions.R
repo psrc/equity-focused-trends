@@ -1,12 +1,164 @@
 library(tidyverse)
 library(stringr)
 
-
-
-
-
 # functions for data processing ####
-# group fields
+# get ACS table by race ####
+get_acs_all_race <- function(name,year,data_type){
+  get_acs_recs(          geography = "county", table.names = paste(name,'A',sep=""), years = year, acs.type = data_type) %>%
+    add_row(get_acs_recs(geography = "county", table.names = paste(name,'B',sep=""), years = year, acs.type = data_type)) %>%
+    add_row(get_acs_recs(geography = "county", table.names = paste(name,'C',sep=""), years = year, acs.type = data_type)) %>%
+    add_row(get_acs_recs(geography = "county", table.names = paste(name,'D',sep=""), years = year, acs.type = data_type)) %>%
+    add_row(get_acs_recs(geography = "county", table.names = paste(name,'E',sep=""), years = year, acs.type = data_type)) %>%
+    add_row(get_acs_recs(geography = "county", table.names = paste(name,'F',sep=""), years = year, acs.type = data_type)) %>%
+    add_row(get_acs_recs(geography = "county", table.names = paste(name,'G',sep=""), years = year, acs.type = data_type)) %>%
+    add_row(get_acs_recs(geography = "county", table.names = paste(name,'H',sep=""), years = year, acs.type = data_type)) %>%
+    add_row(get_acs_recs(geography = "county", table.names = paste(name,'I',sep=""), years = year, acs.type = data_type)) %>%
+    mutate(race = case_when(grepl("WHITE ALONE",concept)                                     ~ "White alone",
+                            grepl("ASIAN ALONE",concept)                                     ~ "Asian alone",
+                            grepl("BLACK OR AFRICAN AMERICAN ALONE",concept)                 ~ "Black or African American alone",
+                            grepl("HISPANIC OR LATINO",concept)                              ~ "Hispanic or Latino",
+                            grepl("NATIVE HAWAIIAN AND OTHER PACIFIC ISLANDER ALONE",concept)~ "Native Hawaiian and other Pacific Islander alone",
+                            grepl("WHITE ALONE, NOT HISPANIC OR LATINO",concept)             ~ "White alone, not Hispanic or Latino)",
+                            grepl("AMERICAN INDIAN AND ALASKA NATIVE ALONE",concept)         ~ "American Indian and Alaska Native alone",
+                            grepl("SOME OTHER RACE ALONE",concept)|grepl("TWO OR MORE RACES",concept)~ "Some Other Race"))
+}
+
+
+# PUMS: group fields ####
+aapi_pums_recode <- function(.pums){
+  
+  .pums <- .pums %>% 
+    # filter(JWTRNS!="Total", !is.na(JWTRNS)) %>%
+    mutate(
+      race_aapi = case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
+                            PRACE == "White alone" ~ "White alone",
+                            TRUE ~ PRACE),
+      race_3cat =  factor(case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
+                                    PRACE == "White alone" ~ "White alone",
+                                    TRUE ~ "Other people of color"),
+                          levels = c("Asian or Pacific Islander","Other people of color","White alone")),
+      race_4cat =  factor(case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
+                                    PRACE == "White alone" ~ "White alone",
+                                    PRACE == "Hispanic or Latino" ~ "Hispanic or Latino",
+                                    PRACE == "Black or African American alone" ~ "Black or African American alone",
+                                    TRUE ~ "Some Other Race(s)"),
+                          levels = c("Asian or Pacific Islander","Black or African American alone","Hispanic or Latino","White alone","Some Other Race(s)")),
+      mode = case_when(JWTRNS %in% c("Car, truck, or van")~"Drive",
+                              JWTRNS %in% c("Bus",
+                                            "Light rail, streetcar, or trolley",
+                                            "Long-distance train or commuter train",
+                                            "Subway or elevated rail",
+                                            "Ferryboat",
+                                            "Long-distance train or commuter rail")~"Public Transit",
+                              JWTRNS == "Bicycle" ~"Bicycle",
+                              JWTRNS == "Walked" ~"Walked",
+                              JWTRNS == "Worked from home" ~"Worked from home",
+                              JWTRNS %in% c("Motorcycle","Taxicab","Other method") ~"Other",
+                              TRUE~JWTRNS),
+      mode_hts = case_when(JWTRNS %in% c("Car, truck, or van")~"Drive",
+                              JWTRNS %in% c("Bus",
+                                            "Light rail, streetcar, or trolley",
+                                            "Long-distance train or commuter train",
+                                            "Subway or elevated rail",
+                                            "Ferryboat",
+                                            "Long-distance train or commuter rail")~"Transit",
+                              JWTRNS %in% c("Walked","Bicycle") ~"Walk/Bike",
+                              JWTRNS == "Worked from home" ~"Worked from home",
+                              JWTRNS %in% c("Motorcycle","Taxicab","Other method") ~"Other",
+                              TRUE~JWTRNS),
+      vehicle = factor(case_when(VEH == "No vehicles"~ "No vehicle",
+                                 VEH %in% c("1 vehicle",
+                                            "2 vehicles",
+                                            "3 vehicles",
+                                            "4 vehicles",
+                                            "5 vehicles",
+                                            "6 or more vehicles") ~ "1+ vehicle(s)"),
+                       levels = c("No vehicle","1+ vehicle(s)")),
+      migrate = case_when(POBP=="Washington/WA"~"Born in state of residence",
+                          grepl("/",POBP) | POBP == "Other US Island Areas, Oceania, Not Specified, or At Sea" ~"Born in other state in the United States",
+                          TRUE~POBP),
+      age = factor(case_when(AGEP < 18 ~ "Under 18 years",
+                             AGEP < 25 ~ "18-24 years",
+                             AGEP < 35 ~ "25-34 years",
+                             AGEP < 45 ~ "35-44 years",
+                             AGEP < 55 ~ "45-54 years",
+                             AGEP < 65 ~ "55-64 years",
+                             AGEP >64 ~ "65 years and above"),
+                   levels = c("Under 18 years",
+                              "18-24 years",
+                              "25-34 years",
+                              "35-44 years",
+                              "45-54 years",
+                              "55-64 years",
+                              "65 years and above")))
+}
+aapi_pums_recode_17 <- function(.pums){
+  
+  .pums <- .pums %>% 
+    # filter(JWTR!="Total", !is.na(JWTR)) %>%
+    mutate(
+      race_aapi = case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
+                            PRACE == "White alone" ~ "White alone",
+                            TRUE ~ PRACE),
+      race_3cat =  factor(case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
+                                    PRACE == "White alone" ~ "White alone",
+                                    TRUE ~ "Other people of color"),
+                          levels = c("Asian or Pacific Islander","Other people of color","White alone")),
+      race_4cat =  factor(case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
+                                    PRACE == "White alone" ~ "White alone",
+                                    PRACE == "Hispanic or Latino" ~ "Hispanic or Latino",
+                                    PRACE == "Black or African American alone" ~ "Black or African American alone",
+                                    TRUE ~ "Some Other Race(s)"),
+                          levels = c("Asian or Pacific Islander","Black or African American alone","Hispanic or Latino","White alone","Some Other Race(s)")),
+      mode = case_when(JWTR %in% c("Car, truck, or van")~"Drive",
+                              JWTR %in% c("Bus or trolley bus","Ferryboat","Railroad",
+                                          "Streetcar or trolley car (carro publico in Puerto Rico)",
+                                          "Subway or elevated")~"Public Transit",
+                              JWTR == "Bicycle" ~"Bicycle",
+                              JWTR == "Walked" ~"Walked",
+                              JWTR == "Worked at home" ~"Worked from home",
+                              JWTR %in% c("Motorcycle","Taxicab","Other method")~"Other",
+                       TRUE~JWTR),
+      mode_hts = case_when(JWTR %in% c("Car, truck, or van")~"Drive",
+                                  JWTR %in% c("Bus or trolley bus","Ferryboat","Railroad",
+                                                "Streetcar or trolley car (carro publico in Puerto Rico)",
+                                                "Subway or elevated")~"Transit",
+                                  JWTR %in% c("Walked","Bicycle") ~"Walk/Bike",
+                                  JWTR == "Worked at home" ~"Worked from home",
+                                  JWTR %in% c("Motorcycle","Taxicab","Other method") ~"Other",
+                           TRUE~JWTR),
+      vehicle = factor(case_when(VEH == "No vehicles"~ "No vehicle",
+                                 VEH %in% c("1 vehicle",
+                                            "2 vehicles",
+                                            "3 vehicles",
+                                            "4 vehicles",
+                                            "5 vehicles",
+                                            "6 or more vehicles") ~ "1+ vehicle(s)"),
+                       levels = c("No vehicle","1+ vehicle(s)")),
+      migrate = case_when(POBP=="Washington/WA"~"Born in state of residence",
+                          grepl("/",POBP) | POBP == "Other US Island Areas, Oceania, Not Specified, or At Sea" ~"Born in other state in the United States",
+                          TRUE~POBP),
+      age = factor(case_when(AGEP < 18 ~ "Under 18 years",
+                             AGEP < 25 ~ "18-24 years",
+                             AGEP < 35 ~ "25-34 years",
+                             AGEP < 45 ~ "35-44 years",
+                             AGEP < 55 ~ "45-54 years",
+                             AGEP < 65 ~ "55-64 years",
+                             AGEP >64 ~ "65 years and above"),
+                   levels = c("Under 18 years",
+                              "18-24 years",
+                              "25-34 years",
+                              "35-44 years",
+                              "45-54 years",
+                              "55-64 years",
+                              "65 years and above")))
+}
+
+rgc_hct <- c("Auburn","Bellevue","Bothell Canyon Park","Burien",
+             "Everett","Federal Way","Kent","Kirkland Totem Lake",
+             "Redmond-Overlake","Redmond Downtown","Renton",
+             "Seattle South Lake Union","Seattle Uptown","Tukwila")
+# HTS[household]: group fields ####
 hh_group_data <- function(.data){
   .data <- .data %>%
     mutate(
@@ -47,13 +199,11 @@ hh_group_data <- function(.data){
                                                         "$75,000-$99,999")~ "$25,000 - $99,999",
                                   hhincome_broad %in% c("$100,000-$199,000",
                                                         "$200,000 or more","$100,000 or more") ~ "$100,000 and over",
-                                  TRUE ~ hhincome_broad)
-    )%>%
-    left_join(urban_metro, by = c("final_home_rgcnum"="name")) %>%
-    mutate(urban_metro = case_when(!is.na(category)~category,
-                                   TRUE~"Not RGC"),
-           .after = "final_home_rgcnum") %>%
-    select(-category)
+                                  TRUE ~ hhincome_broad),
+      home_in_HCT = case_when(final_home_rgcnum %in% rgc_hct ~ "centers with HTC",
+                              !is.na(final_home_rgcnum) ~ "other centers",
+                              TRUE~ "not in centers")
+    )
   
   .data$vehicle_count <- factor(.data$vehicle_count, levels=c("No vehicle","1","2 or more"))
   .data$vehicle_binary <- factor(.data$vehicle_binary, levels=c("No vehicle","1 or more"))
@@ -68,12 +218,11 @@ hh_group_data <- function(.data){
   .data$hhincome_three <- factor(.data$hhincome_three, levels=c("Under $25,000","$25,000 - $99,999","$100,000 and over","Prefer not to answer"))
   .data$hhincome_binary <- factor(.data$hhincome_binary, levels=c("Under $50,000","$50,000 and over","Prefer not to answer"))
   .data$survey <- factor(.data$survey, levels=c("2017","2019","2017/2019","2021"))
-  .data$urban_metro <- factor(.data$urban_metro, levels=c("Metro","Urban","Not RGC")) 
   
   return(.data)
 }
 
-
+# HTS[person]: group fields ####
 per_group_data <- function(.data,hh_data){
   
   .data <- .data %>%
@@ -84,11 +233,25 @@ per_group_data <- function(.data,hh_data){
            rideshare_freq = mode_freq_5,
            transit_pass = benefits_3) %>%
     mutate(
-      race_eth_broad = case_when(race_eth_broad=="Asian only, non-Hispanic/Latinx"~"Asian only",
-                                 race_eth_broad=="Black or African American only, non-Hispanic/Latinx"~"Black or African American only",
-                                 race_eth_broad=="White only, non-Hispanic/Latinx"~ "White only",
-                                 race_eth_broad=="Other race, including multi-race non-Hispanic"~ "Other race, including multi-race",
-                                 TRUE~race_eth_broad),
+      race_4cat = case_when((race_eth_broad=="Other race, including multi-race non-Hispanic" & race_hapi=="Selected") | 
+                              (race_eth_broad=="Asian only, non-Hispanic/Latinx") ~ "Asian or Pacific Islander",
+                            # race_eth_broad=="Other race, including multi-race non-Hispanic" & race_aiak=="Selected" ~ "American Indian or Alaskan Native Alone",
+                            race_eth_broad=="Black or African American only, non-Hispanic/Latinx"~"Black or African American alone",
+                            race_eth_broad=="White only, non-Hispanic/Latinx"~ "White alone",
+                            race_eth_broad=="Hispanic or Latinx"~"Hispanic or Latino",
+                            race_eth_broad=="Other race, including multi-race non-Hispanic"~ "Other people of color",
+                            TRUE~race_eth_broad),
+      race_3cat =  factor(case_when(race_4cat %in% c("Asian or Pacific Islander") ~ "Asian or Pacific Islander",
+                                    race_4cat == "White alone" ~ "White alone",
+                                    race_4cat == "Child -- no race specified" ~ "Child -- no race specified",
+                                    TRUE ~ "Other people of color"),
+                          levels = c("Asian or Pacific Islander","Other people of color","White alone", "Child -- no race specified")),
+      workplace_travel = case_when(workplace %in% c("Usually the same location (outside home)",
+                                                    "Workplace regularly varies (different offices or jobsites)",
+                                                    "Drives for a living (e.g., bus driver, salesperson)")~ "Works outside the home",
+                                   workplace  %in% c("Telework some days and travel to a work location some days",
+                                                     "At home (telecommute or self-employed with home office)")~ "Works at home",
+                                   TRUE~workplace),
       age = case_when(age == '75-84 years' ~ '75 years or older',
                       age == '85 or years older' ~ '75 years or older',
                       TRUE ~ age),
@@ -114,21 +277,55 @@ per_group_data <- function(.data,hh_data){
                                                     "Carpool with other people not in household (may also include household members)",
                                                     "Vanpool",
                                                     "Private bus or shuttle") ~ "HOV modes",
-                                is.na(commute_mode) ~ "NA",
-                                TRUE ~ "Other modes")
+                                is.na(commute_mode) ~ NA,
+                                TRUE ~ "Other modes"),
+      commute_mode3 = case_when(commute_mode %in% c("Vanpool","Private bus or shuttle","Paratransit","Ferry or water taxi",
+                                                    "Bus (public transit)","Urban rail (Link light rail, monorail, streetcar)",
+                                                    "Commuter rail (Sounder, Amtrak)","Streetcar","Urban rail (Link light rail, monorail)") ~"Transit",
+                               commute_mode %in% c("Carpool ONLY with other household members",
+                                                   "Carpool with other people not in household (may also include household members)")~"Carpool",
+                               commute_mode %in% c("Bicycle or e-bike", "Walk, jog, or wheelchair")~"Walk/Bike",
+                               commute_mode == "Drive alone"~"Drive Alone",
+                               is.na(commute_mode) ~ NA,
+                               TRUE~ "Other"),
+      commute_mode_compare_pums = case_when(commute_mode %in% c("Vanpool","Private bus or shuttle","Paratransit","Ferry or water taxi",
+                                                    "Bus (public transit)","Urban rail (Link light rail, monorail, streetcar)",
+                                                    "Commuter rail (Sounder, Amtrak)","Streetcar","Urban rail (Link light rail, monorail)") ~"Transit",
+                                commute_mode %in% c("Drive alone",
+                                                    "Carpool ONLY with other household members",
+                                                    "Carpool with other people not in household (may also include household members)") | 
+                                  workplace == "Drives for a living (e.g., bus driver, salesperson)"~"Drive",
+                                commute_mode %in% c("Bicycle or e-bike", "Walk, jog, or wheelchair")~"Walk/Bike",
+                                is.na(commute_mode) ~ NA,
+                                TRUE~ "Other"),
+      telecommute_freq = case_when(telecommute_freq %in% c("1 day a week","2 days a week", "1-2 days")~"1-2 days",
+                                   telecommute_freq %in% c("3 days a week","4 days a week", "3-4 days")~"3-4 days",
+                                   telecommute_freq %in% c("5 days a week","6-7 days a week", "5+ days")~"5+ days",
+                                   is.na(telecommute_freq) ~"NA",
+                                   TRUE~"None"),
+      telecommute_freq2 = case_when(telecommute_freq %in% c("1-2 days","3-4 days","5+ days")~"At least once a week",
+                                    telecommute_freq == "NA" ~"NA",
+                                    TRUE~"None"),
+      transit_freq2 = case_when(transit_freq %in% c("1 day/week",
+                                                    "2-4 days/week",
+                                                    "5 days/week",
+                                                    "6-7 days/week")~"at least 1 day/week",
+                                is.na(transit_freq)~NA,
+                                TRUE~ "less than 1 day/week")
     ) %>%
     # add household data
     left_join(hh_data %>%
-                select(survey_year:hhincome_broad,vehicle_binary:hhincome_binary), 
-              by = c("household_id"="hhid")) 
+                select(survey_year:hhincome_broad,household_id:hhincome_binary,home_in_HCT), 
+              by = "household_id") 
   
-  .data$race_eth_broad <- factor(.data$race_eth_broad, 
-                                 levels=c("Asian only",
-                                          "Black or African American only",
-                                          "Hispanic or Latinx",
-                                          "White only",
-                                          "Other race, including multi-race",
-                                          "Child -- no race specified"))
+  # .data$race_eth_broad <- factor(.data$race_eth_broad, 
+  #                                levels=c("Asian only",
+  #                                         "Black or African American only",
+  #                                         "Hispanic or Latinx",
+  #                                         "Native Hawaiian and Other Pacific Islander alone",
+  #                                         "White only",
+  #                                         "Other race, including multi-race",
+  #                                         "Child -- no race specified"))
   .data$workplace <- factor(.data$workplace, 
                             levels=c("Usually the same location (outside home)",
                                      "Telework some days and travel to a work location some days",
@@ -167,6 +364,9 @@ per_group_data <- function(.data,hh_data){
   .data$commute_mode2 <- factor(.data$commute_mode2, level = c("Drive alone","HOV modes","Public transit",
                                                                "Walk","Bike or micro-mobility","Other modes","NA"))
   
+  .data$commute_mode3 <- factor(.data$commute_mode3, level = c("Drive Alone","Transit","Carpool",
+                                                               "Walk/Bike","Other"))
+  
   .freq <- c("I never do this",
              "1 day/week",
              "2-4 days/week",
@@ -187,6 +387,7 @@ per_group_data <- function(.data,hh_data){
 }
 
 
+# HTS[trip]: group fields ####
 trip_group_data <- function(.data,per_data){
   
   .data <- .data %>%
@@ -200,6 +401,10 @@ trip_group_data <- function(.data,per_data){
         simple_purpose == 'Shop' ~ 'Shop',
         simple_purpose %in% c('Escort','Errand/Other','Change mode','Home')~ 'Errands',
         is.na(simple_purpose) ~ 'Errands',
+        simple_purpose %in% c('Social/Recreation','Meal') ~ 'Social/Recreation/Meal',
+        TRUE ~ simple_purpose),
+      simple_purpose2 = case_when(
+        simple_purpose %in% c('Shop', 'Errands') ~ 'Shop/Errands',
         simple_purpose %in% c('Social/Recreation','Meal') ~ 'Social/Recreation/Meal',
         TRUE ~ simple_purpose),
       .after="mode_simple")%>%
@@ -219,14 +424,19 @@ trip_group_data <- function(.data,per_data){
     left_join(per_data %>%
                 select(survey_year,person_id,sample_county:vehicle_count,vehicle_binary,
                        hhincome_broad,hhincome_binary,have_child,
-                       gender,age,age_category,race_eth_broad,
-                       education,education2,workplace:license,commute_mode2), 
+                       gender,age,age_category,race_eth_broad,race_4cat,race_3cat,
+                       education,education2,workplace:license,commute_mode2,commute_mode3,commute_mode_compare_pums,
+                       home_in_HCT), 
               by = "person_id")
   
   .data$simple_purpose <- factor(.data$simple_purpose, 
                                  levels=c('Work/School',
                                           'Shop',
                                           'Errands',
+                                          'Social/Recreation/Meal'))
+  .data$simple_purpose2 <- factor(.data$simple_purpose, 
+                                 levels=c('Work/School',
+                                          'Shop/Errands',
                                           'Social/Recreation/Meal'))
   .data$mode_simple <- factor(.data$mode_simple, 
                               levels=c("Drive","Transit", "Bike","Walk","Other"))
@@ -237,13 +447,113 @@ trip_group_data <- function(.data,per_data){
 }
 
 
+
+## ACS[commute_by_race]: group fields ####
+get_acs_commute_by_race <- function(year,type='acs5'){
+  
+  return(
+    get_acs_all_race('B08105',year,type) %>%
+      mutate(mode = case_when(label=="Estimate!!Total:"                                              ~"Total",
+                              label=="Estimate!!Total:!!Car, truck, or van - drove alone"            ~"Drove alone",
+                              label=="Estimate!!Total:!!Car, truck, or van - carpooled"              ~"Carpooled",
+                              label=="Estimate!!Total:!!Public transportation (excluding taxicab)"   ~"Public transit",
+                              label=="Estimate!!Total:!!Walked"                                      ~"Walked",
+                              label=="Estimate!!Total:!!Taxicab, motorcycle, bicycle, or other means"~"Other",
+                              label=="Estimate!!Total:!!Worked from home"                            ~"Work from home"),
+             race_aapi = factor(case_when(race %in% c("Asian alone","Native Hawaiian and other Pacific Islander alone") ~ "Asian or Pacific Islander",
+                                          race == "White alone" ~ "White alone",
+                                          TRUE ~ race))) %>%
+      group_by(GEOID,name,acs_type,year,race_aapi,mode) %>%
+      summarise(estimate = sum(estimate),
+                moe= moe_sum(moe, estimate = estimate)) %>%
+      select(GEOID,name,acs_type,year,race_aapi,mode,estimate,moe) %>%
+      # filter(!race %in% c("White alone, not Hispanic or Latino)","Other")) %>%
+      group_by(name,race_aapi) %>%
+      mutate(mode_share = estimate/estimate[mode=="Total"],
+             mode_moe = moe_ratio(estimate, estimate[mode=="Total"], moe, moe[mode=="Total"]),
+             mode = factor(mode, levels=c("Drove alone",
+                                          "Carpooled",
+                                          "Public transit",
+                                          "Walked",
+                                          "Other",
+                                          "Work from home"))) %>%
+      ungroup()
+  )
+  
+}
+
+
+
+## ACS[occupation_by_race]: group fields ####
+get_acs_occupation_by_race <- function(){
+  
+  return(
+    get_acs_all_race('C24010',2021,'acs5') %>%
+      mutate(occupation = factor(case_when(label=="Estimate!!Total:"                                              ~"Total",
+                                    label %in% c("Estimate!!Total:!!Male:!!Management, business, science, and arts occupations",
+                                                 "Estimate!!Total:!!Female:!!Management, business, science, and arts occupations")          ~"Management, business, science, and arts occupations",
+                                    label %in% c("Estimate!!Total:!!Male:!!Service occupations",
+                                                 "Estimate!!Total:!!Female:!!Service occupations")                                          ~"Service occupations",
+                                    label %in% c("Estimate!!Total:!!Male:!!Sales and office occupations",
+                                                 "Estimate!!Total:!!Female:!!Sales and office occupations")                                 ~"Sales and office occupations",
+                                    label %in% c("Estimate!!Total:!!Male:!!Natural resources, construction, and maintenance occupations",
+                                                 "Estimate!!Total:!!Female:!!Natural resources, construction, and maintenance occupations") ~"Natural resources, construction, and maintenance occupations",
+                                    label %in% c("Estimate!!Total:!!Male:!!Production, transportation, and material moving occupations",
+                                                 "Estimate!!Total:!!Female:!!Production, transportation, and material moving occupations")  ~"Production, transportation, and material moving occupations"),
+                                 levels = c("Total",
+                                            "Management, business, science, and arts occupations",
+                                            "Service occupations",
+                                            "Sales and office occupations",
+                                            "Natural resources, construction, and maintenance occupations","Production, transportation, and material moving occupations"))) %>%
+      filter(!is.na(occupation)) %>%
+      group_by(GEOID,name,acs_type,year,race,occupation) %>%
+      summarise(estimate = sum(estimate),
+                moe= moe_sum(moe, estimate = estimate))%>%
+      select(GEOID,name,acs_type,year,race,occupation,estimate,moe) %>%
+      group_by(name,race) %>%
+      mutate(occupation_share = estimate/estimate[occupation=="Total"],
+             occupation_moe = moe_ratio(estimate, estimate[occupation=="Total"], moe, moe[occupation=="Total"])) %>%
+      ungroup()
+  )
+  
+}
+
+
+## ACS[birthplace_by_race]: group fields ####
+get_acs_birthplace_by_race <- function(year,type){
+  
+  return(
+    get_acs_all_race('B06004',year,type) %>%
+      mutate(born = case_when(label=="Estimate!!Total:" ~"Total",
+                              label=="Estimate!!Total:!!" ~"Born in WA state",
+                              label=="Estimate!!Total:!!Born in other state in the United States" ~"Born in other state",
+                              label=="Estimate!!Total:!!Native; born outside the United States" ~"Native: born outside the US",
+                              label=="Estimate!!Total:!!Foreign born" ~"Foreign born")) %>%
+      select(GEOID,name,acs_type,year,born,race,name,estimate,moe) %>%
+      filter(!race %in% c("White alone, not Hispanic or Latino)","Other")) %>%
+      group_by(name,race) %>%
+      mutate(born_share = estimate/estimate[born=="Total"],
+             born_moe = moe_ratio(estimate, estimate[born=="Total"], moe, moe[born=="Total"])) %>%
+      ungroup() %>%
+      filter(born!="Total") %>%
+      mutate(born = factor(born, levels=c("Born in WA state",
+                                          "Born in other state",
+                                          "Native: born outside the US",
+                                          "Foreign born")))
+  )
+  
+}
+
+
+
+
+
 # for wrapping the labels in x-axis
 # scale_x_discrete(labels = label_wrap(10))
 wrap_axis <- function(.data, fields, w=11){
   
   .data %>%
     mutate(cat = str_wrap({{fields}}, width=w))
-  
 }
 
 # error bars for ggplot
@@ -251,69 +561,6 @@ moe_bars <- geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
                           width=0.2, position = position_dodge(0.9))
 
 
-# change legend
-psrc_style2 <- function(text_size=0,axis_text_size=0, loc="bottom",
-                        m.t=0,m.r=0,m.l=0) {
-  font <- "Poppins"
-  
-  ggplot2::theme(
-    
-    #Text format:
-    #This sets the font, size, type and color of text for the chart's title
-    plot.title = ggplot2::element_text(family=font,
-                                       # face="bold",
-                                       size=14+text_size),
-    plot.title.position = "plot",
-    
-    #This sets the font, size, type and color of text for the chart's subtitle, as well as setting a margin between the title and the subtitle
-    plot.subtitle = ggplot2::element_text(family=font,
-                                          size=12+text_size,
-                                          margin=ggplot2::margin(9,0,9,0)),
-    
-    #This leaves the caption text element empty, because it is set elsewhere in the finalise plot function
-    plot.caption =  ggplot2::element_text(family=font,
-                                          size=10+text_size,
-                                          face="italic",
-                                          color="#4C4C4C",
-                                          hjust=0),
-    plot.caption.position = "plot",
-    
-    #Legend format
-    #This sets the position and alignment of the legend, removes a title and background for it and sets the requirements for any text within the legend.
-    legend.position = loc,
-    legend.background = ggplot2::element_blank(),
-    legend.title = ggplot2::element_blank(),
-    legend.key = ggplot2::element_blank(),
-    legend.text = ggplot2::element_text(family=font,
-                                        size=12+text_size,
-                                        color="#4C4C4C"),
-    
-    #Axis format
-    #This sets the text font, size and colour for the axis test, as well as setting the margins and removes lines and ticks. In some cases, axis lines and axis ticks are things we would want to have in the chart - the cookbook shows examples of how to do so.
-    axis.title = ggplot2::element_blank(),
-    axis.text = ggplot2::element_text(size=11+text_size+axis_text_size,
-                                      color="#2f3030"),
-    axis.text.x = ggplot2::element_text(margin=ggplot2::margin(5, b = 10)),
-    axis.ticks = ggplot2::element_blank(),
-    axis.line = ggplot2::element_blank(),
-    
-    #Grid lines
-    #This removes all minor gridlines and adds major y gridlines. In many cases you will want to change this to remove y gridlines and add x gridlines.
-    # panel.grid.minor = ggplot2::element_blank(),
-    panel.grid.major.y = ggplot2::element_line(color="#cbcbcb"),
-    panel.grid.major.x = ggplot2::element_blank(),
-    
-    #Blank background
-    #This sets the panel background as blank, removing the standard grey ggplot background color from the plot
-    panel.background = ggplot2::element_blank(),
-    
-    #Strip background sets the panel background for facet-wrapped plots to PSRC Gray and sets the title size of the facet-wrap title
-    strip.background = ggplot2::element_rect(fill="#BCBEC0"),
-    strip.text = ggplot2::element_text(size  = 12+text_size,  hjust = 0),
-    
-    plot.margin = margin(m.t, m.r, 0, m.l, "cm"),
-  )
-}
 
 no_moe <- function(plot){
   plot <- plot + geom_text(aes(x=.data[[x]],y=.data[[y]], 
