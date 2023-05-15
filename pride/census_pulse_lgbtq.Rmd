@@ -30,10 +30,7 @@ url_start <-
 #data items and their url name
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
+### Anxiety data download
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
 #which weeks to summarize
@@ -126,7 +123,7 @@ df_anxiety_more<-df_anxiety%>%filter(anxiety_grp=='More than half the days')%>%d
 static_line_chart(df_anxiety_more, x='week', y='share', fill='select_characteristics')
 
 ```
-### depression
+### Depression Data download
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -157,7 +154,7 @@ for (week in week_range) {
   }
   else{
     year = '2023'
-    tbls <- list('health1')
+    tbls <- list('health2')
   }
   week_char <- as.character(week)
   for (tbl in tbls) {
@@ -219,5 +216,21 @@ for (week in week_range) {
 ```{r}
 df_depress_more<-df_depress%>%filter(depress_grp=='More than half the days')%>%drop_na()
 static_line_chart(df_depress_more, x='week', y='share', fill='select_characteristics')
+
+```
+```{r}
+df_anxiety_more_56<-df_anxiety_more%>%filter(week =='56')%>%mutate(symptoms='anxiety')
+df_depress_more_56<-df_depress_more%>%filter(week =='56')%>%mutate(symptoms='depression')
+depress_anxiety<-rbind(df_anxiety_more_56, df_depress_more_56)%>%filter(select_characteristics %in% 
+                                                                          c("    Yes"  , "    No" ))
+```
+
+```{r}
+static_column_chart(depress_anxiety, x='symptoms',y='share', fill= 'select_characteristics')
+
+```
+
+```{r}
+static_column_chart(depress_anxiety, x='symptoms',y='sum_total', fill= 'select_characteristics')
 
 ```
