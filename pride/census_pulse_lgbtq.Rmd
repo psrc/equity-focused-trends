@@ -1,0 +1,223 @@
+---
+title: "census_pulse_lgbtq"
+author: "suzanne"
+date: "2023-05-15"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+library(openxlsx)
+library(dplyr)
+library(data.table)
+library(janitor)
+library(tidyr)
+library(psrcplot)
+```
+
+
+
+```{r cars}
+#where you want your outputs to go
+dest_file_loc <-
+  "C:/GitHub/equity-focused-trends/pride/census_pulse"
+
+#the same for all data tables
+url_start <-
+  'https://www2.census.gov/programs-surveys/demo/tables/hhp/'
+
+#data items and their url name
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+#which weeks to summarize
+week_range <- 34:56
+
+sheet_name <- 'Seattle_Metro_Area'
+
+df_anxiety<-data.frame()
+
+for (week in week_range) {
+  # have to assign which year each week was in to make the url
+  if (week < 42) {
+    year = '2021'
+    #they changed the table names over time, ugh!!
+    tbls <- list('health2a')
+  }
+  else if (week < 52)
+  {
+    year = '2022'
+    # this is stupid
+    if (week < 49) {
+      tbls <- list('health2a')
+    }
+    else{
+      tbls <- list('health1')
+    }
+  }
+  else{
+    year = '2023'
+    tbls <- list('health1')
+  }
+  week_char <- as.character(week)
+  for (tbl in tbls) {
+    url_end <-
+      paste0(year,'/','wk',week_char,'/',tbl,
+             '_week',week_char,'.xlsx')
+    url <- paste0(url_start, url_end)
+    file_end <- gsub('/', '_', url_end)
+    dest_file = paste0(dest_file_loc, file_end)
+    
+    
+    
+    df <- read.xlsx(url, sheet = sheet_name, fillMergedCells = TRUE)
+    df_row5 <- df %>% slice(5)
+    df_row32_35<- df %>% slice(32:35)
+    #df_row32_34<-df%>%slice(32:34)
+    df_lgbtq <- bind_rows(df_row5, df_row32_35) %>% select(1:6)
+    df_lgbtq <- df_lgbtq %>% row_to_names(row_number = 1)
+    #rows 5 in the 25-30 position 32-34 position
+    
+    
+    df_lgbtq_summ <-
+      df_lgbtq%>% pivot_longer(
+        cols = c(
+          'Not at all',
+          'Several days',
+          'More than half the days',
+          'Nearly every day',
+          'Did not report'
+        ),
+        names_to = 'anxiety_freq',
+        values_to = 'total'
+      ) %>%
+      filter(anxiety_freq != 'Did not report') %>%
+      mutate(
+        anxiety_grp = case_when(
+          anxiety_freq %in% c('Not at all', 'Several days') ~ 'Less than half the days',
+          anxiety_freq %in% c('More than half the days', 'Nearly every day') ~ 'More than half the days',
+         TRUE
+            ~ 'error catch'
+        )
+      ) %>%
+      clean_names()%>%
+      group_by(select_characteristics, anxiety_grp)%>%
+      mutate(sum_total=sum(as.numeric(total)))%>%
+      select(anxiety_grp, select_characteristics,sum_total)%>%
+      distinct()%>%
+      group_by(select_characteristics)%>%
+      mutate(share=prop.table(sum_total)) %>%
+      mutate(week = week)
+    
+    df_anxiety <- rbind(df_anxiety, df_lgbtq_summ)
+    
+  }
+}
+```
+
+```{r}
+df_anxiety_more<-df_anxiety%>%filter(anxiety_grp=='More than half the days')%>%drop_na()
+static_line_chart(df_anxiety_more, x='week', y='share', fill='select_characteristics')
+
+```
+### depression
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+#which weeks to summarize
+week_range <- 34:56
+
+sheet_name <- 'Seattle_Metro_Area'
+
+df_depress<-data.frame()
+
+for (week in week_range) {
+  # have to assign which year each week was in to make the url
+  if (week < 42) {
+    year = '2021'
+    #they changed the table names over time, ugh!!
+    tbls <- list('health2b')
+  }
+  else if (week < 52)
+  {
+    year = '2022'
+    # this is stupid
+    if (week < 49) {
+      tbls <- list('health2b')
+    }
+    else{
+      tbls <- list('health2')
+    }
+  }
+  else{
+    year = '2023'
+    tbls <- list('health1')
+  }
+  week_char <- as.character(week)
+  for (tbl in tbls) {
+    url_end <-
+      paste0(year,'/','wk',week_char,'/',tbl,
+             '_week',week_char,'.xlsx')
+    url <- paste0(url_start, url_end)
+    file_end <- gsub('/', '_', url_end)
+    dest_file = paste0(dest_file_loc, file_end)
+    
+    
+    
+    df <- read.xlsx(url, sheet = sheet_name, fillMergedCells = TRUE)
+    df_row5 <- df %>% slice(5)
+    df_row32_35<- df %>% slice(32:35)
+    #df_row32_34<-df%>%slice(32:34)
+    df_lgbtq <- bind_rows(df_row5, df_row32_35) %>% select(1:6)
+    df_lgbtq <- df_lgbtq %>% row_to_names(row_number = 1)
+    #rows 5 in the 25-30 position 32-34 position
+    
+    
+    df_lgbtq_summ <-
+      df_lgbtq%>% pivot_longer(
+        cols = c(
+          'Not at all',
+          'Several days',
+          'More than half the days',
+          'Nearly every day',
+          'Did not report'
+        ),
+        names_to = 'depress_freq',
+        values_to = 'total'
+      ) %>%
+      filter(depress_freq != 'Did not report') %>%
+      mutate(
+        depress_grp = case_when(
+          depress_freq %in% c('Not at all', 'Several days') ~ 'Less than half the days',
+          depress_freq %in% c('More than half the days', 'Nearly every day') ~ 'More than half the days',
+         TRUE
+            ~ 'error catch'
+        )
+      ) %>%
+      clean_names()%>%
+      group_by(select_characteristics, depress_grp)%>%
+      mutate(sum_total=sum(as.numeric(total)))%>%
+      select(depress_grp, select_characteristics,sum_total)%>%
+      distinct()%>%
+      group_by(select_characteristics)%>%
+      mutate(share=prop.table(sum_total)) %>%
+      mutate(week = week)
+    
+    df_depress <- rbind(df_depress, df_lgbtq_summ)
+    
+  }
+}
+```
+
+
+```{r}
+df_depress_more<-df_depress%>%filter(depress_grp=='More than half the days')%>%drop_na()
+static_line_chart(df_depress_more, x='week', y='share', fill='select_characteristics')
+
+```
