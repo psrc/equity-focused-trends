@@ -34,7 +34,7 @@ url_start <-
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
 #which weeks to summarize
-week_range <- 34:56
+week_range <- 34:57
 
 sheet_name <- 'Seattle_Metro_Area'
 
@@ -80,7 +80,7 @@ for (week in week_range) {
     df_lgbtq <- bind_rows(df_row5, df_row32_35) %>% select(1:6)
     df_lgbtq <- df_lgbtq %>% row_to_names(row_number = 1)
     #rows 5 in the 25-30 position 32-34 position
-    
+    df_lgbtq[df_lgbtq=="-"] <- "0"
     
     df_lgbtq_summ <-
       df_lgbtq%>% pivot_longer(
@@ -128,7 +128,7 @@ static_line_chart(df_anxiety_more, x='week', y='share', fill='select_characteris
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
 #which weeks to summarize
-week_range <- 34:56
+week_range <- 34:57
 
 sheet_name <- 'Seattle_Metro_Area'
 
@@ -174,7 +174,7 @@ for (week in week_range) {
     df_lgbtq <- bind_rows(df_row5, df_row32_35) %>% select(1:6)
     df_lgbtq <- df_lgbtq %>% row_to_names(row_number = 1)
     #rows 5 in the 25-30 position 32-34 position
-    
+    df_lgbtq[df_lgbtq=="-"] <- "0"
     
     df_lgbtq_summ <-
       df_lgbtq%>% pivot_longer(
@@ -219,9 +219,9 @@ static_line_chart(df_depress_more, x='week', y='share', fill='select_characteris
 
 ```
 ```{r}
-df_anxiety_more_56<-df_anxiety_more%>%filter(week =='56')%>%mutate(symptoms='anxiety')
-df_depress_more_56<-df_depress_more%>%filter(week =='56')%>%mutate(symptoms='depression')
-depress_anxiety<-rbind(df_anxiety_more_56, df_depress_more_56)%>%filter(select_characteristics %in% 
+df_anxiety_more_57<-df_anxiety_more%>%filter(week =='57')%>%mutate(symptoms='anxiety')
+df_depress_more_57<-df_depress_more%>%filter(week =='57')%>%mutate(symptoms='depression')
+depress_anxiety<-rbind(df_anxiety_more_57, df_depress_more_57)%>%filter(select_characteristics %in% 
                                                                           c("    Yes"  , "    No" ))
 ```
 
