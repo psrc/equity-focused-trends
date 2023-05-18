@@ -234,3 +234,21 @@ static_column_chart(depress_anxiety, x='symptoms',y='share', fill= 'select_chara
 static_column_chart(depress_anxiety, x='symptoms',y='sum_total', fill= 'select_characteristics')
 
 ```
+```{r}
+df_anxiety_more_avg<-df_anxiety_more%>%group_by(select_characteristics)%>%summarize(mean_share=mean(share), mean_total=mean(sum_total))%>%
+ mutate(symptoms='anxiety')
+df_depress_more_avg<-df_depress_more%>%group_by(select_characteristics)%>%summarize(mean_share=mean(share), mean_total=mean(sum_total))%>%
+ mutate(symptoms='depression')
+depress_anxiety<-rbind(df_anxiety_more_avg, df_depress_more_avg)%>%filter(select_characteristics %in% 
+                                                                          c("    Yes"  , "    No" ))
+```
+
+```{r}
+static_column_chart(depress_anxiety, x='symptoms',y='mean_share', fill= 'select_characteristics')
+
+```
+
+```{r}
+static_column_chart(depress_anxiety, x='symptoms',y='mean_total', fill= 'select_characteristics')
+
+```
