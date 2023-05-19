@@ -218,6 +218,23 @@ df_depress_more<-df_depress%>%filter(depress_grp=='More than half the days')%>%d
 static_line_chart(df_depress_more, x='week', y='share', fill='select_characteristics')
 
 ```
+
+```{r}
+df_depress_more<-df_depress%>%filter(depress_grp=='More than half the days')%>%drop_na()
+static_line_chart(df_depress_more, x='week', y='sum_total', fill='select_characteristics')
+
+```
+```{r}
+df_anxiety_more_56<-df_anxiety_more%>%filter(week =='56')%>%mutate(symptoms='anxiety')
+df_depress_more_56<-df_depress_more%>%filter(week =='56')%>%mutate(symptoms='depression')
+depress_anxiety<-rbind(df_anxiety_more_56, df_depress_more_56)%>%filter(select_characteristics %in% 
+                                                                          c("    Yes"  , "    No" ))
+```
+
+```{r}
+static_column_chart(depress_anxiety, x='symptoms',y='sum_total', fill= 'select_characteristics')
+
+```
 ```{r}
 df_anxiety_more_57<-df_anxiety_more%>%filter(week =='57')%>%mutate(symptoms='anxiety')
 df_depress_more_57<-df_depress_more%>%filter(week =='57')%>%mutate(symptoms='depression')
@@ -240,15 +257,18 @@ df_anxiety_more_avg<-df_anxiety_more%>%group_by(select_characteristics)%>%summar
 df_depress_more_avg<-df_depress_more%>%group_by(select_characteristics)%>%summarize(mean_share=mean(share), mean_total=mean(sum_total))%>%
  mutate(symptoms='depression')
 depress_anxiety<-rbind(df_anxiety_more_avg, df_depress_more_avg)%>%filter(select_characteristics %in% 
-                                                                          c("    Yes"  , "    No" ))
+                                                                          c("    Yes"  , "    No" ))%>%mutate(LGBT=case_match(select_characteristics, 
+                                          "    Yes" ~"LGBT identifying",
+                                          "    No" ~ "Not LGBT identifying"))
 ```
 
 ```{r}
-static_column_chart(depress_anxiety, x='symptoms',y='mean_share', fill= 'select_characteristics')
+static_column_chart(depress_anxiety, x='symptoms',y='mean_share', fill= 'LGBT')
 
 ```
 
 ```{r}
-static_column_chart(depress_anxiety, x='symptoms',y='mean_total', fill= 'select_characteristics')
+depress_anxiety<-depress_anxiety%>%mutate(rounded_total=round(mean_total, -3))
+static_column_chart(depress_anxiety, x='symptoms',y='rounded_total', fill= 'LGBT')
 
 ```
