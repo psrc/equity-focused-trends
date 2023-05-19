@@ -30,6 +30,101 @@ url_start <-
 #data items and their url name
 ```
 
+
+### Population summary; for averaging over weeks
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+#which weeks to summarize
+week_range <- 34:57
+
+sheet_name <- 'Seattle_Metro_Area'
+
+tbls<-'employ1'
+df_people<-data.frame()
+df_sexorient<-data.frame()
+
+for (week in week_range) {
+  # have to assign which year each week was in to make the url
+  if (week < 42) {
+    year = '2021'
+  }
+  else if (week < 52)
+  {
+    year = '2022'
+    # this is stupid
+    if (week < 49) {
+    }
+    else{
+    }
+  }
+  else{
+    year = '2023'
+    tbls <- list('health1')
+  }
+  week_char <- as.character(week)
+  for (tbl in tbls) {
+    url_end <-
+      paste0(year,'/','wk',week_char,'/',tbl,
+             '_week',week_char,'.xlsx')
+    url <- paste0(url_start, url_end)
+    file_end <- gsub('/', '_', url_end)
+    dest_file = paste0(dest_file_loc, file_end)
+    
+    
+    
+    df <- read.xlsx(url, sheet = sheet_name, fillMergedCells = TRUE)
+    
+
+    df_row23_28<- df %>% slice(23:28)
+    #df_row32_34<-df%>%slice(32:34)
+    df_detail <- df_row23_28 %>% select(1:2)
+        df_detail  <-  df_detail %>% rename('SexualOrientation'= 1,
+                                            'total' = 2)%>%
+      mutate(week=week)
+
+    
+    df_row30_33<- df %>% slice(30:33)
+    #df_row32_34<-df%>%slice(32:34)
+    df_lgbtq <- df_row30_33 %>% select(1:2)
+    df_lgbtq <- df_lgbtq %>% rename('LGBT'= 1,
+                                            'total' = 2)%>%
+      mutate(week=week)
+
+    
+      
+     
+    df_people <- rbind(df_people, df_lgbtq)
+    df_sexorient<- rbind(df_sexorient,df_detail)
+    
+  }
+}
+print(df_people)
+print(df_sexorient)
+```
+```{r}
+LGBT_med<-df_people%>%group_by(LGBT)%>%
+  summarize('population'=median(as.numeric(total)))%>%
+  mutate(LGBT_grp= case_match(LGBT,
+         "    Yes" ~"LGBT identifying",
+         "    No" ~"Not LGBT identifying",
+         "    Other" ~"Other",
+         "    Did not report" ~"Did not report"))%>%drop_na()%>%
+  mutate(
+           rounded_pop=round(population, -3)
+         )
+sex_ort_med<-df_sexorient%>%group_by(SexualOrientation)%>%
+  summarize('population'=median(as.numeric(total)))%>%
+              mutate(rounded_pop=round(population, -3))%>%drop_na()
+
+```
+
+```{r}
+static_bar_chart(LGBT_med, x= 'rounded_pop', y='LGBT_grp', fill='LGBT_grp')
+```
+```{r}
+static_bar_chart(sex_ort_med, x= 'rounded_pop', y='SexualOrientation', fill='SexualOrientation')
+```
+
 ### Anxiety data download
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -104,14 +199,20 @@ for (week in week_range) {
         )
       ) %>%
       clean_names()%>%
-      group_by(select_characteristics, anxiety_grp)%>%
+      mutate(LGBTQ=case_match(select_characteristics, 
+                                          "    Yes" ~"LGBTQ+ identifying",
+                                          "    No" ~ "Not LGBTQ+ identifying",
+                                          "    Other" ~ "LGBTQ+ identifying",
+                                          "    Did not report" ~ "Did not report"))%>%
+      group_by(LGBTQ, anxiety_grp)%>%
       mutate(sum_total=sum(as.numeric(total)))%>%
-      select(anxiety_grp, select_characteristics,sum_total)%>%
+      select(anxiety_grp, LGBTQ, sum_total)%>%
       distinct()%>%
-      group_by(select_characteristics)%>%
+      group_by(LGBTQ)%>%
       mutate(share=prop.table(sum_total)) %>%
       mutate(week = week)
-    
+      
+     
     df_anxiety <- rbind(df_anxiety, df_lgbtq_summ)
     
   }
@@ -120,7 +221,7 @@ for (week in week_range) {
 
 ```{r}
 df_anxiety_more<-df_anxiety%>%filter(anxiety_grp=='More than half the days')%>%drop_na()
-static_line_chart(df_anxiety_more, x='week', y='share', fill='select_characteristics')
+static_line_chart(df_anxiety_more, x='week', y='share', fill='LGBTQ')
 
 ```
 ### Depression Data download
@@ -198,11 +299,16 @@ for (week in week_range) {
         )
       ) %>%
       clean_names()%>%
-      group_by(select_characteristics, depress_grp)%>%
+      mutate(LGBTQ=case_match(select_characteristics, 
+                                          "    Yes" ~"LGBTQ+ identifying",
+                                          "    No" ~ "Not LGBTQ+ identifying",
+                                          "    Other" ~ "LGBTQ+ identifying",
+                                          "    Did not report" ~ "Did not report"))%>%
+      group_by(LGBTQ, depress_grp)%>%
       mutate(sum_total=sum(as.numeric(total)))%>%
-      select(depress_grp, select_characteristics,sum_total)%>%
+      select(depress_grp, LGBTQ, sum_total)%>%
       distinct()%>%
-      group_by(select_characteristics)%>%
+      group_by(LGBTQ)%>%
       mutate(share=prop.table(sum_total)) %>%
       mutate(week = week)
     
@@ -215,60 +321,52 @@ for (week in week_range) {
 
 ```{r}
 df_depress_more<-df_depress%>%filter(depress_grp=='More than half the days')%>%drop_na()
-static_line_chart(df_depress_more, x='week', y='share', fill='select_characteristics')
+static_line_chart(df_depress_more, x='week', y='share', fill='LGBTQ')
 
 ```
 
 ```{r}
 df_depress_more<-df_depress%>%filter(depress_grp=='More than half the days')%>%drop_na()
-static_line_chart(df_depress_more, x='week', y='sum_total', fill='select_characteristics')
+static_line_chart(df_depress_more, x='week', y='sum_total', fill='LGBTQ')
 
 ```
 ```{r}
 df_anxiety_more_56<-df_anxiety_more%>%filter(week =='56')%>%mutate(symptoms='anxiety')
 df_depress_more_56<-df_depress_more%>%filter(week =='56')%>%mutate(symptoms='depression')
-depress_anxiety<-rbind(df_anxiety_more_56, df_depress_more_56)%>%filter(select_characteristics %in% 
-                                                                          c("    Yes"  , "    No" ))
+depress_anxiety<-rbind(df_anxiety_more_56, df_depress_more_56)%>%filter(LGBTQ!='Did not report')
 ```
 
 ```{r}
-static_column_chart(depress_anxiety, x='symptoms',y='sum_total', fill= 'select_characteristics')
+static_column_chart(depress_anxiety, x='symptoms',y='sum_total', fill= 'LGBTQ')
 
 ```
 ```{r}
 df_anxiety_more_57<-df_anxiety_more%>%filter(week =='57')%>%mutate(symptoms='anxiety')
 df_depress_more_57<-df_depress_more%>%filter(week =='57')%>%mutate(symptoms='depression')
-depress_anxiety<-rbind(df_anxiety_more_57, df_depress_more_57)%>%filter(select_characteristics %in% 
-                                                                          c("    Yes"  , "    No" ))
+depress_anxiety<-rbind(df_anxiety_more_57, df_depress_more_57)%>%filter(LGBTQ!='Did not report')
 ```
 
 ```{r}
-static_column_chart(depress_anxiety, x='symptoms',y='share', fill= 'select_characteristics')
+static_column_chart(depress_anxiety, x='symptoms',y='share', fill= 'LGBTQ')
 
 ```
 
-```{r}
-static_column_chart(depress_anxiety, x='symptoms',y='sum_total', fill= 'select_characteristics')
 
-```
 ```{r}
-df_anxiety_more_avg<-df_anxiety_more%>%group_by(select_characteristics)%>%summarize(mean_share=mean(share), mean_total=mean(sum_total))%>%
+df_anxiety_more_avg<-df_anxiety_more%>%group_by(LGBTQ)%>%summarize(mean_share=mean(share), mean_total=mean(sum_total))%>%
  mutate(symptoms='anxiety')
-df_depress_more_avg<-df_depress_more%>%group_by(select_characteristics)%>%summarize(mean_share=mean(share), mean_total=mean(sum_total))%>%
+df_depress_more_avg<-df_depress_more%>%group_by(LGBTQ)%>%summarize(mean_share=mean(share), mean_total=mean(sum_total))%>%
  mutate(symptoms='depression')
-depress_anxiety<-rbind(df_anxiety_more_avg, df_depress_more_avg)%>%filter(select_characteristics %in% 
-                                                                          c("    Yes"  , "    No" ))%>%mutate(LGBT=case_match(select_characteristics, 
-                                          "    Yes" ~"LGBT identifying",
-                                          "    No" ~ "Not LGBT identifying"))
+depress_anxiety<-rbind(df_anxiety_more_avg, df_depress_more_avg)%>%filter%>%filter(LGBTQ!='Did not report')
 ```
 
 ```{r}
-static_column_chart(depress_anxiety, x='symptoms',y='mean_share', fill= 'LGBT')
+static_column_chart(depress_anxiety, x='symptoms',y='mean_share', fill= 'LGBTQ')
 
 ```
 
 ```{r}
 depress_anxiety<-depress_anxiety%>%mutate(rounded_total=round(mean_total, -3))
-static_column_chart(depress_anxiety, x='symptoms',y='rounded_total', fill= 'LGBT')
+static_column_chart(depress_anxiety, x='symptoms',y='rounded_total', fill= 'LGBTQ')
 
 ```
