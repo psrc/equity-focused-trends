@@ -14,6 +14,7 @@ library(data.table)
 library(janitor)
 library(tidyr)
 library(psrcplot)
+library(ggplot2)
 ```
 
 
@@ -111,7 +112,8 @@ LGBT_med<-df_people%>%group_by(LGBT)%>%
          "    Did not report" ~"Did not report"))%>%drop_na()%>%
   mutate(
            rounded_pop=round(population, -3)
-         )
+         )%>%mutate(share=population/sum(population))
+
 sex_ort_med<-df_sexorient%>%group_by(SexualOrientation)%>%
   summarize('population'=median(as.numeric(total)))%>%
               mutate(rounded_pop=round(population, -3))%>%drop_na()
@@ -119,7 +121,7 @@ sex_ort_med<-df_sexorient%>%group_by(SexualOrientation)%>%
 ```
 
 ```{r}
-static_bar_chart(LGBT_med, x= 'rounded_pop', y='LGBT_grp', fill='LGBT_grp')
+static_bar_chart(LGBT_med, x= 'share', y='LGBT_grp', fill='LGBT_grp')
 ```
 ```{r}
 static_bar_chart(sex_ort_med, x= 'rounded_pop', y='SexualOrientation', fill='SexualOrientation')
@@ -361,8 +363,8 @@ depress_anxiety<-rbind(df_anxiety_more_avg, df_depress_more_avg)%>%filter%>%filt
 ```
 
 ```{r}
-static_column_chart(depress_anxiety, x='symptoms',y='mean_share', fill= 'LGBTQ')
-
+static_column_chart(depress_anxiety, x='symptoms',y='mean_share', fill= 'LGBTQ') +theme(text = element_text(size=20),
+        axis.text.x = element_text(size=12))
 ```
 
 ```{r}
