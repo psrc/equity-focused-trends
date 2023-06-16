@@ -15,6 +15,7 @@ library(janitor)
 library(tidyr)
 library(psrcplot)
 library(ggplot2)
+library(echarts4r)
 ```
 
 
@@ -28,19 +29,17 @@ dest_file_loc <-
 url_start <-
   'https://www2.census.gov/programs-surveys/demo/tables/hhp/'
 
-#data items and their url name
+#which weeks to summarize
+week_range <- 34:57
+
+sheet_name <- 'Seattle_Metro_Area'
 ```
 
 
 ### Population summary; for averaging over weeks
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
-#which weeks to summarize
-week_range <- 34:57
-
-sheet_name <- 'Seattle_Metro_Area'
-
-tbls<-'employ1'
+tbl<-'employ1'
 df_people<-data.frame()
 df_sexorient<-data.frame()
 
@@ -52,59 +51,68 @@ for (week in week_range) {
   else if (week < 52)
   {
     year = '2022'
-    # this is stupid
-    if (week < 49) {
-    }
-    else{
-    }
   }
   else{
     year = '2023'
-    tbls <- list('health1')
+
   }
   week_char <- as.character(week)
-  for (tbl in tbls) {
-    url_end <-
+
+  url_end <-
       paste0(year,'/','wk',week_char,'/',tbl,
              '_week',week_char,'.xlsx')
     url <- paste0(url_start, url_end)
     file_end <- gsub('/', '_', url_end)
     dest_file = paste0(dest_file_loc, file_end)
-    
-    
-    
+
     df <- read.xlsx(url, sheet = sheet_name, fillMergedCells = TRUE)
-    
 
     df_row23_28<- df %>% slice(23:28)
-    #df_row32_34<-df%>%slice(32:34)
     df_detail <- df_row23_28 %>% select(1:2)
-        df_detail  <-  df_detail %>% rename('SexualOrientation'= 1,
-                                            'total' = 2)%>%
-      mutate(week=week)
-
-    
+    df_detail  <-  df_detail %>% rename('SexualOrientation'= 1,
+                                        'total' = 2)%>%
+                                 mutate(week=week)
+      
     df_row30_33<- df %>% slice(30:33)
     #df_row32_34<-df%>%slice(32:34)
     df_lgbtq <- df_row30_33 %>% select(1:2)
     df_lgbtq <- df_lgbtq %>% rename('LGBT'= 1,
                                             'total' = 2)%>%
-      mutate(week=week)
+    mutate(week=week)
 
-    
-      
-     
+    #bind the weeks together
     df_people <- rbind(df_people, df_lgbtq)
     df_sexorient<- rbind(df_sexorient,df_detail)
-    
-  }
 }
-print(df_people)
-print(df_sexorient)
+
 ```
 ```{r}
-LGBT_med<-df_people%>%group_by(LGBT)%>%
-  summarize('population'=median(as.numeric(total)))%>%
+df_people_1<-df_people%>%group_by(week)%>%
+  mutate(LGBT_grp= case_match(LGBT,
+         "    Yes" ~"LGBT identifying",
+         "    No" ~"Not LGBT identifying",
+         "    Other" ~"Other",
+         "    Did not report" ~"Did not report"))%>%drop_na()%>%
+  mutate(
+           rounded_total=round(as.numeric(total), -3)
+         )%>%mutate(share=as.numeric(total)/sum(as.numeric(total)))
+
+week_est<-df_people_1 |> group_by(LGBT_grp)|>
+  e_charts(week) |>
+  e_line(share) |>
+  e_title("Sexual Orientation Estimated by Week (Census Pulse weeks)")|>
+  e_x_axis(week) |>
+  e_legend(bottom=0)|>
+  e_y_axis(
+    formatter = e_axis_formatter("percent", digits = 0)
+  )
+
+week_est
+```
+
+```{r}
+LGBT_mean<-df_people%>%group_by(LGBT)%>%
+  summarize('population'=mean(as.numeric(total)))%>%
   mutate(LGBT_grp= case_match(LGBT,
          "    Yes" ~"LGBT identifying",
          "    No" ~"Not LGBT identifying",
@@ -114,17 +122,33 @@ LGBT_med<-df_people%>%group_by(LGBT)%>%
            rounded_pop=round(population, -3)
          )%>%mutate(share=population/sum(population))
 
-sex_ort_med<-df_sexorient%>%group_by(SexualOrientation)%>%
-  summarize('population'=median(as.numeric(total)))%>%
+sex_ort_mean<-df_sexorient%>%group_by(SexualOrientation)%>%
+  summarize('population'=mean(as.numeric(total)))%>%
               mutate(rounded_pop=round(population, -3))%>%drop_na()
 
 ```
 
 ```{r}
-static_bar_chart(LGBT_med, x= 'share', y='LGBT_grp', fill='LGBT_grp')
+static_bar_chart(LGBT_mean, x= 'share', y='LGBT_grp', fill='LGBT_grp')
+
+LGBT_mean |>
+  e_charts(LGBT_grp) |>
+  e_bar(share)|>
+  e_legend(FALSE) |>
+  e_theme("infographic")|>
+  e_y_axis(
+    formatter = e_axis_formatter("percent", digits = 0)
+  )
+    
 ```
 ```{r}
-static_bar_chart(sex_ort_med, x= 'rounded_pop', y='SexualOrientation', fill='SexualOrientation')
+static_bar_chart(sex_ort_mean, x= 'rounded_pop', y='SexualOrientation', fill='SexualOrientation')
+
+sex_ort_mean |>
+  e_charts(SexualOrientation) |>
+  e_bar(rounded_pop, hideOverlap = TRUE)|>
+  e_legend(FALSE) |>
+  e_theme("infographic")
 ```
 
 ### Anxiety data download
@@ -142,34 +166,32 @@ for (week in week_range) {
   if (week < 42) {
     year = '2021'
     #they changed the table names over time, ugh!!
-    tbls <- list('health2a')
+    tbl <- 'health2a'
   }
   else if (week < 52)
   {
     year = '2022'
     # this is stupid
     if (week < 49) {
-      tbls <- list('health2a')
+      tbl <- 'health2a'
     }
     else{
-      tbls <- list('health1')
+      tbl <- 'health1'
     }
   }
   else{
     year = '2023'
-    tbls <- list('health1')
+    tbl <- 'health1'
   }
   week_char <- as.character(week)
-  for (tbl in tbls) {
+
     url_end <-
       paste0(year,'/','wk',week_char,'/',tbl,
              '_week',week_char,'.xlsx')
     url <- paste0(url_start, url_end)
     file_end <- gsub('/', '_', url_end)
     dest_file = paste0(dest_file_loc, file_end)
-    
-    
-    
+
     df <- read.xlsx(url, sheet = sheet_name, fillMergedCells = TRUE)
     df_row5 <- df %>% slice(5)
     df_row32_35<- df %>% slice(32:35)
@@ -217,7 +239,6 @@ for (week in week_range) {
      
     df_anxiety <- rbind(df_anxiety, df_lgbtq_summ)
     
-  }
 }
 ```
 
@@ -225,6 +246,17 @@ for (week in week_range) {
 df_anxiety_more<-df_anxiety%>%filter(anxiety_grp=='More than half the days')%>%drop_na()
 static_line_chart(df_anxiety_more, x='week', y='share', fill='LGBTQ')
 
+week_est<-df_anxiety_more |>
+  e_charts(week) |>
+  e_line(share) |>
+  e_title("Anxiety Estimated by Week (Census Pulse weeks)")|>
+  e_x_axis(week) |>
+  e_legend(bottom=0)|>
+  e_y_axis(
+    formatter = e_axis_formatter("percent", digits = 0)
+  )
+
+week_est
 ```
 ### Depression Data download
 
@@ -242,25 +274,25 @@ for (week in week_range) {
   if (week < 42) {
     year = '2021'
     #they changed the table names over time, ugh!!
-    tbls <- list('health2b')
+    tbl <- list('health2b')
   }
   else if (week < 52)
   {
     year = '2022'
     # this is stupid
     if (week < 49) {
-      tbls <- list('health2b')
+      tbl <- list('health2b')
     }
     else{
-      tbls <- list('health2')
+      tbl <- list('health2')
     }
   }
   else{
     year = '2023'
-    tbls <- list('health2')
+    tbl <- list('health2')
   }
   week_char <- as.character(week)
-  for (tbl in tbls) {
+
     url_end <-
       paste0(year,'/','wk',week_char,'/',tbl,
              '_week',week_char,'.xlsx')
@@ -316,7 +348,6 @@ for (week in week_range) {
     
     df_depress <- rbind(df_depress, df_lgbtq_summ)
     
-  }
 }
 ```
 
@@ -327,11 +358,8 @@ static_line_chart(df_depress_more, x='week', y='share', fill='LGBTQ')
 
 ```
 
-```{r}
-df_depress_more<-df_depress%>%filter(depress_grp=='More than half the days')%>%drop_na()
-static_line_chart(df_depress_more, x='week', y='sum_total', fill='LGBTQ')
 
-```
+
 ```{r}
 df_anxiety_more_56<-df_anxiety_more%>%filter(week =='56')%>%mutate(symptoms='anxiety')
 df_depress_more_56<-df_depress_more%>%filter(week =='56')%>%mutate(symptoms='depression')
