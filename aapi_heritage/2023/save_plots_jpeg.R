@@ -1,4 +1,4 @@
-jpeg(file="print_graphs/commute_compare_other.jpeg",height=432,width=1000)
+jpeg(file="print_graphs/pums_car_free_21.jpeg",height=432,width=700)
 print(
   print_plot
 )

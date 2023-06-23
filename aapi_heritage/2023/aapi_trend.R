@@ -115,6 +115,7 @@ pums_2019 <- get_psrc_pums(span = 1,
                            dyear = 2019,
                            level = "p",
                            vars = c("AGEP","PRACE",
+                                    "RAC1P",
                                     "RAC2P",         # race with country
                                     "ANC1P",         # Ancestry - first entry
                                     "JWTRNS",        # means of transportation to work
@@ -140,8 +141,6 @@ pums_2021_h <- get_psrc_pums(span = 1,
   aapi_pums_recode()
 
 
-test <- pums_2021 %>% psrc_pums_count(., group_vars=c("JWTRNS"))
-
 # commute mode share by race
 pums_race_commute_19_4cat <- pums_2019 %>% psrc_pums_count(., group_vars=c("race_4cat","mode_hts"))
 pums_race_commute_21_4cat <- pums_2021 %>% psrc_pums_count(., group_vars=c("race_4cat","mode_hts"))
@@ -157,11 +156,9 @@ pums_country_commute_21 <- pums_2021 %>%
                              TRUE~RAC2P)) %>%
   psrc_pums_count(., group_vars=c("RAC1P","country","mode"))
 
-pums_ancestry_commute_21 <- pums_2021 %>% 
-  filter(race_3cat == "Asian or Pacific Islander") %>%
-  psrc_pums_count(., group_vars=c("RAC1P","ANC1P","mode"))
 
 
+test <- pums_2021 %>% psrc_pums_count(., group_vars=c("RAC1P","PRACE"))
 
 # remove work from home
 pums_race_commute_17_no_wfm_3cat <- pums_2017 %>% 
@@ -174,15 +171,46 @@ pums_race_commute_21_no_wfm_3cat <- pums_2021 %>%
   filter(mode_hts!="Worked from home" & !is.na(mode_hts)) %>%
   psrc_pums_count(., group_vars=c("race_3cat","mode_hts"))
 
+test <- pums_2019 %>% 
+  psrc_pums_count(., group_vars=c("LUM_JOBSECTOR"))
+
+# top 10 aapi group commute mode
+aapi_top_10 <- pums_2019 %>% 
+  filter(race_3cat == "Asian or Pacific Islander") %>%
+  mutate(country = case_when(PRACE=="Native Hawaiian and Other Pacific Islander alone" ~ "Native Hawaiian and Other Pacific Islander alone",
+                             TRUE~RAC2P)) %>%
+  psrc_pums_count(., group_vars=c("race_3cat","country")) %>%
+  filter(!country %in% c("Total","All combinations of Asian races only")) %>%
+  arrange(desc(count)) %>%
+  top_n(10) # identify top 10 most populous groups of aapi: aapi_top_10$country
+# high telework share groups:
+tele_high <- c("Asian Indian alone","Taiwanese alone","Pakistani alone","Chinese, except Taiwanese, alone","Japanese alone")
+
+pums_race_commute_19_no_wfm_country <- pums_2019 %>% 
+  mutate(country = case_when(PRACE=="Native Hawaiian and Other Pacific Islander alone" ~ "Native Hawaiian and Other Pacific Islander alone",
+                             TRUE~RAC2P)) %>%
+  filter(race_3cat == "Asian or Pacific Islander",
+         mode_hts!="Worked from home" & !is.na(mode_hts),
+         country %in% aapi_top_10$country) %>%
+  psrc_pums_count(., group_vars=c("race_3cat","country","mode_hts"))
+pums_race_commute_21_no_wfm_country <- pums_2021 %>% 
+  mutate(country = case_when(PRACE=="Native Hawaiian and Other Pacific Islander alone" ~ "Native Hawaiian and Other Pacific Islander alone",
+                             TRUE~RAC2P)) %>%
+  filter(race_3cat == "Asian or Pacific Islander",
+         mode_hts!="Worked from home" & !is.na(mode_hts),
+         country %in% aapi_top_10$country) %>%
+  psrc_pums_count(., group_vars=c("race_3cat","country","mode_hts"))
+
+
 # county-level
 pums_race_commute_19_3cat_county <- pums_2019 %>% psrc_pums_count(., group_vars=c("COUNTY","race_3cat","mode"))
 pums_race_commute_21_3cat_county <- pums_2021 %>% psrc_pums_count(., group_vars=c("COUNTY","race_3cat","mode"))
 pums_race_commute_19_no_wfm_3cat_county <- pums_2019 %>% 
-  filter(mode!="Worked from home") %>%
-  psrc_pums_count(., group_vars=c("COUNTY","race_3cat","mode"))
+  filter(mode!="Worked from home" & !is.na(mode_hts)) %>%
+  psrc_pums_count(., group_vars=c("COUNTY","race_3cat","mode_hts"))
 pums_race_commute_21_no_wfm_3cat_county <- pums_2021 %>% 
-  filter(mode!="Worked from home") %>%
-  psrc_pums_count(., group_vars=c("COUNTY","race_3cat","mode"))
+  filter(mode!="Worked from home" & !is.na(mode_hts)) %>%
+  psrc_pums_count(., group_vars=c("COUNTY","race_3cat","mode_hts"))
 
 
 
@@ -192,7 +220,7 @@ pums_race_veh_21 <- pums_2021_h %>%
                   incl_na=FALSE)
 
 pums_race_veh_21_per <- pums_2021 %>% 
-  psrc_pums_count(., group_vars=c("race_3cat","vehicle"),
+  psrc_pums_count(., group_vars=c("race_4cat","vehicle"),
                   incl_na=FALSE)
 pums_race_veh_21_county <- pums_2021_h %>% 
   psrc_pums_count(., group_vars=c("COUNTY","race_3cat","vehicle"),
@@ -400,6 +428,17 @@ hts_car_own <- hhts_count(per_data_21,
                        filter(race_3cat!="Child -- no race specified"), 
                      group_vars = c("race_3cat","vehicle_count"), 
                      spec_wgt = "hh_weight_2019"))
+hts_car_own_detailed <- hhts_count(per_data_21, 
+                          group_vars = c("race_4cat","vehicle_count"), 
+                          spec_wgt = "person_adult_weight_2021") %>%
+  add_row(hhts_count(per_data_17 %>%
+                       filter(race_3cat!="Child -- no race specified"), 
+                     group_vars = c("race_4cat","vehicle_count"), 
+                     spec_wgt = "hh_weight_2017")) %>%
+  add_row(hhts_count(per_data_19 %>%
+                       filter(race_3cat!="Child -- no race specified"), 
+                     group_vars = c("race_4cat","vehicle_count"), 
+                     spec_wgt = "hh_weight_2019"))
 
 hts_commute <- hhts_count(per_data_21 %>% test(), 
                           group_vars = c("race_3cat","commute_mode3"), 
@@ -464,6 +503,23 @@ hts_commute_race_compare <- hhts_count(per_data_21 %>% filter(!is.na(commute_mod
   rename(DATA_YEAR = survey,
          mode_hts = commute_mode_compare_pums) %>%
   mutate(data_type="HTS")
+
+
+
+
+test <- pums_race_commute_19_4cat %>%
+  filter(!is.na(mode_hts),mode_hts!="Total") %>%
+  mutate(grp = case_when(mode_hts %in% c("Drive","Other","Transit", "Walk/Bike")~"Traveling to Work",
+                         mode_hts =="Worked from home"~"Telework")) %>%
+  group_by(race_4cat) %>%
+  mutate(total_workers = sum(count)) %>%
+  group_by(DATA_YEAR,COUNTY,race_4cat,grp,total_workers) %>%
+  summarise(count_workers = sum(count)) %>%
+  group_by(grp) %>%
+  mutate(sum_all_workers_in_grp = sum(count_workers))
+
+test3 <- pums_commute_mode_share %>%
+  filter(DATA_YEAR==2019)
 
 
 
