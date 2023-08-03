@@ -101,11 +101,18 @@ for (week in week_range) {
 }
 
 
-df_hisp <- main_df %>%
+df_hisp <- df_main %>%
   filter(str_detect(select_characteristics, 'Hispanic or Latino')) %>%
   filter(str_detect(rent_change_class, 'more than '))
+hisp_bar_chart <- interactive_column_chart(
+  t=df_hisp, y='share', x='week',
+  fill='select_characteristics',
+  color='pognbgy_10',
+  title="Share of renters with rent increase > $500"
+)
+hisp_bar_chart
 
-df_totals <- main_df %>%
+df_totals <- df_main %>%
   group_by(select_characteristics, week) %>%
   summarize(sum(value))
 

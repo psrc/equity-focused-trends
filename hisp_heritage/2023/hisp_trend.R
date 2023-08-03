@@ -214,7 +214,8 @@ pums_mode_with_vehicles <- pums_2021 %>%
   filter(vehicle=="1+ vehicle(s)") %>%
   filter(mode_hts != "NA") %>%
   psrc_pums_count(., group_vars=c("race_4cat","mode_hts")) %>%
-  filter(mode_hts != "Total")
+  filter(mode_hts != "Total") %>%
+  filter(mode_hts != 'Drive')
 mode_chart_with_vehicles <- interactive_column_chart(
   t=pums_mode_with_vehicles, y="share", x="mode_hts",
   fill="race_4cat",
