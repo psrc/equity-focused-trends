@@ -1,0 +1,220 @@
+---
+title: "Template to make PSRC leaflet map"
+author: "PSRC Data"
+date: "2023"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+library(sf) # geographic data library
+library(dplyr) # for working with data frames
+library(psrcelmer) # to get data from Elmer
+library(psrcplot) # to get color schemes
+library(mapview) # for outputting the map to html or png
+library(htmlwidgets) # to help with map formatting
+library(leafsync)
+```
+
+
+### 2. Read in any other libraries or keys you need
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+library(psrccensus)
+Sys.getenv("CENSUS_API_KEY")
+```
+
+
+```{r}
+create_psrc_map <- function(lyr,
+                            lyr_data_field,
+                            legend_title,
+                            legend_subtitle,
+                            psrc_col_pal,
+                            map_lat = 47.615,
+                            map_lon = -122.257,
+                            map_zoom = 8.5,
+                            wgs84 = 4326) {
+  # psrc colors need more contrast to work
+  pal <-
+    leaflet::colorNumeric(palette = psrc_col_pal, domain = lyr_data_field)
+  
+  css_fix <-
+    "div.info.legend.leaflet-control br {clear: both;} html * {font-family: Poppins !important;}" # CSS to correct spacing and font family
+  html_fix <-
+    htmltools::tags$style(type = "text/css", css_fix)  # Convert CSS to HTML
+  
+  
+  labels <-
+    paste0('Estimate: ', prettyNum(round(lyr_data_field,-1), big.mark = ",")) %>%
+    lapply(htmltools::HTML)
+  
+  m <- leaflet::leaflet() %>%
+    leaflet::addMapPane(name = "polygons", zIndex = 410) %>%
+    leaflet::addMapPane(name = "maplabels", zIndex = 500) %>% # higher zIndex rendered on top
+    
+    leaflet::addProviderTiles("CartoDB.VoyagerNoLabels") %>%
+    leaflet::addProviderTiles(
+      "CartoDB.VoyagerOnlyLabels",
+      options = leaflet::leafletOptions(pane = "maplabels"),
+      group = "Labels"
+    ) %>%
+    leaflet::addEasyButton(leaflet::easyButton(
+      icon = htmltools::span(class = "globe", htmltools::HTML("&#127758;")),  #&#127760; (another emoji option) #"fa-globe", (font awesome icon no longer works because of the conversion to Poppins font below)  
+      title ="Region",
+      onClick=JS("function(btn, map){map.setView([47.615,-122.257],8.5); }")))%>%
+    leaflet::addPolygons(
+      data = lyr,
+      fillOpacity = 0.7,
+      fillColor = pal(lyr_data_field),
+      weight = 0.7,
+      color = "#BCBEC0",
+      group = "estimate",
+      opacity = 0,
+      stroke = FALSE,
+      options = leaflet::leafletOptions(pane = "polygons"),
+      dashArray = "",
+      highlight = leaflet::highlightOptions(
+        weight = 5,
+        color = "76787A",
+        dashArray = "",
+        fillOpacity = 0.7,
+        bringToFront = TRUE
+      ),
+      label = labels,
+      labelOptions = leaflet::labelOptions(
+        style = list(
+          "font-weight" = "normal",
+          padding = "3px 8px",
+          "font-family" = "Poppins"
+        )
+      )
+    ) %>%
+    
+    leaflet::addLegend(
+      pal = pal,
+      values = lyr_data_field,
+      position = "bottomright",
+      title = paste(legend_title, '<br>', legend_subtitle)
+    ) %>%
+    
+    leaflet::addLayersControl(baseGroups = "CartoDB.VoyagerNoLabels",
+                              overlayGroups = c("Labels", "estimate")) %>%
+    
+    leaflet::setView(lng = map_lon, lat = map_lat, zoom = map_zoom) %>%
+    htmlwidgets::prependContent(html_fix)      # Insert into leaflet HTML code
+  
+  return(m)
+  
+}
+
+```
+
+
+### 3. Define create_psrc_map function
+
+
+### 4.  Read in Data Table with a geographic field ID
+
+```{r, results=FALSE, message=FALSE, warning=FALSE}
+big_tbl<-read.csv('C:/GitHub/equity-focused-trends/hisp_heritage/2023/tract_accessibility_2018.csv')
+```
+
+### 5. Clean up the data in preparation to join to the geographic layer
+```{r}
+# read in data table and process data to join and map
+tbl <- big_tbl %>% mutate(geoid10=as.character(tract_geoid10))
+```
+
+
+### 6. Read in ElmerGeo geographic layer
+
+```{r}
+tract_layer_name <- "TRACT2010_NOWATER"
+lyr <- st_read_elmergeo(tract_layer_name)
+```
+
+### 7. Join to data table layer via matching IDs, choose the field to map
+```{r }
+lyr_data<- dplyr::left_join(lyr,tbl, by="geoid10")
+# this is the field to map
+lyr_data_field<-lyr_data$access
+```
+
+
+```{r, results=FALSE, message=FALSE, warning=FALSE}
+big_tbl <-psrccensus::get_acs_recs(geography='tract',table.names='B03001',year=2019, acs.type='acs5')
+```
+
+### 5. Clean up the data in preparation to join to the geographic layer
+```{r}
+# read in data table and process data to join and map
+hisp_tbl <- big_tbl %>%filter(label=='Estimate!!Total:!!Hispanic or Latino:')%>% 
+  dplyr::select(GEOID,estimate) %>%
+  dplyr::mutate(dplyr::across(c('GEOID'), as.character))%>%
+  dplyr::group_by(GEOID) %>%
+  dplyr::summarise(Total=sum(estimate))
+```
+
+```{r }
+lyr_data_2<- dplyr::left_join(lyr_data,hisp_tbl, by = c("geoid10"='GEOID'))
+# this is the field to map
+lyr_data_field_2<-lyr_data_2$Total
+```
+
+### 8. Call the function to make the map.
+
+these are the function inputs:
+
+lyr: sf map layer, the geographic layer including the field you want to map
+
+lyr_data_field: numeric vector of data values to map
+
+legend_title: string, The title in the legend
+
+legend_subtitle: string, The title in the legend
+
+psrc_col_pal: string list, color ramp
+
+map_lat=47.615, map_lon=-122.257: defaults, can be overridden for centering the map
+
+map_zoom=8.5, wgs84=4326 : defaults, can be overriden, zoom level and projection
+```{r}
+# need to add a white color to ensure contrast
+psrc_purple_plus<-append(psrc_colors$purples_inc, "#FFFFFF", after=0)
+map_acc<-create_psrc_map(lyr=lyr_data_2, 
+                        lyr_data_field=lyr_data_field,
+                        legend_title= 'Transit Accessibility',
+                        legend_subtitle = 'Number of Jobs within 45 minutes on Transit',
+                        psrc_col_pal=psrc_purple_plus)
+
+map_acc
+map_shot(map_acc, file='map_acc.png')
+```
+
+```{r}
+# need to add a white color to ensure contrast
+psrc_orange_plus<-append(psrc_colors$oranges_inc, "#FFFFFF", after=0)
+map_hisp_pop<-create_psrc_map(lyr=lyr_data_2, 
+                        lyr_data_field=lyr_data_field_2,
+                        legend_title= 'Hispanic Population',
+                        legend_subtitle = 'ACS 2015-2019 5-year',
+                        psrc_col_pal=psrc_orange_plus)
+
+map_hisp_pop
+map_shot(map_hisp_pop, file='hisp_pop.png')
+```
+
+```{r}
+map_it<-sync(map_acc, map_hisp_pop, ncol=1)
+map_it
+```
+
+
+
+
+
+
