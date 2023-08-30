@@ -1,0 +1,7 @@
+﻿survey,COUNTY,SEX,BIN_AGE,count,count_moe,share,share_moe
+2019,Region,Female,between 65 and 75 years,194000,2661.193202,0.091539944,0.001285063
+2019,Region,Female,between 75 and 85 years,92000,3569.257472,0.043517266,0.001659671
+2019,Region,Female,85 years and over,44000,3330.753311,0.020968524,0.001571473
+2019,Region,Male,between 65 and 75 years,170000,2425.905767,0.079976163,0.001144641
+2019,Region,Male,between 75 and 85 years,70000,2527.597797,0.032859403,0.001172369
+2019,Region,Male,85 years and over,26000,2358.860138,0.012305723,0.001111753

@@ -1,0 +1,25 @@
+﻿DATA_YEAR,COUNTY,SEX,PRACE,PINCP_median,PINCP_median_moe,ref_val
+2021,Region,Female,"American Indian or
+Alaskan Native ",44000,5835.467545,66000
+2021,Region,Female,Asian ,63000,1756.638526,66000
+2021,Region,Female,"Black or African American
+",43000,1745.345086,66000
+2021,Region,Female,Hispanic or Latino,39000,1582.958233,66000
+2021,Region,Female,"Native Hawaiian and Other
+Pacific Islander ",38000,2570.775626,66000
+2021,Region,Female,Some Other Race ,53000,9244.488191,66000
+2021,Region,Female,Two or More Races,53000,2182.143905,66000
+2021,Region,Female,White ,61000,731.488916,66000
+2021,Region,Female,Total,56000,1380.325203,66000
+2021,Region,Male,"American Indian or
+Alaskan Native ",46000,3695.765878,66000
+2021,Region,Male,Asian ,93000,2370.473123,66000
+2021,Region,Male,"Black or African American
+",46000,1204.636708,66000
+2021,Region,Male,Hispanic or Latino,48000,1551.135418,66000
+2021,Region,Male,"Native Hawaiian and Other
+Pacific Islander ",43000,5517.533835,66000
+2021,Region,Male,Some Other Race ,67000,19488.79348,66000
+2021,Region,Male,Two or More Races,63000,2815.932826,66000
+2021,Region,Male,White ,81000,1158.113329,66000
+2021,Region,Male,Total,74000,876.2224105,66000

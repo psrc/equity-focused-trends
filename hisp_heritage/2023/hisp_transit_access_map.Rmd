@@ -192,7 +192,7 @@ map_acc<-create_psrc_map(lyr=lyr_data_2,
                         psrc_col_pal=psrc_purple_plus)
 
 map_acc
-map_shot(map_acc, file='map_acc.png')
+mapshot(map_acc, file='map_acc.png')
 ```
 
 ```{r}
@@ -205,7 +205,7 @@ map_hisp_pop<-create_psrc_map(lyr=lyr_data_2,
                         psrc_col_pal=psrc_orange_plus)
 
 map_hisp_pop
-map_shot(map_hisp_pop, file='hisp_pop.png')
+mapshot(map_hisp_pop, file='hisp_pop.png')
 ```
 
 ```{r}

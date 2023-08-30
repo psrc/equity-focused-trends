@@ -39,7 +39,6 @@ vignettes/*.pdf
 .Renviron
 
 # Input and Outputs
-*.csv
 *.pdf
 /aian-nov22
 *.png

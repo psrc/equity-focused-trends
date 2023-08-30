@@ -16,6 +16,7 @@ library(tidyr)
 library(psrcplot)
 library(ggplot2)
 library(echarts4r)
+install_psrc_fonts()
 ```
 
 
@@ -29,7 +30,7 @@ dest_file_loc <-
 url_start <-
   'https://www2.census.gov/programs-surveys/demo/tables/hhp/'
 
-#which weeks to summarize
+#which weeks to summarize- when they started asking sexual orientation
 week_range <- 34:57
 
 sheet_name <- 'Seattle_Metro_Area'
