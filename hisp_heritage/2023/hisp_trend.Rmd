@@ -1,0 +1,278 @@
+---
+title: "Hispanic Commute Modes"
+output: html_document
+fontsize: 12pt
+---
+\setmainfont{Poppins}
+```{r setup, include=FALSE}
+library(psrccensus)
+library(ggplot2)
+library(tidyverse)
+library(psrcplot)
+source("./hisp_functions.R")
+library(sf) # geographic data library
+library(psrcelmer) # to get data from Elmer
+library(psrcplot) # to get color schemes
+library(mapview) # for outputting the map to html or png
+library(htmlwidgets) # to help with map formatting
+library(leafsync)
+
+pums_2021 <- get_psrc_pums(span = 5,
+                           dyear = 2021,
+                           level = "p",
+                           vars = c("AGEP","PRACE",
+                                    "MIG",           # lived here 1 year ago
+                                    "HISP",          # detailed Hispanic origin
+                                    "HISPEED",       # Has broadband internet
+                                    "FACCESSP",      # Access to the Internet
+                                    "HHLDRHISP",     # Detailed Hispanic origin of householder
+                                    "RAC2P",         # race with country
+                                    "ANC1P",         # Ancestry - first entry
+                                    "JWTRNS",        # means of transportation to work
+                                    "JWMNP",         # Travel time to work
+                                    "NAICSP",        # NAICS recode for 2018
+                                    "POBP",          # Place of birth (Recode)
+                                    "GRPIP",         # Gross rent as % of household income
+                                    "OWN_RENT",      # Dichotomous tenure
+                                    "MI_JOBSECTOR",  # PSRC-defined manufacturing-industrial groups
+                                    "SOCP",          # Standard Occupational Classification (SOC) codes for 2018 and laterbased on 2018 SOC codes
+                                    "TEN",           # Tenure
+                                    "VEH",           # Vehicles (1 ton or less) available
+                                    "WIF"))          # Workers in family
+
+pums_2021 <- pums_2021 %>%
+  hisp_pums_recode() %>%
+  mutate(ind = substr(NAICSP, 1,3))
+
+
+pums_race_counts <- pums_2021 %>%
+  psrc_pums_count(., group_vars="race_4cat") 
+
+```
+
+``` {r prep_map, echo=FALSE, message=FALSE, warning=FALSE}
+
+create_psrc_map <- function(lyr,
+                            lyr_data_field,
+                            legend_title,
+                            legend_subtitle,
+                            psrc_col_pal,
+                            map_lat = 47.615,
+                            map_lon = -122.257,
+                            map_zoom = 8.5,
+                            wgs84 = 4326) {
+  # psrc colors need more contrast to work
+  pal <-
+    leaflet::colorNumeric(palette = psrc_col_pal, domain = lyr_data_field)
+  
+  css_fix <-
+    "div.info.legend.leaflet-control br {clear: both;} html * {font-family: Poppins !important;}" # CSS to correct spacing and font family
+  html_fix <-
+    htmltools::tags$style(type = "text/css", css_fix)  # Convert CSS to HTML
+  
+  
+  labels <-
+    paste0('Estimate: ', prettyNum(round(lyr_data_field,-1), big.mark = ",")) %>%
+    lapply(htmltools::HTML)
+  
+  m <- leaflet::leaflet() %>%
+    leaflet::addMapPane(name = "polygons", zIndex = 410) %>%
+    leaflet::addMapPane(name = "maplabels", zIndex = 500) %>% # higher zIndex rendered on top
+    
+    leaflet::addProviderTiles("CartoDB.VoyagerNoLabels") %>%
+    leaflet::addProviderTiles(
+      "CartoDB.VoyagerOnlyLabels",
+      options = leaflet::leafletOptions(pane = "maplabels"),
+      group = "Labels"
+    ) %>%
+    leaflet::addEasyButton(leaflet::easyButton(
+      icon = htmltools::span(class = "globe", htmltools::HTML("&#127758;")),  #&#127760; (another emoji option) #"fa-globe", (font awesome icon no longer works because of the conversion to Poppins font below)  
+      title ="Region",
+      onClick=JS("function(btn, map){map.setView([47.615,-122.257],8.5); }")))%>%
+    leaflet::addPolygons(
+      data = lyr,
+      fillOpacity = 0.7,
+      fillColor = pal(lyr_data_field),
+      weight = 0.7,
+      color = "#BCBEC0",
+      group = "estimate",
+      opacity = 0,
+      stroke = FALSE,
+      options = leaflet::leafletOptions(pane = "polygons"),
+      dashArray = "",
+      highlight = leaflet::highlightOptions(
+        weight = 5,
+        color = "76787A",
+        dashArray = "",
+        fillOpacity = 0.7,
+        bringToFront = TRUE
+      ),
+      label = labels,
+      labelOptions = leaflet::labelOptions(
+        style = list(
+          "font-weight" = "normal",
+          padding = "3px 8px",
+          "font-family" = "Poppins"
+        )
+      )
+    ) %>%
+    
+    leaflet::addLegend(
+      pal = pal,
+      values = lyr_data_field,
+      position = "bottomright",
+      title = paste(legend_title, '<br>', legend_subtitle)
+    ) %>%
+    
+    leaflet::addLayersControl(baseGroups = "CartoDB.VoyagerNoLabels",
+                              overlayGroups = c("Labels", "estimate")) %>%
+    
+    leaflet::setView(lng = map_lon, lat = map_lat, zoom = map_zoom) %>%
+    htmlwidgets::prependContent(html_fix)      # Insert into leaflet HTML code
+  
+  return(m)
+  
+}
+big_tbl<-read.csv('tract_accessibility_2018.csv')
+tbl <- big_tbl %>% mutate(geoid10=as.character(tract_geoid10))
+tract_layer_name <- "TRACT2010_NOWATER"
+lyr <- st_read_elmergeo(tract_layer_name)
+lyr_data<- dplyr::left_join(lyr,tbl, by="geoid10")
+# this is the field to map
+lyr_data_field<-lyr_data$access
+big_tbl <-psrccensus::get_acs_recs(geography='tract',table.names='B03001',year=2019, acs.type='acs5')
+hisp_tbl <- big_tbl %>%filter(label=='Estimate!!Total:!!Hispanic or Latino:')%>% 
+  dplyr::select(GEOID,estimate) %>%
+  dplyr::mutate(dplyr::across(c('GEOID'), as.character))%>%
+  dplyr::group_by(GEOID) %>%
+  dplyr::summarise(Total=sum(estimate))
+lyr_data_2<- dplyr::left_join(lyr_data,hisp_tbl, by = c("geoid10"='GEOID'))
+# this is the field to map
+lyr_data_field_2<-lyr_data_2$Total
+
+```
+
+### Intro 
+	
+Nationally, Hispanic populations [report relatively high use of public transit](https://tinyurl.com/5n83ta2s) compared with whites.  But in the central Puget Sound region, Census data shows that Hispanics tend to commute by car more often than other groups.  
+
+```{r echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
+pums_mode <- pums_2021 %>%
+  filter(mode_hts != "NA") %>%
+  psrc_pums_count(., group_vars=c("race_4cat","mode_hts")) %>%
+  filter(mode_hts != "Total") 
+pums_mode_drive <- pums_mode %>%
+  filter(mode_hts == 'Drive')
+  
+mode_chart_drive <- interactive_column_chart(
+  t=pums_mode_drive, y="share", x="mode_hts",
+  fill="race_4cat",
+  #facet="race_4cat",
+  color='pognbgy_10',
+  moe="share_moe",
+  title="Drive Commute Mode choice by Race"
+)
+mode_chart_drive
+```
+Additionally, Hispanic transit commute rates tend to be roughly on par with whites and substantially below the rates for Black and Asian groups.  
+
+```{r echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
+pums_mode_transit <- pums_mode %>%
+  filter(mode_hts == 'Transit')
+mode_chart_transit <- interactive_column_chart(
+  t=pums_mode_transit, y="share", x="mode_hts",
+  fill="race_4cat",
+  #facet="race_4cat",
+  color='pognbgy_10',
+  moe="share_moe",
+  title="Transit Commute Mode choice by Race"
+)
+mode_chart_transit
+```
+
+This led us to wonder what are the factors that inform these choices, and what are some of the pressures that lead the area's Hispanics to favor cars over transit at higher rates than other populations.  
+
+### Home Locations Make a Difference
+First, we looked at the places that the Hispanic populace lives.  Using Census data from the American Community Survey, we looked at the Hispanic population counts by tract.  As shown in the map below, the roughly 441,000 Hispanic people in the region tend to live in either South King County -- notably Burien, Des Moines, Federal Way and Auburn -- and Southern Snohomish County along the SR 99 Corridor.  
+
+
+```{r hispanic_pop_map, echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
+
+psrc_purple_plus<-append(psrc_colors$purples_inc, "#FFFFFF", after=0)
+map_acc<-create_psrc_map(lyr=lyr_data_2,
+                        lyr_data_field=lyr_data_field,
+                        legend_title= 'Transit Accessibility',
+                        legend_subtitle = 'Number of Jobs within 45 minutes on Transit',
+                        psrc_col_pal=psrc_purple_plus)
+
+map_acc
+mapshot(map_acc, file='map_acc.png')
+
+
+```
+
+To see how well commuters in these heavily Hispanic areas are served by transit, we calculated the number of jobs accessible by transit within 45 minutes for each Census tract. This map, below, shows that the areas with best transit access to jobs are concentrated in central Seattle and Bellevue.  Residents in these areas can reach a large pool of jobs by a 45-minute transit ride -- nearly 800,000 for some tracts.  By contrast, people living in the most heavily Hispanic areas can reach a much smaller pool by equivalent means: many can reach only between 30 and 60 thousand within the same 45-minute window.  Residents of the tract with the single highest Hispanic population, in Auburn, have only 20,000 jobs accessible within this window  And the fewer the jobs accessible by transit, the higher the likelihood that a given worker will need to drive to get to his or her place of work.
+
+```{r transit_access_map, echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
+psrc_orange_plus<-append(psrc_colors$oranges_inc, "#FFFFFF", after=0)
+ map_hisp_pop<-create_psrc_map(lyr=lyr_data_2, 
+                         lyr_data_field=lyr_data_field_2,
+                         legend_title= 'Hispanic Population',
+                         legend_subtitle = 'ACS 2015-2019 5-year',
+                         psrc_col_pal=psrc_orange_plus)
+
+ map_hisp_pop
+ mapshot(map_hisp_pop, file='hisp_pop.png')
+```
+
+
+- Home location: Hispanics live in areas of low transit service
+	- Hispanic populations have generally low accessibility to jobs by car compared with other groups, but they have even lower accessibility to jobs by transit.  This leads to a higher likelihood that they
+	- graphic: jobs accessible within 30 minutes by car, 2018
+	- graphic: jobs accessible within 45 minutes by transit, 2018
+	- need to demonstrate this
+	
+### Industry
+- industry: Hispanic workers tend to be in industries not well suited to transit
+	- Do Hispanic people indeed work in different sectors than others?  Create a stacked bar chart showing the industry breakdown by race.
+		- industry_chart_all compares the proportion of workers in construction and restaurant industries (the two most common industries among Hispanic workers).
+		- Need to account for
+  - Find the top industries for Hispanic workers
+     - CON-Construction: count=30,980
+     - ENT-Restaurants And Other Food Services: count=29,837
+     - EDU-Elementary And Secondary Schools: count=8,196
+  - Find the top industries for population overall:
+    - CON-Construction: 180,192
+    - ENT-Restaurants And Other Food Services: 163,853
+    - PRF-Computer Systems Design And Related Services: 145,800
+  - make a choropleth map of their locations by tract
+	
+- overall accessibility:
+	- jobs accessible within 30 minutes by car
+	- jobs accessible within 45 minutes by transit
+
+
+```{r echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
+
+pums_emp_mode <- pums_2021 %>%
+  mutate(ind2 = factor(case_when(
+          grepl('CON-Construction',NAICSP) ~ 'Construction',
+          grepl('ENT-Restaurants', NAICSP) ~ 'Restaurants',
+          #grepl('EDU-Elementary', NAICSP) ~ 'K-12 Edu',
+          .default = 'Other' )
+        )
+       ) %>%
+  filter(ind2 != 'Other') %>%
+  psrc_pums_count(., group_vars=c("race_4cat", "ind2")) %>%
+  inner_join(pums_race_counts, by='race_4cat') %>%
+  mutate(pct = (count.x / count.y) * 100) %>%
+  filter(ind2 != "Total")
+
+
+industry_chart_all <- ggplot(
+  pums_emp_mode, 
+  aes(fill=ind2, y=pct, x=race_4cat)) +
+    geom_bar(position="stack", stat="identity") 
+
+industry_chart_all
+```
