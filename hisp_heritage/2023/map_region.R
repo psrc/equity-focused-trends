@@ -9,7 +9,7 @@ create_psrc_map <- function(lyr,
                             wgs84 = 4326) {
   # psrc colors need more contrast to work
   pal <-
-    leaflet::colorNumeric(palette = psrc_col_pal, domain = lyr_data_field)
+    leaflet::colorNumeric(palette = psrc_col_pal, domain = c(0,2000), na.color='#7A3803')
   
   css_fix <-
     "div.info.legend.leaflet-control br {clear: both;} html * {font-family: Poppins !important;}" # CSS to correct spacing and font family

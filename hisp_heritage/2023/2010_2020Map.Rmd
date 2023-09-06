@@ -62,17 +62,17 @@ Note: you will need field names to match on
 This example gets ACS 5-year data for Asian Groups by Tract. For Asian Pacific Islander Month, we had observed that https://www.psrc.org/media/7650  https://www.psrc.org/media/7703 Vietnamese workers had some of the higher shares of driving to work and lower shares of teleworking. This may relate to the jobs sectors Vietnamese workers are part of. We wanted to look into where Vietnamese people live in region to better understand their commuting patterns. B2015: Asian Alone by Selected Group
 ```{r, results=FALSE, message=FALSE, warning=FALSE}
 library(psrccensus)
-big_tbl <-psrccensus::get_decennial_recs(geography='tract',table_codes='DP1_0092',year=2020)
+big_tbl <-get_decennial_recs(geography="tract", variables="DP1_0093C", years=2020, sumfile="dp")
 ```
 
 ### 5. Clean up the data in preparation to join to the geographic layer
 ```{r}
 # read in data table and process data to join and map
-tbl <- big_tbl %>%filter(label=='Estimate!!Total:!!Cambodian')%>% 
-  dplyr::select(GEOID,estimate) %>%
+tbl <- big_tbl %>%
+  dplyr::select(GEOID,value) %>%
   dplyr::mutate(dplyr::across(c('GEOID'), as.character))%>%
   dplyr::group_by(GEOID) %>%
-  dplyr::summarise(Total=sum(estimate))
+  dplyr::summarise(Total=sum(value))
 ```
 
 
@@ -110,25 +110,98 @@ map_lat=47.615, map_lon=-122.257: defaults, can be overridden for centering the 
 map_zoom=8.5, wgs84=4326 : defaults, can be overriden, zoom level and projection
 ```{r}
 # need to add a white color to ensure contrast
-psrc_purple_plus<-append(psrc_colors$purples_inc, "#FFFFFF", after=0)
+psrc_orange_plus<-append(psrc_colors$oranges_inc, "#FFFFFF", after=0)
 map_it<-create_psrc_map(lyr=lyr_data, 
                         lyr_data_field=lyr_data_field,
-                        legend_title= 'Cambodian Population',
+                        legend_title= '2020 Hispanic Population',
                         legend_subtitle = 'by Census Tract',
-                        psrc_col_pal=psrc_purple_plus)
+                        psrc_col_pal=psrc_orange_plus)
 
 map_it
 ```
 
 ### Step 9. (optional) Save the map as html
 ```{r}
-mapshot(map_it, url= "VietnamesePop.html")
+mapshot(map_it, url= "HispanicPop2020.html")
 ```
 
 
 ### Step 10. (optional) Save the map as png
 ```{r}
-mapshot(map_it, file= "VietnamesePop.png")
+mapshot(map_it, file= "HispanicPop2020.png")
 
 ```
 
+
+```{r, results=FALSE, message=FALSE, warning=FALSE}
+big_tbl <-get_decennial_recs(geography="tract", variables="P005010", years=2010, sumfile="sf1")
+```
+
+### 5. Clean up the data in preparation to join to the geographic layer
+```{r}
+# read in data table and process data to join and map
+tbl <- big_tbl %>%
+  dplyr::select(GEOID,value) %>%
+  dplyr::mutate(dplyr::across(c('GEOID'), as.character))%>%
+  dplyr::group_by(GEOID) %>%
+  dplyr::summarise(Total=sum(value))
+```
+
+
+### 6. Read in ElmerGeo geographic layer
+
+```{r}
+tract_layer_name <- "TRACT2010_NOWATER"
+lyr <- st_read_elmergeo(tract_layer_name)
+```
+
+### 7. Join to data table layer via matching IDs, choose the field to map
+```{r }
+lyr_data<- dplyr::left_join(lyr,tbl, by = c("geoid10"="GEOID"))
+# this is the field to map
+lyr_data_field<-lyr_data$Total
+```
+
+
+### 8. Call the function to make the map.
+
+these are the function inputs:
+
+lyr: sf map layer, the geographic layer including the field you want to map
+
+lyr_data_field: numeric vector of data values to map
+
+legend_title: string, The title in the legend
+
+legend_subtitle: string, The title in the legend
+
+psrc_col_pal: string list, color ramp
+
+map_lat=47.615, map_lon=-122.257: defaults, can be overridden for centering the map
+
+map_zoom=8.5, wgs84=4326 : defaults, can be overriden, zoom level and projection
+```{r}
+# need to add a white color to ensure contrast
+psrc_orange_plus<-append(psrc_colors$oranges_inc, "#FFFFFF", after=0)
+map_it<-create_psrc_map(lyr=lyr_data, 
+                        lyr_data_field=lyr_data_field,
+                        legend_title= '2010 Hispanic Population',
+                        legend_subtitle = 'by Census Tract',
+                        psrc_col_pal=psrc_orange_plus)
+
+map_it
+```
+
+### Step 9. (optional) Save the map as html
+```{r}
+mapshot(map_it, url= "HispanicPop2010.html")
+```
+
+
+### Step 10. (optional) Save the map as png
+```{r}
+mapshot(map_it, file= "HispanicPop2010.png")
+
+```
+
+```
