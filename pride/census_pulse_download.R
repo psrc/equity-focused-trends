@@ -42,6 +42,9 @@ for (week in week_range) {
   }
   week_char <- as.character(week)
   for (tbl in tbls) {
+    tbl = 'health1'
+    week_char = "52"
+    year = "2023"
     url_end <-
       paste0(year,
              '/',

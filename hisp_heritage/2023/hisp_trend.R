@@ -11,6 +11,7 @@ library(stringr)
 #library(chron)
 # library(scales)
 # library(gridExtra)
+library(ggplot2)
 
 library(odbc)
 library(DBI)
@@ -199,7 +200,7 @@ pums_mode <- pums_2021 %>%
   filter(mode_hts != "NA") %>%
   psrc_pums_count(., group_vars=c("race_4cat","mode_hts")) %>%
   filter(mode_hts != "Total")
-mode_chart <- interactive_column_chart(
+mode_chart_all <- interactive_column_chart(
   t=pums_mode, y="share", x="mode_hts",
   fill="race_4cat",
   #facet="race_4cat",
@@ -207,7 +208,52 @@ mode_chart <- interactive_column_chart(
   moe="share_moe",
   title="Commute Mode choice by Race"
 )
-mode_chart
+mode_chart_all
+
+# drive commute modes by race
+pums_mode <- pums_2021 %>%
+  filter(mode_hts != "NA") %>%
+  psrc_pums_count(., group_vars=c("race_4cat","mode_hts")) %>%
+  filter(mode_hts != "Total") %>%
+  filter(mode_hts == 'Drive')
+mode_chart_drive <- interactive_column_chart(
+  t=pums_mode, y="share", x="mode_hts",
+  fill="race_4cat",
+  #facet="race_4cat",
+  color='pognbgy_10',
+  moe="share_moe",
+  title="Drive Commute Mode choice by Race"
+)
+mode_chart_drive
+
+# transit commute modes by race
+pums_mode <- pums_2021 %>%
+  filter(mode_hts != "NA") %>%
+  psrc_pums_count(., group_vars=c("race_4cat","mode_hts")) %>%
+  filter(mode_hts != "Total") %>%
+  filter(mode_hts == 'Transit')
+mode_chart_transit <- interactive_column_chart(
+  t=pums_mode, y="share", x="mode_hts",
+  fill="race_4cat",
+  #facet="race_4cat",
+  color='pognbgy_10',
+  moe="share_moe",
+  title="Transit Commute Mode choice by Race"
+)
+mode_chart_transit
+
+# show auto ownership by race...
+  # share of workers by count off vehicles in household
+  # share of workers by vehicles>= workers in hh
+
+# Industry of worker for Hispanic workers
+  # list top industries
+
+# mode share by industry for everyone
+
+# transit accessibiltiy/hispanic density map
+
+
 
 # commute mode by race, 1+ vehicles only
 pums_mode_with_vehicles <- pums_2021 %>%
@@ -242,12 +288,19 @@ mode_chart_with_vehicles <- interactive_column_chart(
 )
 mode_chart_with_vehicles
 
+
+
 # workers by industry by race
 pums_emp <- pums_2021 %>%
   psrc_pums_count(., group_vars=c("race_4cat", "ind")) %>%
   filter(ind != "Total") %>%
   arrange(desc(share)) %>%
   arrange(race_4cat)
+
+pums_emp_all_races <- pums_2021 %>%
+  psrc_pums_count(., group_vars=c("ind", "NAICSP")) %>%
+  filter(ind != "Total") %>%
+  arrange(desc(share)) 
 
 pums_hisp_emp <- pums_2021 %>%
   filter(race_4cat == "Hispanic or Latino") %>%
@@ -260,10 +313,29 @@ pums_hisp_emp_detailed <- pums_2021 %>%
   psrc_pums_count(., group_vars=c("NAICSP")) %>%
   arrange(desc(share)) 
 
-pums_emp_mode <- pums_2021 %>%
-  psrc_pums_count(., group_vars=c("race_4cat", "ind")) %>%
-  filter(ind != "Total")
+pums_race_counts <- pums_2021 %>%
+  psrc_pums_count(., group_vars="race_4cat") 
 
+pums_emp_mode <- pums_2021 %>%
+  mutate(ind2 = factor(case_when(
+          grepl('CON-Construction',NAICSP) ~ 'Construction',
+          grepl('ENT-Restaurants', NAICSP) ~ 'Restaurants',
+          grepl('EDU-Elementary', NAICSP) ~ 'K-12 Edu',
+          .default = 'Other' )
+        )
+       ) %>%
+  filter(ind2 != 'Other') %>%
+  psrc_pums_count(., group_vars=c("race_4cat", "ind2")) %>%
+  inner_join(pums_race_counts, by='race_4cat') %>%
+  mutate(pct = (count.x / count.y) * 100) %>%
+  filter(ind2 != "Total")
+
+
+industry_chart_all <- ggplot(
+  pums_emp_mode, 
+  aes(fill=ind2, y=pct, x=race_4cat)) +
+    geom_bar(position="stack", stat="identity") 
+industry_chart_all
 
 #commute mode choice by county
 pums_mode_county <- pums_2021 %>%
@@ -281,10 +353,13 @@ county_mode_chart <-  static_facet_column_chart(
   )
 county_mode_chart
 
-#commute mode choice by sector, for the most common sectors among Hispanics:
-  # commute mode choice: entertainment
-  pums_mode_ent <- pums_2021 %>%
+# commute mode choice by sector, for the most common sectors among Hispanics:
+  pums21 <- pums_2021 %>%
     filter(mode_hts != "NA") %>%
+    filter(VEH != 'No vehicles')
+    
+  # commute mode choice: entertainment
+  pums_mode_ent <- pums21 %>%
     filter(ind == "ENT") %>%
     psrc_pums_count(., group_vars=c("race_4cat","mode_hts")) %>%
     filter(mode_hts != "Total")
@@ -295,11 +370,10 @@ county_mode_chart
       moe="share_moe",
       title="Commute Mode choice: Entertainment sector"
     )
-  county_mode_chart
+  ent_mode_chart
 
   # commute mode choice: professional services
-  pums_mode_prf <- pums_2021 %>%
-    filter(mode_hts != "NA") %>%
+  pums_mode_prf <- pums21 %>%
     filter(ind == "PRF") %>%
     psrc_pums_count(., group_vars=c("race_4cat","mode_hts")) %>%
     filter(mode_hts != "Total")
@@ -307,13 +381,13 @@ county_mode_chart
       t=pums_mode_prf,  y="share", x="mode_hts",
       fill="race_4cat",
       color='pognbgy_10',
+      moe="share_moe",
       title="Commute mode choice: Professional Services sector"
     )
   prf_mode_chart
 
   # commute mode choice: construction
-  pums_mode_con <- pums_2021 %>%
-    filter(mode_hts != "NA") %>%
+  pums_mode_con <- pums21 %>%
     filter(ind == "CON") %>%
     psrc_pums_count(., group_vars=c("race_4cat","mode_hts")) %>%
     filter(mode_hts != "Total")
@@ -321,6 +395,7 @@ county_mode_chart
       t=pums_mode_con,  y="share", x="mode_hts",
       fill="race_4cat",
       color='pognbgy_10',
+      moe="share_moe",
       title="Commute Mode choice: Construction sector"
     )
   con_mode_chart
@@ -335,6 +410,7 @@ county_mode_chart
       t=pums_mode_ret,  y="share", x="mode_hts",
       fill="race_4cat",
       color='pognbgy_10',
+      moe="share_moe",
       title="Commute Mode choice: Retail sector"
     )
   ret_mode_chart
@@ -406,6 +482,40 @@ hisp_trans_chart <-  interactive_bar_chart(
     title="transit use by Hispanic origin"
   )
 hisp_trans_chart
-  
-  
 
+
+
+# hisp population vs overal population density, by tract
+geo_tracts20 <- st_read_elmergeo('tract2020_nowater')
+pop <- get_acs_recs('tract', table.names='B01001', years=2021, acs.type='acs5') %>%
+  filter(variable=="B01001_001")
+hisp_pop <- get_acs_recs('tract', table.names='B01001I', years=2021, acs.type='acs5') %>%
+  filter(variable=="B01001I_001")
+pop_density <- data.frame(geo_tracts20) %>%
+  inner_join(., pop, by=c("geoid20" = "GEOID")) %>%
+  mutate(pop_density = estimate/aland20) %>%
+  rename(tot_pop = estimate) %>%
+  select(c("geoid20", "pop_density", "tot_pop")) %>%
+  inner_join(hisp_pop, by=c("geoid20" = "GEOID")) %>%
+  rename(hisp_pop = estimate) %>%
+  select(c("geoid20", "pop_density", "tot_pop", "hisp_pop")) 
+
+  pivot_longer(cols=c("pop_density", "tot_pop", "hisp_pop"), 
+                      names_to="var",
+                      values_to="values") 
+plot.sctr <- ggplot(
+  pop_density,
+  aes(x=hisp_pop, y=pop_density)
+) + geom_point() 
+plot.sctr
+
+
+
+
+str(pop_density) 
+str(data.frame(geo_tracts20))
+str(pop)
+str(hisp_pop)
+rm(geo_tracts)
+  
+df <- data.frame(geo_tracts20)

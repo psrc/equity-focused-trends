@@ -9,7 +9,7 @@ library(psrccensus)
 library(ggplot2)
 library(tidyverse)
 library(psrcplot)
-source("./hisp_functions.R")
+source("C:/Users/cpeak/Repos/equity-focused-trends/hisp_heritage/2023/hisp_functions.R")
 library(sf) # geographic data library
 library(psrcelmer) # to get data from Elmer
 library(psrcplot) # to get color schemes
@@ -206,7 +206,7 @@ map_acc<-create_psrc_map(lyr=lyr_data_2,
                         psrc_col_pal=psrc_purple_plus)
 
 map_acc
-mapshot(map_acc, file='map_acc.png')
+# mapshot(map_acc, file='map_acc.png')
 
 
 ```
@@ -222,34 +222,170 @@ psrc_orange_plus<-append(psrc_colors$oranges_inc, "#FFFFFF", after=0)
                          psrc_col_pal=psrc_orange_plus)
 
  map_hisp_pop
- mapshot(map_hisp_pop, file='hisp_pop.png')
+ # mapshot(map_hisp_pop, file='hisp_pop.png')
+```
+
+	
+### Industry
+We wondered if another contributing factor to the relatively high rates of Hispanic drive commute trips might be a difference in the mix of industrial sectors among the different groups.  To investigate this, we first summarized workers by the NAICS industry codes in Census PUMS data.  For Hispanic workers, we saw that construction jobs constitute the largest individual sector, with 7 percent of workers.  This was followed by Restaurants/Food Services (6.7 percent) and Elementary and Secondary Education (1.9 percent).  
+
+For non-Hispanic workers, the Construction sector represented a lower share of the jobs, at 3.9 percent, although it was the largest single sector for this group just as it was for Hispanics.  Following this sector was Computer Systems Design (3.6 percent) and Restaurants/Food Services (3.5 percent).
+
+```{r industry, echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
+industry_shares_by_race <- pums_2021 %>%
+  mutate(industry = factor(case_when(
+          grepl('CON-Construction',NAICSP) ~ 'Construction',
+          grepl('ENT-Restaurants', NAICSP) ~ 'Restaurants',
+          grepl('PRF-Computer Systems Design', NAICSP) ~ 'Computer Systems Design',
+          grepl('EDU-Elementary', NAICSP) ~ 'K-12 Education' )
+        )
+       ) %>%
+  psrc_pums_count(., group_vars=c("race_4cat", "industry")) %>%
+  filter(race_4cat != "Total") %>%
+  filter(industry != "Total")
+
+industry_shares_chart <- interactive_column_chart(
+  t=industry_shares_by_race, y="share", x="race_4cat",
+  fill="industry",
+  pos="stack",
+  color="pognbgy_5",
+  #moe="share_moe",
+  title = "Top Four Industries as Percent of Total Employment, by Race and Hispanic Origin"
+)
+industry_shares_chart
+
+```
+The relatively high rate of construction jobs among Hispanic workers is likely to have some marginal effect on the high drive commute share for this group.  As has been pointed out in the [news media](https://www.seattletimes.com/seattle-news/data/these-three-occupations-use-public-transit-far-more-than-most-in-king-county/), construction workers are among the least likely to commute by transit, not least because the work often require tools or equipment to be carried to the job site.  This is borne out in the Census PUMS data that we reviewed: only 3 percent of workers of in this sector (of any race) commute by transit, whereas 87 percent drive to work.  
+
+It should be noted however that as relatively large as this employment share is, construction jobs still account for only seven percent of Hispanic employment, and are likely to be only a contributing factor to this group's high drive commute share.  And within the Construction sector itself, Hispanic commuters still showed a somewhat higher drive commute share than did other groups,with 91 percent of their commutes being by car.  The chart below illustrates this finding:
+
+```{r commutes_by_race_cn, echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
+pums_mode_cn <- pums_2021 %>%
+  filter(mode_hts != "NA") %>%
+  filter(grepl('Construction', NAICSP)) %>%
+  psrc_pums_count(., group_vars=c("race_4cat","mode_hts")) %>%
+  filter(mode_hts != "Total") 
+  
+mode_chart_cn_drive <- interactive_column_chart(
+  t=pums_mode_cn %>% filter(mode_hts == 'Drive'), 
+  y="share", x="mode_hts",
+  fill="race_4cat",
+  #facet="race_4cat",
+  color='pognbgy_10',
+  moe="share_moe",
+  title="Drive Commute Mode choice by Race: Construction Only"
+)
+mode_chart_cn_drive
+```
+
+```{r scratch, echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
+pums_naics_nonhisp<- pums_2021 %>%
+  filter(race_4cat != "Hispanic or Latino") %>%
+  psrc_pums_count(., group_vars=c("NAICSP")) %>%
+  filter(NAICSP != "Total") %>%
+  arrange(desc(count)) 
+
+mode_by_naics <- pums_2021 %>%
+  filter(!is.na(mode_hts)) %>%
+  psrc_pums_count(., group_vars=c("NAICSP","mode_hts")) %>%
+  filter(mode_hts != "Total") %>%
+  filter(NAICSP != "Total")
+
+# mode_by_ind2_rac4 <- mode_by_naics_rac4 
+
+  
+mode_by_ind2_rac4 <- pums_2021 %>%
+  filter(!is.na(mode_hts)) %>%
+  mutate(ind2 = factor(case_when(
+          grepl('CON-Construction',NAICSP) ~ 'Construction',
+          grepl('ENT-Restaurants', NAICSP) ~ 'Restaurants',
+          grepl('PRF-Computer Systems Design', NAICSP) ~ 'Computer Systems',
+          grepl('EDU-Elementary', NAICSP) ~ 'K-12 Education'#,
+          #.default = ind )
+          )
+        )
+       ) %>%
+  psrc_pums_count(., group_vars=c("race_4cat", "ind2","mode_hts")) %>%
+  filter(mode_hts != "Total") %>%
+  filter(race_4cat != "Total") %>%
+  filter(ind2 != "Total")
+
+mode_by_race <- pums_2021 %>%
+  filter(!is.na(mode_hts)) %>%
+  mutate(ind2 = factor(case_when(
+          grepl('CON-Construction',NAICSP) ~ 'Construction',
+          grepl('ENT-Restaurants', NAICSP) ~ 'Restaurants',
+          grepl('PRF-Computer Systems Design', NAICSP) ~ 'Computer Systems',
+          grepl('EDU-Elementary', NAICSP) ~ 'K-12 Education'#,
+          #.default = ind )
+          )
+        )
+       ) %>%
+  psrc_pums_count(., group_vars=c("race_4cat","mode_hts")) %>%
+  filter(mode_hts != "Total") %>%
+  filter(race_4cat != "Total")
+
+mode_by_ind2_rac4_hisp <- mode_by_ind2_rac4 %>%
+  filter(grepl('Hispanic', race_4cat))
+
+mode_by_ind2_rac4_construction <- mode_by_ind2_rac4 %>%
+  filter(ind2 == "Construction")
+
+mode_by_naics_hisp <- pums_2021 %>%
+  filter(!is.na(mode_hts)) %>%
+  filter(race_4cat == "Hispanic or Latino") %>%
+  psrc_pums_count(., group_vars=c("NAICSP","mode_hts")) %>%
+  filter(mode_hts != "Total") %>%
+  filter(NAICSP != "Total")
+
+mode_by_naics_nonhisp <- pums_2021 %>%
+  filter(!is.na(mode_hts)) %>%
+  filter(race_4cat != "Hispanic or Latino") %>%
+  psrc_pums_count(., group_vars=c("NAICSP","mode_hts")) %>%
+  filter(mode_hts != "Total") %>%
+  filter(NAICSP != "Total")
+
+
+mode_splits_overall <- interactive_column_chart(
+  t=mode_by_race,
+  y="share", x="race_4cat",
+  fill="mode_hts",
+  pos="stack",
+  color="pognbgy_5",
+  title = paste("Commute Shares by Race")
+)
+#mode_splits_overall
+
+mode_splits_chart <- function(industry) {
+  mode_splits_for_industry <- interactive_column_chart(
+    t=mode_by_ind2_rac4 %>% filter(ind2 == industry),
+    y="share", x="race_4cat",
+    fill="mode_hts",
+    pos="stack",
+    color="pognbgy_5",
+    title = paste("Commute Shares by Race and Ethnicity:",industry)
+  )
+}
+chart.construction <- mode_splits_chart('Construction')
+#chart.construction
+
+
+
+# chart.construction <- mode_splits_chart('Construction')
+# chart.restaurants <- mode_splits_chart('Restaurants')
+# chart.computers <- mode_splits_chart('Computer Systems')
+# chart.med <- mode_splits_chart('MED')
+# chart.construction
+# chart.restaurants
+# chart.computers
+# chart.med
+
+
+
 ```
 
 
-- Home location: Hispanics live in areas of low transit service
-	- Hispanic populations have generally low accessibility to jobs by car compared with other groups, but they have even lower accessibility to jobs by transit.  This leads to a higher likelihood that they
-	- graphic: jobs accessible within 30 minutes by car, 2018
-	- graphic: jobs accessible within 45 minutes by transit, 2018
-	- need to demonstrate this
 	
-### Industry
-- industry: Hispanic workers tend to be in industries not well suited to transit
-	- Do Hispanic people indeed work in different sectors than others?  Create a stacked bar chart showing the industry breakdown by race.
-		- industry_chart_all compares the proportion of workers in construction and restaurant industries (the two most common industries among Hispanic workers).
-		- Need to account for
-  - Find the top industries for Hispanic workers
-     - CON-Construction: count=30,980
-     - ENT-Restaurants And Other Food Services: count=29,837
-     - EDU-Elementary And Secondary Schools: count=8,196
-  - Find the top industries for population overall:
-    - CON-Construction: 180,192
-    - ENT-Restaurants And Other Food Services: 163,853
-    - PRF-Computer Systems Design And Related Services: 145,800
-  - make a choropleth map of their locations by tract
-	
-- overall accessibility:
-	- jobs accessible within 30 minutes by car
-	- jobs accessible within 45 minutes by transit
 
 
 ```{r echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
@@ -274,5 +410,5 @@ industry_chart_all <- ggplot(
   aes(fill=ind2, y=pct, x=race_4cat)) +
     geom_bar(position="stack", stat="identity") 
 
-industry_chart_all
+#industry_chart_all
 ```
