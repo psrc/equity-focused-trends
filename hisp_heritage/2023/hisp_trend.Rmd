@@ -30,7 +30,10 @@ pums_2021 <- get_psrc_pums(span = 5,
                                     "RAC2P",         # race with country
                                     "ANC1P",         # Ancestry - first entry
                                     "JWTRNS",        # means of transportation to work
+                                    "JWRIP",         # Vehicle occupancy in journey to work
                                     "JWMNP",         # Travel time to work
+                                    "JWDP",          # Time of departure for work -- hour and minute
+                                    "JWAP",          # Time of arrival at work -- hour and minute
                                     "NAICSP",        # NAICS recode for 2018
                                     "OCCP",          # Occupation recode based on 2018 OCC codes
                                     "POBP",          # Place of birth (Recode)
@@ -41,6 +44,8 @@ pums_2021 <- get_psrc_pums(span = 5,
                                     "TEN",           # Tenure
                                     "VEH",           # Vehicles (1 ton or less) available
                                     "WIF"))          # Workers in family
+
+
 
 pums_2021 <- pums_2021 %>%
   hisp_pums_recode() %>%
@@ -157,6 +162,55 @@ lyr_data_field_2<-lyr_data_2$Total
 
 ```
 
+``` {r hispanic_sov_share, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE}
+
+hisp_sov <- get_acs_recs(geography='county', table.names='08105I', year=2021, acs.type='acs5') %>%
+  filter(name == 'Region') %>%
+  filter(!is.na(label)) %>%
+  mutate(mode = sub(".*!!", "", label)) %>%
+  filter(mode != 'Total:') %>%
+  mutate(mode = case_when(
+    grepl("drove alone", mode) ~ "SOV",
+    grepl("carpooled", mode) ~ "HOV",
+    grepl("Public transportation", mode) ~ "Transit",
+    grepl("Taxicab", mode) ~ "Other",
+    grepl("Worked from home", mode) ~ "At Home"
+  )) %>%
+  filter(!is.na(mode))
+
+mode_chart_hisp_sov <- static_column_chart(
+  t=hisp_sov, y="estimate", x='mode',
+  fill='mode',
+  color='psrc_light',
+  moe='moe',
+  title="Means of Transportation To Work, Hispanic Workers"
+)
+#mode_chart_hisp_sov
+
+
+nonhisp_sov <- get_acs_recs(geography='county', table.names='08105H', year=2021, acs.type='acs5') %>%
+  filter(name == 'Region') %>%
+  filter(!is.na(label)) %>%
+  mutate(mode = sub(".*!!", "", label)) %>%
+  filter(mode != 'Total:') %>%
+  mutate(mode = case_when(
+    grepl("drove alone", mode) ~ "SOV",
+    grepl("carpooled", mode) ~ "HOV",
+    grepl("Public transportation", mode) ~ "Transit",
+    grepl("Taxicab", mode) ~ "Other",
+    grepl("Worked from home", mode) ~ "At Home"
+  )) %>%
+  filter(!is.na(mode))
+
+mode_chart_nonhisp_sov <- static_column_chart(
+  t=nonhisp_sov, y="estimate", x='mode',
+  fill='mode',
+  color='psrc_light',
+  moe='moe',
+  title="Means of Transportation To Work, Non-Hispanic Workers"
+)
+#mode_chart_nonhisp_sov
+```
 ### Introduction
 	
 Nationally, Hispanic populations [report relatively high use of public transit](https://tinyurl.com/5n83ta2s) compared with non-Hispanic white people.  But in the central Puget Sound region, Census data shows that Hispanic workers report relatively low shares of transit commutes, roughly on par with their non-Hispanic white counterparts and at substantially lower rates than other groups.  We summarized the commute mode data available in the Census Bureau's 2017-2021 Public Use Microdata Sample (PUMS) by race and Hispanic origin:
@@ -167,58 +221,56 @@ pums_mode <- pums_2021 %>%
   filter(mode_hts != "Total") 
 
 pums_mode_transit <- pums_mode %>%
-  filter(mode_hts == 'Transit')
+  filter(mode_hts == 'Transit') %>%
+  select(-mode_hts)
 
-mode_chart_transit <- interactive_column_chart(
-  t=pums_mode_transit, y="share", x="mode_hts",
+mode_chart_transit <- static_bar_chart(
+  t=pums_mode_transit, x="share", y="race_4cat",
   fill="race_4cat",
   #facet="race_4cat",
   color='pognbgy_10',
-  moe="share_moe",
-  title="Transit Commute Mode Choice by Race"
+  #moe="share_moe",
+  title="Percent of Commuters Who Use Transit, By Race/Ethnicity",
+  ylabel="Race/Ethnicity",
+  source='Source: 2017-2021 Census Public Use Microdata Sample'
 )
+
 mode_chart_transit
 ```
 Source: 2017-2021 Census Public Use Microdata Sample
 
-Conversely, Hispanic commuters drive to work at a higher rate than all other groups:
 
-```{r echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
-pums_mode_drive <- pums_mode %>%
-  filter(mode_hts == 'Drive')
+
+```{r carpool echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
+pums_mode_carpool <- pums_mode %>%
+  filter(mode_hts == 'Carpool')
   
-mode_chart_drive <- interactive_column_chart(
-  t=pums_mode_drive, y="share", x="mode_hts",
+mode_chart_carpool <- static_column_chart(
+  t=pums_mode_carpool, y="share", x="mode_hts",
   fill="race_4cat",
   #facet="race_4cat",
   color='pognbgy_10',
   moe="share_moe",
-  title="Drive Commute Mode Choice by Race"
+  title="HOV Commute Mode Choice by Race"
 )
-mode_chart_drive
+
+mode_chart_carpool <- static_bar_chart(
+  t=pums_mode_carpool, x="share", y="race_4cat",
+  fill="race_4cat",
+  #facet="race_4cat",
+  color='pognbgy_10',
+  #moe="share_moe",
+  title="Percent of Commuters Who Carpool, By Race/Ethnicity",
+  ylabel="Race/Ethnicity",
+  source='Source: 2017-2021 Census Public Use Microdata Sample'
+)
+mode_chart_carpool
 ```
 
 This led us to wonder what are the factors that inform these choices, and what are some of the pressures that lead the area's Hispanic workers to favor cars over transit at higher rates than other populations.  
 
 ### Home Locations Make a Difference
 First, we looked at the places that the Hispanic populace lives.  Using Census data from the 2021 5-year American Community Survey, we looked at the Hispanic population counts by tract.  As shown in the map below, large concentrations of Hispanic populations are in South King County -- notably Burien, Des Moines, Federal Way and Auburn -- and Southern Snohomish County along the SR 99 Corridor.  
-
-
-```{r hispanic_pop_map, echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
-
-psrc_purple_plus<-append(psrc_colors$purples_inc, "#FFFFFF", after=0)
-map_acc<-create_psrc_map(lyr=lyr_data_2,
-                        lyr_data_field=lyr_data_field,
-                        legend_title= 'Transit Accessibility',
-                        legend_subtitle = 'Number of Jobs within 45 minutes on Transit',
-                        psrc_col_pal=psrc_purple_plus)
-
-map_acc
-# mapshot(map_acc, file='map_acc.png')
-
-
-```
-To see how well commuters in these areas of high Hispanic concentrations are served by transit, we calculated the number of jobs accessible by transit within 45 minutes for each Census tract. This map, below, shows that the areas with best transit access to jobs are concentrated in central Seattle and Bellevue.  Residents in these areas can reach a large pool of jobs by a 45-minute transit ride -- nearly 800,000 for some tracts.  By contrast, people living in the areas of high Hispanic populations can reach a much smaller pool by equivalent means: many can reach only between 30 and 60 thousand within the same 45-minute window.  Residents of the tract with the single highest Hispanic population, in Auburn, have only 20,000 jobs accessible within this window  And the fewer the jobs accessible by transit, the higher the likelihood that a given worker will need to drive to get to his or her place of work.
 
 ```{r transit_access_map, echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
 # create Census data layer 
@@ -241,17 +293,36 @@ map_hisp_pop<-create_psrc_map(lyr=lyr_data_census,
                        psrc_col_pal=psrc_orange_plus)
 
  map_hisp_pop
- # mapshot(map_hisp_pop, file='hisp_pop.png')
+ mapshot(map_hisp_pop, file='hisp_pop.png')
 ```
+
+To see how well commuters in these areas of high Hispanic concentrations are served by transit, we calculated the number of jobs accessible by transit within 45 minutes for each Census tract. This map, below, shows that the areas with best transit access to jobs are concentrated in central Seattle and Bellevue.  Residents in these areas can reach a large pool of jobs by a 45-minute transit ride -- nearly 800,000 for some tracts.  By contrast, people living in the areas of high Hispanic populations can reach a much smaller pool by equivalent means: many can reach only between 30 and 60 thousand within the same 45-minute window.  Residents of the tract with the single highest Hispanic population, in Auburn, have only 20,000 jobs accessible within this window  And the fewer the jobs accessible by transit, the higher the likelihood that a given worker will need to drive to get to his or her place of work.
+
+```{r hispanic_pop_map, echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
+
+psrc_purple_plus<-append(psrc_colors$purples_inc, "#FFFFFF", after=0)
+map_acc<-create_psrc_map(lyr=lyr_data_2,
+                        lyr_data_field=lyr_data_field,
+                        legend_title= 'Transit Accessibility',
+                        legend_subtitle = 'Number of Jobs within 45 minutes on Transit',
+                        psrc_col_pal=psrc_purple_plus)
+
+map_acc
+mapshot(map_acc, file='map_acc.png')
+
+
+```
+
+The effects of the lower levels of transit accessibility for Hispanic workers can be seen not only in the lower use of transit as documented above, but also in high carpooling rates among this group.  Hispanic workers are twice as likely to commute by carpool as non-Hispanic white workers: The rates for these two groups are 14% and 7%, respectively.  A full investigation into the factors that might be influencing this is beyond the scope of this article, but it seems likely that this might be a response to less accessible transit commute options for Hispanic workers.  
 
 	
 ### Not All Occupations Are Equally Well-Suited to Transit
 
-Some occupations are better suited to transit than others.  In the Census data we looked at (the 2017-2021 Public Use Microdata Sample) we found that construction work is the most common occupation for the region's Hispanic workers, at 11 percent of Hispanic employment.  This is a much higher rate than it is for non-Hispanic workers, for whom it ranks eleventh, at 4 percent.  The share of construction workers of any race or ethnicity who commute by transit is very low -- only two percent.  It has been pointed out in [the news media](https://www.seattletimes.com/seattle-news/data/these-three-occupations-use-public-transit-far-more-than-most-in-king-county/) that these jobs often do not lend themselves well to transit because the work often require tools or equipment to be carried to the job site.  As this occupation represents such a comparatively large share of Hispanic workers, it is likely that this is another contributor to the relatively low transit commute share for this group, in addition to the low transit access discussed in the previous section.
+Some occupations are better suited to transit than others.  In the Census data we looked at (the 2017-2021 PUMS) we found that construction work is the most common occupation for the region's Hispanic workers, at 11% of Hispanic employment.  This is a much higher rate than it is for non-Hispanic workers, for whom it ranks eleventh, at 4% .  The share of construction workers of any race or ethnicity who commute by transit is very low -- only 2%.  It has been pointed out in [the news media](https://www.seattletimes.com/seattle-news/data/these-three-occupations-use-public-transit-far-more-than-most-in-king-county/) that these jobs often do not lend themselves well to transit because the work often require tools or equipment to be carried to the job site.  As this occupation represents such a comparatively large share of Hispanic workers, it is likely that this is another contributor to the relatively low transit commute share for this group.
 
-Food Preparation and Serving is the second-highest occupation for Hispanic workers, at 10.8 percent, which is roughly double the rate for non-Hispanic workers (5 percent).  The transit commute share for this occupation is much higher than it is for construction: 8 percent, which is on par with the overall regional share for all occupations and demographic groups.  It thus does not seem to be a contributor to the comparatively lower transit commute share for Hispanic workers the way construction does. 
+<!--Food Preparation and Serving is the second-highest occupation for Hispanic workers, at 10.8%, which is roughly double the rate for non-Hispanic workers (5% ).  The transit commute share for this occupation (8%) is much higher than it is for construction, which is on par with the overall regional share for all occupations and demographic groups.  It thus does not seem to be a contributor to the comparatively lower transit commute share for Hispanic workers the way construction does. -->
 
-The third-highest occupation among Hispanic workers, according to the 2021 PUMS data, is Building and Grounds Cleaning and Maintenance.  Eight percent of Hispanic workers are in this category, compared to only 2 percent for non-Hispanic workers.  As with construction, workers in this occupation tend to commute by transit at relatively low rates (5 percent) and so the prevalence of this occupation among the Hispanic workforce seems to be another contributing factor to its relatively low transit commute share.  
+Food Preparation and Service, the second-highest occupation for Hispanic workers (10.8%) does not appear to be a significant contributor to low transit commute rates but the third-highest, Building and Grounds Cleaning and Maintenance does.  Eight percent of Hispanic workers are in this latter category, compared with only 2% for non-Hispanic workers.  As with construction, workers in this occupation tend to commute by transit at relatively low rates (5%), so this is likely to reduce Hispanic transit commute shares further.  It is worth noting that these occupations often lend themselves to evening and night shifts, and may be less well served by most transit routes for this reason.
 
 ```{r transit_commutes_by_occupation, echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
 
@@ -278,64 +349,22 @@ occ_mode_chart <-  ggplot(pums_transit_occ,aes(x=occupation, y=share))+
   geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe), width=0.2,
                      position=position_dodge(.9))
 
-occ_mode_chart
+#occ_mode_chart
 
 ```
 
-It should be stressed that the effect of these occupations on the overall transit commute shares for Hispanic workers is likely to be relatively minor in comparison with the misalignment between transit services and Hispanic home locations that was discussed in the previous section.  After all, Construction, Grounds Cleaning and Maintenance work represent only 20 percent of overall Hispanic employment, and can explain only so much.  But the effects of the prevalence of the occupations do seem to be secondary contributing factors to the relatively low Hispanic commute shares.  
+It should be stressed that the effect of these occupations on the overall transit commute shares for Hispanic workers is likely to be relatively minor in comparison with the misalignment between transit services and Hispanic home locations that was discussed in the previous section.  After all, Construction, Grounds Cleaning and Maintenance work represent only 20% of overall Hispanic employment, and can explain only so much.  But the effects of the prevalence of the occupations do seem to be secondary contributing factors to the relatively low Hispanic commute shares.  
+
+
+### Conclusion
+
+The relatively low rate of transit commute trips among Hispanic workers appears to be tied to several factors.  Residence location, transit infrastructure, and occupation types all have their effects on the transit commute mode share for Hispanic workers.  In particular, the misalignment of transit services with the areas in the region that many Hispanic workers live points to an opportunity: More targeted transit investments in these areas would benefit Hispanic commuters and would contribute to a more equitable system overall.  Further investments to better accommodate people working throughout all times of day would enhance equity in the system even more.
 
 
 
 
 
 
-
-
-```{r industry, echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
-industry_shares_by_race <- pums_2021 %>%
-  mutate(industry = factor(case_when(
-          grepl('CON-Construction',NAICSP) ~ 'Construction',
-          grepl('ENT-Restaurants', NAICSP) ~ 'Restaurants',
-          grepl('PRF-Computer Systems Design', NAICSP) ~ 'Computer Systems Design',
-          grepl('EDU-Elementary', NAICSP) ~ 'K-12 Education' )
-        )
-       ) %>%
-  psrc_pums_count(., group_vars=c("race_4cat", "industry")) %>%
-  filter(race_4cat != "Total") %>%
-  filter(industry != "Total")
-
-industry_shares_chart <- interactive_column_chart(
-  t=industry_shares_by_race, y="share", x="race_4cat",
-  fill="industry",
-  pos="stack",
-  color="pognbgy_5",
-  #moe="share_moe",
-  title = "Top Four Industries as Percent of Total Employment, by Race and Hispanic Origin"
-)
-#industry_shares_chart
-
-```
-
-```{r transit_commutes_by_industry, echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
-
-# transit mode choice: by industry
-pums_transit_ind <- pums_2021 %>%
-  psrc_pums_count(., group_vars=c("ind","mode_hts")) %>%
-  filter(mode_hts == "Transit") %>%
-  filter(mode_hts != "Total")%>%
-  arrange(desc(share))%>%
-  filter(ind %in% c("PRF", "CON", "EDU", "ENT"))%>%
-  mutate(ind=factor(ind, levels=unique(ind)))
-
-ind_mode_chart <-  ggplot(pums_transit_ind,aes(x=ind, y=share))+
-  geom_bar(stat="identity", fill="#F05A28" , position=position_dodge())+ 
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1))+
-  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe), width=0.2,
-                     position=position_dodge(.9))
-
-#ind_mode_chart
-
-```
 
 
 
@@ -347,17 +376,19 @@ pums_mode_cn <- pums_2021 %>%
   psrc_pums_count(., group_vars=c("race_4cat","mode_hts")) %>%
   filter(mode_hts != "Total") 
   
-mode_chart_cn_drive <- interactive_column_chart(
-  t=pums_mode_cn %>% filter(mode_hts == 'Drive'), 
-  y="share", x="mode_hts",
-  fill="race_4cat",
-  #facet="race_4cat",
-  color='pognbgy_10',
-  moe="share_moe",
-  title="Drive Commute Mode choice by Race: Construction Only"
-)
-#mode_chart_cn_drive
+# mode_chart_cn_drive <- interactive_column_chart(
+#   t=pums_mode_cn %>% filter(mode_hts == 'Drive'), 
+#   y="share", x="mode_hts",
+#   fill="race_4cat",
+#   #facet="race_4cat",
+#   color='pognbgy_10',
+#   moe="share_moe",
+#   title="Drive Commute Mode choice by Race: Construction Only"
+# )
+
+# mode_chart_cn_drive
 ```
+
 ```{r mode_choices, echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
 
 # overall commute mode shares
@@ -377,167 +408,32 @@ commute_mode_chart <-  ggplot(pums_commute_modes,aes(x=mode_hts, y=share))+
                      position=position_dodge(.9))
 
 #commute_mode_chart
-```
 
 
+# show shifts by occupation
+pums_occ_shift <- pums_2021 %>%
+  #filter(occupation == 'CLN') %>%
+  filter(grepl("Hispanic", race_4cat)) %>%
+  filter(mode_hts != "NA") %>%
+  filter( !is.na(shift)) %>%
+  psrc_pums_count(., group_vars=c("shift", "mode_hts")) %>%
+  filter(mode_hts != "Total")%>%
+  arrange(desc(share))
+  
 
-Similarly, Hispanic workers within the Construction industry appear to take transit to work at rates slightly lower than their Black and Asian counterparts.  It should be noted that although the Hispanic bar in the chart below is noticeably lower than that for the two other groups, because of the high margin of error we cannot point to a significant difference between the groups here.
-```{r transit_commutes_by_race_cn, echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
-mode_chart_cn_transit <- interactive_column_chart(
-  t=pums_mode_cn %>% filter(mode_hts == 'Transit'), 
+occ_chart_shifts <- static_column_chart(
+  t=pums_occ_shift,
   y="share", x="mode_hts",
-  fill="race_4cat",
+  fill="shift",
   #facet="race_4cat",
   color='pognbgy_10',
   moe="share_moe",
-  title="Transit Commute Mode choice by Race: Construction Only"
+  title="Commute Modes by Shift"
 )
-mode_chart_cn_transit
-```
 
-```{r scratch, echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
-pums_naics_nonhisp<- pums_2021 %>%
-  filter(race_4cat != "Hispanic or Latino") %>%
-  psrc_pums_count(., group_vars=c("NAICSP")) %>%
-  filter(NAICSP != "Total") %>%
-  arrange(desc(count)) 
-
-mode_by_naics <- pums_2021 %>%
-  filter(!is.na(mode_hts)) %>%
-  psrc_pums_count(., group_vars=c("NAICSP","mode_hts")) %>%
-  filter(mode_hts != "Total") %>%
-  filter(NAICSP != "Total")
-
-# mode_by_ind2_rac4 <- mode_by_naics_rac4 
-
-  
-mode_by_ind2_rac4 <- pums_2021 %>%
-  filter(!is.na(mode_hts)) %>%
-  mutate(ind2 = factor(case_when(
-          grepl('CON-Construction',NAICSP) ~ 'Construction',
-          grepl('ENT-Restaurants', NAICSP) ~ 'Restaurants',
-          grepl('PRF-Computer Systems Design', NAICSP) ~ 'Computer Systems',
-          grepl('EDU-Elementary', NAICSP) ~ 'K-12 Education'#,
-          #.default = ind )
-          )
-        )
-       ) %>%
-  psrc_pums_count(., group_vars=c("race_4cat", "ind2","mode_hts")) %>%
-  filter(mode_hts != "Total") %>%
-  filter(race_4cat != "Total") %>%
-  filter(ind2 != "Total")
-
-mode_by_race <- pums_2021 %>%
-  filter(!is.na(mode_hts)) %>%
-  mutate(ind2 = factor(case_when(
-          grepl('CON-Construction',NAICSP) ~ 'Construction',
-          grepl('ENT-Restaurants', NAICSP) ~ 'Restaurants',
-          grepl('PRF-Computer Systems Design', NAICSP) ~ 'Computer Systems',
-          grepl('EDU-Elementary', NAICSP) ~ 'K-12 Education'#,
-          #.default = ind )
-          )
-        )
-       ) %>%
-  psrc_pums_count(., group_vars=c("race_4cat","mode_hts")) %>%
-  filter(mode_hts != "Total") %>%
-  filter(race_4cat != "Total")
-
-mode_by_ind2_rac4_hisp <- mode_by_ind2_rac4 %>%
-  filter(grepl('Hispanic', race_4cat))
-
-mode_by_ind2_rac4_construction <- mode_by_ind2_rac4 %>%
-  filter(ind2 == "Construction")
-
-mode_by_naics_hisp <- pums_2021 %>%
-  filter(!is.na(mode_hts)) %>%
-  filter(race_4cat == "Hispanic or Latino") %>%
-  psrc_pums_count(., group_vars=c("NAICSP","mode_hts")) %>%
-  filter(mode_hts != "Total") %>%
-  filter(NAICSP != "Total")
-
-mode_by_naics_nonhisp <- pums_2021 %>%
-  filter(!is.na(mode_hts)) %>%
-  filter(race_4cat != "Hispanic or Latino") %>%
-  psrc_pums_count(., group_vars=c("NAICSP","mode_hts")) %>%
-  filter(mode_hts != "Total") %>%
-  filter(NAICSP != "Total")
-
-
-mode_splits_overall <- interactive_column_chart(
-  t=mode_by_race,
-  y="share", x="race_4cat",
-  fill="mode_hts",
-  pos="stack",
-  color="pognbgy_5",
-  title = paste("Commute Shares by Race")
-)
-#mode_splits_overall
-
-mode_splits_chart <- function(industry) {
-  mode_splits_for_industry <- interactive_column_chart(
-    t=mode_by_ind2_rac4 %>% filter(ind2 == industry),
-    y="share", x="race_4cat",
-    fill="mode_hts",
-    pos="stack",
-    color="pognbgy_5",
-    title = paste("Commute Shares by Race and Ethnicity:",industry)
-  )
-}
-chart.construction <- mode_splits_chart('Construction')
-#chart.construction
-
-
-
-# chart.construction <- mode_splits_chart('Construction')
-# chart.restaurants <- mode_splits_chart('Restaurants')
-# chart.computers <- mode_splits_chart('Computer Systems')
-# chart.med <- mode_splits_chart('MED')
-# chart.construction
-# chart.restaurants
-# chart.computers
-# chart.med
-
-occupations <- pums_2021 %>%
-  filter(!is.na(occupation2)) %>%
-  psrc_pums_count(., group_vars=c("occupation2")) 
-  
-occupations_hisp <- pums_2021 %>%
-  filter(!is.na(occupation2)) %>%
-  filter(race_4cat == "Hispanic or Latino") %>%
-  psrc_pums_count(., group_vars=c("occupation2")) 
-
-occupations_nonhisp <- pums_2021 %>%
-  filter(!is.na(occupation2)) %>%
-  filter(race_4cat != "Hispanic or Latino") %>%
-  psrc_pums_count(., group_vars=c("occupation2")) 
 
 ```
 
 
-	
 
 
-```{r echo = FALSE, cache=TRUE, warning=FALSE, message=FALSE}
-
-pums_emp_mode <- pums_2021 %>%
-  mutate(ind2 = factor(case_when(
-          grepl('CON-Construction',NAICSP) ~ 'Construction',
-          grepl('ENT-Restaurants', NAICSP) ~ 'Restaurants',
-          #grepl('EDU-Elementary', NAICSP) ~ 'K-12 Edu',
-          .default = 'Other' )
-        )
-       ) %>%
-  filter(ind2 != 'Other') %>%
-  psrc_pums_count(., group_vars=c("race_4cat", "ind2")) %>%
-  inner_join(pums_race_counts, by='race_4cat') %>%
-  mutate(pct = (count.x / count.y) * 100) %>%
-  filter(ind2 != "Total")
-
-
-industry_chart_all <- ggplot(
-  pums_emp_mode, 
-  aes(fill=ind2, y=pct, x=race_4cat)) +
-    geom_bar(position="stack", stat="identity") 
-
-#industry_chart_all
-```

@@ -297,16 +297,27 @@ pums_emp <- pums_2021 %>%
   arrange(desc(share)) %>%
   arrange(race_4cat)
 
-pums_emp_all_races <- pums_2021 %>%
-  psrc_pums_count(., group_vars=c("ind", "NAICSP")) %>%
-  filter(ind != "Total") %>%
-  arrange(desc(share)) 
+pums_naics_all_races <- pums_2021 %>%
+  psrc_pums_count(., group_vars=c("NAICSP")) %>%
+  filter(NAICSP != "Total") %>%
+  arrange(desc(count)) 
 
-pums_hisp_emp <- pums_2021 %>%
+pums_ind_all_races <- pums_2021 %>%
+  psrc_pums_count(., group_vars=c("ind")) %>%
+  filter(ind != "Total") %>%
+  arrange(desc(count)) 
+
+pums_naics_hisp<- pums_2021 %>%
   filter(race_4cat == "Hispanic or Latino") %>%
-  psrc_pums_count(., group_vars=c("ind", "NAICSP")) %>%
-  arrange(desc(share)) %>%
-  arrange(ind)
+  psrc_pums_count(., group_vars=c("NAICSP")) %>%
+  filter(NAICSP != "Total") %>%
+  arrange(desc(count)) 
+
+pums_ind_hisp <- pums_2021 %>%
+  filter(race_4cat == "Hispanic or Latino") %>%
+  psrc_pums_count(., group_vars=c("ind")) %>%
+  filter(ind != "Total") %>%
+  arrange(desc(count)) 
 
 pums_hisp_emp_detailed <- pums_2021 %>%
   filter(race_4cat == "Hispanic or Latino") %>%

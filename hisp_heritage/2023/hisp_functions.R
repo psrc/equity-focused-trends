@@ -26,18 +26,18 @@ hisp_pums_recode <- function(.pums){
     # filter(JWTRNS!="Total", !is.na(JWTRNS)) %>%
     mutate(
       race_aapi = case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
-                            PRACE == "White alone" ~ "White alone",
+                            PRACE == "White alone" ~ "Non-Hispanic White",
                             TRUE ~ PRACE),
       race_3cat =  factor(case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
                                     PRACE == "White alone" ~ "White alone",
                                     TRUE ~ "Other people of color"),
                           levels = c("Asian or Pacific Islander","Other people of color","White alone")),
       race_4cat =  factor(case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
-                                    PRACE == "White alone" ~ "White alone",
+                                    PRACE == "White alone" ~ "Non-Hispanic White",
                                     PRACE == "Hispanic or Latino" ~ "Hispanic or Latino",
-                                    PRACE == "Black or African American alone" ~ "Black or African American alone",
+                                    PRACE == "Black or African American alone" ~ "Black or African American",
                                     TRUE ~ "Some Other Race(s)"),
-                          levels = c("Asian or Pacific Islander","Black or African American alone","Hispanic or Latino","White alone","Some Other Race(s)")),
+                          levels = c("Asian or Pacific Islander","Black or African American","Hispanic or Latino","Non-Hispanic White","Some Other Race(s)")),
       mode = case_when(JWTRNS %in% c("Car, truck, or van")~"Drive",
                               JWTRNS %in% c("Bus",
                                             "Light rail, streetcar, or trolley",
@@ -50,7 +50,10 @@ hisp_pums_recode <- function(.pums){
                               JWTRNS == "Worked from home" ~"Worked from home",
                               JWTRNS %in% c("Motorcycle","Taxicab","Other method") ~"Other",
                               TRUE~JWTRNS),
-      mode_hts = case_when(JWTRNS %in% c("Car, truck, or van")~"Drive",
+      mode_hts = case_when((JWTRNS %in% c("Car, truck, or van")
+                              & JWRIP == 1)~"Drive, SOV",
+                           (JWTRNS %in% c("Car, truck, or van")
+                              & JWRIP != 1) ~"Carpool",
                               JWTRNS %in% c("Bus",
                                             "Light rail, streetcar, or trolley",
                                             "Long-distance train or commuter train",
@@ -61,6 +64,12 @@ hisp_pums_recode <- function(.pums){
                               JWTRNS == "Worked from home" ~"Worked from home",
                               JWTRNS %in% c("Motorcycle","Taxicab","Other method") ~"Other",
                               TRUE~JWTRNS),
+      shift = case_when(
+                            (as.numeric(JWAP) >=1 & as.numeric(JWAP) < 59) ~ "Night", #Midnight - 4AM
+                            (as.numeric(JWAP) >=59 & as.numeric(JWAP) < 141) ~ "Day", #5AM - noon 
+                            (as.numeric(JWAP) >=141 & as.numeric(JWAP) < 238) ~ "Evening", #noon - 8PM
+                            (as.numeric(JWAP) >=238) ~ "Night" #8PM - Midnight
+                        ),
       vehicle = factor(case_when(VEH == "No vehicles"~ "No vehicle",
                                  VEH %in% c("1 vehicle",
                                             "2 vehicles",
@@ -97,6 +106,7 @@ hisp_pums_recode <- function(.pums){
                           WIF == "1 worker" ~ 1,
                           WIF == "2 workers" ~ 2,
                           WIF == "3 or more workers in family" ~ 3),
+      occupation = substr(OCCP, 1, 3),
       veh_wrk_ratio = ( veh_num / wif_num ),
       veh_availability = factor(case_when(veh_wrk_ratio < 1 ~ "cars < workers",
                                           veh_wrk_ratio >= 1 ~ "cars >= workers")))
