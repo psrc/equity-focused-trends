@@ -231,9 +231,10 @@ mode_chart_transit <- static_bar_chart(
   color='pognbgy_10',
   #moe="share_moe",
   title="Percent of Commuters Who Use Transit, By Race/Ethnicity",
-  ylabel="Race/Ethnicity",
+  #ylabel="Race/Ethnicity",
   source='Source: 2017-2021 Census Public Use Microdata Sample'
-)
+) +
+  theme(panel.grid.major.x = element_blank())
 
 mode_chart_transit
 ```
@@ -261,9 +262,11 @@ mode_chart_carpool <- static_bar_chart(
   color='pognbgy_10',
   #moe="share_moe",
   title="Percent of Commuters Who Carpool, By Race/Ethnicity",
-  ylabel="Race/Ethnicity",
+  #ylabel="',
   source='Source: 2017-2021 Census Public Use Microdata Sample'
-)
+) +
+  theme(panel.grid.major.x = element_blank())
+
 mode_chart_carpool
 ```
 
