@@ -225,3 +225,47 @@ rs_xtab <- rs %>% filter(reliability %in% c("good","fair","weak") & SEX !="Total
   tidyr::pivot_wider(id_cols=SOCP, names_from=SEX, values_from=WAGP_median) %>% 
   mutate(diff=log(Female/Male)) %>% filter(!is.na(diff)) %>% arrange(diff)
 ```
+
+```{r}
+people_by_race<-get_acs_recs(geography ='county', table.names='C23002', years =2022, acs.type='acs1')%>%filter(name=='Region')%>%filter(!(label %in%c('Estimate!!Total:!!Two or More Races:!!Two races including Some Other Race',' Estimate!!Total:!!Two or More Races:!!Two races excluding Some Other Race, and three or more races'	,
+'Estimate!!Total:')))
+
+```
+
+```{r}
+people_by_race_share<-people_by_race%>%mutate(total=sum(estimate))%>%group_by(label)%>%mutate(share=estimate/total)
+```
+
+
+```{r}
+static_bar_chart(t=people_by_race_share, y='GEOID', x='share', fill='label', pos='stack', color='obgnpgy_10')
+```
+
+
+
+```{r}
+people_by_race
+```
+
+# Find the share of workers by race in the top ten occupations
+
+```{r}
+soc_prace<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("SOCP", "PRACE"))
+
+```
+
+```{r}
+soc_count_prace<-psrc_pums_count(soc_prace, group_vars=c("SOCP",  'PRACE'))%>%filter(COUNTY=='Region')
+```
+
+
+
+```{r}
+share_occ_race<-merge(soc_count_prace, top_10)%>%filter(!PRACE %in% c('Asian alone', 'White alone'))
+write.csv(share_occ_race, 'share_occ_race.csv')
+```
+
+```{r}
+static_bar_chart(t=share_occ_race, y= 'SOCP', x='share', fill= 'PRACE', pos='stack',
+  color='pognbgy_10')
+```
