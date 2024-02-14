@@ -1,0 +1,261 @@
+---
+title: "occupation_race_gender"
+author: "suzanne"
+date: "2024-02-09"
+output: html_document
+---
+https://www.wsj.com/economy/jobs/workers-america-jobs-demographics-charts-94a5ff6c?st=suj8l825gtmpp0s&reflink=article_copyURL_share
+
+https://www.americanprogress.org/article/occupational-segregation-in-america/#interactive-visualization
+
+
+```{r setup, include=FALSE}
+library(psrccensus)
+library(tidycensus)
+library(dplyr)
+library(tidyr)
+library(psrcplot)
+
+```
+
+data dictionary
+```{r}
+pums_vars<-tidycensus::pums_variables%>%filter(survey=='acs5')%>%filter(year==2022)
+
+```
+
+```{r}
+acs_vars<-tidycensus::load_variables(2022, 'acs1', cache=TRUE)
+```
+
+median wage by race and sex
+```{r}
+race_sex_wage<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("SEX", "PRACE", "WAGP", 'ESR', 'WKHP'))%>%filter(WKHP>30)
+
+```
+```{r}
+library(tidyverse)
+race_sex_wage_wrkr<-race_sex_wage%>%mutate(worker=case_when(str_detect(ESR, 'Armed') ~'Worker',
+                                                            str_detect(ESR, 'Civilian')~'Worker',
+                                                            .default = 'Not Worker'
+                                                            ))
+
+```
+
+
+```{r}
+race_sex_medwage<-psrc_pums_median(race_sex_wage_wrkr, stat_var='WAGP', group_vars=c('SEX', 'PRACE','worker'))
+```
+
+
+
+
+```{r}
+race_sex_medwage_wrkr<-race_sex_medwage%>%filter(worker=='Worker')%>%filter(worker!='Total')%>%filter(PRACE!='Total') %>%filter(SEX != 'Total')%>%mutate(median_wage_rd=round(WAGP_median,-3))
+race_sex_medwage_wrkr<-race_sex_medwage_wrkr%>%mutate(PRACE_ordered=forcats::fct_reorder(PRACE, -median_wage_rd))
+psrcplot::static_column_chart(t=race_sex_medwage_wrkr, x='PRACE', y='median_wage_rd', fill='SEX')
+```
+
+
+
+Get Data on occupation, sex, and race, to count
+
+```{r}
+soc_gend_prace<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("SOCP", "SEX", "PRACE"))
+```
+
+```{r}
+esr_prace<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("ESR", "PRACE"))
+esr_prace_count<-psrc_pums_count(esr_prace, group_vars=c("ESR", 'PRACE'))
+
+```
+
+
+count how many by sex, race and occupation
+```{r}
+soc_gend_count_prace<-psrc_pums_count(soc_gend_prace, group_vars=c("SOCP", "SEX", 'PRACE'))
+
+```
+Top Occupation by Race and Gender (detailed)
+
+```{r }
+job_grp_gender_race<-soc_gend_count_prace%>%
+  group_by(SOCP, SEX, PRACE)%>%
+  summarize(workers=sum(count))%>%
+  filter(SEX!='Total')%>%filter(PRACE!='Total')%>%filter(SOCP!='Total')%>%
+  group_by(SEX, PRACE)%>%filter(workers==max(workers))%>%arrange(SOCP,SEX, PRACE)%>%
+  pivot_wider(id_cols=PRACE, names_from=SEX, values_from=SOCP)
+```
+
+```{r}
+write.csv(job_grp_gender_race, 'soc_gend_racecount.csv')
+```
+
+
+
+Median Earnings by Occupation (and then within the same occupation)
+```{r}
+earnings_by_occ<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("SOCP", "WAGP"))
+```
+
+
+```{r}
+earn_by_occ_median<-psrc_pums_median(earnings_by_occ, stat_var="WAGP",group_vars= c('SOCP'))%>%filter(COUNTY=='Region')
+```
+Top Ten Occupations by Median Wages
+```{r}
+top_10<-earn_by_occ_median%>%top_n(n=10, wt=WAGP_median)%>%mutate(occupation=forcats::fct_reorder(substr(SOCP,5,25), -WAGP_median))%>%mutate(MedianWage=round(WAGP_median, -3))
+
+```
+
+```{r}
+people_by_race<-get_acs_recs(geography ='county', table.names='C23002', years =2022, acs.type='acs1')%>%filter(name=='Region')%>%filter(!(label %in%c('Estimate!!Total:!!Two or More Races:!!Two races including Some Other Race',' Estimate!!Total:!!Two or More Races:!!Two races excluding Some Other Race, and three or more races'	,
+'Estimate!!Total:')))
+
+```
+
+```{r}
+people_by_race_share<-people_by_race%>%mutate(total=sum(estimate))%>%group_by(label)%>%mutate(share=estimate/total)
+```
+
+
+```{r}
+static_bar_chart(t=people_by_race_share, y='GEOID', x='share', fill='label', pos='stack', color='obgnpgy_10')
+```
+
+
+
+```{r}
+people_by_race
+```
+
+# Find the share of workers by race in the top ten occupations
+
+```{r}
+soc_prace<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("SOCP", "PRACE"))
+
+```
+
+```{r}
+soc_count_prace<-psrc_pums_count(soc_prace, group_vars=c("SOCP",  'PRACE'))%>%filter(COUNTY=='Region')
+```
+
+
+
+```{r}
+share_occ_race<-merge(soc_count_prace, top_10)%>%filter(!PRACE %in% c('Asian alone', 'White alone'))
+write.csv(share_occ_race, 'share_occ_race.csv')
+```
+
+```{r}
+static_bar_chart(t=share_occ_race, y= 'SOCP', x='share', fill= 'PRACE', pos='stack',
+  color='pognbgy_10')
+```
+
+# Find the share of workers by sex in the top ten occupations
+
+```{r}
+soc_sex<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("SOCP", "SEX"))
+
+```
+
+```{r}
+soc_sex_count<-psrc_pums_count(soc_sex, group_vars=c("SOCP",  'SEX'))%>%filter(COUNTY=='Region')
+```
+
+```{r}
+share_occ_sex<-merge(soc_sex_count, top_10)%>%filter(SEX!='Total')
+```
+```{r}
+
+static_bar_chart(top_10, y='occupation', x='MedianWage', fill='COUNTY', est='currency' )
+```
+
+
+```{r}
+static_bar_chart(t=share_occ_sex, y= 'occupation', x='share', fill= 'SEX', pos='stack')
+```
+
+
+
+slice the data multiple ways
+```{r}
+earnings_by_gend_race<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("WAGP","PRACE", "SEX"))
+```
+
+
+```{r}
+earn_by_occ_median_race<-psrc_pums_median(earnings_by_gend_race, stat_var="WAGP",group_vars= c('SEX', 'PRACE'))%>%filter(COUNTY=='Region')
+```
+```
+
+
+
+
+
+
+```{r}
+
+earn_by_occ_median_prace<-psrc_pums_median(earnings_by_occ_prace, stat_var="WAGP",group_vars= c('SOCP', 'PRACE'))%>%filter(COUNTY=='Region')
+```
+
+```{r}
+earn_by_occ_median_race<-psrc_pums_median(earnings_by_occ, stat_var="WAGP",group_vars= c('SOCP', 'PRACE'))%>%filter(COUNTY=='Region')
+```
+
+
+
+```{r}
+
+earn_by_occ_median_prace<-psrc_pums_median(earnings_by_occ_prace, stat_var="WAGP",group_vars= c('SOCP', 'PRACE'))%>%filter(COUNTY=='Region')
+```
+
+```{r}
+earn_by_occ_median_race<-psrc_pums_median(earnings_by_occ, stat_var="WAGP",group_vars= c('SOCP', 'PRACE'))%>%filter(COUNTY=='Region')
+```
+
+share by gender
+
+
+```{r}
+
+job_grp_gender_race<-soc_gend_count_prace%>%
+  group_by(SOCP, SEX, PRACE)%>%
+  summarize(workers=sum(count))%>%
+  filter(SEX!='Total')%>%filter(PRACE!='Total')%>%filter(SOCP!='Total')%>%
+  group_by(SEX, PRACE)%>%filter(workers==max(workers))%>%arrange(SOCP,SEX, PRACE)
+```
+
+
+
+```{r}
+job_grp_gend_race_income<-merge(job_grp_gender_race, earn_by_occ_median)%>%
+  pivot_wider(id_cols=PRACE, names_from=SEX, values_from=WAGP_median)
+
+```
+
+```{r}
+write.csv(job_grp_gend_race_income,'job_grp_gend_race_income.csv' )
+```
+
+```{r}
+job_grp_gend_race_income_all<-merge(job_grp_gender_race, earn_by_occ_median)%>%distinct(SOCP,WAGP_median)
+```
+
+```{r}
+write.csv(job_grp_gend_race_income_all, 'occup_wage.csv')
+```
+
+
+Median Earnings by Occupation (and then within the same occupation)
+```{r}
+earnings_by_occ_gend_race<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("SOCP", "WAGP","PRACE", "SEX"))
+```
+```
+
+
+```{r}
+echart_bar_chart(t=soft_dev_med_wage, x='PRACE' , y='WAGP_median', fill='SEX', pos= NULL, est="currency")
+
+```
+

@@ -1,0 +1,227 @@
+---
+title: "occupation_race_gender"
+author: "suzanne"
+date: "2024-02-09"
+output: html_document
+---
+https://www.wsj.com/economy/jobs/workers-america-jobs-demographics-charts-94a5ff6c?st=suj8l825gtmpp0s&reflink=article_copyURL_share
+
+https://www.americanprogress.org/article/occupational-segregation-in-america/#interactive-visualization
+
+
+```{r setup, include=FALSE}
+library(psrccensus)
+library(tidycensus)
+library(dplyr)
+library(tidyr)
+library(psrcplot)
+```
+
+data dictionary
+```{r}
+pums_vars<-tidycensus::pums_variables%>%filter(survey=='acs5')%>%filter(year==2022)
+
+```
+
+gender and race labor force participation
+
+
+Detailed race and gender occupation
+
+```{r}
+soc_gend_prace<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("SOCP", "SEX", "PRACE"))
+```
+
+
+```{r}
+soc_gend_count_prace<-psrc_pums_count(soc_gend_prace, group_vars=c("SOCP", "SEX", 'PRACE'))
+
+```
+Top Occupation by Race and Gender (detailed)
+
+to do: look into total workers
+```{r }
+job_grp_gender_race<-soc_gend_count_prace%>%
+  group_by(SOCP, SEX, PRACE)%>%
+  summarize(workers=sum(count))%>%
+  filter(SEX!='Total')%>%filter(PRACE!='Total')%>%filter(SOCP!='Total')%>%
+  group_by(SEX, PRACE)%>%filter(workers==max(workers))%>%arrange(SOCP,SEX, PRACE)%>%
+  pivot_wider(id_cols=PRACE, names_from=SEX, values_from=SOCP)
+```
+
+```{r}
+write.csv(job_grp_gender_race, 'soc_gend_racecount.csv')
+```
+
+National Level data?
+Median Income for these occupations?
+
+same analysis with 3 digit code
+
+```{r}
+soc3_gend_prace<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("SOCP3", "SEX", "PRACE"))
+```
+
+
+```{r}
+soc3_gend_count_prace<-psrc_pums_count(soc3_gend_prace, group_vars=c("SOCP3", "SEX", 'PRACE'))
+
+```
+Top Occupation by Race and Gender not detailed
+```{r }
+job_grp3_gender_race<-soc3_gend_count_prace%>%
+  group_by(SOCP3, SEX, PRACE)%>%
+  summarize(workers=sum(count))%>%
+  filter(SEX!='Total')%>%filter(PRACE!='Total')%>%filter(SOCP3!='Total')%>%
+  group_by(SEX, PRACE)%>%filter(workers==max(workers))%>%arrange(SOCP3,SEX, PRACE)%>%
+  pivot_wider(id_cols=PRACE, names_from=SEX, values_from=SOCP3)
+```
+
+```{r}
+write.csv(job_grp3_gender_race, 'soc3_gend_racecount.csv')
+```
+
+
+same analysis with 5 digit code
+
+```{r}
+soc5_gend_prace<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("SOCP5", "SEX", "PRACE"))
+```
+
+
+```{r}
+soc5_gend_count_prace<-psrc_pums_count(soc5_gend_prace, group_vars=c("SOCP5", "SEX", 'PRACE'))
+
+```
+Top Occupation by Race and Gender 
+```{r }
+job_grp5_gender_race<-soc5_gend_count_prace%>%
+  group_by(SOCP5, SEX, PRACE)%>%
+  summarize(workers=sum(count))%>%
+  filter(SEX!='Total')%>%filter(PRACE!='Total')%>%filter(SOCP5!='Total')%>%
+  group_by(SEX, PRACE)%>%filter(workers==max(workers))%>%arrange(SOCP5,SEX, PRACE)%>%
+  pivot_wider(id_cols=PRACE, names_from=SEX, values_from=SOCP5)
+```
+
+```{r}
+write.csv(job_grp5_gender_race, 'soc5_gend_racecount.csv')
+```
+
+Median Earnings by Occupation (and then within the same occupation)
+```{r}
+earnings_by_occ<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("SOCP", "WAGP"))
+```
+
+
+```{r}
+earn_by_occ_median<-psrc_pums_median(earnings_by_occ, stat_var="WAGP",group_vars= c('SOCP'))%>%filter(COUNTY=='Region')
+```
+
+
+```{r}
+
+job_grp_gender_race<-soc_gend_count_prace%>%
+  group_by(SOCP, SEX, PRACE)%>%
+  summarize(workers=sum(count))%>%
+  filter(SEX!='Total')%>%filter(PRACE!='Total')%>%filter(SOCP!='Total')%>%
+  group_by(SEX, PRACE)%>%filter(workers==max(workers))%>%arrange(SOCP,SEX, PRACE)
+```
+
+
+
+```{r}
+job_grp_gend_race_income<-merge(job_grp_gender_race, earn_by_occ_median)%>%
+  pivot_wider(id_cols=PRACE, names_from=SEX, values_from=WAGP_median)
+
+```
+
+```{r}
+write.csv(job_grp_gend_race_income,'job_grp_gend_race_income.csv' )
+```
+
+```{r}
+job_grp_gend_race_income_all<-merge(job_grp_gender_race, earn_by_occ_median)%>%distinct(SOCP,WAGP_median)
+```
+
+```{r}
+write.csv(job_grp_gend_race_income_all, 'occup_wage.csv')
+```
+
+
+Median Earnings by Occupation (and then within the same occupation)
+```{r}
+earnings_by_occ_gend_race<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("SOCP", "WAGP","PRACE", "SEX"))
+```
+get software developer wages
+```{r}
+
+soft_dev<-earnings_by_occ_gend_race%>%mutate(
+  software_dev=factor(
+    case_when(SOCP=='CMM-Software Developers' ~ 'Software Developers',
+              SOCP!='CMM-Software Developers' ~ NA_character_
+              )
+  )
+)
+
+```
+
+```{r}
+soft_dev_med_wage<-psrc_pums_median(soft_dev, stat_var= 'WAGP', group_vars=c('SEX', 'PRACE', 'software_dev'), rr=TRUE)%>%filter(software_dev=='Software Developers')%>%filter(reliability=='good')%>%mutate(PRACE_low_high=forcats::fct_reorder(PRACE, -WAGP_median))
+
+write.csv(soft_dev_med_wage, 'soft_dev_med_wage.csv')
+```
+
+```{r}
+static_bar_chart(t=soft_dev_med_wage, y='PRACE_low_high' , x='WAGP_median', fill='SEX', est="currency", moe='WAGP_median_moe')
+```
+
+
+```{r}
+echart_bar_chart(t=soft_dev_med_wage, x='PRACE' , y='WAGP_median', fill='SEX', pos= NULL, est="currency")
+
+```
+
+
+```{r}
+library(psrccensus)
+library(dplyr)
+library(magrittr)
+
+pums5_22 <- get_psrc_pums(5,2022,"p",vars=c("WAGP","PRACE","SEX","SOCP3","SOCP5","SOCP"))
+
+rs3 <- psrc_pums_median(pums5_22, stat_var="WAGP", group_vars=c("SOCP3","SEX"), rr=TRUE) 
+rs3_xtab <- rs3 %>% filter(reliability %in% c("good","fair","weak") & SEX !="Total") %>% 
+  select(SOCP3, SEX, WAGP_median, WAGP_median_moe) %>%
+  tidyr::pivot_wider(id_cols=SOCP3, names_from=SEX, values_from=WAGP_median) %>% 
+  mutate(diff=log(Female/Male)) %>% filter(!is.na(diff)) %>% arrange(diff)
+
+rs5 <- pums5_22 %>% filter(SOCP5!="TRN-Conveyor, Dredge, And Hoist And Winch Operators") %>%
+  psrc_pums_median(stat_var="WAGP", group_vars=c("SOCP5","SEX"), rr=TRUE) 
+rs5_xtab <- rs5 %>% filter(reliability %in% c("good","fair","weak") & SEX !="Total") %>% 
+  select(SOCP5, SEX, WAGP_median, WAGP_median_moe) %>%
+  tidyr::pivot_wider(id_cols=SOCP5, names_from=SEX, values_from=WAGP_median) %>% 
+  mutate(diff=log(Female/Male)) %>% filter(!is.na(diff)) %>% arrange(diff)
+```
+```{r}
+library(psrccensus)
+library(dplyr)
+library(magrittr)
+
+pums5_22 <- get_psrc_pums(5,2022,"p",vars=c("WAGP","PRACE","SEX","SOCP3","SOCP5","SOCP"))
+
+rs3 <- psrc_pums_median(pums5_22, stat_var="WAGP", group_vars=c("SOCP3","SEX"), rr=TRUE) 
+rs3_xtab <- rs3 %>% filter(reliability %in% c("good","fair","weak") & SEX !="Total") %>% 
+  select(SOCP3, SEX, WAGP_median, WAGP_median_moe) %>%
+  tidyr::pivot_wider(id_cols=SOCP3, names_from=SEX, values_from=WAGP_median) %>% 
+  mutate(diff=log(Female/Male)) %>% filter(!is.na(diff)) %>% arrange(diff)
+```
+
+```{r}
+rs <- pums5_22 %>%filter(SOCP!="RPR-Locksmiths And Safe
+  Repairers")%>%
+  psrc_pums_median(stat_var="WAGP", group_vars=c("SOCP","SEX"), rr=TRUE)
+rs_xtab <- rs %>% filter(reliability %in% c("good","fair","weak") & SEX !="Total") %>% 
+  select(SOCP, SEX, WAGP_median, WAGP_median_moe) %>%
+  tidyr::pivot_wider(id_cols=SOCP, names_from=SEX, values_from=WAGP_median) %>% 
+  mutate(diff=log(Female/Male)) %>% filter(!is.na(diff)) %>% arrange(diff)
+```

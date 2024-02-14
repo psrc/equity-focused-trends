@@ -1,0 +1,245 @@
+---
+title: "hispanic-latinx-2"
+author: "suzanne"
+date: "2022-08-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Notes for Hispanic Heritage Month
+
+auto onwership?
+
+```{r load_libraries}
+library(devtools)
+library(sf)
+library(dplyr)
+library(psrccensus)
+library(psrcplot)
+library(tidycensus)
+library(ggplot2)
+library(stringr)
+library(tidyr)
+library(forcats)
+
+Sys.setenv("CENSUS_API_KEY"='c4780eb03010d73b7ae4e6894c1592375e545a21')
+Sys.getenv("CENSUS_API_KEY")
+install_psrc_fonts()
+
+```
+
+
+### Means of Transportation to Work
+fix labels
+```{r}
+
+white_df <- format_estimates(get_acs_recs(geography = 'county',
+             table.names = c('B08105H'),
+             years=c(2021),
+             acs.type = 'acs5')%>%filter(name=='Region'), type='share')%>%mutate(Ethnicity='Non-Hispanic White')
+
+
+
+Hispanic_df <- format_estimates(get_acs_recs(geography = 'county',
+             table.names = c('B08105I'),
+             years=c(2021),
+             acs.type = 'acs5')%>%filter(name=='Region'), type='share')%>%mutate(Ethnicity='All Hispanic')
+
+
+
+white_Hispanic_df<-rbind(Hispanic_df, white_df)%>%filter(label!='Estimate!!Total:' & label!='Estimate!!Total:!!Female:' & label!= 'Estimate!!Total:!!Male:')%>%mutate(label=str_remove(label, 'Estimate!!Total:!!'))%>%mutate(label=str_wrap(label, width=20))%>%mutate(Ethnicity=str_wrap(Ethnicity, width=25))
+
+
+
+
+p<-static_column_chart(t=white_Hispanic_df, x='label', y='Region_share', fill='Ethnicity', moe='Region_share_moe', est='percent',  color = 'pgnobgy_5')
+  
+write.csv(white_Hispanic_df,'C:/GitHub/heritage-month/hispanic_heritage2/means_transport.csv')
+
+print(p)
+```
+
+
+
+
+
+```{r}
+Hispanic_df <- get_acs_recs(geography = 'county',
+             table.names = c('C24010I'),
+             years=c(2020),
+             acs.type = 'acs5')%>%filter(name=='Region')%>%mutate(Ethnicity='Hispanic/Latinx')
+
+
+
+white_df <- get_acs_recs(geography = 'county',
+             table.names = c('C24010H'),
+             years=c(2020),
+             acs.type = 'acs5')%>%filter(name=='Region')%>%mutate(Ethnicity='Non-Hispanic/Latinx White')
+
+
+white_Hispanic_df<-rbind(Hispanic_df, white_df)%>%
+  separate(label, c("Type", "Value","Gender","Variable"), "!!") %>%
+  mutate(Gender=replace_na(Gender,"Total"), Gender=gsub(":","",Gender),Variable=replace_na(Variable,"Total")) %>%
+  filter(Variable!="Total")%>%select(Variable, moe, estimate, Ethnicity)%>%group_by(Variable,Ethnicity)%>%mutate(sum_est = sum(estimate), moe_grp=moe_sum(moe,sum(estimate))) %>%select(sum_est, moe_grp, Ethnicity,Variable)%>%filter(row_number()==1)%>%group_by(Ethnicity)%>%mutate(sum_Eth=sum(sum_est), moe_Eth=moe_sum(moe_grp, sum(sum_est)))%>%mutate(share=sum_est/sum_Eth, moe_share=moe_prop(sum_est, sum_Eth, moe_grp, moe_Eth))%>%mutate(Variable=str_remove(Variable, 'occupations'))%>%mutate(Variable=str_wrap(Variable, width=20))
+#%>%
+  
+  #mutate(Variable=fct_relevel(Variable, 'Less than high school diploma', 'High school graduate (includes equivalency)', 'Some college or associate\'s degree', 'Bachelor\'s degree or higher'))
+
+p<-create_bar_chart(t=white_Hispanic_df, w.x='Variable', w.y='share', f='Ethnicity', w.moe='moe_share', est.type='percent', w.color = 'PrOr')+theme(axis.text.x = element_text(size=14,color="#4C4C4C"))+theme(legend.text = element_text(size=14,color="#4C4C4C"))+coord_flip()
+
+
+ggsave('C:/GitHub/heritage-month/hispanic_heritage2/job_sector.jpeg', p, device='jpeg', width=11, height=7, dpi=72)
+  
+write.csv(white_Hispanic_df,'C:/GitHub/heritage-month/hispanic_heritage2/job_sector.csv')
+
+```
+
+
+```{r}
+write.csv(white_Hispanic_df,'C:/GitHub/heritage-month/hispanic_heritage2/job_sector.csv')
+```
+
+```{r}
+race_vehs_obj<-get_psrc_pums(span=5, dyear=2020, level="h", vars=c("HRACE","VEH"))
+
+
+race_vehs<-psrc_pums_count(race_vehs_obj,group_vars =c("HRACE","VEH"))%>%filter(HRACE=='Hispanic or Latino' | HRACE=='White alone')%>%filter(VEH!='Total')
+
+
+p<-create_bar_chart(t=race_vehs, w.x='VEH', w.y='share', f='HRACE', w.moe='share_moe', est.type='percent', w.color = 'PrOr')+coord_flip()
+
+ggsave('C:/GitHub/heritage-month/hispanic_heritage2/veh_own.jpeg', p, device='jpeg', width=11, height=7, dpi=72)
+  
+write.csv(white_Hispanic_df,'C:/GitHub/heritage-month/hispanic_heritage2/veh_own.csv')
+
+```
+
+
+print(p)
+
+
+```{r}
+race_vehs_obj<-get_psrc_pums(span=5, dyear=2020, level="h", vars=c("PRACE","VEH"))
+
+
+race_vehs<-psrc_pums_count(race_vehs_obj,group_vars =c("HRACE","VEH"))%>%filter(HRACE=='Hispanic or Latino' | HRACE=='White alone')%>%filter(VEH!='Total')
+
+
+p<-create_bar_chart(t=race_vehs, w.x='VEH', w.y='share', f='HRACE', w.moe='share_moe', est.type='percent', w.color = 'PrOr')+coord_flip()
+
+ggsave('C:/GitHub/heritage-month/hispanic_heritage2/veh_own.jpeg', p, device='jpeg', width=11, height=7, dpi=72)
+  
+write.csv(white_Hispanic_df,'C:/GitHub/heritage-month/hispanic_heritage2/veh_own.csv')
+
+```
+
+```{r}
+race_hhsize_obj<-get_psrc_pums(span=5, dyear=2020, level="h", vars=c("HRACE","NPF"))
+
+
+race_hhsize<-psrc_pums_mean(race_hhsize_obj,stat_var="NPF", group_var = "HRACE")%>%filter(HRACE=='Hispanic or Latino' | HRACE=='White alone')
+
+
+p<-create_bar_chart(t=race_hhsize, w.x='COUNTY', w.y='NPF_mean', f='HRACE', w.moe='NPF_mean_moe', est.type='percent', w.color = 'PrOr', )+coord_flip()
+
+ggsave('C:/GitHub/heritage-month/hispanic_heritage2/hhsize.jpeg', p, device='jpeg', width=11, height=7, dpi=72)
+  
+write.csv(race_hhsize,'C:/GitHub/heritage-month/hispanic_heritage2/hhsize.csv')
+
+
+```
+
+```{r}
+race_rent_obj<-get_psrc_pums(span=5, dyear=2020, level="h", vars=c("HRACE","GRPIP")) %>% mutate(BIN_GRPIP=cut(GRPIP,c(0,25,50,75,100)))
+
+
+race_rent<-psrc_pums_mean(race_rent_obj,stat_var="GRPIP", group_var = "HRACE")%>%filter(HRACE=='Hispanic or Latino' | HRACE=='White alone')
+
+
+
+race_rent_count<-psrc_pums_count(race_rent_obj, group_var=c('HRACE', 'BIN_GRPIP'))%>%drop_na(BIN_GRPIP)%>%filter(BIN_GRPIP!='Total')
+
+
+
+p<-create_bar_chart(t=race_rent, w.x='COUNTY', w.y= 'GRPIP_mean', f='HRACE', w.moe='GRPIP_mean_moe', est.type='percent', w.color = 'PrOr', )+coord_flip()
+
+ggsave('C:/GitHub/heritage-month/hispanic_heritage2/rent.jpeg', p, device='jpeg', width=11, height=7, dpi=72)
+  
+write.csv(race_rent_count,'C:/GitHub/heritage-month/hispanic_heritage2/rent.csv')
+
+
+p<-create_column_chart(t=race_rent_count, w.x='BIN_GRPIP', w.y= 'share', f='HRACE', w.moe='share_moe', est.type='number', w.color = 'psrc_dark' )
+
+ggsave('C:/GitHub/heritage-month/hispanic_heritage2/rent.jpeg', p, device='jpeg', width=25, height=7, dpi=72)
+  
+
+p
+```
+
+```{r}
+race_housecost_obj<-get_psrc_pums(span=5, dyear=2020, level="h", vars=c("HRACE","OCPIP"))
+
+
+race_housecost<-psrc_pums_mean(race_housecost_obj,stat_var="OCPIP", group_var = "HRACE")%>%filter(HRACE=='Hispanic or Latino' | HRACE=='White alone')
+
+
+p<-create_bar_chart(t=race_housecost, w.x='COUNTY', w.y= 'OCPIP_mean', f='HRACE', w.moe='OCPIP_mean_moe', est.type='percent', w.color = 'PrOr', )+coord_flip()
+
+ggsave('C:/GitHub/heritage-month/hispanic_heritage2/housecost.jpeg', p, device='jpeg', width=11, height=7, dpi=72)
+  
+write.csv(race_hhsize,'C:/GitHub/heritage-month/hispanic_heritage2/housecost.csv')
+
+
+```
+```{r}
+workplace_travel_race<- read.csv('C:/GitHub/heritage-month/hispanic_heritage2/workplace_travel_race_2021.csv')%>%mutate(Worker.Race=str_wrap(Worker.Race, width=11))%>%filter(Worker.Race!='Missing')%>%mutate(race_name=ifelse(Worker.Race=='Hispanic','Hispanic/Latinx', paste('Not Hispanic/Latinx', Worker.Race, sep= ' ')))%>%mutate(race_name=str_wrap(race_name, width=11))
+
+
+p<-create_column_chart(t=workplace_travel_race, w.x='race_name', w.y= 'Works.outside.the.home', f='race_name', w.moe='moe', est.type='percent', w.color = 'psrc_dark' )
+
+
+ggsave('C:/GitHub/heritage-month/hispanic_heritage2/workplace_travel.jpeg', p, device='jpeg', width=11, height=7, dpi=72)
+
+
+```
+
+```{r}
+hispanic_df <- get_acs_recs(geography = 'county',
+             table.names = c('C27001I'),
+             years=c(2019),
+             acs.type = 'acs5')%>%filter(name=='Region')
+
+
+white_df <- get_acs_recs(geography = 'county',
+             table.names = c('C27001H'),
+             years=c(2019),
+             acs.type = 'acs5')%>%filter(name=='Region')
+
+
+
+
+white_Black_df<-rbind(Hispanic_df, white_df)
+
+write.table(white_Black_df,"clipboard", sep='\t', row.names=FALSE )
+```
+
+
+```{r}
+race_health_obj<-get_psrc_pums(span=5, dyear=2020, level="p", vars=c("PRACE","HICOV"))
+
+
+
+race_health_count<-psrc_pums_count(race_health_obj, group_var=c('PRACE', "HICOV"))%>%filter(HICOV=='No health insurance coverage')%>%filter(PRACE=='White alone' | PRACE =='Hispanic or Latino')%>%mutate(PRACE =ifelse(PRACE=='Hispanic or Latino', 'Hispanic/Latinx', PRACE))%>%mutate(PRACE =ifelse(PRACE=='White alone', 'Non-Hispanic/Latinx White', PRACE))
+  
+write.csv(race_health_count, 'C:/GitHub/heritage-month/hispanic_heritage2/healthinsurance.csv')
+
+p<-create_column_chart(t=race_health_count, w.x='HICOV', w.y= 'share', f='PRACE', w.moe='share_moe', est.type='percent', w.color = "PrOr")
+
+ggsave('C:/GitHub/heritage-month/hispanic_heritage2/hicov.jpeg', p, device='jpeg', width=10, height=10, dpi=72)
+  
+
+p
+```

@@ -9,7 +9,7 @@ library(psrccensus)
 library(ggplot2)
 library(tidyverse)
 library(psrcplot)
-source("C:/Users/cpeak/Repos/equity-focused-trends/hisp_heritage/2023/hisp_functions.R")
+#source("C:/Users/cpeak/Repos/equity-focused-trends/hisp_heritage/2023/hisp_functions.R")
 library(sf) # geographic data library
 library(psrcelmer) # to get data from Elmer
 library(psrcplot) # to get color schemes
@@ -40,13 +40,13 @@ pums_2021 <- get_psrc_pums(span = 5,
                                     "VEH",           # Vehicles (1 ton or less) available
                                     "WIF"))          # Workers in family
 
-pums_2021 <- pums_2021 %>%
-  hisp_pums_recode() %>%
-  mutate(ind = substr(NAICSP, 1,3))
+#pums_2021 <- pums_2021 %>%
+#  hisp_pums_recode() %>%
+#  mutate(ind = substr(NAICSP, 1,3))
 
 
-pums_race_counts <- pums_2021 %>%
-  psrc_pums_count(., group_vars="race_4cat") 
+#pums_race_counts <- pums_2021 %>%
+#  psrc_pums_count(., group_vars="race_4cat") 
 
 ```
 

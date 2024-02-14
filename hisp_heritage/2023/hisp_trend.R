@@ -519,3 +519,26 @@ str(hisp_pop)
 rm(geo_tracts)
   
 df <- data.frame(geo_tracts20)
+
+
+library(scales)
+# transit mode choice: by industry
+pums_transit_ind <- pums_2021 %>%
+  psrc_pums_count(., group_vars=c("ind","mode_hts")) %>%
+  filter(mode_hts == "Transit") %>%
+  filter(mode_hts != "Total")%>%
+  arrange(desc(share))%>%
+  filter(ind %in% c("PRF", "CON", "EDU", "ENT"))%>%
+  mutate(ind=factor(ind, levels=unique(ind)))
+
+
+ind_mode_chart <-  ggplot(pums_transit_ind,aes(x=ind, y=share))+
+  geom_bar(stat="identity", fill="#F05A28" , position=position_dodge())+ 
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1))+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe), width=0.2,
+                     position=position_dodge(.9))
+  
+  
+
+ind_mode_chart
+
