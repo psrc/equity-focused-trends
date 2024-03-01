@@ -18,7 +18,6 @@ library(sf)
 
 install_psrc_fonts()
 
-Sys.setenv(CENSUS_API_KEY = '3fc20d0d6664692c0becc323b82c752408d843d9')
 Sys.getenv("CENSUS_API_KEY")
 
 

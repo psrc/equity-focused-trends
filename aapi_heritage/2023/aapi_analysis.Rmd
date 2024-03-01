@@ -688,10 +688,10 @@ print_plot<-ggplot(pums_race_veh_21_per %>%
   geom_col(position = "dodge") +
   # facet_wrap(~race_aapi)+
   scale_y_continuous(labels = scales::label_percent()) +
-  scale_fill_manual(values = psrc_colors$purples_inc[c(3)])+
+  scale_fill_manual(values = psrc_colors$purples_inc[c(4)])+
   # geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
   #                         width=0.2, position = position_dodge(0.9))+
-  labs(title="Share of People in Car-free Households by Race and Ethnicity", caption = pums_caption_21)+
+  labs(title="Share of People in Car-Free Households by Race and Ethnicity", caption = pums_caption_21)+
   psrc_style() +
   theme(axis.title.x= element_blank(),
         axis.title.y= element_blank(),
