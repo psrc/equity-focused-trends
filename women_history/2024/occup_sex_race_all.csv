@@ -1,0 +1,1053 @@
+"","DATA_YEAR","COUNTY","SOCP","SEX","PRACE","count","count_moe","reliability","share","share_moe"
+"1",2022,"Region","BUS-Business Operations Specialists, All Other","Female","White alone",2790,519.726939850389,"good",0.58910472972973,0.0697062627079762
+"2",2022,"Region","BUS-Business Operations Specialists, All Other","Female","Total",4736,672.342410960554,"good",0.499156829679595,0.0491687234658999
+"3",2022,"Region","BUS-Business Operations Specialists, All Other","Male","White alone",3149,502.874508991806,"good",0.66266835016835,0.0643933286040375
+"4",2022,"Region","BUS-Business Operations Specialists, All Other","Male","Total",4752,620.512120029698,"good",0.500843170320405,0.0491687234658999
+"5",2022,"Region","BUS-Business Operations Specialists, All Other","Total","Total",9488,893.053213546091,"good",0.00221832757553256,0.000208537800519049
+"6",2022,"Region","BUS-Claims Adjusters, Appraisers, Examiners, And Investigators","Female","Total",2666,625.862620000388,"good",0.610347985347985,0.0683356252652691
+"7",2022,"Region","BUS-Claims Adjusters, Appraisers, Examiners, And Investigators","Male","White alone",1108,257.523948777099,"good",0.650998824911868,0.124768635606394
+"8",2022,"Region","BUS-Claims Adjusters, Appraisers, Examiners, And Investigators","Male","Total",1702,363.715042811677,"good",0.389652014652015,0.0683356252652691
+"9",2022,"Region","BUS-Claims Adjusters, Appraisers, Examiners, And Investigators","Total","Total",4368,775.319842672203,"good",0.00102125367305293,0.000181350186106895
+"10",2022,"Region","BUS-Compensation, Benefits, And Job Analysis Specialists","Total","Total",1103,242.447832649108,"good",0.000257885256725591,5.66692324588745e-05
+"11",2022,"Region","BUS-Compliance Officers","Female","White alone",1900,402.385292307013,"good",0.746268656716418,0.0832175662137021
+"12",2022,"Region","BUS-Compliance Officers","Female","Total",2546,471.03074886625,"good",0.54158689640502,0.0626915306788479
+"13",2022,"Region","BUS-Compliance Officers","Male","White alone",1384,324.192107686554,"good",0.642227378190255,0.115974913226452
+"14",2022,"Region","BUS-Compliance Officers","Male","Total",2155,407.950050281894,"good",0.45841310359498,0.0626915306788479
+"15",2022,"Region","BUS-Compliance Officers","Total","Total",4701,651.90936984561,"good",0.00109911023741342,0.000152449425237913
+"16",2022,"Region","BUS-Cost Estimators","Male","White alone",1944,361.694316550592,"good",0.891334250343879,0.0586711577377769
+"17",2022,"Region","BUS-Cost Estimators","Male","Total",2181,375.568306869736,"good",0.798024149286498,0.0684454895278463
+"18",2022,"Region","BUS-Cost Estimators","Total","Total",2733,427.967545165518,"good",0.000638984956147816,9.99877910783186e-05
+"19",2022,"Region","BUS-Fundraisers","Female","White alone",1460,333.570348316888,"good",0.887537993920973,0.074407126228326
+"20",2022,"Region","BUS-Fundraisers","Female","Total",1645,360.753788264933,"good",0.707831325301205,0.0859472189262983
+"21",2022,"Region","BUS-Fundraisers","Total","Total",2324,451.453909091227,"good",0.000543359326047393,0.000105517662703257
+"22",2022,"Region","BUS-Human Resources Workers","Female","Asian alone",2379,578.846610106037,"good",0.16654998599832,0.0342698380992955
+"23",2022,"Region","BUS-Human Resources Workers","Female","White alone",8806,868.070490136746,"good",0.616493979277513,0.0395073343167409
+"24",2022,"Region","BUS-Human Resources Workers","Female","Total",14284,1180.58872009953,"good",0.721523463150982,0.0377313599104079
+"25",2022,"Region","BUS-Human Resources Workers","Male","White alone",3860,720.139873825738,"good",0.700163250498821,0.0727352658345606
+"26",2022,"Region","BUS-Human Resources Workers","Male","Total",5513,941.066889390042,"good",0.278476536849018,0.037731359910408
+"27",2022,"Region","BUS-Human Resources Workers","Total","Total",19797,1533.07460456023,"good",0.0046286078217557,0.000358361333189985
+"28",2022,"Region","BUS-Logisticians","Female","Total",1159,283.874528610353,"good",0.299483204134367,0.0632734777853871
+"29",2022,"Region","BUS-Logisticians","Male","Total",2711,660.393235239429,"good",0.700516795865633,0.0632734777853871
+"30",2022,"Region","BUS-Logisticians","Total","Total",3870,776.438518801553,"good",0.000904819531757061,0.00018150466024902
+"31",2022,"Region","BUS-Management Analysts","Female","Asian alone",2006,419.358704957641,"good",0.193648035524665,0.0376503420534896
+"32",2022,"Region","BUS-Management Analysts","Female","White alone",7440,884.020229759337,"good",0.718216044019693,0.0401079918886703
+"33",2022,"Region","BUS-Management Analysts","Female","Total",10359,961.726708888757,"good",0.463676648314758,0.0329127587789772
+"34",2022,"Region","BUS-Management Analysts","Male","Asian alone",1482,345.43687891748,"good",0.123685528292439,0.024879422574701
+"35",2022,"Region","BUS-Management Analysts","Male","White alone",9058,869.902146023477,"good",0.755967284259723,0.034823709848889
+"36",2022,"Region","BUS-Management Analysts","Male","Total",11982,1053.78011799189,"good",0.536323351685242,0.0329127587789772
+"37",2022,"Region","BUS-Management Analysts","Total","Total",22341,1372.79995678904,"good",0.00522340391705026,0.000321027796917514
+"38",2022,"Region","BUS-Market Research Analysts And Marketing Specialists","Female","White alone",3008,421.039830747935,"good",0.659215428446198,0.0610401418410747
+"39",2022,"Region","BUS-Market Research Analysts And Marketing Specialists","Female","Total",4563,523.144399026215,"good",0.523760330578512,0.0434154730928242
+"40",2022,"Region","BUS-Market Research Analysts And Marketing Specialists","Male","White alone",2819,481.695494111685,"good",0.679440829115449,0.0743163215912679
+"41",2022,"Region","BUS-Market Research Analysts And Marketing Specialists","Male","Total",4149,643.69135866986,"good",0.476239669421488,0.0434154730928242
+"42",2022,"Region","BUS-Market Research Analysts And Marketing Specialists","Total","Total",8712,909.397079435738,"good",0.00203689606218799,0.000212675735247711
+"43",2022,"Region","BUS-Meeting, Convention, And Event Planners","Female","White alone",1805,403.77696991037,"good",0.804367201426025,0.0698082385078568
+"44",2022,"Region","BUS-Meeting, Convention, And Event Planners","Female","Total",2244,428.385605293292,"good",0.758620689655172,0.0745910600015099
+"45",2022,"Region","BUS-Meeting, Convention, And Event Planners","Total","Total",2958,511.725102428052,"good",0.000691590742877878,0.000119644138690284
+"46",2022,"Region","BUS-Project Management Specialists","Female","Asian alone",1659,333.848484482482,"good",0.155789275988356,0.0262611892314791
+"47",2022,"Region","BUS-Project Management Specialists","Female","White alone",7426,811.20677773842,"good",0.697342473471687,0.039536340698688
+"48",2022,"Region","BUS-Project Management Specialists","Female","Total",10649,1081.48573038321,"good",0.482269824736199,0.038716696911112
+"49",2022,"Region","BUS-Project Management Specialists","Male","White alone",8026,944.450000285219,"good",0.702064380685794,0.0407790825863097
+"50",2022,"Region","BUS-Project Management Specialists","Male","Total",11432,1091.86638008217,"good",0.517730175263801,0.038716696911112
+"51",2022,"Region","BUS-Project Management Specialists","Total","Total",22081,1328.25937293465,"good",0.00516261500793997,0.000310593278443198
+"52",2022,"Region","BUS-Purchasing Agents, Except Wholesale, Retail, And Farm Products","Female","White alone",1937,375.264126469611,"good",0.669547182855168,0.0765621416806824
+"53",2022,"Region","BUS-Purchasing Agents, Except Wholesale, Retail, And Farm Products","Female","Total",2893,416.090548076678,"good",0.551047619047619,0.0552740066901412
+"54",2022,"Region","BUS-Purchasing Agents, Except Wholesale, Retail, And Farm Products","Male","White alone",1901,353.430077985731,"good",0.806533729316928,0.0690850658002407
+"55",2022,"Region","BUS-Purchasing Agents, Except Wholesale, Retail, And Farm Products","Male","Total",2357,419.560628025021,"good",0.448952380952381,0.0552740066901412
+"56",2022,"Region","BUS-Purchasing Agents, Except Wholesale, Retail, And Farm Products","Total","Total",5250,598.802821680476,"good",0.00122746835703477,0.000140027372422587
+"57",2022,"Region","BUS-Training And Development Specialists","Female","White alone",1212,278.468911747793,"good",0.793713163064833,0.0807425940090256
+"58",2022,"Region","BUS-Training And Development Specialists","Female","Total",1527,315.909390814835,"good",0.537108688005628,0.0727772771888772
+"59",2022,"Region","BUS-Training And Development Specialists","Total","Total",2843,507.430107911425,"good",0.000664703340771402,0.000118608341776565
+"60",2022,"Region","BUS-Wholesale And Retail Buyers, Except Farm Products","Female","White alone",1905,366.462472841695,"good",0.694241982507289,0.0803633222304504
+"61",2022,"Region","BUS-Wholesale And Retail Buyers, Except Farm Products","Female","Total",2744,466.210674417961,"good",0.544876886417792,0.0675320601951487
+"62",2022,"Region","BUS-Wholesale And Retail Buyers, Except Farm Products","Male","White alone",1702,374.717857100512,"good",0.742582897033159,0.0844248999105776
+"63",2022,"Region","BUS-Wholesale And Retail Buyers, Except Farm Products","Male","Total",2292,487.983919594181,"good",0.455123113582208,0.0675320601951486
+"64",2022,"Region","BUS-Wholesale And Retail Buyers, Except Farm Products","Total","Total",5036,680.769988710394,"good",0.00117743440876707,0.000159162376912219
+"65",2022,"Region","CLN-First-Line Supervisors Of Housekeeping And Janitorial Workers","Male","Total",1941,441.177376897603,"good",0.583233173076923,0.085217876801743
+"66",2022,"Region","CLN-First-Line Supervisors Of Housekeeping And Janitorial Workers","Total","Total",3328,631.859253863153,"good",0.000778098036611757,0.000147746846659799
+"67",2022,"Region","CLN-First-Line Supervisors Of Landscaping, Lawn Service, And Groundskeeping Workers","Male","Total",2261,546.820739524161,"good",0.9296875,0.0442269782300796
+"68",2022,"Region","CLN-First-Line Supervisors Of Landscaping, Lawn Service, And Groundskeeping Workers","Total","Total",2432,557.996875662176,"good",0.000568610103677823,0.00013037730020376
+"69",2022,"Region","CLN-Janitors And Building Cleaners","Female","Asian alone",1823,426.308502285903,"good",0.152399264337067,0.0336597905173112
+"70",2022,"Region","CLN-Janitors And Building Cleaners","Female","Hispanic or Latino",2986,502.541576888172,"good",0.249623808727638,0.0365531218602754
+"71",2022,"Region","CLN-Janitors And Building Cleaners","Female","White alone",4673,696.574371073362,"good",0.390653736833305,0.0413205596020242
+"72",2022,"Region","CLN-Janitors And Building Cleaners","Female","Total",11962,1163.03181052207,"good",0.339626927117345,0.0255561226548204
+"73",2022,"Region","CLN-Janitors And Building Cleaners","Male","Asian alone",3300,633.195309448436,"good",0.141880562362956,0.0254631216422988
+"74",2022,"Region","CLN-Janitors And Building Cleaners","Male","Black or African American alone",3115,659.188467331233,"good",0.133926652048669,0.026149466701455
+"75",2022,"Region","CLN-Janitors And Building Cleaners","Male","Hispanic or Latino",3852,633.78874158015,"good",0.165613310976396,0.022385831131261
+"76",2022,"Region","CLN-Janitors And Building Cleaners","Male","White alone",11009,959.959972250796,"good",0.473322154864784,0.0303525703812381
+"77",2022,"Region","CLN-Janitors And Building Cleaners","Male","Total",23259,1607.59774342884,"good",0.660373072882655,0.0255561226548204
+"78",2022,"Region","CLN-Janitors And Building Cleaners","Total","Total",35221,2066.80064415723,"good",0.00823479295297557,0.000483295629343519
+"79",2022,"Region","CLN-Landscaping And Groundskeeping Workers","Female","White alone",1474,351.379277663396,"good",0.643387167175906,0.0971299935829436
+"80",2022,"Region","CLN-Landscaping And Groundskeeping Workers","Female","Total",2291,466.525741257918,"good",0.12989737483699,0.0257006044234952
+"81",2022,"Region","CLN-Landscaping And Groundskeeping Workers","Male","Hispanic or Latino",5708,865.228013952825,"good",0.371953603544898,0.0413291718793396
+"82",2022,"Region","CLN-Landscaping And Groundskeeping Workers","Male","White alone",6935,755.685857370641,"good",0.451909292323733,0.0423419354073793
+"83",2022,"Region","CLN-Landscaping And Groundskeeping Workers","Male","Total",15346,1327.18957829835,"good",0.87010262516301,0.0257006044234952
+"84",2022,"Region","CLN-Landscaping And Groundskeeping Workers","Total","Total",17637,1375.50922197926,"good",0.0041235922691471,0.00032163332430259
+"85",2022,"Region","CLN-Maids And Housekeeping Cleaners","Female","Asian alone",1586,338.790535585781,"good",0.102880124545926,0.0228557442289219
+"86",2022,"Region","CLN-Maids And Housekeeping Cleaners","Female","Black or African American alone",1770,422.086292750073,"good",0.114815775817333,0.0283273294373991
+"87",2022,"Region","CLN-Maids And Housekeeping Cleaners","Female","Hispanic or Latino",5917,991.970736503855,"good",0.383822003113648,0.0440846727777566
+"88",2022,"Region","CLN-Maids And Housekeeping Cleaners","Female","White alone",5082,780.506303427461,"good",0.329657498702647,0.0390728692008247
+"89",2022,"Region","CLN-Maids And Housekeeping Cleaners","Female","Total",15416,1421.99841117044,"good",0.848571585842462,0.0325812239144932
+"90",2022,"Region","CLN-Maids And Housekeeping Cleaners","Male","Total",2751,634.668202890298,"good",0.151428414157538,0.0325812239144932
+"91",2022,"Region","CLN-Maids And Housekeeping Cleaners","Total","Total",18167,1532.42972321205,"good",0.00424750812233347,0.000358328427517918
+"92",2022,"Region","CMM-Computer Network Architects","Male","White alone",2188,477.090272438037,"good",0.660827544548475,0.0821055870197849
+"93",2022,"Region","CMM-Computer Network Architects","Male","Total",3311,582.403416276038,"good",0.899239543726236,0.0473968747287172
+"94",2022,"Region","CMM-Computer Network Architects","Total","Total",3682,681.532155750006,"good",0.000860864474400388,0.000159383890287392
+"95",2022,"Region","CMM-Computer Occupations, All Other","Female","White alone",2191,464.764030771261,"good",0.653834676216055,0.081354706502864
+"96",2022,"Region","CMM-Computer Occupations, All Other","Female","Total",3351,639.376182520901,"good",0.247671840354767,0.0383924775488247
+"97",2022,"Region","CMM-Computer Occupations, All Other","Male","Asian alone",1775,381.815272790717,"good",0.174378622654485,0.0341504261866328
+"98",2022,"Region","CMM-Computer Occupations, All Other","Male","White alone",6180,672.398856020368,"good",0.607132331270262,0.0479414937960762
+"99",2022,"Region","CMM-Computer Occupations, All Other","Male","Total",10179,891.580894787456,"good",0.752328159645233,0.0383924775488247
+"100",2022,"Region","CMM-Computer Occupations, All Other","Total","Total",13530,1120.37096465077,"good",0.00316336130870104,0.000261922159503229
+"101",2022,"Region","CMM-Computer Programmers","Female","Total",1379,312.420754198165,"good",0.162139917695473,0.0333866418461559
+"102",2022,"Region","CMM-Computer Programmers","Male","White alone",4840,644.796880254744,"good",0.679202918888577,0.0601057288601114
+"103",2022,"Region","CMM-Computer Programmers","Male","Total",7126,802.09785037893,"good",0.837860082304527,0.0333866418461559
+"104",2022,"Region","CMM-Computer Programmers","Total","Total",8505,881.576741393652,"good",0.00198849873839633,0.000206139585032226
+"105",2022,"Region","CMM-Computer Support Specialists","Female","White alone",2113,452.232610317965,"good",0.57015650296816,0.0910595387309072
+"106",2022,"Region","CMM-Computer Support Specialists","Female","Total",3706,613.195236125901,"good",0.250168759281761,0.034331192010241
+"107",2022,"Region","CMM-Computer Support Specialists","Male","Asian alone",1916,427.328131606731,"good",0.172488296723082,0.0356982227364585
+"108",2022,"Region","CMM-Computer Support Specialists","Male","White alone",7132,817.921807703065,"good",0.642059776737486,0.0465701387751939
+"109",2022,"Region","CMM-Computer Support Specialists","Male","Total",11108,1003.44696618394,"good",0.749831240718239,0.034331192010241
+"110",2022,"Region","CMM-Computer Support Specialists","Total","Total",14814,1211.24372758696,"good",0.00346356499830726,0.000283038396527714
+"111",2022,"Region","CMM-Computer Systems Analysts","Female","White alone",3029,462.531615323483,"good",0.575199392328143,0.0604824322618439
+"112",2022,"Region","CMM-Computer Systems Analysts","Female","Total",5266,637.851587114902,"good",0.412760620786957,0.0390690014551464
+"113",2022,"Region","CMM-Computer Systems Analysts","Male","White alone",4817,595.668219532694,"good",0.642952482648158,0.0516566173204937
+"114",2022,"Region","CMM-Computer Systems Analysts","Male","Total",7492,860.354343472793,"good",0.587239379213043,0.0390690014551465
+"115",2022,"Region","CMM-Computer Systems Analysts","Total","Total",12758,1099.28151197043,"good",0.00298286500934279,0.000257292177942157
+"116",2022,"Region","CMM-Database Administrators And Architects","Male","Total",2611,518.656787133842,"good",0.707588075880759,0.0724036607318287
+"117",2022,"Region","CMM-Database Administrators And Architects","Total","Total",3690,658.507595152668,"good",0.000862734902373012,0.000153977888716641
+"118",2022,"Region","CMM-Information Security Analysts","Male","Total",2753,564.699173867157,"good",0.81233402183535,0.0601117058049426
+"119",2022,"Region","CMM-Information Security Analysts","Total","Total",3389,564.314726510172,"good",0.000792360049903018,0.000131929236678479
+"120",2022,"Region","CMM-Network And Computer Systems Administrators","Male","White alone",2095,375.101122745587,"good",0.681079323797139,0.070433929219802
+"121",2022,"Region","CMM-Network And Computer Systems Administrators","Male","Total",3076,410.263791498836,"good",0.826659500134373,0.0577229431282091
+"122",2022,"Region","CMM-Network And Computer Systems Administrators","Total","Total",3721,470.408308455272,"good",0.000869982810766932,0.000109990588431339
+"123",2022,"Region","CMM-Operations Research Analysts","Female","White alone",1392,331.900713182798,"good",0.69426433915212,0.135354232190509
+"124",2022,"Region","CMM-Operations Research Analysts","Female","Total",2005,453.747539624184,"good",0.539268423883808,0.0728571871752109
+"125",2022,"Region","CMM-Operations Research Analysts","Male","Total",1713,413.090584154977,"good",0.460731576116191,0.0728571871752109
+"126",2022,"Region","CMM-Operations Research Analysts","Total","Total",3718,676.770273479118,"good",0.000869281400277197,0.000158205315901435
+"127",2022,"Region","CMM-Other Mathematical Science Occupations","Female","White alone",1764,381.133933327577,"good",0.439571392972838,0.0674869363526733
+"128",2022,"Region","CMM-Other Mathematical Science Occupations","Female","Total",4013,706.546075425198,"good",0.428464659406363,0.0483359684676913
+"129",2022,"Region","CMM-Other Mathematical Science Occupations","Male","Asian alone",2185,516.871067729903,"good",0.408182327666729,0.0611708561449145
+"130",2022,"Region","CMM-Other Mathematical Science Occupations","Male","White alone",2410,341.631293443677,"good",0.450214832804035,0.0594141262840647
+"131",2022,"Region","CMM-Other Mathematical Science Occupations","Male","Total",5353,695.759356999602,"good",0.571535340593637,0.0483359684676913
+"132",2022,"Region","CMM-Other Mathematical Science Occupations","Total","Total",9366,1087.60335376287,"good",0.00218980354895004,0.000254284291746957
+"133",2022,"Region","CMM-Software Developers","Female","Asian alone",13780,1245.19763358071,"good",0.61534339555238,0.0324673074040224
+"134",2022,"Region","CMM-Software Developers","Female","White alone",6984,707.066850304835,"good",0.31186925069215,0.0285349984417214
+"135",2022,"Region","CMM-Software Developers","Female","Total",22394,1429.17937027687,"good",0.190577502425408,0.010768602109904
+"136",2022,"Region","CMM-Software Developers","Male","Asian alone",41417,2148.91031959253,"good",0.435455042476239,0.0166428650103316
+"137",2022,"Region","CMM-Software Developers","Male","Hispanic or Latino",4478,644.058676206019,"good",0.0470813356884515,0.00657964862624051
+"138",2022,"Region","CMM-Software Developers","Male","Two or More Races",3228,520.519435297569,"good",0.0339389351501388,0.00546896559553177
+"139",2022,"Region","CMM-Software Developers","Male","White alone",43975,1993.4780654051,"good",0.462349650937842,0.0162969431843686
+"140",2022,"Region","CMM-Software Developers","Male","Total",95112,3096.29639408903,"good",0.809422497574592,0.010768602109904
+"141",2022,"Region","CMM-Software Developers","Total","Total",117506,3484.11036892113,"good",0.0274733136689006,0.000813060089007046
+"142",2022,"Region","CMM-Software Quality Assurance Analysts And Testers","Total","Total",3737,795.962789585669,"good",0.00087372366671218,0.000186066566352558
+"143",2022,"Region","CMM-Web And Digital Interface Designers","Female","Total",1102,213.238260605948,"good",0.467940552016985,0.0768302453617832
+"144",2022,"Region","CMM-Web And Digital Interface Designers","Total","Total",2355,402.924441026168,"good",0.000550607234441313,9.4214610346129e-05
+"145",2022,"Region","CMM-Web Developers","Total","Total",3392,695.266698484294,"good",0.000793061460392752,0.000162497307676609
+"146",2022,"Region","CMS-Clergy","Male","White alone",3139,379.131640423218,"good",0.608215462119744,0.0662285276627342
+"147",2022,"Region","CMS-Clergy","Male","Total",5161,683.918221296413,"good",0.798545567074114,0.0457603782080501
+"148",2022,"Region","CMS-Clergy","Total","Total",6463,799.962840376039,"good",0.00151107199838395,0.000187067238557895
+"149",2022,"Region","CMS-Counselors, All Other","Female","Total",2622,518.119772056858,"good",0.60179022263025,0.0709093342271026
+"150",2022,"Region","CMS-Counselors, All Other","Male","Total",1735,425.303925819525,"good",0.39820977736975,0.0709093342271026
+"151",2022,"Region","CMS-Counselors, All Other","Total","Total",4357,706.670920251251,"good",0.00101868183459057,0.000165239684699858
+"152",2022,"Region","CMS-Educational, Guidance, And Career Counselors And Advisors","Female","White alone",2619,402.80723045118,"good",0.628208203406093,0.0650443071345846
+"153",2022,"Region","CMS-Educational, Guidance, And Career Counselors And Advisors","Female","Total",4169,473.974001579992,"good",0.745529327610873,0.0420230246606231
+"154",2022,"Region","CMS-Educational, Guidance, And Career Counselors And Advisors","Male","Total",1423,331.747195270736,"good",0.254470672389127,0.0420230246606231
+"155",2022,"Region","CMS-Educational, Guidance, And Career Counselors And Advisors","Total","Total",5592,669.899968867554,"good",0.00130742915286447,0.000156578595304676
+"156",2022,"Region","CMS-Mental Health Counselors","Female","White alone",2333,406.048349243966,"good",0.746798975672215,0.0669719456811782
+"157",2022,"Region","CMS-Mental Health Counselors","Female","Total",3124,500.717842399789,"good",0.757149781871062,0.0491961847722312
+"158",2022,"Region","CMS-Mental Health Counselors","Total","Total",4126,606.193325208633,"good",0.000964673226881043,0.000141788636915573
+"159",2022,"Region","CMS-Other Community And Social Service Specialists","Total","Total",2110,440.267893423992,"good",0.00049332537777969,0.000102910000392213
+"160",2022,"Region","CMS-Social And Human Service Assistants","Female","White alone",1692,410.568240398292,"good",0.48122866894198,0.0935877612836994
+"161",2022,"Region","CMS-Social And Human Service Assistants","Female","Total",3516,580.580721869276,"good",0.723456790123457,0.0744353124553599
+"162",2022,"Region","CMS-Social And Human Service Assistants","Total","Total",4860,799.218725686999,"good",0.00113628499336933,0.000186895027488819
+"163",2022,"Region","CMS-Social Workers, All Other","Female","White alone",4380,639.959760510378,"good",0.65324384787472,0.0607714796247281
+"164",2022,"Region","CMS-Social Workers, All Other","Female","Total",6705,775.769163591851,"good",0.802129441320732,0.0406545075781853
+"165",2022,"Region","CMS-Social Workers, All Other","Male","Total",1654,390.465101963351,"good",0.197870558679268,0.0406545075781853
+"166",2022,"Region","CMS-Social Workers, All Other","Total","Total",8359,890.982554372559,"good",0.00195436342789594,0.000208353873738638
+"167",2022,"Region","CMS-Substance Abuse And Behavioral Disorder Counselors","Female","White alone",900,219.107886739045,"good",0.658376005852231,0.128510683444854
+"168",2022,"Region","CMS-Substance Abuse And Behavioral Disorder Counselors","Female","Total",1367,299.541807666309,"good",0.694261046216353,0.10387144219788
+"169",2022,"Region","CMS-Substance Abuse And Behavioral Disorder Counselors","Total","Total",1969,376.510998079737,"good",0.000460359084762184,8.80195416155137e-05
+"170",2022,"Region","CON-Carpenters","Male","Hispanic or Latino",6162,1012.53845713262,"good",0.275040171397965,0.0357431222246525
+"171",2022,"Region","CON-Carpenters","Male","White alone",13379,1056.40524461615,"good",0.597170148187824,0.0402577867204362
+"172",2022,"Region","CON-Carpenters","Male","Total",22404,1521.92787215467,"good",0.970416251570148,0.0110946034564087
+"173",2022,"Region","CON-Carpenters","Total","Total",23087,1594.48463462454,"good",0.00539782132549749,0.000372660335418018
+"174",2022,"Region","CON-Carpet, Floor, And Tile Installers And Finishers","Male","White alone",1789,430.72323280298,"good",0.556627255756067,0.0987670816440462
+"175",2022,"Region","CON-Carpet, Floor, And Tile Installers And Finishers","Male","Total",3214,653.414520762854,"good",0.972465960665658,0.029427243556539
+"176",2022,"Region","CON-Carpet, Floor, And Tile Installers And Finishers","Total","Total",3305,667.126094321756,"good",0.000772720556190462,0.000155956168220105
+"177",2022,"Region","CON-Construction And Building Inspectors","Total","Total",2262,553.251309739751,"good",0.000528863509259554,0.00012937671277205
+"178",2022,"Region","CON-Construction Equipment Operators","Male","White alone",3490,496.249906745583,"good",0.787099684258006,0.0661460119455183
+"179",2022,"Region","CON-Construction Equipment Operators","Male","Total",4434,583.350028957743,"good",0.963075586446568,0.0288899438130823
+"180",2022,"Region","CON-Construction Equipment Operators","Total","Total",4604,580.111996324848,"good",0.00107643129824535,0.000135648094926704
+"181",2022,"Region","CON-Construction Laborers","Male","Hispanic or Latino",6528,895.738375085047,"good",0.275268817204301,0.0295816704883272
+"182",2022,"Region","CON-Construction Laborers","Male","White alone",12607,1038.68620429187,"good",0.531604469744887,0.0317519698336069
+"183",2022,"Region","CON-Construction Laborers","Male","Total",23715,1736.87093444109,"good",0.95378861003861,0.0137987464797066
+"184",2022,"Region","CON-Construction Laborers","Total","Total",24864,1705.48035658652,"good",0.00581329013891669,0.000399072094826666
+"185",2022,"Region","CON-Drywall Installers, Ceiling Tile Installers, And Tapers","Male","Total",2335,523.838104133806,"good",0.912822517591869,0.0718204879519956
+"186",2022,"Region","CON-Electricians","Male","White alone",12323,1138.76519587885,"good",0.760162852384184,0.034301909279813
+"187",2022,"Region","CON-Electricians","Male","Total",16211,1272.51888087171,"good",0.936132124501935,0.0210654913681584
+"188",2022,"Region","CON-Electricians","Total","Total",17317,1329.07306460744,"good",0.00404877515024213,0.000310889958352914
+"189",2022,"Region","CON-First-Line Supervisors Of Construction Trades And Extraction Workers","Male","White alone",6596,801.571298439041,"good",0.794890335020487,0.0509161300540069
+"190",2022,"Region","CON-First-Line Supervisors Of Construction Trades And Extraction Workers","Male","Total",8298,944.753589586988,"good",0.95566048600714,0.0192549485600659
+"191",2022,"Region","CON-First-Line Supervisors Of Construction Trades And Extraction Workers","Total","Total",8683,905.700086834075,"good",0.00203011576078723,0.000211661988277677
+"192",2022,"Region","CON-Painters And Paperhangers","Male","Hispanic or Latino",3921,777.78706928214,"good",0.450845119006554,0.0638369641430808
+"193",2022,"Region","CON-Painters And Paperhangers","Male","White alone",3386,545.311545216356,"good",0.389329653903645,0.0520041544774061
+"194",2022,"Region","CON-Painters And Paperhangers","Male","Total",8697,1046.51087367679,"good",0.918179898648649,0.0282461622103638
+"195",2022,"Region","CON-Painters And Paperhangers","Total","Total",9472,1137.36173174259,"good",0.00221458671958731,0.000265880436063892
+"196",2022,"Region","CON-Plumbers, Pipefitters, And Steamfitters","Male","White alone",6674,820.812720103526,"good",0.713949507916132,0.0459463178441247
+"197",2022,"Region","CON-Plumbers, Pipefitters, And Steamfitters","Male","Total",9348,894.708604220531,"good",0.950386335908906,0.0206255135568642
+"198",2022,"Region","CON-Plumbers, Pipefitters, And Steamfitters","Total","Total",9836,896.506889725338,"good",0.00229969119234172,0.000209497738327757
+"199",2022,"Region","CON-Roofers","Male","Total",3780,617.189224636578,"good",0.969728065674705,0.0395288092801967
+"200",2022,"Region","CON-Roofers","Total","Total",3898,623.267467837846,"good",0.000911366029661247,0.000145695183259924
+"201",2022,"Region","CON-Sheet Metal Workers","Male","Total",3050,664.174021109114,"good",0.896004700352526,0.0629355962524184
+"202",2022,"Region","CON-Sheet Metal Workers","Total","Total",3404,728.006082402475,"good",0.000795867102351689,0.000170217848428725
+"203",2022,"Region","EAT-Bartenders","Female","White alone",3469,556.69045788032,"good",0.711006353761017,0.0759910784041193
+"204",2022,"Region","EAT-Bartenders","Female","Total",4879,682.001010063402,"good",0.577328126848894,0.0445841819962969
+"205",2022,"Region","EAT-Bartenders","Male","White alone",2654,438.854276495912,"good",0.743001119820829,0.0673116801836074
+"206",2022,"Region","EAT-Bartenders","Male","Total",3572,552.05327496085,"good",0.422671873151106,0.0445841819962969
+"207",2022,"Region","EAT-Bartenders","Total","Total",8451,973.918912343322,"good",0.00197587334958112,0.000227558817769248
+"208",2022,"Region","EAT-Chefs And Head Cooks","Female","Total",2319,485.734824518481,"good",0.277924256951103,0.0513340407077224
+"209",2022,"Region","EAT-Chefs And Head Cooks","Male","White alone",2862,598.791410948963,"good",0.475020746887967,0.0737710195942084
+"210",2022,"Region","EAT-Chefs And Head Cooks","Male","Total",6025,872.01557059923,"good",0.722075743048897,0.0513340407077224
+"211",2022,"Region","EAT-Chefs And Head Cooks","Total","Total",8344,993.250400629167,"good",0.00195085637544727,0.000232343982110908
+"212",2022,"Region","EAT-Cooks","Female","Asian alone",3125,601.894575194652,"good",0.221332955591756,0.0363625585529723
+"213",2022,"Region","EAT-Cooks","Female","Hispanic or Latino",3416,634.762529900947,"good",0.24194348041646,0.0410575591337844
+"214",2022,"Region","EAT-Cooks","Female","White alone",5859,636.253273524978,"good",0.414972731779871,0.0372465518585671
+"215",2022,"Region","EAT-Cooks","Female","Total",14119,1077.53477086125,"good",0.396567704968682,0.0263457343209095
+"216",2022,"Region","EAT-Cooks","Male","Asian alone",2912,640.742703927442,"good",0.135542729473096,0.0258051785267069
+"217",2022,"Region","EAT-Cooks","Male","Hispanic or Latino",5795,966.038557658932,"good",0.2697356172035,0.0374470528626586
+"218",2022,"Region","EAT-Cooks","Male","White alone",8716,985.841239794725,"good",0.405697263079501,0.040211741271088
+"219",2022,"Region","EAT-Cooks","Male","Total",21484,1725.59272910318,"good",0.603432295031318,0.0263457343209095
+"220",2022,"Region","EAT-Cooks","Total","Total",35603,2047.3675220753,"good",0.00832410588866839,0.000478354182646772
+"221",2022,"Region","EAT-Dining Room And Cafeteria Attendants And Bartender Helpers","Female","Total",1642,346.668285093979,"good",0.435890629147863,0.0803029660969488
+"222",2022,"Region","EAT-Dining Room And Cafeteria Attendants And Bartender Helpers","Male","Total",2125,519.736832350037,"good",0.564109370852137,0.0803029660969488
+"223",2022,"Region","EAT-Dining Room And Cafeteria Attendants And Bartender Helpers","Total","Total",3767,619.694338310227,"good",0.000880737771609522,0.000144871199651041
+"224",2022,"Region","EAT-Dishwashers","Male","White alone",2374,546.531166767962,"good",0.446828533785056,0.0776887789843373
+"225",2022,"Region","EAT-Dishwashers","Male","Total",5313,868.489975633714,"good",0.852672123254694,0.0490474595996636
+"226",2022,"Region","EAT-Dishwashers","Total","Total",6231,980.956134449956,"good",0.00145682958717784,0.000229352301729407
+"227",2022,"Region","EAT-Fast Food And Counter Workers","Female","Asian alone",1471,326.673972501637,"good",0.106880767274577,0.02355640465913
+"228",2022,"Region","EAT-Fast Food And Counter Workers","Female","White alone",7628,817.344119810469,"good",0.554239627988084,0.0352985190167948
+"229",2022,"Region","EAT-Fast Food And Counter Workers","Female","Total",13763,1274.51469408507,"good",0.66263842079923,0.033455480408473
+"230",2022,"Region","EAT-Fast Food And Counter Workers","Male","White alone",3657,635.719928587857,"good",0.521906664763808,0.0568533549289113
+"231",2022,"Region","EAT-Fast Food And Counter Workers","Male","Total",7007,934.880578571402,"good",0.33736157920077,0.033455480408473
+"232",2022,"Region","EAT-Fast Food And Counter Workers","Total","Total",20770,1708.15531868848,"good",0.00485609862392614,0.000399266186287575
+"233",2022,"Region","EAT-First-Line Supervisors Of Food Preparation And Serving Workers","Female","White alone",3390,716.330544804562,"good",0.646206633625619,0.0703336639003087
+"234",2022,"Region","EAT-First-Line Supervisors Of Food Preparation And Serving Workers","Female","Total",5246,879.434446796633,"good",0.589305773983374,0.070105946997046
+"235",2022,"Region","EAT-First-Line Supervisors Of Food Preparation And Serving Workers","Male","Total",3656,830.195418078629,"good",0.410694226016625,0.0701059469970459
+"236",2022,"Region","EAT-First-Line Supervisors Of Food Preparation And Serving Workers","Total","Total",8902,1177.77134972848,"good",0.00208131872653782,0.000275157117828583
+"237",2022,"Region","EAT-Food Preparation Workers","Female","Asian alone",2117,390.442404699464,"good",0.179012345679012,0.0300542608441541
+"238",2022,"Region","EAT-Food Preparation Workers","Female","White alone",6398,863.931698874396,"good",0.541011330965669,0.0506776491096995
+"239",2022,"Region","EAT-Food Preparation Workers","Female","Total",11826,1088.34771391316,"good",0.613095546684639,0.0359861888199099
+"240",2022,"Region","EAT-Food Preparation Workers","Male","White alone",3895,640.175374114391,"good",0.521908079860646,0.0477599488318811
+"241",2022,"Region","EAT-Food Preparation Workers","Male","Total",7463,941.427765621187,"good",0.386904453315361,0.0359861888199099
+"242",2022,"Region","EAT-Food Preparation Workers","Total","Total",19289,1476.40825709642,"good",0.00450983564549405,0.000344996066760102
+"243",2022,"Region","EAT-Food Servers, Nonrestaurant","Female","Total",2569,508.132085880482,"good",0.671633986928105,0.0782047542504887
+"244",2022,"Region","EAT-Food Servers, Nonrestaurant","Total","Total",3825,612.521553970756,"good",0.000894298374411049,0.000143222235046987
+"245",2022,"Region","EAT-Hosts And Hostesses, Restaurant, Lounge, And Coffee Shop","Female","Total",3619,579.141168008716,"good",0.794337137840211,0.0571248663666135
+"246",2022,"Region","EAT-Hosts And Hostesses, Restaurant, Lounge, And Coffee Shop","Total","Total",4556,649.76375559891,"good",0.0010652087304096,0.000151915952148394
+"247",2022,"Region","EAT-Waiters And Waitresses","Female","Asian alone",4047,603.138750869151,"good",0.198197756991038,0.0285742040973277
+"248",2022,"Region","EAT-Waiters And Waitresses","Female","Hispanic or Latino",2235,390.964281431181,"good",0.109456878397571,0.0177935853412812
+"249",2022,"Region","EAT-Waiters And Waitresses","Female","White alone",11462,1151.21855310471,"good",0.561339928497968,0.0375668132185731
+"250",2022,"Region","EAT-Waiters And Waitresses","Female","Total",20419,1348.19462212388,"good",0.677157259401738,0.030445201733155
+"251",2022,"Region","EAT-Waiters And Waitresses","Male","Asian alone",1754,418.91564961517,"good",0.180174627632255,0.0391564313188677
+"252",2022,"Region","EAT-Waiters And Waitresses","Male","White alone",4274,723.949343115594,"good",0.439034411915768,0.054913210713209
+"253",2022,"Region","EAT-Waiters And Waitresses","Male","Total",9735,1207.63129401786,"good",0.322842740598262,0.030445201733155
+"254",2022,"Region","EAT-Waiters And Waitresses","Total","Total",30154,1836.21602493688,"good",0.00705011063581458,0.000429457340655815
+"255",2022,"Region","EDU-Archivists, Curators, And Museum Technicians","Total","Total",1394,328.477915130911,"good",0.000325922074229805,7.6785914211045e-05
+"256",2022,"Region","EDU-Elementary And Middle School Teachers","Female","Asian alone",2076,370.17580873485,"good",0.0586639538826721,0.0100360844553869
+"257",2022,"Region","EDU-Elementary And Middle School Teachers","Female","Hispanic or Latino",2262,511.134880709094,"good",0.0639199728721601,0.0139853623333168
+"258",2022,"Region","EDU-Elementary And Middle School Teachers","Female","White alone",28191,1580.74246233534,"good",0.796625974906748,0.0189456732755702
+"259",2022,"Region","EDU-Elementary And Middle School Teachers","Female","Total",35388,1857.54751890228,"good",0.793043945947157,0.0173127047042203
+"260",2022,"Region","EDU-Elementary And Middle School Teachers","Male","White alone",7373,835.374180943785,"good",0.79837574445046,0.044390049819924
+"261",2022,"Region","EDU-Elementary And Middle School Teachers","Male","Total",9235,907.554341818577,"good",0.206956054052843,0.0173127047042203
+"262",2022,"Region","EDU-Elementary And Middle School Teachers","Total","Total",44623,2167.0525675324,"good",0.0104330134278024,0.000507507432571511
+"263",2022,"Region","EDU-Librarians And Media Collections Specialists","Female","White alone",2069,416.028110250678,"good",0.839350912778905,0.0724777076750001
+"264",2022,"Region","EDU-Librarians And Media Collections Specialists","Female","Total",2465,498.973134831676,"good",0.723935389133627,0.100873370618016
+"265",2022,"Region","EDU-Librarians And Media Collections Specialists","Total","Total",3405,690.682688740821,"good",0.000796100905848267,0.000161523347717183
+"266",2022,"Region","EDU-Other Educational Instruction and Library Workers","Female","White alone",691,140.187398016013,"good",0.628753412192903,0.0934959177680309
+"267",2022,"Region","EDU-Other Educational Instruction and Library Workers","Female","Total",1099,213.317242147699,"good",0.667273831208257,0.0902721356807871
+"268",2022,"Region","EDU-Other Educational Instruction and Library Workers","Total","Total",1647,298.488638345331,"good",0.000385074358864052,6.98021432726759e-05
+"269",2022,"Region","EDU-Other Teachers And Instructors","Female","Asian alone",1044,236.198457914632,"good",0.10941102494236,0.0225635047599134
+"270",2022,"Region","EDU-Other Teachers And Instructors","Female","White alone",6960,755.629187722887,"good",0.729406832949067,0.0345115889132706
+"271",2022,"Region","EDU-Other Teachers And Instructors","Female","Total",9542,926.233387979914,"good",0.607577204711875,0.0391322323570685
+"272",2022,"Region","EDU-Other Teachers And Instructors","Male","White alone",4472,708.930971876846,"good",0.725620639299043,0.0484681498122262
+"273",2022,"Region","EDU-Other Teachers And Instructors","Male","Total",6163,815.922736134525,"good",0.392422795288125,0.0391322323570685
+"274",2022,"Region","EDU-Other Teachers And Instructors","Total","Total",15705,1235.00920807094,"good",0.00367188391375831,0.000288778065739817
+"275",2022,"Region","EDU-Postsecondary Teachers","Female","Asian alone",1884,346.229516334541,"good",0.153307836276345,0.0267476950807493
+"276",2022,"Region","EDU-Postsecondary Teachers","Female","White alone",8788,846.393024540018,"good",0.715111074945073,0.0328252909340622
+"277",2022,"Region","EDU-Postsecondary Teachers","Female","Total",12289,1023.24837996635,"good",0.523136520369503,0.0310998890906123
+"278",2022,"Region","EDU-Postsecondary Teachers","Male","Asian alone",1821,443.661105000202,"good",0.162560257096947,0.0335841600214679
+"279",2022,"Region","EDU-Postsecondary Teachers","Male","White alone",7756,721.406868173224,"good",0.692376361364042,0.0399212940040794
+"280",2022,"Region","EDU-Postsecondary Teachers","Male","Total",11202,1013.12370257782,"good",0.476863479630497,0.0310998890906123
+"281",2022,"Region","EDU-Postsecondary Teachers","Total","Total",23491,1409.98039792624,"good",0.00549227793811502,0.000329990058754249
+"282",2022,"Region","EDU-Preschool And Kindergarten Teachers","Female","White alone",7527,870.813421756492,"good",0.561716417910448,0.0496758965338169
+"283",2022,"Region","EDU-Preschool And Kindergarten Teachers","Female","Total",13400,1100.93085949402,"good",0.950354609929078,0.0198742851610139
+"284",2022,"Region","EDU-Preschool And Kindergarten Teachers","Total","Total",14100,1145.0423639712,"good",0.00329662930175053,0.000267872448227042
+"285",2022,"Region","EDU-Secondary School Teachers","Female","White alone",6965,776.740189321693,"good",0.787628632816917,0.036207888175143
+"286",2022,"Region","EDU-Secondary School Teachers","Female","Total",8843,872.57481781292,"good",0.571622495151907,0.0379698149717073
+"287",2022,"Region","EDU-Secondary School Teachers","Male","White alone",5512,716.997928349518,"good",0.831748905990644,0.0431696833250675
+"288",2022,"Region","EDU-Secondary School Teachers","Male","Total",6627,778.990614097821,"good",0.428377504848093,0.0379698149717073
+"289",2022,"Region","EDU-Secondary School Teachers","Total","Total",15470,1163.67136057985,"good",0.00361694009206246,0.000272147906554907
+"290",2022,"Region","EDU-Special Education Teachers","Female","White alone",3018,506.433361241882,"good",0.859584164055825,0.0627224161332787
+"291",2022,"Region","EDU-Special Education Teachers","Female","Total",3511,529.294567071352,"good",0.856341463414634,0.050745202476278
+"292",2022,"Region","EDU-Special Education Teachers","Total","Total",4100,621.558412065994,"good",0.000958594335970013,0.000145418624513282
+"293",2022,"Region","EDU-Teaching Assistants","Female","Asian alone",2017,405.314280307578,"good",0.0975857564468528,0.0191323128852571
+"294",2022,"Region","EDU-Teaching Assistants","Female","Hispanic or Latino",1930,446.139497426253,"good",0.0933765542600029,0.0194570755077258
+"295",2022,"Region","EDU-Teaching Assistants","Female","White alone",14171,985.920426668654,"good",0.685616140113213,0.0319420115583233
+"296",2022,"Region","EDU-Teaching Assistants","Female","Total",20669,1269.45823471964,"good",0.850786202354491,0.0178531130300359
+"297",2022,"Region","EDU-Teaching Assistants","Male","White alone",2237,394.260894421448,"good",0.617103448275862,0.0699241243527453
+"298",2022,"Region","EDU-Teaching Assistants","Male","Total",3625,486.721698218037,"good",0.149213797645509,0.0178531130300359
+"299",2022,"Region","EDU-Teaching Assistants","Total","Total",24294,1408.19950929147,"good",0.0056800221458672,0.000329221932452219
+"300",2022,"Region","EDU-Tutors","Female","White alone",1834,389.73119064459,"good",0.562749309604173,0.0794629463101151
+"301",2022,"Region","EDU-Tutors","Female","Total",3259,528.722551287535,"good",0.587524788173788,0.0662368416880598
+"302",2022,"Region","EDU-Tutors","Male","White alone",1259,299.487147700031,"good",0.550262237762238,0.109116937074912
+"303",2022,"Region","EDU-Tutors","Male","Total",2288,497.95090146394,"good",0.412475211826212,0.0662368416880598
+"304",2022,"Region","EDU-Tutors","Total","Total",5547,720.115636652371,"good",0.00129690799551845,0.000168433913934507
+"305",2022,"Region","ENG-Aerospace Engineers","Female","White alone",1176,275.066184960547,"good",0.660674157303371,0.112532361434683
+"306",2022,"Region","ENG-Aerospace Engineers","Female","Total",1780,328.753980515826,"good",0.116294263687443,0.0198894182192907
+"307",2022,"Region","ENG-Aerospace Engineers","Male","Asian alone",2560,434.221112484757,"good",0.189265119030016,0.0307790624827308
+"308",2022,"Region","ENG-Aerospace Engineers","Male","White alone",9401,778.828720144872,"good",0.695031790625462,0.0349089543056227
+"309",2022,"Region","ENG-Aerospace Engineers","Male","Total",13526,805.849805496502,"good",0.883705736312557,0.0198894182192907
+"310",2022,"Region","ENG-Aerospace Engineers","Total","Total",15306,867.541169258699,"good",0.00357859631862366,0.000203162435410527
+"311",2022,"Region","ENG-Architects, Except Landscape And Naval","Female","White alone",1685,329.856546871136,"good",0.72008547008547,0.0729456646268537
+"312",2022,"Region","ENG-Architects, Except Landscape And Naval","Female","Total",2340,416.173458832072,"good",0.351721028107621,0.0488495302933303
+"313",2022,"Region","ENG-Architects, Except Landscape And Naval","Male","White alone",3422,519.606522620723,"good",0.793415256202179,0.0701358555490404
+"314",2022,"Region","ENG-Architects, Except Landscape And Naval","Male","Total",4313,592.091694262806,"good",0.648278971892379,0.0488495302933303
+"315",2022,"Region","ENG-Architects, Except Landscape And Naval","Total","Total",6653,753.984004865985,"good",0.00155549466273378,0.00017626755222711
+"316",2022,"Region","ENG-Civil Engineers","Female","White alone",1862,343.543983454084,"good",0.708793300342596,0.0819318816766939
+"317",2022,"Region","ENG-Civil Engineers","Female","Total",2627,420.764021906876,"good",0.227209825289742,0.0316193985809254
+"318",2022,"Region","ENG-Civil Engineers","Male","White alone",6785,710.81542597481,"good",0.759373251259093,0.039549145908656
+"319",2022,"Region","ENG-Civil Engineers","Male","Total",8935,816.395949388224,"good",0.772790174710258,0.0316193985809253
+"320",2022,"Region","ENG-Civil Engineers","Total","Total",11562,932.38659496276,"good",0.00270323602743544,0.000218171488320211
+"321",2022,"Region","ENG-Computer Hardware Engineers","Total","Total",1772,400.260310182636,"good",0.000414299795936308,9.35633517203586e-05
+"322",2022,"Region","ENG-Electrical and Electronic Engineering Technologists And Technicians","Male","Total",1778,353.752842015085,"good",0.904834605597964,0.0484297186688109
+"323",2022,"Region","ENG-Electrical and Electronic Engineering Technologists And Technicians","Total","Total",1965,366.43311954912,"good",0.000459423870775872,8.5669513810639e-05
+"324",2022,"Region","ENG-Electrical And Electronics Engineers","Male","White alone",3496,623.679899079848,"good",0.713906473351031,0.0668820790339439
+"325",2022,"Region","ENG-Electrical And Electronics Engineers","Male","Total",4897,658.350908306125,"good",0.902173913043478,0.0304122676963716
+"326",2022,"Region","ENG-Electrical And Electronics Engineers","Total","Total",5428,702.648516511812,"good",0.00126908537942567,0.000164275870883059
+"327",2022,"Region","ENG-Industrial Engineers, Including Health And Safety","Male","White alone",2994,534.280831142434,"good",0.656147271531887,0.071360528213387
+"328",2022,"Region","ENG-Industrial Engineers, Including Health And Safety","Male","Total",4563,601.137785817445,"good",0.798844537815126,0.0467081416808277
+"329",2022,"Region","ENG-Industrial Engineers, Including Health And Safety","Total","Total",5712,655.999105266158,"good",0.00133548557245383,0.000153393677621289
+"330",2022,"Region","ENG-Landscape Architects","Total","Total",995,232.506362351119,"good",0.000232634479095162,5.4369148519482e-05
+"331",2022,"Region","ENG-Mechanical Engineers","Male","White alone",4442,712.767699029635,"good",0.816094065772552,0.0445615828482001
+"332",2022,"Region","ENG-Mechanical Engineers","Male","Total",5443,774.169752494568,"good",0.890688921616757,0.0380422045901423
+"333",2022,"Region","ENG-Mechanical Engineers","Total","Total",6111,772.688036986791,"good",0.00142877316758848,0.000180708491481255
+"334",2022,"Region","ENG-Other Drafters","Male","Total",1347,328.729286123096,"good",0.71763452317528,0.0949041164698224
+"335",2022,"Region","ENG-Other Drafters","Total","Total",1877,403.123016652485,"good",0.000438849163077004,9.42315843288461e-05
+"336",2022,"Region","ENG-Other Engineering Technologists And Technicians, Except Drafters","Male","White alone",4530,536.822884088644,"good",0.698966208918377,0.0510641771255729
+"337",2022,"Region","ENG-Other Engineering Technologists And Technicians, Except Drafters","Male","Total",6481,721.497918889064,"good",0.840160746694322,0.038088812221997
+"338",2022,"Region","ENG-Other Engineering Technologists And Technicians, Except Drafters","Total","Total",7714,788.631769384483,"good",0.00180356017260309,0.000184345241365791
+"339",2022,"Region","ENG-Other Engineers","Female","White alone",1251,289.19034499357,"good",0.531887755102041,0.0865518220680206
+"340",2022,"Region","ENG-Other Engineers","Female","Total",2352,442.917433726366,"good",0.175903073816468,0.0295321054709996
+"341",2022,"Region","ENG-Other Engineers","Male","Asian alone",2412,503.941259589101,"good",0.218894636536891,0.0429288907120137
+"342",2022,"Region","ENG-Other Engineers","Male","White alone",7133,801.890004490953,"good",0.647336418912787,0.0447299153299024
+"343",2022,"Region","ENG-Other Engineers","Male","Total",11019,997.41296001393,"good",0.824096926183531,0.0295321054709996
+"344",2022,"Region","ENG-Other Engineers","Total","Total",13371,1116.44042528363,"good",0.00312618655274513,0.000261017553155732
+"345",2022,"Region","ENT-Artists And Related Workers","Female","White alone",2545,398.003492150195,"good",0.769579679467796,0.0632028054014249
+"346",2022,"Region","ENT-Artists And Related Workers","Female","Total",3307,467.560396189626,"good",0.468812021548058,0.0515307711614414
+"347",2022,"Region","ENT-Artists And Related Workers","Male","White alone",2855,481.453872035006,"good",0.761942887643448,0.0678007878711712
+"348",2022,"Region","ENT-Artists And Related Workers","Male","Total",3747,551.388565640194,"good",0.531187978451942,0.0515307711614413
+"349",2022,"Region","ENT-Artists And Related Workers","Total","Total",7054,714.933635275856,"good",0.00164924986486158,0.000167218509061016
+"350",2022,"Region","ENT-Coaches And Scouts","Female","White alone",2151,385.474784360145,"good",0.676202452059101,0.0858238412967594
+"351",2022,"Region","ENT-Coaches And Scouts","Female","Total",3181,545.079506135344,"good",0.539243939650788,0.0616504322229322
+"352",2022,"Region","ENT-Coaches And Scouts","Male","White alone",1608,356.253985437356,"good",0.591611479028698,0.0805200687341367
+"353",2022,"Region","ENT-Coaches And Scouts","Male","Total",2718,518.843405016147,"good",0.460756060349212,0.0616504322229322
+"354",2022,"Region","ENT-Coaches And Scouts","Total","Total",5899,777.523654275225,"good",0.00137920682631393,0.000182041514551948
+"355",2022,"Region","ENT-Editors","Female","White alone",1268,280.249781806338,"good",0.760647870425915,0.0927145023271215
+"356",2022,"Region","ENT-Editors","Female","Total",1667,332.39055780437,"good",0.643380934002316,0.0700409606504609
+"357",2022,"Region","ENT-Editors","Male","Total",924,226.454131936801,"good",0.356619065997684,0.0700409606504609
+"358",2022,"Region","ENT-Editors","Total","Total",2591,415.331553302599,"good",0.000605784859633733,9.70512939206801e-05
+"359",2022,"Region","ENT-Graphic Designers","Female","White alone",2526,369.536353018888,"good",0.748001184483269,0.0677494394961119
+"360",2022,"Region","ENT-Graphic Designers","Female","Total",3377,419.442582570904,"good",0.497129397909613,0.0519509276465907
+"361",2022,"Region","ENT-Graphic Designers","Male","White alone",2649,469.914052641544,"good",0.775468384074941,0.0606079059178802
+"362",2022,"Region","ENT-Graphic Designers","Male","Total",3416,542.810119747228,"good",0.502870602090387,0.0519509276465907
+"363",2022,"Region","ENT-Graphic Designers","Total","Total",6793,666.01649916406,"good",0.00158822715225471,0.000155853534076477
+"364",2022,"Region","ENT-Interior Designers","Female","Total",2397,558.228877648989,"good",0.841643258426966,0.0743351510378524
+"365",2022,"Region","ENT-Interior Designers","Total","Total",2848,561.31186939949,"good",0.000665872358254292,0.000131249766694488
+"366",2022,"Region","ENT-Interpreters And Translators","Female","Total",2722,518.838059106596,"good",0.774395448079659,0.0639943134395013
+"367",2022,"Region","ENT-Interpreters And Translators","Total","Total",3515,570.458748700333,"good",0.000821819290471853,0.000133336685147433
+"368",2022,"Region","ENT-Musicians And Singers","Female","Total",947,230.368727245041,"good",0.384022708840227,0.0885739238125254
+"369",2022,"Region","ENT-Musicians And Singers","Total","Total",2466,471.436738399226,"good",0.000576559422561476,0.000110245622818539
+"370",2022,"Region","ENT-Other Designers","Female","White alone",3367,505.043398224351,"good",0.598577777777778,0.0734925479491603
+"371",2022,"Region","ENT-Other Designers","Female","Total",5625,915.588587400204,"good",0.535561268209083,0.0526638761834523
+"372",2022,"Region","ENT-Other Designers","Male","White alone",3613,532.485127894432,"good",0.740672406724067,0.0597059026708554
+"373",2022,"Region","ENT-Other Designers","Male","Total",4878,627.696952244871,"good",0.464438731790917,0.0526638761834523
+"374",2022,"Region","ENT-Other Designers","Total","Total",10503,1080.8317243482,"good",0.00245563812455928,0.000252677787952724
+"375",2022,"Region","ENT-Other Media And Communication Equipment Workers","Male","Total",2111,494.372449639439,"good",0.907566638005159,0.056782213844
+"376",2022,"Region","ENT-Other Media And Communication Equipment Workers","Total","Total",2326,505.794968943692,"good",0.000543826933040549,0.000118230715312419
+"377",2022,"Region","ENT-Photographers","Female","Total",2255,533.933272887399,"good",0.56220393916729,0.0777007058294168
+"378",2022,"Region","ENT-Photographers","Male","White alone",1384,291.583616444323,"good",0.788154897494305,0.0931379680330727
+"379",2022,"Region","ENT-Photographers","Male","Total",1756,367.942964121139,"good",0.43779606083271,0.0777007058294168
+"380",2022,"Region","ENT-Photographers","Total","Total",4011,665.028152114631,"good",0.000937785824774567,0.000155496803263834
+"381",2022,"Region","ENT-Producers And Directors","Total","Total",3013,602.676120106189,"good",0.000704449935189671,0.000140866953958647
+"382",2022,"Region","ENT-Public Relations Specialists","Female","White alone",1824,443.211358163349,"good",0.801405975395431,0.0705607555806015
+"383",2022,"Region","ENT-Public Relations Specialists","Female","Total",2276,513.338716868551,"good",0.706174371703382,0.084141959563566
+"384",2022,"Region","ENT-Public Relations Specialists","Total","Total",3223,636.457600373937,"good",0.000753548669471062,0.000148807478136956
+"385",2022,"Region","ENT-Technical Writers","Total","Total",1939,380.329727573654,"good",0.000453344979864843,8.8883276851373e-05
+"386",2022,"Region","ENT-Writers And Authors","Female","White alone",3171,500.678794873769,"good",0.80461811722913,0.060463080947316
+"387",2022,"Region","ENT-Writers And Authors","Female","Total",3941,568.173450918599,"good",0.686107242339833,0.0559734053955716
+"388",2022,"Region","ENT-Writers And Authors","Male","White alone",1425,331.236997397634,"good",0.790349417637271,0.0965828479841251
+"389",2022,"Region","ENT-Writers And Authors","Male","Total",1803,412.183300971789,"good",0.313892757660167,0.0559734053955716
+"390",2022,"Region","ENT-Writers And Authors","Total","Total",5744,725.099784925323,"good",0.00134296728434433,0.000169579982686436
+"391",2022,"Region","FFF-Fishing And Hunting Workers","Male","Total",1928,451.868055952177,"good",0.966416040100251,0.0227720050949792
+"392",2022,"Region","FFF-Fishing And Hunting Workers","Total","Total",1995,455.120250638499,"good",0.000466437975673214,0.00010644533757729
+"393",2022,"Region","FFF-Other Agricultural Workers","Female","White alone",1222,301.31487945752,"good",0.464285714285714,0.0986211394914416
+"394",2022,"Region","FFF-Other Agricultural Workers","Female","Total",2632,468.390460900412,"good",0.363435515051091,0.0642817943860087
+"395",2022,"Region","FFF-Other Agricultural Workers","Male","Total",4610,752.572128531545,"good",0.636564484948909,0.0642817943860086
+"396",2022,"Region","FFF-Other Agricultural Workers","Total","Total",7242,750.434323946806,"good",0.00169320492221825,0.000175416462630234
+"397",2022,"Region","FIN-Accountants And Auditors","Female","Asian alone",5166,598.269448203525,"good",0.253074021456915,0.0236709500547914
+"398",2022,"Region","FIN-Accountants And Auditors","Female","White alone",12090,957.325483865728,"good",0.592269632097193,0.0278385366136029
+"399",2022,"Region","FIN-Accountants And Auditors","Female","Total",20413,1428.85503937987,"good",0.648464055402014,0.0258237002185146
+"400",2022,"Region","FIN-Accountants And Auditors","Male","Asian alone",1811,390.718147745277,"good",0.163654437014278,0.0331622561597626
+"401",2022,"Region","FIN-Accountants And Auditors","Male","White alone",8107,752.018366494463,"good",0.732604373757455,0.0419744606078022
+"402",2022,"Region","FIN-Accountants And Auditors","Male","Total",11066,886.909724774032,"good",0.351535944597986,0.0258237002185146
+"403",2022,"Region","FIN-Accountants And Auditors","Total","Total",31479,1578.96848355026,"good",0.0073599002687805,0.000368471842412021
+"404",2022,"Region","FIN-Credit Counselors And Loan Officers","Female","White alone",1839,403.623469938258,"good",0.711411992263056,0.0770187927587181
+"405",2022,"Region","FIN-Credit Counselors And Loan Officers","Female","Total",2585,478.684824634122,"good",0.585503963759909,0.065587314832321
+"406",2022,"Region","FIN-Credit Counselors And Loan Officers","Male","Total",1830,386.195063293797,"good",0.414496036240091,0.065587314832321
+"407",2022,"Region","FIN-Credit Counselors And Loan Officers","Total","Total",4415,632.906561768797,"good",0.0010322424373921,0.000147990586551722
+"408",2022,"Region","FIN-Financial And Investment Analysts","Female","Total",3155,559.38816988854,"good",0.509775407981903,0.0663128071960588
+"409",2022,"Region","FIN-Financial And Investment Analysts","Male","White alone",1821,419.773896452007,"good",0.600197758734344,0.0843225967262656
+"410",2022,"Region","FIN-Financial And Investment Analysts","Male","Total",3034,579.993501868771,"good",0.490224592018097,0.0663128071960588
+"411",2022,"Region","FIN-Financial And Investment Analysts","Total","Total",6189,788.681950417118,"good",0.00144700984032156,0.000184397685908706
+"412",2022,"Region","FIN-Other Financial Specialists","Total","Total",1289,309.555171637464,"good",0.000301372707089109,7.23818493991236e-05
+"413",2022,"Region","FIN-Personal Financial Advisors","Female","White alone",1648,313.018257784191,"good",0.688387635756057,0.0787500937104751
+"414",2022,"Region","FIN-Personal Financial Advisors","Female","Total",2394,438.093180650532,"good",0.351180871351034,0.0492538602601682
+"415",2022,"Region","FIN-Personal Financial Advisors","Male","White alone",3479,529.645424754854,"good",0.786570201220891,0.0624803007303598
+"416",2022,"Region","FIN-Personal Financial Advisors","Male","Total",4423,583.680447546001,"good",0.648819128648966,0.0492538602601682
+"417",2022,"Region","FIN-Personal Financial Advisors","Total","Total",6817,761.142228819621,"good",0.00159383843617258,0.000177916424999117
+"418",2022,"Region","FIN-Tax Preparers","Female","Total",877,214.055210194123,"good",0.567637540453074,0.105611731038945
+"419",2022,"Region","FIN-Tax Preparers","Total","Total",1545,349.67879183259,"good",0.00036122640221309,8.1767260142999e-05
+"420",2022,"Region","HLS-Dental Assistants","Female","White alone",3365,453.05073984875,"good",0.573351507922985,0.0524788697352205
+"421",2022,"Region","HLS-Dental Assistants","Female","Total",5869,609.929532081371,"good",0.925563791200126,0.030907424466829
+"422",2022,"Region","HLS-Dental Assistants","Total","Total",6341,653.682515354358,"good",0.00148254797180143,0.000152738938931198
+"423",2022,"Region","HLS-Home Health Aides","Female","White alone",1737,318.745228093692,"good",0.467438105489774,0.0829938238494038
+"424",2022,"Region","HLS-Home Health Aides","Female","Total",3716,616.952529461344,"good",0.82212389380531,0.0538142314207016
+"425",2022,"Region","HLS-Home Health Aides","Total","Total",4520,706.745969715251,"good",0.0010567918045328,0.000165269155566923
+"426",2022,"Region","HLS-Massage Therapists","Female","White alone",2864,602.599897276377,"good",0.696498054474708,0.07904385521989
+"427",2022,"Region","HLS-Massage Therapists","Female","Total",4112,662.164913142867,"good",0.837133550488599,0.0523565784018546
+"428",2022,"Region","HLS-Massage Therapists","Total","Total",4912,699.59888968519,"good",0.00114844277519139,0.000163551619795481
+"429",2022,"Region","HLS-Medical Assistants","Female","White alone",5287,701.595199877572,"good",0.582525341560159,0.0522033213958315
+"430",2022,"Region","HLS-Medical Assistants","Female","Total",9076,867.401184351855,"good",0.897725024727992,0.0271361579223763
+"431",2022,"Region","HLS-Medical Assistants","Total","Total",10110,887.766509475465,"good",0.00236375335040411,0.000207605377481125
+"432",2022,"Region","HLS-Nursing Assistants","Female","Asian alone",2376,414.315546873696,"good",0.174346932785442,0.0285542118077362
+"433",2022,"Region","HLS-Nursing Assistants","Female","Black or African American alone",2943,577.504070538685,"good",0.215952450836513,0.0353352779466085
+"434",2022,"Region","HLS-Nursing Assistants","Female","Hispanic or Latino",1586,367.401092356841,"good",0.116378045201057,0.0270818831484696
+"435",2022,"Region","HLS-Nursing Assistants","Female","White alone",5096,650.560065294704,"good",0.373936014088641,0.0363534486905128
+"436",2022,"Region","HLS-Nursing Assistants","Female","Total",13628,1087.44199094653,"good",0.820469596628537,0.0269732358640743
+"437",2022,"Region","HLS-Nursing Assistants","Male","Total",2982,518.048606807315,"good",0.179530403371463,0.0269732358640743
+"438",2022,"Region","HLS-Nursing Assistants","Total","Total",16610,1257.30294306752,"good",0.00388347607816144,0.000294053231588589
+"439",2022,"Region","HLS-Other Healthcare Support Workers","Female","White alone",1302,309.685831828,"good",0.559278350515464,0.102690308499114
+"440",2022,"Region","HLS-Other Healthcare Support Workers","Female","Total",2328,500.231760689483,"good",0.733690513709423,0.0767670095545121
+"441",2022,"Region","HLS-Other Healthcare Support Workers","Total","Total",3173,550.703399338065,"good",0.000741858494642159,0.000128783053000297
+"442",2022,"Region","HLS-Personal Care Aides","Female","Asian alone",3639,579.066987652335,"good",0.148639817008414,0.0216046447744159
+"443",2022,"Region","HLS-Personal Care Aides","Female","Black or African American alone",6155,933.800880246961,"good",0.251409198594886,0.0321801764118784
+"444",2022,"Region","HLS-Personal Care Aides","Female","Hispanic or Latino",1695,406.37826430556,"good",0.0692345396617923,0.0157462913028366
+"445",2022,"Region","HLS-Personal Care Aides","Female","White alone",11192,1255.87373902097,"good",0.457152193448248,0.0333947583435372
+"446",2022,"Region","HLS-Personal Care Aides","Female","Total",24482,1914.94883823922,"good",0.781598186636018,0.0247878155695439
+"447",2022,"Region","HLS-Personal Care Aides","Male","Black or African American alone",2396,569.256878846229,"good",0.350241192808069,0.0615657196554573
+"448",2022,"Region","HLS-Personal Care Aides","Male","White alone",2488,522.272345055719,"good",0.363689519076158,0.0607103214418329
+"449",2022,"Region","HLS-Personal Care Aides","Male","Total",6841,898.136029806315,"good",0.218401813363982,0.0247878155695439
+"450",2022,"Region","HLS-Personal Care Aides","Total","Total",31323,2204.41735657747,"good",0.00732342692331432,0.000515881480279837
+"451",2022,"Region","HLS-Phlebotomists","Female","Total",1709,377.567995649459,"good",0.757871396895787,0.0935494625840743
+"452",2022,"Region","HLS-Phlebotomists","Total","Total",2255,416.752073646611,"good",0.000527226884783507,9.74386148020094e-05
+"453",2022,"Region","HLS-Physical Therapist Assistants And Aides","Female","Total",1152,278.159236800614,"good",0.746113989637306,0.0932557221393104
+"454",2022,"Region","HLS-Physical Therapist Assistants And Aides","Total","Total",1544,330.489465906252,"good",0.000360992598716512,7.72337388323016e-05
+"455",2022,"Region","HLS-Veterinary Assistants And Laboratory Animal Caretakers","Female","Total",1564,362.988921996939,"good",0.925443786982248,0.0458949562401353
+"456",2022,"Region","HLS-Veterinary Assistants And Laboratory Animal Caretakers","Total","Total",1690,375.95376457917,"good",0.000395127909216908,8.79027448905394e-05
+"457",2022,"Region","LGL-Lawyers, And Judges, Magistrates, And Other Judicial Workers","Female","White alone",5758,645.855575272057,"good",0.741055341055341,0.0470233020213671
+"458",2022,"Region","LGL-Lawyers, And Judges, Magistrates, And Other Judicial Workers","Female","Total",7770,705.566848656986,"good",0.405850091407678,0.0307659884469295
+"459",2022,"Region","LGL-Lawyers, And Judges, Magistrates, And Other Judicial Workers","Male","White alone",9863,1121.11921432446,"good",0.867076923076923,0.0245984396340907
+"460",2022,"Region","LGL-Lawyers, And Judges, Magistrates, And Other Judicial Workers","Male","Total",11375,1251.05554016199,"good",0.594149908592322,0.0307659884469295
+"461",2022,"Region","LGL-Lawyers, And Judges, Magistrates, And Other Judicial Workers","Total","Total",19145,1556.015795346,"good",0.00447616794198681,0.00036397277697662
+"462",2022,"Region","LGL-Paralegals And Legal Assistants","Female","White alone",4221,529.984945057404,"good",0.70338276953841,0.075066086600121
+"463",2022,"Region","LGL-Paralegals And Legal Assistants","Female","Total",6001,744.856744754486,"good",0.781583745767127,0.0485977280577788
+"464",2022,"Region","LGL-Paralegals And Legal Assistants","Total","Total",7678,960.462449468354,"good",0.00179514324672628,0.000224519294168532
+"465",2022,"Region","MED-Clinical Laboratory Technologists And Technicians","Female","White alone",1896,356.475713057706,"good",0.504255319148936,0.072017889669836
+"466",2022,"Region","MED-Clinical Laboratory Technologists And Technicians","Female","Total",3760,487.325662520711,"good",0.680419833514296,0.0648535455176196
+"467",2022,"Region","MED-Clinical Laboratory Technologists And Technicians","Male","Total",1766,421.4336219872,"good",0.319580166485704,0.0648535455176196
+"468",2022,"Region","MED-Clinical Laboratory Technologists And Technicians","Total","Total",5526,569.723610819316,"good",0.00129199812209032,0.000133191463055549
+"469",2022,"Region","MED-Dental Hygienists","Female","White alone",2149,413.458241331576,"good",0.693897319987084,0.0801770129810977
+"470",2022,"Region","MED-Dental Hygienists","Female","Total",3097,507.585135488373,"good",0.956159308428527,0.0328723983708971
+"471",2022,"Region","MED-Dental Hygienists","Total","Total",3239,521.073062487402,"good",0.00075728952541631,0.000121784433772404
+"472",2022,"Region","MED-Dentists","Female","Total",1502,330.756080221891,"good",0.372335151214675,0.0673911186376987
+"473",2022,"Region","MED-Dentists","Male","White alone",1329,280.314709280034,"good",0.524881516587678,0.0862526440170332
+"474",2022,"Region","MED-Dentists","Male","Total",2532,471.430280907209,"good",0.627664848785325,0.0673911186376987
+"475",2022,"Region","MED-Dentists","Total","Total",4034,574.471119648325,"good",0.000943163305195862,0.000134353274877626
+"476",2022,"Region","MED-Diagnostic Medical Sonographers","Total","Total",1728,377.846330511823,"good",0.000404012442086874,8.83131876919982e-05
+"477",2022,"Region","MED-Dietitians And Nutritionists","Female","White alone",1059,248.996983297489,"good",0.754811119030649,0.0929769056867921
+"478",2022,"Region","MED-Dietitians And Nutritionists","Female","Total",1403,285.107971788759,"good",0.921208141825345,0.0676871407459206
+"479",2022,"Region","MED-Dietitians And Nutritionists","Total","Total",1523,302.595950286847,"good",0.000356082725288373,7.07536664471371e-05
+"480",2022,"Region","MED-Licensed Practical And Licensed Vocational Nurses","Female","White alone",2140,350.401604066677,"good",0.524509803921569,0.0616077497880299
+"481",2022,"Region","MED-Licensed Practical And Licensed Vocational Nurses","Female","Total",4080,526.810190572705,"good",0.820430323748241,0.0619273002850827
+"482",2022,"Region","MED-Licensed Practical And Licensed Vocational Nurses","Total","Total",4973,628.25961376349,"good",0.00116270478848265,0.000146813087901084
+"483",2022,"Region","MED-Medical Records Specialists","Female","White alone",1468,305.961376894617,"good",0.72962226640159,0.0898133577430512
+"484",2022,"Region","MED-Medical Records Specialists","Female","Total",2012,375.068297057349,"good",0.858361774744027,0.0612028479423733
+"485",2022,"Region","MED-Medical Records Specialists","Total","Total",2344,406.194437578852,"good",0.000548035395978954,9.50020598975098e-05
+"486",2022,"Region","MED-Miscellaneous Health Technologists And Technicians","Total","Total",2660,585.25692466856,"good",0.000621917300897618,0.000136798548399195
+"487",2022,"Region","MED-Nurse Practitioners, And Nurse Midwives","Female","White alone",2424,410.44414745797,"good",0.763945792625276,0.0663058999790743
+"488",2022,"Region","MED-Nurse Practitioners, And Nurse Midwives","Female","Total",3173,434.202572169661,"good",0.882369299221357,0.0430023015324032
+"489",2022,"Region","MED-Nurse Practitioners, And Nurse Midwives","Total","Total",3596,476.756787907891,"good",0.000840757373694675,0.000111410865730522
+"490",2022,"Region","MED-Occupational Therapists","Female","White alone",1011,244.117667452604,"good",0.656067488643738,0.0943755130425136
+"491",2022,"Region","MED-Occupational Therapists","Female","Total",1541,298.935698585415,"good",0.89593023255814,0.0551845665603643
+"492",2022,"Region","MED-Occupational Therapists","Total","Total",1720,324.123237787342,"good",0.000402142014114249,7.57979243371092e-05
+"493",2022,"Region","MED-Opticians, Dispensing","Total","Total",1010,246.506145336683,"good",0.000236141531543833,5.7631163387356e-05
+"494",2022,"Region","MED-Other Healthcare Practitioners And Technical Occupations","Female","Total",1416,308.149819840123,"good",0.773347897323867,0.0793590350106716
+"495",2022,"Region","MED-Other Healthcare Practitioners And Technical Occupations","Total","Total",1831,365.568265244332,"good",0.000428094202234413,8.55018923967821e-05
+"496",2022,"Region","MED-Other Therapists","Female","White alone",2225,472.276319999743,"good",0.854454685099846,0.0631186935551599
+"497",2022,"Region","MED-Other Therapists","Female","Total",2604,497.524260358226,"good",0.897931034482759,0.0484009146455503
+"498",2022,"Region","MED-Other Therapists","Total","Total",2900,534.020943747762,"good",0.000678030140076351,0.000124914330395582
+"499",2022,"Region","MED-Pharmacists","Female","Asian alone",1310,246.449879148885,"good",0.422172091524331,0.0680090033634407
+"500",2022,"Region","MED-Pharmacists","Female","White alone",1540,352.820288739537,"good",0.496293909120206,0.0728308969066121
+"501",2022,"Region","MED-Pharmacists","Female","Total",3103,414.068426217214,"good",0.587912087912088,0.0533069718967436
+"502",2022,"Region","MED-Pharmacists","Male","Total",2175,411.719872574181,"good",0.412087912087912,0.0533069718967436
+"503",2022,"Region","MED-Pharmacists","Total","Total",5278,615.501321188671,"good",0.00123401485493896,0.000143989787439205
+"504",2022,"Region","MED-Pharmacy Technicians","Female","White alone",1757,396.523488081097,"good",0.562419974391805,0.0779107681112976
+"505",2022,"Region","MED-Pharmacy Technicians","Female","Total",3124,476.656597702948,"good",0.779441117764471,0.0556422270195632
+"506",2022,"Region","MED-Pharmacy Technicians","Total","Total",4008,584.709690664949,"good",0.000937084414284832,0.000136752265271936
+"507",2022,"Region","MED-Physical Therapists","Female","White alone",2254,444.268180573401,"good",0.741447368421053,0.0661801589973294
+"508",2022,"Region","MED-Physical Therapists","Female","Total",3040,489.537738703565,"good",0.67948144836835,0.0541642157626277
+"509",2022,"Region","MED-Physical Therapists","Male","Total",1434,308.141696823474,"good",0.32051855163165,0.0541642157626277
+"510",2022,"Region","MED-Physical Therapists","Total","Total",4474,616.784079633019,"good",0.0010460368436902,0.000144269234767624
+"511",2022,"Region","MED-Physician Assistants","Female","White alone",881,213.251267610535,"good",0.574690150032616,0.131925181721111
+"512",2022,"Region","MED-Physician Assistants","Female","Total",1533,342.440642119185,"good",0.687443946188341,0.096533457495921
+"513",2022,"Region","MED-Physician Assistants","Total","Total",2230,407.018344684856,"good",0.000521381797369056,9.51398589682693e-05
+"514",2022,"Region","MED-Physicians","Female","Asian alone",2443,480.98995496008,"good",0.322465681098205,0.055905284284166
+"515",2022,"Region","MED-Physicians","Female","White alone",4311,641.491473291929,"good",0.569033790918691,0.0581552557745543
+"516",2022,"Region","MED-Physicians","Female","Total",7576,827.75371868615,"good",0.454251109245713,0.0316182847226796
+"517",2022,"Region","MED-Physicians","Male","Asian alone",2157,413.520739990753,"good",0.236980883322347,0.0397248119388615
+"518",2022,"Region","MED-Physicians","Male","White alone",5583,521.56332748047,"good",0.613381674357284,0.0418724936082728
+"519",2022,"Region","MED-Physicians","Male","Total",9102,771.46527696245,"good",0.545748890754287,0.0316182847226796
+"520",2022,"Region","MED-Physicians","Total","Total",16678,1212.80228579208,"good",0.00389937471592875,0.000283466413512744
+"521",2022,"Region","MED-Radiologic Technologists And Technicians","Female","White alone",1096,264.052477270144,"good",0.718688524590164,0.110067125252885
+"522",2022,"Region","MED-Radiologic Technologists And Technicians","Female","Total",1525,313.374011151212,"good",0.522618231665524,0.0899304312016384
+"523",2022,"Region","MED-Radiologic Technologists And Technicians","Total","Total",2918,467.698408675398,"good",0.000682238603014756,0.000109362925749993
+"524",2022,"Region","MED-Registered Nurses","Female","Asian alone",6709,735.017588622885,"good",0.16799799674471,0.0164159771961091
+"525",2022,"Region","MED-Registered Nurses","Female","Hispanic or Latino",1877,375.021217841404,"good",0.0470013772380118,0.00919742607116199
+"526",2022,"Region","MED-Registered Nurses","Female","Two or More Races",1753,356.498485480654,"good",0.0438963315387505,0.00885355724218221
+"527",2022,"Region","MED-Registered Nurses","Female","White alone",26614,1523.74956813776,"good",0.666432953549518,0.0256741614028716
+"528",2022,"Region","MED-Registered Nurses","Female","Total",39935,1820.27549144285,"good",0.851655968096223,0.017151676346051
+"529",2022,"Region","MED-Registered Nurses","Male","White alone",3843,602.39576569312,"good",0.552472685451409,0.0642276389381176
+"530",2022,"Region","MED-Registered Nurses","Male","Total",6956,900.581012383811,"good",0.148344031903777,0.017151676346051
+"531",2022,"Region","MED-Registered Nurses","Total","Total",46891,2054.30142963521,"good",0.0109632797580414,0.000480483198181647
+"532",2022,"Region","MED-Speech-Language Pathologists","Female","White alone",1873,429.392425062727,"good",0.825837742504409,0.0624755523549182
+"533",2022,"Region","MED-Speech-Language Pathologists","Female","Total",2268,461.256797341513,"good",0.955349620893008,0.0290239370226548
+"534",2022,"Region","MED-Speech-Language Pathologists","Total","Total",2374,466.380564244481,"good",0.000555049500876295,0.000109037265756596
+"535",2022,"Region","MED-Veterinarians","Female","White alone",1015,228.470010600407,"good",0.921052631578947,0.0547612507600878
+"536",2022,"Region","MED-Veterinarians","Female","Total",1102,244.594407775403,"good",0.657125819916518,0.092049343744323
+"537",2022,"Region","MED-Veterinarians","Total","Total",1677,316.17931317727,"good",0.000392088463761393,7.39401007840503e-05
+"538",2022,"Region","MED-Veterinary Technologists And Technicians","Female","White alone",2134,471.320059403639,"good",0.878912685337726,0.0626530267866631
+"539",2022,"Region","MED-Veterinary Technologists And Technicians","Female","Total",2428,506.240297756411,"good",0.941450174486235,0.0420215046287082
+"540",2022,"Region","MED-Veterinary Technologists And Technicians","Total","Total",2579,496.407199371141,"good",0.000602979217674796,0.00011601568577021
+"541",2022,"Region","MGR-Architectural And Engineering Managers","Male","Asian alone",1642,341.734645467064,"good",0.237523506437147,0.0432330547913234
+"542",2022,"Region","MGR-Architectural And Engineering Managers","Male","White alone",4653,591.941312944113,"good",0.673079704903804,0.0463885400869484
+"543",2022,"Region","MGR-Architectural And Engineering Managers","Male","Total",6913,757.196019493962,"good",0.87109375,0.0334967373936767
+"544",2022,"Region","MGR-Architectural And Engineering Managers","Total","Total",7936,835.660161909433,"good",0.00185546454884342,0.000195149397302851
+"545",2022,"Region","MGR-Chief Executives And Legislators","Female","White alone",4440,557.115625584133,"good",0.768964322826463,0.0523267887286737
+"546",2022,"Region","MGR-Chief Executives And Legislators","Female","Total",5774,654.501241843742,"good",0.260008105552303,0.0238347375289125
+"547",2022,"Region","MGR-Chief Executives And Legislators","Male","Asian alone",1831,368.118510183881,"good",0.111422138380089,0.0215377522146914
+"548",2022,"Region","MGR-Chief Executives And Legislators","Male","White alone",13174,1028.8657727335,"good",0.80167954725248,0.026020067174105
+"549",2022,"Region","MGR-Chief Executives And Legislators","Male","Total",16433,1168.52653446338,"good",0.739991894447697,0.0238347375289125
+"550",2022,"Region","MGR-Chief Executives And Legislators","Total","Total",22207,1419.30272067308,"good",0.0051920742485088,0.00033186023761284
+"551",2022,"Region","MGR-Computer And Information Systems Managers","Female","White alone",3606,561.273421453395,"good",0.687511916110581,0.0551670651001335
+"552",2022,"Region","MGR-Computer And Information Systems Managers","Female","Total",5245,734.211893766881,"good",0.267084224462776,0.0352732039866827
+"553",2022,"Region","MGR-Computer And Information Systems Managers","Male","Asian alone",2971,510.427489758585,"good",0.206419787396651,0.0314172459537844
+"554",2022,"Region","MGR-Computer And Information Systems Managers","Male","White alone",9772,1111.36977939107,"good",0.678941151948864,0.0396769653810137
+"555",2022,"Region","MGR-Computer And Information Systems Managers","Male","Total",14393,1353.7540967625,"good",0.732915775537224,0.0352732039866826
+"556",2022,"Region","MGR-Computer And Information Systems Managers","Total","Total",19638,1442.17357337024,"good",0.00459143306579979,0.000337280413056089
+"557",2022,"Region","MGR-Construction Managers","Female","White alone",1564,348.212347286106,"good",0.734617191169563,0.0986923586950099
+"558",2022,"Region","MGR-Construction Managers","Female","Total",2129,437.45047380675,"good",0.110856547774017,0.0204569469493685
+"559",2022,"Region","MGR-Construction Managers","Male","White alone",13735,907.064694520187,"good",0.804345279925041,0.0288129182940457
+"560",2022,"Region","MGR-Construction Managers","Male","Total",17076,1020.40604361144,"good",0.889143452225983,0.0204569469493685
+"561",2022,"Region","MGR-Construction Managers","Total","Total",19205,1149.17444166236,"good",0.00449019615178149,0.000268410226049216
+"562",2022,"Region","MGR-Education And Childcare Administrators","Female","White alone",6762,747.332117823963,"good",0.684343689909928,0.0487898059112372
+"563",2022,"Region","MGR-Education And Childcare Administrators","Female","Total",9881,955.305123172042,"good",0.719927140255009,0.033174083684646
+"564",2022,"Region","MGR-Education And Childcare Administrators","Male","White alone",3089,548.401404691399,"good",0.803590010405827,0.0566056773209485
+"565",2022,"Region","MGR-Education And Childcare Administrators","Male","Total",3844,569.777398806981,"good",0.280072859744991,0.033174083684646
+"566",2022,"Region","MGR-Education And Childcare Administrators","Total","Total",13725,1183.86331139093,"good",0.00320895299053376,0.000276677886241236
+"567",2022,"Region","MGR-Facilities Managers","Male","White alone",1873,374.670914410233,"good",0.773008666941808,0.094194007092971
+"568",2022,"Region","MGR-Facilities Managers","Male","Total",2423,452.462326116772,"good",0.798089591567852,0.0649290616585865
+"569",2022,"Region","MGR-Facilities Managers","Total","Total",3036,489.275654866457,"good",0.000709827415610966,0.000114381192266655
+"570",2022,"Region","MGR-Farmers, Ranchers, And Other Agricultural Managers","Male","White alone",1481,354.325706633388,"good",0.668321299638989,0.0991877990008092
+"571",2022,"Region","MGR-Farmers, Ranchers, And Other Agricultural Managers","Male","Total",2216,438.884489408945,"good",0.700379266750948,0.0642039371313579
+"572",2022,"Region","MGR-Farmers, Ranchers, And Other Agricultural Managers","Total","Total",3164,520.995938091172,"good",0.000739754263172957,0.000121794739093535
+"573",2022,"Region","MGR-Financial Managers","Female","Asian alone",2489,561.627910548879,"good",0.19296069462749,0.0382439321783218
+"574",2022,"Region","MGR-Financial Managers","Female","White alone",8407,997.255930245591,"good",0.651755950073649,0.0433484941634333
+"575",2022,"Region","MGR-Financial Managers","Female","Total",12899,1355.92202167842,"good",0.588028811086798,0.0340684272147719
+"576",2022,"Region","MGR-Financial Managers","Male","Asian alone",1061,259.300479128462,"good",0.117406218877946,0.0269754835330891
+"577",2022,"Region","MGR-Financial Managers","Male","White alone",6490,793.129035026773,"good",0.718158680978201,0.0404031318567459
+"578",2022,"Region","MGR-Financial Managers","Male","Total",9037,965.241509966547,"good",0.411971188913202,0.0340684272147719
+"579",2022,"Region","MGR-Financial Managers","Total","Total",21936,1757.31470356408,"good",0.00512871350093615,0.000410689380330238
+"580",2022,"Region","MGR-Food Service Managers","Female","White alone",4247,686.18429827926,"good",0.565587961113331,0.0608634283995285
+"581",2022,"Region","MGR-Food Service Managers","Female","Total",7509,811.875413825915,"good",0.501536200908362,0.042035660510823
+"582",2022,"Region","MGR-Food Service Managers","Male","White alone",4217,703.561711522166,"good",0.565054267720756,0.067061900692924
+"583",2022,"Region","MGR-Food Service Managers","Male","Total",7463,998.997001456961,"good",0.498463799091638,0.042035660510823
+"584",2022,"Region","MGR-Food Service Managers","Total","Total",14972,1323.31585095453,"good",0.00350050595076659,0.000309383677804023
+"585",2022,"Region","MGR-General And Operations Managers","Female","White alone",5191,693.030319854406,"good",0.654025450422074,0.0596914213813849
+"586",2022,"Region","MGR-General And Operations Managers","Female","Total",7937,874.892055336686,"good",0.385909466621287,0.0320583983180944
+"587",2022,"Region","MGR-General And Operations Managers","Male","White alone",9640,919.569125115127,"good",0.76326207442597,0.0317714302625382
+"588",2022,"Region","MGR-General And Operations Managers","Male","Total",12630,1026.02679999416,"good",0.614090533378713,0.0320583983180944
+"589",2022,"Region","MGR-General And Operations Managers","Total","Total",20567,1364.06421354623,"good",0.0048086365141208,0.000318885346383641
+"590",2022,"Region","MGR-Human Resources Managers","Female","White alone",3571,614.484239852822,"good",0.771107752105377,0.0569982307952271
+"591",2022,"Region","MGR-Human Resources Managers","Female","Total",4631,659.864331055066,"good",0.656786271450858,0.0416294078476167
+"592",2022,"Region","MGR-Human Resources Managers","Male","White alone",1686,328.518896986916,"good",0.696694214876033,0.0882505523846878
+"593",2022,"Region","MGR-Human Resources Managers","Male","Total",2420,382.934659628768,"good",0.343213728549142,0.0416294078476167
+"594",2022,"Region","MGR-Human Resources Managers","Total","Total",7051,841.437599955427,"good",0.00164854845437184,0.000196798769882408
+"595",2022,"Region","MGR-Industrial Production Managers","Male","White alone",2314,468.892382438391,"good",0.75794300687848,0.0725292327482892
+"596",2022,"Region","MGR-Industrial Production Managers","Male","Total",3053,554.538503264201,"good",0.768436949408507,0.0742934923532061
+"597",2022,"Region","MGR-Industrial Production Managers","Total","Total",3973,632.124293622307,"good",0.000928901291904601,0.000147808990887075
+"598",2022,"Region","MGR-Lodging Managers","Total","Total",1626,366.687252196951,"good",0.000380164485435913,8.57234191871211e-05
+"599",2022,"Region","MGR-Marketing Managers","Female","Asian alone",1173,285.278288474605,"good",0.144743336623889,0.0319212912537142
+"600",2022,"Region","MGR-Marketing Managers","Female","White alone",5688,653.687896893464,"good",0.701875616979269,0.0455977489733818
+"601",2022,"Region","MGR-Marketing Managers","Female","Total",8104,848.663933811553,"good",0.568582052901144,0.041073533208239
+"602",2022,"Region","MGR-Marketing Managers","Male","White alone",4564,676.820851848922,"good",0.74223450967637,0.0503565032204404
+"603",2022,"Region","MGR-Marketing Managers","Male","Total",6149,843.312823812285,"good",0.431417947098856,0.041073533208239
+"604",2022,"Region","MGR-Marketing Managers","Total","Total",14253,1233.05961967224,"good",0.00333240123672698,0.000288256080529167
+"605",2022,"Region","MGR-Medical And Health Services Managers","Female","White alone",5072,640.710078389594,"good",0.63903237999244,0.0581430935252192
+"606",2022,"Region","MGR-Medical And Health Services Managers","Female","Total",7937,889.996005701009,"good",0.730645309767099,0.0475119557926496
+"607",2022,"Region","MGR-Medical And Health Services Managers","Male","Total",2926,637.610360755297,"good",0.269354690232901,0.0475119557926496
+"608",2022,"Region","MGR-Medical And Health Services Managers","Total","Total",10863,1106.43432494602,"good",0.00253980738332738,0.000258528153709116
+"609",2022,"Region","MGR-Other Managers","Female","Asian alone",6501,608.731577641164,"good",0.17280701754386,0.0145834719011595
+"610",2022,"Region","MGR-Other Managers","Female","Hispanic or Latino",2057,504.288963447546,"good",0.0546783625730994,0.0134624422376285
+"611",2022,"Region","MGR-Other Managers","Female","Two or More Races",2377,479.194175301099,"good",0.0631844763423711,0.0123176095014065
+"612",2022,"Region","MGR-Other Managers","Female","White alone",24669,1602.25347570071,"good",0.655741626794258,0.0231032625760665
+"613",2022,"Region","MGR-Other Managers","Female","Total",37620,1895.67468950437,"good",0.390853082045901,0.0145142878153413
+"614",2022,"Region","MGR-Other Managers","Male","Asian alone",8363,922.862373499565,"good",0.142637853695144,0.0144594006800829
+"615",2022,"Region","MGR-Other Managers","Male","Black or African American alone",2611,591.922455448136,"good",0.044532755709437,0.00984031355326338
+"616",2022,"Region","MGR-Other Managers","Male","Hispanic or Latino",3470,501.484124965586,"good",0.0591837082771912,0.00848297696790256
+"617",2022,"Region","MGR-Other Managers","Male","Two or More Races",3003,660.912708601711,"good",0.0512186386041514,0.0110578428022305
+"618",2022,"Region","MGR-Other Managers","Male","White alone",40247,1631.29185098038,"good",0.686445736896863,0.0194985324203057
+"619",2022,"Region","MGR-Other Managers","Male","Total",58631,1946.97446036504,"good",0.609146917954099,0.0145142878153413
+"620",2022,"Region","MGR-Other Managers","Total","Total",96251,2683.10364747828,"good",0.0225038203491341,0.000628819385464178
+"621",2022,"Region","MGR-Property, Real Estate, And Community Association Managers","Female","White alone",5618,605.267796986384,"good",0.748069241011984,0.0509251890095957
+"622",2022,"Region","MGR-Property, Real Estate, And Community Association Managers","Female","Total",7510,744.363499723086,"good",0.541066282420749,0.0410685643732178
+"623",2022,"Region","MGR-Property, Real Estate, And Community Association Managers","Male","White alone",4744,696.520856433962,"good",0.744740973312402,0.045588172893053
+"624",2022,"Region","MGR-Property, Real Estate, And Community Association Managers","Male","Total",6370,839.802869920971,"good",0.458933717579251,0.0410685643732178
+"625",2022,"Region","MGR-Property, Real Estate, And Community Association Managers","Total","Total",13880,1127.79309289869,"good",0.00324519253250336,0.000263508689324357
+"626",2022,"Region","MGR-Public Relations And Fundraising Managers","Female","White alone",1652,382.073516170318,"good",0.801163918525703,0.0940273001325327
+"627",2022,"Region","MGR-Public Relations And Fundraising Managers","Female","Total",2062,429.349569420129,"good",0.746020260492041,0.0692855219360618
+"628",2022,"Region","MGR-Public Relations And Fundraising Managers","Total","Total",2764,477.486717774694,"good",0.000646232864541736,0.000111649299846479
+"629",2022,"Region","MGR-Purchasing Managers","Female","Total",2618,568.227504698822,"good",0.499713685817904,0.0829317692228527
+"630",2022,"Region","MGR-Purchasing Managers","Male","Total",2621,617.417720926238,"good",0.500286314182096,0.0829317692228527
+"631",2022,"Region","MGR-Purchasing Managers","Total","Total",5239,809.425421813214,"good",0.00122489651857241,0.00018928935514113
+"632",2022,"Region","MGR-Sales Managers","Female","White alone",2434,372.831184586268,"good",0.738470873786408,0.0734824258862213
+"633",2022,"Region","MGR-Sales Managers","Female","Total",3296,564.112930673017,"good",0.369672498878421,0.046250808536724
+"634",2022,"Region","MGR-Sales Managers","Male","White alone",4841,703.480648608226,"good",0.861387900355872,0.0410749693783485
+"635",2022,"Region","MGR-Sales Managers","Male","Total",5620,758.157461084108,"good",0.630327501121579,0.046250808536724
+"636",2022,"Region","MGR-Sales Managers","Total","Total",8916,1023.34866936934,"good",0.00208459197548991,0.000239228797336435
+"637",2022,"Region","MGR-Social And Community Service Managers","Female","White alone",4435,630.370997221081,"good",0.603401360544218,0.0537628896172334
+"638",2022,"Region","MGR-Social And Community Service Managers","Female","Total",7350,886.447061656109,"good",0.715467730945196,0.0485552218180194
+"639",2022,"Region","MGR-Social And Community Service Managers","Male","White alone",2297,509.172941429285,"good",0.785836469380773,0.0703579034792974
+"640",2022,"Region","MGR-Social And Community Service Managers","Male","Total",2923,566.877120048957,"good",0.284532269054804,0.0485552218180194
+"641",2022,"Region","MGR-Social And Community Service Managers","Total","Total",10273,1000.63870760068,"good",0.00240186332034633,0.000233883343200662
+"642",2022,"Region","MGR-Transportation, Storage, And Distribution Managers","Male","White alone",2384,415.010874928296,"good",0.646070460704607,0.0736327266910065
+"643",2022,"Region","MGR-Transportation, Storage, And Distribution Managers","Male","Total",3690,548.226822947172,"good",0.678932842686293,0.0701451185090882
+"644",2022,"Region","MGR-Transportation, Storage, And Distribution Managers","Total","Total",5435,676.29479195189,"good",0.00127072200390171,0.000158108893769777
+"645",2022,"Region","MIL-First-Line Enlisted Military Supervisors","Male","White alone",1750,406.978784720408,"good",0.621228257011005,0.102740036746982
+"646",2022,"Region","MIL-First-Line Enlisted Military Supervisors","Male","Total",2817,658.543961718768,"good",0.886964735516373,0.0639753460072187
+"647",2022,"Region","MIL-First-Line Enlisted Military Supervisors","Total","Total",3176,674.868442451008,"good",0.000742559905131893,0.000157798141645482
+"648",2022,"Region","MIL-Military Enlisted Tactical Operations And Air/Weapons Specialists And Crew Members","Male","White alone",2659,450.708386343099,"good",0.574050086355786,0.0685145293395382
+"649",2022,"Region","MIL-Military Enlisted Tactical Operations And Air/Weapons Specialists And Crew Members","Male","Total",4632,622.578388665837,"good",0.862088218872138,0.0418738392859963
+"650",2022,"Region","MIL-Military Enlisted Tactical Operations And Air/Weapons Specialists And Crew Members","Total","Total",5373,675.732282264951,"good",0.00125622618711387,0.000157991956593985
+"651",2022,"Region","MIL-Military Officer Special And Tactical Operations Leaders","Male","Total",3205,712.774912349614,"good",0.919391853126793,0.0504057895717594
+"652",2022,"Region","MIL-Military Officer Special And Tactical Operations Leaders","Total","Total",3486,731.243207528282,"good",0.000815038989071089,0.00017099249382222
+"653",2022,"Region","MIL-Military, Rank Not Specified","Male","White alone",4596,660.369161421284,"good",0.525737817433082,0.0670729003492294
+"654",2022,"Region","MIL-Military, Rank Not Specified","Male","Total",8742,875.962808920133,"good",0.868640699523052,0.0343371400115063
+"655",2022,"Region","MIL-Military, Rank Not Specified","Total","Total",10064,974.297199897829,"good",0.00235299838956152,0.000227540472552571
+"656",2022,"Region","OFF-Billing And Posting Clerks","Female","White alone",3861,520.964254054441,"good",0.694049973036132,0.0526562239681065
+"657",2022,"Region","OFF-Billing And Posting Clerks","Female","Total",5563,615.936416633243,"good",0.894804568119672,0.0383459156612786
+"658",2022,"Region","OFF-Billing And Posting Clerks","Total","Total",6217,683.633876887878,"good",0.00145355633822575,0.000159699007278617
+"659",2022,"Region","OFF-Bookkeeping, Accounting, And Auditing Clerks","Female","Asian alone",2166,354.823487585729,"good",0.110617435268883,0.0166315786703215
+"660",2022,"Region","OFF-Bookkeeping, Accounting, And Auditing Clerks","Female","White alone",14655,1071.21700266449,"good",0.748429600122568,0.026704913802467
+"661",2022,"Region","OFF-Bookkeeping, Accounting, And Auditing Clerks","Female","Total",19581,1330.35732813359,"good",0.879649595687332,0.020806457326579
+"662",2022,"Region","OFF-Bookkeeping, Accounting, And Auditing Clerks","Male","White alone",1781,402.255479639495,"good",0.664800298618888,0.103033574915485
+"663",2022,"Region","OFF-Bookkeeping, Accounting, And Auditing Clerks","Male","Total",2679,518.570954274822,"good",0.120350404312668,0.0208064573265789
+"664",2022,"Region","OFF-Bookkeeping, Accounting, And Auditing Clerks","Total","Total",22260,1484.68139701629,"good",0.00520446583382744,0.000347262274473556
+"665",2022,"Region","OFF-Correspondence Clerks And Order Clerks","Total","Total",1966,412.109272810319,"good",0.00045965767427245,9.63827081535825e-05
+"666",2022,"Region","OFF-Couriers And Messengers","Female","Total",3236,774.583408740628,"good",0.308219830460044,0.0595476176095388
+"667",2022,"Region","OFF-Couriers And Messengers","Male","White alone",4386,703.67103069634,"good",0.603882693102024,0.0645192812873134
+"668",2022,"Region","OFF-Couriers And Messengers","Male","Total",7263,935.679846423177,"good",0.691780169539956,0.0595476176095388
+"669",2022,"Region","OFF-Couriers And Messengers","Total","Total",10499,1181.45790749978,"good",0.00245470291057297,0.000276362178049337
+"670",2022,"Region","OFF-Customer Service Representatives","Female","Asian alone",2798,468.836976601409,"good",0.0938139145012573,0.014392890036144
+"671",2022,"Region","OFF-Customer Service Representatives","Female","Black or African American alone",2391,533.878281215625,"good",0.0801676445934619,0.016925564838758
+"672",2022,"Region","OFF-Customer Service Representatives","Female","Hispanic or Latino",3336,730.027388419435,"good",0.111852472757754,0.0234689618994159
+"673",2022,"Region","OFF-Customer Service Representatives","Female","Two or More Races",2285,522.326486340201,"good",0.0766135792120704,0.0170490483767787
+"674",2022,"Region","OFF-Customer Service Representatives","Female","White alone",18360,1308.54714610852,"good",0.615590947191953,0.0295736928625625
+"675",2022,"Region","OFF-Customer Service Representatives","Female","Total",29825,1693.92783721297,"good",0.636402432518937,0.0216287223746616
+"676",2022,"Region","OFF-Customer Service Representatives","Male","White alone",9770,871.991986079861,"good",0.573356807511737,0.0405236697710073
+"677",2022,"Region","OFF-Customer Service Representatives","Male","Total",17040,1271.3798372654,"good",0.363597567481063,0.0216287223746616
+"678",2022,"Region","OFF-Customer Service Representatives","Total","Total",46865,2126.69153872688,"good",0.0109572008671304,0.000496885683267968
+"679",2022,"Region","OFF-Data Entry Keyers","Female","White alone",1809,368.708686848439,"good",0.727382388419783,0.0719903671359942
+"680",2022,"Region","OFF-Data Entry Keyers","Female","Total",2487,498.917950844625,"good",0.673618634886241,0.0756613439282755
+"681",2022,"Region","OFF-Data Entry Keyers","Total","Total",3692,562.132027411043,"good",0.000863202509366168,0.000131415264752678
+"682",2022,"Region","OFF-Dispatchers, Except Police, Fire, And Ambulance","Female","White alone",1075,241.523872370828,"good",0.71003963011889,0.0912147187446331
+"683",2022,"Region","OFF-Dispatchers, Except Police, Fire, And Ambulance","Female","Total",1514,336.785378078532,"good",0.516723549488055,0.0835788709640512
+"684",2022,"Region","OFF-Dispatchers, Except Police, Fire, And Ambulance","Male","Total",1416,319.834494948168,"good",0.483276450511945,0.0835788709640513
+"685",2022,"Region","OFF-Dispatchers, Except Police, Fire, And Ambulance","Total","Total",2930,441.869628888148,"good",0.000685044244973692,0.000103318032370351
+"686",2022,"Region","OFF-Executive Secretaries And Executive Administrative Assistants","Female","White alone",3794,655.38728222136,"good",0.708629062383265,0.0790412250355132
+"687",2022,"Region","OFF-Executive Secretaries And Executive Administrative Assistants","Female","Total",5354,817.83330280611,"good",0.93666899930021,0.0251416399076911
+"688",2022,"Region","OFF-Executive Secretaries And Executive Administrative Assistants","Total","Total",5716,856.765525450225,"good",0.00133642078644015,0.00020027553024595
+"689",2022,"Region","OFF-File Clerks","Female","Total",1938,435.626159360007,"good",0.757327080890973,0.0728933668605759
+"690",2022,"Region","OFF-File Clerks","Total","Total",2559,516.982831362658,"good",0.000598303147743235,0.000120806820339837
+"691",2022,"Region","OFF-First-Line Supervisors Of Office And Administrative Support Workers","Female","Asian alone",1477,355.921515158188,"good",0.122146873966259,0.0276024319075263
+"692",2022,"Region","OFF-First-Line Supervisors Of Office And Administrative Support Workers","Female","White alone",8268,973.43526534575,"good",0.683757856434006,0.0437377862739778
+"693",2022,"Region","OFF-First-Line Supervisors Of Office And Administrative Support Workers","Female","Total",12092,1176.5905479212,"good",0.657281078436702,0.0351469066899125
+"694",2022,"Region","OFF-First-Line Supervisors Of Office And Administrative Support Workers","Male","White alone",4371,576.605234805408,"good",0.693259318001586,0.0558792469161227
+"695",2022,"Region","OFF-First-Line Supervisors Of Office And Administrative Support Workers","Male","Total",6305,740.48638531289,"good",0.342718921563298,0.0351469066899125
+"696",2022,"Region","OFF-First-Line Supervisors Of Office And Administrative Support Workers","Total","Total",18397,1360.31578915752,"good",0.00430128292654642,0.000317959382477669
+"697",2022,"Region","OFF-Hotel, Motel, And Resort Desk Clerks","Total","Total",2090,455.455466715737,"good",0.000488649307848129,0.000106481076644227
+"698",2022,"Region","OFF-Insurance Claims And Policy Processing Clerks","Female","Total",1891,425.60556362523,"good",0.824324324324324,0.0712230509220726
+"699",2022,"Region","OFF-Insurance Claims And Policy Processing Clerks","Total","Total",2294,464.267263260075,"good",0.000536345221150051,0.000108534407189353
+"700",2022,"Region","OFF-Interviewers, Except Eligibility And Loan","Female","White alone",1063,257.528151885867,"good",0.508126195028681,0.151702528458278
+"701",2022,"Region","OFF-Interviewers, Except Eligibility And Loan","Total","Total",2695,652.79903179788,"good",0.00063010042327785,0.000152627211034556
+"702",2022,"Region","OFF-Library Assistants, Clerical","Female","Total",1384,310.550121538376,"good",0.835748792270531,0.107395558271208
+"703",2022,"Region","OFF-Library Assistants, Clerical","Total","Total",1656,302.411674543163,"good",0.000387178590333254,7.07180267088431e-05
+"704",2022,"Region","OFF-Loan Interviewers And Clerks","Total","Total",1526,303.013063354948,"good",0.000356784135778107,7.08285210347919e-05
+"705",2022,"Region","OFF-Office Clerks, General","Female","White alone",8000,739.75981047736,"good",0.627401772410007,0.0372928224047071
+"706",2022,"Region","OFF-Office Clerks, General","Female","Total",12751,1052.86187845498,"good",0.76896634905319,0.0329616407670705
+"707",2022,"Region","OFF-Office Clerks, General","Male","White alone",1791,422.471102124157,"good",0.467501957713391,0.0735758138630412
+"708",2022,"Region","OFF-Office Clerks, General","Male","Total",3831,663.695427394976,"good",0.23103365094681,0.0329616407670705
+"709",2022,"Region","OFF-Office Clerks, General","Total","Total",16582,1283.75619774989,"good",0.00387692958025726,0.000300654614080144
+"710",2022,"Region","OFF-Other Financial Clerks","Female","White alone",795,195.800612333057,"good",0.666387259010897,0.10983157464558
+"711",2022,"Region","OFF-Other Financial Clerks","Female","Total",1193,282.600754470861,"good",0.516003460207612,0.0932399890959416
+"712",2022,"Region","OFF-Other Financial Clerks","Total","Total",2312,420.061951118523,"good",0.000540553684088456,9.8147895747324e-05
+"713",2022,"Region","OFF-Other Office And Administrative Support Workers","Female","White alone",6568,781.284952706117,"good",0.659437751004016,0.0437440338060292
+"714",2022,"Region","OFF-Other Office And Administrative Support Workers","Female","Total",9960,968.330476099198,"good",0.763335377069283,0.0458559640021832
+"715",2022,"Region","OFF-Other Office And Administrative Support Workers","Male","White alone",2085,480.340281678,"good",0.675194300518135,0.0889270180271541
+"716",2022,"Region","OFF-Other Office And Administrative Support Workers","Male","Total",3088,651.432877397971,"good",0.236664622930717,0.0458559640021832
+"717",2022,"Region","OFF-Other Office And Administrative Support Workers","Total","Total",13048,1010.45750236217,"good",0.00305066802335042,0.000236247007248047
+"718",2022,"Region","OFF-Payroll And Timekeeping Clerks","Female","White alone",1230,280.30481424246,"good",0.575304022450889,0.0920935955117173
+"719",2022,"Region","OFF-Payroll And Timekeeping Clerks","Female","Total",2138,399.708428643618,"good",0.898696931483817,0.065788195286506
+"720",2022,"Region","OFF-Payroll And Timekeeping Clerks","Total","Total",2379,407.017513632706,"good",0.000556218518359186,9.51165426181068e-05
+"721",2022,"Region","OFF-Postal Service Clerks","Total","Total",1529,352.807250012312,"good",0.000357485546267842,8.24653273432011e-05
+"722",2022,"Region","OFF-Postal Service Mail Carriers","Female","Total",1232,294.777620048147,"good",0.28785046728972,0.0598409535219996
+"723",2022,"Region","OFF-Postal Service Mail Carriers","Male","White alone",1333,292.028969590347,"good",0.437335958005249,0.0812116581797015
+"724",2022,"Region","OFF-Postal Service Mail Carriers","Male","Total",3048,460.816442895108,"good",0.71214953271028,0.0598409535219995
+"725",2022,"Region","OFF-Postal Service Mail Carriers","Total","Total",4280,525.108504362432,"good",0.00100067896535406,0.000122870743918547
+"726",2022,"Region","OFF-Production, Planning, And Expediting Clerks","Female","White alone",2044,368.125125989792,"good",0.61547726588377,0.0852835736615676
+"727",2022,"Region","OFF-Production, Planning, And Expediting Clerks","Female","Total",3321,555.265723378231,"good",0.585301374691576,0.0671590916479307
+"728",2022,"Region","OFF-Production, Planning, And Expediting Clerks","Male","White alone",1798,402.94274160543,"good",0.764130896727582,0.0889218251860643
+"729",2022,"Region","OFF-Production, Planning, And Expediting Clerks","Male","Total",2353,466.31383437552,"good",0.414698625308424,0.0671590916479307
+"730",2022,"Region","OFF-Production, Planning, And Expediting Clerks","Total","Total",5674,677.509081716806,"good",0.00132660103958387,0.000158307625182088
+"731",2022,"Region","OFF-Receptionists And Information Clerks","Female","Asian alone",1600,327.670621714856,"good",0.0824742268041237,0.0173286836821983
+"732",2022,"Region","OFF-Receptionists And Information Clerks","Female","Hispanic or Latino",2403,506.964206970029,"good",0.123865979381443,0.0245757639856838
+"733",2022,"Region","OFF-Receptionists And Information Clerks","Female","White alone",12148,1016.93302614713,"good",0.626185567010309,0.0386346618338399
+"734",2022,"Region","OFF-Receptionists And Information Clerks","Female","Total",19400,1349.84995391525,"good",0.887465690759378,0.0182537697945882
+"735",2022,"Region","OFF-Receptionists And Information Clerks","Male","White alone",1200,291.850770803762,"good",0.48780487804878,0.0918859344145006
+"736",2022,"Region","OFF-Receptionists And Information Clerks","Male","Total",2460,445.183016283753,"good",0.112534309240622,0.0182537697945882
+"737",2022,"Region","OFF-Receptionists And Information Clerks","Total","Total",21860,1488.59712075078,"good",0.00511094443519622,0.000347805351000669
+"738",2022,"Region","OFF-Reservation And Transportation Ticket Agents And Travel Clerks","Female","Total",917,206.502544454663,"good",0.444929645803008,0.0910086349552652
+"739",2022,"Region","OFF-Reservation And Transportation Ticket Agents And Travel Clerks","Total","Total",2061,390.069183346044,"good",0.000481869006447365,9.12092010554938e-05
+"740",2022,"Region","OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive","Female","Asian alone",2242,423.827633875199,"good",0.0829479448000296,0.014993073672468
+"741",2022,"Region","OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive","Female","Hispanic or Latino",1646,376.86928459182,"good",0.0608975544785231,0.0133758107868987
+"742",2022,"Region","OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive","Female","Two or More Races",1228,261.226051794705,"good",0.0454326834141108,0.00947530764292547
+"743",2022,"Region","OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive","Female","White alone",20627,1467.15584802962,"good",0.763143290539791,0.0235142618391841
+"744",2022,"Region","OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive","Female","Total",27029,1641.65741849662,"good",0.918229378991711,0.0160350398952595
+"745",2022,"Region","OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive","Male","White alone",1678,401.822355628081,"good",0.697133361030328,0.100938400558645
+"746",2022,"Region","OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive","Male","Total",2407,522.733920236912,"good",0.0817706210082892,0.0160350398952595
+"747",2022,"Region","OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive","Total","Total",29436,1825.81984029333,"good",0.00688223972527154,0.000427004097086707
+"748",2022,"Region","OFF-Shipping, Receiving, And Inventory Clerks","Female","White alone",1582,324.312699117303,"good",0.5678391959799,0.0818994780156898
+"749",2022,"Region","OFF-Shipping, Receiving, And Inventory Clerks","Female","Total",2786,459.494172541938,"good",0.315765612603423,0.046100430810953
+"750",2022,"Region","OFF-Shipping, Receiving, And Inventory Clerks","Male","White alone",3405,609.123753460658,"good",0.564021865164817,0.0644606862081492
+"751",2022,"Region","OFF-Shipping, Receiving, And Inventory Clerks","Male","Total",6037,850.326181852441,"good",0.684234387396577,0.046100430810953
+"752",2022,"Region","OFF-Shipping, Receiving, And Inventory Clerks","Total","Total",8823,989.730829049621,"good",0.00206284825030815,0.000231282697874792
+"753",2022,"Region","OFF-Tellers","Female","Total",2531,479.436089572948,"good",0.775428921568627,0.0840971625594707
+"754",2022,"Region","OFF-Tellers","Total","Total",3264,554.148471808323,"good",0.000763134612830762,0.000129579550042013
+"755",2022,"Region","OFF-Word Processors And Typists","Total","Total",1518,341.326995621501,"good",0.000354913707805483,7.98119748481399e-05
+"756",2022,"Region","PRD-Bakers","Female","White alone",1797,351.520757836575,"good",0.573938038965187,0.0897692526342962
+"757",2022,"Region","PRD-Bakers","Female","Total",3131,504.910502217967,"good",0.678145982239549,0.0715873811717207
+"758",2022,"Region","PRD-Bakers","Total","Total",4617,643.345598737568,"good",0.00107947074370087,0.000150402123712384
+"759",2022,"Region","PRD-Butchers And Other Meat, Poultry, And Fish Processing Workers","Male","White alone",1158,283.399891507125,"good",0.582788122798188,0.0987881727558715
+"760",2022,"Region","PRD-Butchers And Other Meat, Poultry, And Fish Processing Workers","Male","Total",1987,421.617383029329,"good",0.863913043478261,0.0639193591598776
+"761",2022,"Region","PRD-Butchers And Other Meat, Poultry, And Fish Processing Workers","Total","Total",2300,434.411766941804,"good",0.00053774804212952,0.000101537127893859
+"762",2022,"Region","PRD-Electrical, Electronics, And Electromechanical Assemblers","Female","Total",1376,311.862673199279,"good",0.536661466458658,0.117746068558636
+"763",2022,"Region","PRD-First-Line Supervisors Of Production And Operating Workers","Female","Total",1523,356.560532951629,"good",0.179789871325699,0.0384513930095506
+"764",2022,"Region","PRD-First-Line Supervisors Of Production And Operating Workers","Male","White alone",5155,776.871866653375,"good",0.741940126655153,0.0570090720858817
+"765",2022,"Region","PRD-First-Line Supervisors Of Production And Operating Workers","Male","Total",6948,919.670716556339,"good",0.820210128674301,0.0384513930095506
+"766",2022,"Region","PRD-First-Line Supervisors Of Production And Operating Workers","Total","Total",8471,1002.19037989795,"good",0.00198054941951268,0.00023424163041266
+"767",2022,"Region","PRD-Inspectors, Testers, Sorters, Samplers, And Weighers","Female","White alone",2167,442.506987449068,"good",0.468641868512111,0.0757274130016293
+"768",2022,"Region","PRD-Inspectors, Testers, Sorters, Samplers, And Weighers","Female","Total",4624,776.263891839463,"good",0.307018126286435,0.0418695751057813
+"769",2022,"Region","PRD-Inspectors, Testers, Sorters, Samplers, And Weighers","Male","White alone",7048,726.036734855751,"good",0.675289834243557,0.0402087827526622
+"770",2022,"Region","PRD-Inspectors, Testers, Sorters, Samplers, And Weighers","Male","Total",10437,888.184614033732,"good",0.692981873713565,0.0418695751057813
+"771",2022,"Region","PRD-Inspectors, Testers, Sorters, Samplers, And Weighers","Total","Total",15061,1111.64153692861,"good",0.00352131446196204,0.000259837796249749
+"772",2022,"Region","PRD-Laundry And Dry-Cleaning Workers","Total","Total",1547,347.999351482873,"good",0.000361694009206246,8.13788765409192e-05
+"773",2022,"Region","PRD-Machinists","Male","White alone",5235,726.374985251248,"good",0.730329241071429,0.0522576170843622
+"774",2022,"Region","PRD-Machinists","Male","Total",7168,768.008114272727,"good",0.940312213039486,0.0279277322029623
+"775",2022,"Region","PRD-Machinists","Total","Total",7623,832.64856307148,"good",0.00178228405441449,0.000194587218669492
+"776",2022,"Region","PRD-Miscellaneous Production Workers, Including Equipment Operators and Tenders","Female","White alone",1226,243.052298831959,"good",0.406633499170813,0.0753559139581358
+"777",2022,"Region","PRD-Miscellaneous Production Workers, Including Equipment Operators and Tenders","Female","Total",3015,482.723701415986,"good",0.253021148036254,0.0364422754975227
+"778",2022,"Region","PRD-Miscellaneous Production Workers, Including Equipment Operators and Tenders","Male","White alone",5066,785.868599696381,"good",0.569149533760252,0.0508715176870322
+"779",2022,"Region","PRD-Miscellaneous Production Workers, Including Equipment Operators and Tenders","Male","Total",8901,1080.41027778456,"good",0.746978851963746,0.0364422754975227
+"780",2022,"Region","PRD-Miscellaneous Production Workers, Including Equipment Operators and Tenders","Total","Total",11916,1225.17867304477,"good",0.00278600246522407,0.000286344005790367
+"781",2022,"Region","PRD-Other Assemblers and Fabricators","Female","Asian alone",2177,432.73443914253,"good",0.578066914498141,0.081438263282791
+"782",2022,"Region","PRD-Other Assemblers and Fabricators","Female","White alone",982,242.108571796828,"good",0.260754115772703,0.0637664168697955
+"783",2022,"Region","PRD-Other Assemblers and Fabricators","Female","Total",3766,553.624255106747,"good",0.289447390669434,0.0385722905310879
+"784",2022,"Region","PRD-Other Assemblers and Fabricators","Male","Asian alone",1852,353.965433656664,"good",0.200324499729584,0.04097173651506
+"785",2022,"Region","PRD-Other Assemblers and Fabricators","Male","White alone",4700,735.372131169825,"good",0.508382909680909,0.0506233054546638
+"786",2022,"Region","PRD-Other Assemblers and Fabricators","Male","Total",9245,1056.68339131572,"good",0.710552609330566,0.0385722905310879
+"787",2022,"Region","PRD-Other Assemblers and Fabricators","Total","Total",13011,1186.12108736524,"good",0.00304201729397703,0.000276987617760571
+"788",2022,"Region","PRD-Other Metal Workers And Plastic Workers","Male","White alone",1637,374.337090594827,"good",0.531666125365378,0.0980705135800375
+"789",2022,"Region","PRD-Other Metal Workers And Plastic Workers","Male","Total",3079,571.21046891448,"good",0.868792325056433,0.0566971988655713
+"790",2022,"Region","PRD-Other Metal Workers And Plastic Workers","Total","Total",3544,613.955674563523,"good",0.000828599591872616,0.000143554288043244
+"791",2022,"Region","PRD-Painting Workers","Male","Total",1987,463.972242709626,"good",0.859057501080847,0.0771233284891323
+"792",2022,"Region","PRD-Painting Workers","Total","Total",2313,505.616112122132,"good",0.000540787487585034,0.000118185518648103
+"793",2022,"Region","PRD-Printing Press Operators","Male","Total",1451,339.429915459363,"good",0.788158609451385,0.0759180500548517
+"794",2022,"Region","PRD-Printing Press Operators","Total","Total",1841,398.844659179799,"good",0.000430432237200194,9.32564149593153e-05
+"795",2022,"Region","PRD-Stationary Engineers And Boiler Operators","Male","Total",1996,475.47144994074,"good",0.968461911693353,0.0345552951643418
+"796",2022,"Region","PRD-Stationary Engineers And Boiler Operators","Total","Total",2061,480.701257131183,"good",0.000481869006447365,0.000112415995375587
+"797",2022,"Region","PRD-Tailors, Dressmakers, And Sewers","Total","Total",1383,331.947997887094,"good",0.000323350235767446,7.76183812165764e-05
+"798",2022,"Region","PRD-Welding, Soldering, And Brazing Workers","Male","White alone",3732,494.792237710688,"good",0.680401093892434,0.058247146932746
+"799",2022,"Region","PRD-Welding, Soldering, And Brazing Workers","Male","Total",5485,639.409510930788,"good",0.943574746258386,0.0319175724943237
+"800",2022,"Region","PRD-Welding, Soldering, And Brazing Workers","Total","Total",5813,667.426695548844,"good",0.00135909972560822,0.000156149727490772
+"801",2022,"Region","PRS-Animal Caretakers","Female","White alone",4200,611.715650742851,"good",0.749197288619336,0.0556829407912182
+"802",2022,"Region","PRS-Animal Caretakers","Female","Total",5606,753.550602055031,"good",0.808479953850591,0.0605299913153576
+"803",2022,"Region","PRS-Animal Caretakers","Total","Total",6934,849.501636193245,"good",0.00162119344527221,0.000198726795130228
+"804",2022,"Region","PRS-Childcare Workers","Female","Hispanic or Latino",3161,503.663031129197,"good",0.150552486187845,0.0246306487915385
+"805",2022,"Region","PRS-Childcare Workers","Female","White alone",12148,1137.07470304341,"good",0.57858639740903,0.0353994359697414
+"806",2022,"Region","PRS-Childcare Workers","Female","Total",20996,1295.74421702308,"good",0.923266347126336,0.0199445470965059
+"807",2022,"Region","PRS-Childcare Workers","Total","Total",22741,1313.82778396704,"good",0.00531692531568148,0.000307116773368808
+"808",2022,"Region","PRS-Exercise Trainers And Group Fitness Instructors","Female","White alone",3897,590.900967253608,"good",0.843323955853711,0.0468071573430388
+"809",2022,"Region","PRS-Exercise Trainers And Group Fitness Instructors","Female","Total",4621,633.396884556792,"good",0.695096269554753,0.0643404967562979
+"810",2022,"Region","PRS-Exercise Trainers And Group Fitness Instructors","Total","Total",6648,830.304767224813,"good",0.00155432564525089,0.000194155206565116
+"811",2022,"Region","PRS-Gambling Services Workers","Female","Total",1656,363.817327865235,"good",0.531109685695959,0.0731296983685551
+"812",2022,"Region","PRS-Gambling Services Workers","Male","Total",1462,351.500357407357,"good",0.468890314304041,0.0731296983685551
+"813",2022,"Region","PRS-Gambling Services Workers","Total","Total",3118,552.224809425473,"good",0.000728999302330366,0.000129152880352275
+"814",2022,"Region","PRS-Hairdressers, Hairstylists, And Cosmetologists","Female","White alone",6429,846.874215050559,"good",0.630665097115951,0.0553462123407428
+"815",2022,"Region","PRS-Hairdressers, Hairstylists, And Cosmetologists","Female","Total",10194,1066.40828247499,"good",0.921116833830306,0.0249114016462159
+"816",2022,"Region","PRS-Hairdressers, Hairstylists, And Cosmetologists","Total","Total",11067,1097.53741702162,"good",0.0025875032966293,0.000256499560257598
+"817",2022,"Region","PRS-Manicurists and Pedicurists","Female","Asian alone",2870,505.382312268396,"good",0.902799622522806,0.0527400198742481
+"818",2022,"Region","PRS-Manicurists and Pedicurists","Female","Total",3179,540.966697535532,"good",0.905182232346242,0.0472979302466596
+"819",2022,"Region","PRS-Manicurists and Pedicurists","Total","Total",3512,565.240886544179,"good",0.000821117879982119,0.000132186489840832
+"820",2022,"Region","PRS-Other Entertainment Attendants And Related Workers","Male","Total",2003,409.693351415116,"good",0.542524377031419,0.0802360324018521
+"821",2022,"Region","PRS-Other Entertainment Attendants And Related Workers","Total","Total",3692,696.547857074444,"good",0.000863202509366168,0.000162844469004296
+"822",2022,"Region","PRS-Personal Care And Service Workers, All Other","Female","Total",1913,447.447559678785,"good",0.769509251810137,0.0783749383697403
+"823",2022,"Region","PRS-Personal Care And Service Workers, All Other","Total","Total",2486,548.17129059834,"good",0.000581235492493037,0.00012821525746856
+"824",2022,"Region","PRS-Recreation Workers","Female","Total",1951,460.021977935566,"good",0.566821615339919,0.0777573961594502
+"825",2022,"Region","PRS-Recreation Workers","Male","Total",1491,353.413424782152,"good",0.433178384660081,0.0777573961594502
+"826",2022,"Region","PRS-Recreation Workers","Total","Total",3442,607.328341387507,"good",0.000804751635221655,0.000141938991826189
+"827",2022,"Region","PRS-Skincare Specialists","Female","Total",2587,562.893064934407,"good",0.984398782343988,0.0223685991510005
+"828",2022,"Region","PRS-Skincare Specialists","Total","Total",2628,562.546588602891,"good",0.000614435589007121,0.000131537232858361
+"829",2022,"Region","PRT-Correctional Officers And Jailers","Male","Total",2020,438.284929110048,"good",0.692967409948542,0.0855229439784053
+"830",2022,"Region","PRT-Correctional Officers And Jailers","Total","Total",2915,553.942361891109,"good",0.000681537192525022,0.000129529748458945
+"831",2022,"Region","PRT-Detectives And Criminal Investigators","Male","Total",1051,240.489210813084,"good",0.773932253313697,0.0870684359197328
+"832",2022,"Region","PRT-Detectives And Criminal Investigators","Total","Total",1358,278.376337057858,"good",0.000317505148352995,6.51022155220393e-05
+"833",2022,"Region","PRT-Firefighters","Male","White alone",3939,692.373640913994,"good",0.856304347826087,0.0469708331183171
+"834",2022,"Region","PRT-Firefighters","Male","Total",4600,757.300990958186,"good",0.943009430094301,0.0269979132926971
+"835",2022,"Region","PRT-Firefighters","Total","Total",4878,752.230279429112,"good",0.00114049345630774,0.000175853593491877
+"836",2022,"Region","PRT-Other Protective Service Workers","Female","White alone",1218,280.130749269426,"good",0.717314487632509,0.0839815255542258
+"837",2022,"Region","PRT-Other Protective Service Workers","Female","Total",1698,307.595646450011,"good",0.487650775416427,0.0666562373275941
+"838",2022,"Region","PRT-Other Protective Service Workers","Male","Total",1784,395.17371791087,"good",0.512349224583573,0.0666562373275941
+"839",2022,"Region","PRT-Other Protective Service Workers","Total","Total",3482,530.500640565118,"good",0.000814103775084777,0.000124043088017515
+"840",2022,"Region","PRT-Police Officers","Male","White alone",4770,638.195129435347,"good",0.691504783995361,0.0544675067590661
+"841",2022,"Region","PRT-Police Officers","Male","Total",6898,825.553210573068,"good",0.837339159990289,0.0419643458331111
+"842",2022,"Region","PRT-Police Officers","Total","Total",8238,941.940128881608,"good",0.00192607320480999,0.000220160799751649
+"843",2022,"Region","PRT-Private Detectives And Investigators","Total","Total",1845,407.431001784351,"good",0.000431367451186506,9.52694948198125e-05
+"844",2022,"Region","PRT-Security Guards And Gambling Surveillance Officers","Female","White alone",1860,443.47396931077,"good",0.479011073911924,0.0819830442272109
+"845",2022,"Region","PRT-Security Guards And Gambling Surveillance Officers","Female","Total",3883,693.942523719544,"good",0.256168359941945,0.0382733343066609
+"846",2022,"Region","PRT-Security Guards And Gambling Surveillance Officers","Male","White alone",5353,662.885709395858,"good",0.474767184035477,0.0512695326693618
+"847",2022,"Region","PRT-Security Guards And Gambling Surveillance Officers","Male","Total",11275,1028.86853434003,"good",0.743831640058055,0.0382733343066609
+"848",2022,"Region","PRT-Security Guards And Gambling Surveillance Officers","Total","Total",15158,1241.92940760687,"good",0.00354399340113011,0.000290311446397898
+"849",2022,"Region","RPR-Aircraft Mechanics And Service Technicians","Male","White alone",6574,680.320770798599,"good",0.665788940652218,0.0444083730765203
+"850",2022,"Region","RPR-Aircraft Mechanics And Service Technicians","Male","Total",9874,876.120652859097,"good",0.912569316081331,0.0238688037753885
+"851",2022,"Region","RPR-Aircraft Mechanics And Service Technicians","Total","Total",10820,910.396266240696,"good",0.00252975383297452,0.000212897334103539
+"852",2022,"Region","RPR-Automotive Service Technicians And Mechanics","Male","White alone",6233,755.610655020163,"good",0.727559238940119,0.0485782124198809
+"853",2022,"Region","RPR-Automotive Service Technicians And Mechanics","Male","Total",8567,868.261402982276,"good",0.968460321049062,0.0191277965044855
+"854",2022,"Region","RPR-Automotive Service Technicians And Mechanics","Total","Total",8846,905.831240511305,"good",0.00206822573072945,0.000211905029602894
+"855",2022,"Region","RPR-Bus And Truck Mechanics And Diesel Engine Specialists","Male","White alone",3412,529.834045631271,"good",0.805286759499646,0.0586254146216896
+"856",2022,"Region","RPR-Bus And Truck Mechanics And Diesel Engine Specialists","Male","Total",4237,559.389016445622,"good",0.97536832412523,0.0222683615401228
+"857",2022,"Region","RPR-Bus And Truck Mechanics And Diesel Engine Specialists","Total","Total",4344,555.540757983831,"good",0.00101564238913506,0.000129879518746857
+"858",2022,"Region","RPR-Computer, Automated Teller, And Office Machine Repairers","Male","Total",1482,359.741980609019,"good",0.812945693911135,0.0940352637266123
+"859",2022,"Region","RPR-Computer, Automated Teller, And Office Machine Repairers","Total","Total",1823,400.450070809396,"good",0.000426223774261789,9.36047848963042e-05
+"860",2022,"Region","RPR-First-Line Supervisors Of Mechanics, Installers, And Repairers","Male","White alone",2230,508.126494141715,"good",0.735730781920158,0.0697246326652938
+"861",2022,"Region","RPR-First-Line Supervisors Of Mechanics, Installers, And Repairers","Male","Total",3031,631.005039461849,"good",0.92833078101072,0.0528859983201444
+"862",2022,"Region","RPR-First-Line Supervisors Of Mechanics, Installers, And Repairers","Total","Total",3265,671.424236587793,"good",0.00076336841632734,0.000157028689285041
+"863",2022,"Region","RPR-Heating, Air Conditioning, And Refrigeration Mechanics And Installers","Male","White alone",3689,563.424747312141,"good",0.726610202875714,0.066271190472138
+"864",2022,"Region","RPR-Heating, Air Conditioning, And Refrigeration Mechanics And Installers","Male","Total",5077,665.073520343804,"good",0.959191384847912,0.0348402074623143
+"865",2022,"Region","RPR-Heating, Air Conditioning, And Refrigeration Mechanics And Installers","Total","Total",5293,680.911283432908,"good",0.00123752190738763,0.000159195076886495
+"866",2022,"Region","RPR-Heavy Vehicle And Mobile Equipment Service Technicians And Mechanics","Male","White alone",2321,489.774129628904,"good",0.747744845360825,0.0792751710042219
+"867",2022,"Region","RPR-Heavy Vehicle And Mobile Equipment Service Technicians And Mechanics","Male","Total",3104,576.473345611053,"good",0.995509942270686,0.00763365064263878
+"868",2022,"Region","RPR-Heavy Vehicle And Mobile Equipment Service Technicians And Mechanics","Total","Total",3118,578.97947766091,"good",0.000728999302330366,0.000135318408570254
+"869",2022,"Region","RPR-Industrial And Refractory Machinery Mechanics","Male","White alone",2621,426.455899223472,"good",0.660367850844041,0.0722401136333792
+"870",2022,"Region","RPR-Industrial And Refractory Machinery Mechanics","Male","Total",3969,580.816864631185,"good",0.968048780487805,0.0306151022243415
+"871",2022,"Region","RPR-Industrial And Refractory Machinery Mechanics","Total","Total",4100,596.682226759982,"good",0.000958594335970013,0.000139469618153432
+"872",2022,"Region","RPR-Maintenance And Repair Workers, General","Male","White alone",6620,798.977617664444,"good",0.645979703356753,0.0460472763739197
+"873",2022,"Region","RPR-Maintenance And Repair Workers, General","Male","Total",10248,1040.04843677951,"good",0.935975888208969,0.02260758617017
+"874",2022,"Region","RPR-Maintenance And Repair Workers, General","Total","Total",10949,1032.87361097208,"good",0.00255991448403309,0.000241642497690302
+"875",2022,"Region","RPR-Other Installation, Maintenance, And Repair Workers","Total","Total",2471,565.494919848976,"good",0.000577728440044367,0.000132218079292296
+"876",2022,"Region","SAL-Advertising Sales Agents","Total","Total",2739,578.947578206568,"good",0.000640387777127284,0.000135369702776242
+"877",2022,"Region","SAL-Cashiers","Female","Asian alone",5082,806.717962520049,"good",0.163429379984564,0.0238867420440563
+"878",2022,"Region","SAL-Cashiers","Female","Hispanic or Latino",3931,653.490820872795,"good",0.126414972986879,0.0206620165453718
+"879",2022,"Region","SAL-Cashiers","Female","Two or More Races",2744,566.352859484483,"good",0.0882428608181117,0.0177072934758698
+"880",2022,"Region","SAL-Cashiers","Female","White alone",16038,1215.07415842872,"good",0.51575765371752,0.0287570703589199
+"881",2022,"Region","SAL-Cashiers","Female","Total",31096,1694.27050311078,"good",0.693673596859106,0.0211502597543646
+"882",2022,"Region","SAL-Cashiers","Male","Asian alone",2264,515.347284483968,"good",0.164870375764637,0.035202840744214
+"883",2022,"Region","SAL-Cashiers","Male","Hispanic or Latino",1797,407.097120724895,"good",0.130862219632974,0.0281970260944215
+"884",2022,"Region","SAL-Cashiers","Male","White alone",6948,759.840261763945,"good",0.505971453539179,0.046681022905161
+"885",2022,"Region","SAL-Cashiers","Male","Total",13732,1217.22641737065,"good",0.306326403140894,0.0211502597543646
+"886",2022,"Region","SAL-Cashiers","Total","Total",44828,2181.96346320321,"good",0.0104809431446009,0.000509463954683807
+"887",2022,"Region","SAL-Door-To-Door Sales Workers, News And Street Vendors, And Related Workers","Total","Total",1464,307.835720279502,"good",0.000342288318990268,7.19763409795344e-05
+"888",2022,"Region","SAL-First-Line Supervisors Of Non-Retail Sales Workers","Female","White alone",4787,660.609655311857,"good",0.690266762797405,0.0664368130676466
+"889",2022,"Region","SAL-First-Line Supervisors Of Non-Retail Sales Workers","Female","Total",6935,833.794258509706,"good",0.403549607215595,0.0370402440263648
+"890",2022,"Region","SAL-First-Line Supervisors Of Non-Retail Sales Workers","Male","White alone",7421,909.394326978127,"good",0.724,0.0408614237950663
+"891",2022,"Region","SAL-First-Line Supervisors Of Non-Retail Sales Workers","Male","Total",10250,1109.7327768668,"good",0.596450392784405,0.0370402440263648
+"892",2022,"Region","SAL-First-Line Supervisors Of Non-Retail Sales Workers","Total","Total",17185,1449.53723344771,"good",0.00401791308869382,0.000338838686018941
+"893",2022,"Region","SAL-First-Line Supervisors Of Retail Sales Workers","Female","Asian alone",3486,574.988448843757,"good",0.147887323943662,0.0237692727452092
+"894",2022,"Region","SAL-First-Line Supervisors Of Retail Sales Workers","Female","White alone",16286,1364.14222408946,"good",0.690904462922111,0.0319036667118884
+"895",2022,"Region","SAL-First-Line Supervisors Of Retail Sales Workers","Female","Total",23572,1601.47331554533,"good",0.485670134954157,0.0216224364311494
+"896",2022,"Region","SAL-First-Line Supervisors Of Retail Sales Workers","Male","Asian alone",4111,678.672755891048,"good",0.164683731923246,0.0255486923195902
+"897",2022,"Region","SAL-First-Line Supervisors Of Retail Sales Workers","Male","White alone",17211,1239.12555445766,"good",0.689460401394063,0.0300989879505584
+"898",2022,"Region","SAL-First-Line Supervisors Of Retail Sales Workers","Male","Total",24963,1388.95046781284,"good",0.514329865045843,0.0216224364311494
+"899",2022,"Region","SAL-First-Line Supervisors Of Retail Sales Workers","Total","Total",48535,2154.68323606482,"good",0.0113476527064158,0.000504694433219698
+"900",2022,"Region","SAL-Insurance Sales Agents","Female","White alone",2475,495.892746439439,"good",0.68922305764411,0.0722734006488676
+"901",2022,"Region","SAL-Insurance Sales Agents","Female","Total",3591,596.36967519002,"good",0.576960154241645,0.0566878708586699
+"902",2022,"Region","SAL-Insurance Sales Agents","Male","White alone",1734,340.00462778652,"good",0.658564375237372,0.0753782651857556
+"903",2022,"Region","SAL-Insurance Sales Agents","Male","Total",2633,440.398483242733,"good",0.423039845758355,0.0566878708586699
+"904",2022,"Region","SAL-Insurance Sales Agents","Total","Total",6224,752.878330144553,"good",0.0014551929627018,0.000176071691880753
+"905",2022,"Region","SAL-Parts Salespersons","Total","Total",1267,287.357064072732,"good",0.000296229030164392,6.71933414389514e-05
+"906",2022,"Region","SAL-Real Estate Brokers And Sales Agents","Female","White alone",8397,736.168837042495,"good",0.803233212167591,0.0292942046481505
+"907",2022,"Region","SAL-Real Estate Brokers And Sales Agents","Female","Total",10454,824.751883338256,"good",0.544139079741828,0.0291386385646416
+"908",2022,"Region","SAL-Real Estate Brokers And Sales Agents","Male","White alone",6655,763.830025961274,"good",0.759876684174469,0.0428286069950388
+"909",2022,"Region","SAL-Real Estate Brokers And Sales Agents","Male","Total",8758,909.195012025061,"good",0.455860920258172,0.0291386385646416
+"910",2022,"Region","SAL-Real Estate Brokers And Sales Agents","Total","Total",19212,1340.65728837994,"good",0.00449183277625754,0.000313755719934051
+"911",2022,"Region","SAL-Retail Salespersons","Female","Asian alone",3895,575.757637449344,"good",0.130032716832476,0.018805219873422
+"912",2022,"Region","SAL-Retail Salespersons","Female","Hispanic or Latino",3408,684.258804054614,"good",0.11377445416305,0.0217753295328228
+"913",2022,"Region","SAL-Retail Salespersons","Female","Two or More Races",2371,532.661439906954,"good",0.0791547038792816,0.0166050818107847
+"914",2022,"Region","SAL-Retail Salespersons","Female","White alone",17991,1267.84265101244,"good",0.600620952126594,0.0273384584156681
+"915",2022,"Region","SAL-Retail Salespersons","Female","Total",29954,1681.97577869451,"good",0.538218277212779,0.0197062419080763
+"916",2022,"Region","SAL-Retail Salespersons","Male","Asian alone",2439,428.431873334314,"good",0.0949027237354086,0.0170958111035169
+"917",2022,"Region","SAL-Retail Salespersons","Male","Hispanic or Latino",2245,432.897776185383,"good",0.0873540856031128,0.0158010910492797
+"918",2022,"Region","SAL-Retail Salespersons","Male","Two or More Races",2166,466.994611103811,"good",0.0842801556420233,0.017071485376297
+"919",2022,"Region","SAL-Retail Salespersons","Male","White alone",16878,1310.36233271851,"good",0.656731517509728,0.0309875296915425
+"920",2022,"Region","SAL-Retail Salespersons","Male","Total",25700,1561.84186929567,"good",0.461781722787221,0.0197062419080763
+"921",2022,"Region","SAL-Retail Salespersons","Total","Total",55654,2386.03924252934,"good",0.0130120997985549,0.000556878327129551
+"922",2022,"Region","SAL-Sales And Related Workers, All Other","Female","White alone",2090,502.526230319125,"good",0.627627627627628,0.088997765553458
+"923",2022,"Region","SAL-Sales And Related Workers, All Other","Female","Total",3330,557.018958811098,"good",0.510892911936177,0.071104262195537
+"924",2022,"Region","SAL-Sales And Related Workers, All Other","Male","Total",3188,772.76227778179,"good",0.489107088063823,0.071104262195537
+"925",2022,"Region","SAL-Sales And Related Workers, All Other","Total","Total",6518,996.283898247633,"good",0.00152393119069574,0.000232833209323817
+"926",2022,"Region","SAL-Sales Representatives Of Services, Except Advertising, Insurance, Financial Services, And Travel","Female","White alone",2747,491.759811859408,"good",0.74850136239782,0.0767550752827364
+"927",2022,"Region","SAL-Sales Representatives Of Services, Except Advertising, Insurance, Financial Services, And Travel","Female","Total",3670,539.342419925644,"good",0.307421678673145,0.0372279327885439
+"928",2022,"Region","SAL-Sales Representatives Of Services, Except Advertising, Insurance, Financial Services, And Travel","Male","White alone",6423,788.162572346277,"good",0.776850507982583,0.0584498636940087
+"929",2022,"Region","SAL-Sales Representatives Of Services, Except Advertising, Insurance, Financial Services, And Travel","Male","Total",8268,901.803868492895,"good",0.692578321326855,0.037227932788544
+"930",2022,"Region","SAL-Sales Representatives Of Services, Except Advertising, Insurance, Financial Services, And Travel","Total","Total",11938,1092.95711392076,"good",0.00279114614214878,0.000255491850916783
+"931",2022,"Region","SAL-Sales Representatives, Wholesale And Manufacturing","Female","White alone",4940,665.019200170191,"good",0.762463343108504,0.0476126083153139
+"932",2022,"Region","SAL-Sales Representatives, Wholesale And Manufacturing","Female","Total",6479,794.45853617574,"good",0.335803876852908,0.0299556626750497
+"933",2022,"Region","SAL-Sales Representatives, Wholesale And Manufacturing","Male","White alone",10091,1184.75562074368,"good",0.787436597737027,0.0402838837690042
+"934",2022,"Region","SAL-Sales Representatives, Wholesale And Manufacturing","Male","Total",12815,1258.73589885051,"good",0.664196123147092,0.0299556626750497
+"935",2022,"Region","SAL-Sales Representatives, Wholesale And Manufacturing","Total","Total",19294,1661.07372471844,"good",0.00451100466297694,0.000388357087007408
+"936",2022,"Region","SAL-Securities, Commodities, And Financial Services Sales Agents","Male","Total",1587,311.250345236756,"good",0.677915420760359,0.0757495111861575
+"937",2022,"Region","SAL-Securities, Commodities, And Financial Services Sales Agents","Total","Total",2341,379.945860459092,"good",0.00054733398548922,8.88346430235096e-05
+"938",2022,"Region","SAL-Travel Agents","Total","Total",1707,382.037748012222,"good",0.000399102568658735,8.93253485254462e-05
+"939",2022,"Region","SCI-Biological Scientists","Female","Total",1120,258.224133709458,"good",0.587002096436059,0.0755305320461242
+"940",2022,"Region","SCI-Biological Scientists","Male","Total",788,185.96359400431,"good",0.412997903563941,0.0755305320461242
+"941",2022,"Region","SCI-Biological Scientists","Total","Total",1908,333.302737653773,"good",0.000446097071470923,7.79432420875898e-05
+"942",2022,"Region","SCI-Chemists And Materials Scientists","Total","Total",984,223.409532736408,"good",0.000230062640632803,5.22406072968571e-05
+"943",2022,"Region","SCI-Geoscientists And Hydrologists, Except Geographers","Total","Total",1549,381.822891521711,"good",0.000362161616199403,8.92782050577387e-05
+"944",2022,"Region","SCI-Occupational Health And Safety Specialists And Technicians","Total","Total",1313,317.569369618671,"good",0.000306983991006982,7.42375422776774e-05
+"945",2022,"Region","SCI-Other Life Scientists","Female","Total",2218,511.559824353418,"good",0.607006020799124,0.0821300905785558
+"946",2022,"Region","SCI-Other Life Scientists","Male","Total",1436,351.17455993067,"good",0.392993979200876,0.0821300905785558
+"947",2022,"Region","SCI-Other Life Scientists","Total","Total",3654,599.149559033469,"good",0.000854317976496202,0.000140072227643185
+"948",2022,"Region","SCI-Other Life, Physical, And Social Science Technicians","Female","White alone",1447,310.48301918543,"good",0.604175365344468,0.0972511692339701
+"949",2022,"Region","SCI-Other Life, Physical, And Social Science Technicians","Female","Total",2395,471.12739690953,"good",0.519297484822203,0.0771823964476874
+"950",2022,"Region","SCI-Other Life, Physical, And Social Science Technicians","Male","Total",2217,471.871913028313,"good",0.480702515177797,0.0771823964476875
+"951",2022,"Region","SCI-Other Life, Physical, And Social Science Technicians","Total","Total",4612,614.119832924528,"good",0.00107830172621798,0.000143645898164749
+"952",2022,"Region","SCI-Other Psychologists","Female","White alone",1835,338.745204569378,"good",0.837899543378995,0.0573525556004899
+"953",2022,"Region","SCI-Other Psychologists","Female","Total",2190,384.182697671303,"good",0.68523153942428,0.0966378088645196
+"954",2022,"Region","SCI-Other Psychologists","Total","Total",3196,515.638756981329,"good",0.000747235975063454,0.000120594017802223
+"955",2022,"Region","SCI-Physical Scientists, All Other","Female","White alone",2242,348.867037592763,"good",0.560219890054973,0.0607155186672001
+"956",2022,"Region","SCI-Physical Scientists, All Other","Female","Total",4002,523.510492132202,"good",0.424615384615385,0.0457123023226242
+"957",2022,"Region","SCI-Physical Scientists, All Other","Male","Asian alone",2406,563.382480952106,"good",0.443665867600959,0.0643050769584352
+"958",2022,"Region","SCI-Physical Scientists, All Other","Male","White alone",2446,443.042050959895,"good",0.451041858749769,0.0601755151901921
+"959",2022,"Region","SCI-Physical Scientists, All Other","Male","Total",5423,783.306008427581,"good",0.575384615384615,0.0457123023226242
+"960",2022,"Region","SCI-Physical Scientists, All Other","Total","Total",9425,978.497315021227,"good",0.00220359795524814,0.00022896745470709
+"961",2022,"Region","TRN-Aircraft Pilots And Flight Engineers","Male","White alone",3140,419.416614564206,"good",0.886254586508609,0.0392330883418794
+"962",2022,"Region","TRN-Aircraft Pilots And Flight Engineers","Male","Total",3543,477.448462468726,"good",0.914086687306502,0.0306384586051419
+"963",2022,"Region","TRN-Aircraft Pilots And Flight Engineers","Total","Total",3876,513.080088469383,"good",0.00090622235273653,0.00011996186382507
+"964",2022,"Region","TRN-Bus Drivers, School","Female","White alone",1916,387.243971169985,"good",0.80133835215391,0.0727392271447607
+"965",2022,"Region","TRN-Bus Drivers, School","Female","Total",2391,483.10138074606,"good",0.608087487283825,0.0673796856370285
+"966",2022,"Region","TRN-Bus Drivers, School","Male","White alone",1255,273.218851749381,"good",0.81440622972096,0.0895452431896323
+"967",2022,"Region","TRN-Bus Drivers, School","Male","Total",1541,293.909300905483,"good",0.391912512716175,0.0673796856370285
+"968",2022,"Region","TRN-Bus Drivers, School","Total","Total",3932,552.407802454401,"good",0.000919315348544901,0.000129177728625669
+"969",2022,"Region","TRN-Bus Drivers, Transit And Intercity","Male","White alone",2415,529.60301731462,"good",0.503859795535155,0.0797561564085117
+"970",2022,"Region","TRN-Bus Drivers, Transit And Intercity","Male","Total",4793,721.174829119126,"good",0.705891016200295,0.0557307910276354
+"971",2022,"Region","TRN-Bus Drivers, Transit And Intercity","Total","Total",6790,944.622325506999,"good",0.00158752574176497,0.000220774865881591
+"972",2022,"Region","TRN-Cleaners Of Vehicles And Equipment","Male","Total",4224,649.243489259808,"good",0.780343617217809,0.0643548212501983
+"973",2022,"Region","TRN-Cleaners Of Vehicles And Equipment","Total","Total",5413,730.578095602209,"good",0.001265578326977,0.000170784695250494
+"974",2022,"Region","TRN-Driver/Sales Workers And Truck Drivers","Female","White alone",3928,601.58731812805,"good",0.676075731497418,0.061255948687766
+"975",2022,"Region","TRN-Driver/Sales Workers And Truck Drivers","Female","Total",5810,795.841241465595,"good",0.121616812844075,0.0143277801240955
+"976",2022,"Region","TRN-Driver/Sales Workers And Truck Drivers","Male","Asian alone",3486,528.30244892249,"good",0.0830731835188142,0.0132463509518974
+"977",2022,"Region","TRN-Driver/Sales Workers And Truck Drivers","Male","Black or African American alone",5190,963.745962020075,"good",0.123680385101161,0.0203757617615429
+"978",2022,"Region","TRN-Driver/Sales Workers And Truck Drivers","Male","Hispanic or Latino",4676,755.415452089114,"good",0.111431499177847,0.0155649226127257
+"979",2022,"Region","TRN-Driver/Sales Workers And Truck Drivers","Male","Two or More Races",2191,476.774240988332,"good",0.0522126635369254,0.0113025162184871
+"980",2022,"Region","TRN-Driver/Sales Workers And Truck Drivers","Male","White alone",25400,1512.98999079183,"good",0.60529514095751,0.0248479672536525
+"981",2022,"Region","TRN-Driver/Sales Workers And Truck Drivers","Male","Total",41963,2172.7312941618,"good",0.878383187155925,0.0143277801240955
+"982",2022,"Region","TRN-Driver/Sales Workers And Truck Drivers","Total","Total",47773,2487.17189258604,"good",0.0111694944420233,0.000582294302140124
+"983",2022,"Region","TRN-Flight Attendants","Female","White alone",2148,365.647645678186,"good",0.710552431359577,0.062537359312739
+"984",2022,"Region","TRN-Flight Attendants","Female","Total",3023,404.782325874043,"good",0.812634408602151,0.0532314221097163
+"985",2022,"Region","TRN-Flight Attendants","Total","Total",3720,455.632930279408,"good",0.000869749007270354,0.000106615348428776
+"986",2022,"Region","TRN-Industrial Truck And Tractor Operators","Male","White alone",3043,628.43962794866,"good",0.479363579080025,0.0680814151760278
+"987",2022,"Region","TRN-Industrial Truck And Tractor Operators","Male","Total",6348,819.942985334956,"good",0.902088958362939,0.0390551225893475
+"988",2022,"Region","TRN-Industrial Truck And Tractor Operators","Total","Total",7037,901.023504039295,"good",0.00164527520541975,0.000210585414798148
+"989",2022,"Region","TRN-Laborers And Freight, Stock, And Material Movers, Hand","Female","Asian alone",1394,337.816080154942,"good",0.134504052489386,0.0296397667746501
+"990",2022,"Region","TRN-Laborers And Freight, Stock, And Material Movers, Hand","Female","White alone",5583,732.838453367282,"good",0.538691624855268,0.0528061982957795
+"991",2022,"Region","TRN-Laborers And Freight, Stock, And Material Movers, Hand","Female","Total",10364,1104.38419892943,"good",0.246398174123912,0.0237452734673768
+"992",2022,"Region","TRN-Laborers And Freight, Stock, And Material Movers, Hand","Male","Asian alone",2783,548.147348250222,"good",0.087797337371443,0.0166202158021151
+"993",2022,"Region","TRN-Laborers And Freight, Stock, And Material Movers, Hand","Male","Black or African American alone",2940,645.167343253865,"good",0.092750331251183,0.0190211107399578
+"994",2022,"Region","TRN-Laborers And Freight, Stock, And Material Movers, Hand","Male","Hispanic or Latino",4041,620.965820482496,"good",0.1274843838728,0.0196515671035964
+"995",2022,"Region","TRN-Laborers And Freight, Stock, And Material Movers, Hand","Male","White alone",17970,1503.09389476714,"good",0.566912738974068,0.0297858657426929
+"996",2022,"Region","TRN-Laborers And Freight, Stock, And Material Movers, Hand","Male","Total",31698,1912.84370815515,"good",0.753601825876088,0.0237452734673768
+"997",2022,"Region","TRN-Laborers And Freight, Stock, And Material Movers, Hand","Total","Total",42062,2108.78570929724,"good",0.00983424267306602,0.000493133989594021
+"998",2022,"Region","TRN-Motor Vehicle Operators, All Other","Total","Total",2031,466.36170677115,"good",0.000474854901550024,0.000109044453200478
+"999",2022,"Region","TRN-Packers And Packagers, Hand","Female","Total",4828,795.937546503336,"good",0.625064733298809,0.0548826753688068
+"1000",2022,"Region","TRN-Packers And Packagers, Hand","Male","Total",2896,534.469714755897,"good",0.374935266701191,0.0548826753688068
+"1001",2022,"Region","TRN-Packers And Packagers, Hand","Total","Total",7724,1012.35189834489,"good",0.00180589820756887,0.000236768884424521
+"1002",2022,"Region","TRN-Parking Attendants","Male","Total",1329,318.261377149349,"good",0.832706766917293,0.0943310483877443
+"1003",2022,"Region","TRN-Parking Attendants","Total","Total",1596,344.446855997046,"good",0.000373150380538571,8.05585480461826e-05
+"1004",2022,"Region","TRN-Sailors And Marine Oilers, And Ship Engineers","Male","White alone",1829,358.120504800758,"good",0.643334505803728,0.0619240753291722
+"1005",2022,"Region","TRN-Sailors And Marine Oilers, And Ship Engineers","Male","Total",2843,481.224640431836,"good",0.862560679611651,0.0630801948691828
+"1006",2022,"Region","TRN-Sailors And Marine Oilers, And Ship Engineers","Total","Total",3296,531.182573724656,"good",0.000770616324721259,0.000124169983052613
+"1007",2022,"Region","TRN-Shuttle Drivers and Chauffeurs","Male","Total",1350,324.295385112092,"good",0.826699326393141,0.0850070979108524
+"1008",2022,"Region","TRN-Shuttle Drivers and Chauffeurs","Total","Total",1633,340.54380614871,"good",0.000381801109911959,7.96124686371873e-05
+"1009",2022,"Region","TRN-Stockers And Order Fillers","Female","Asian alone",1492,307.634572238313,"good",0.135698044565712,0.0252173711544178
+"1010",2022,"Region","TRN-Stockers And Order Fillers","Female","White alone",6344,627.794158610129,"good",0.576989540700318,0.0422390844910093
+"1011",2022,"Region","TRN-Stockers And Order Fillers","Female","Total",10995,943.050466005796,"good",0.389935099478668,0.0249843993778621
+"1012",2022,"Region","TRN-Stockers And Order Fillers","Male","Asian alone",1808,400.235802029566,"good",0.105104057667713,0.0214035226876725
+"1013",2022,"Region","TRN-Stockers And Order Fillers","Male","Black or African American alone",1789,440.891763314705,"good",0.103999534937798,0.0246281057501285
+"1014",2022,"Region","TRN-Stockers And Order Fillers","Male","Hispanic or Latino",2091,441.9634697574,"good",0.121555633065923,0.0251550875535878
+"1015",2022,"Region","TRN-Stockers And Order Fillers","Male","White alone",9577,1030.26022995649,"good",0.556737588652482,0.0393926305577528
+"1016",2022,"Region","TRN-Stockers And Order Fillers","Male","Total",17202,1299.99079565443,"good",0.610064900521332,0.0249843993778621
+"1017",2022,"Region","TRN-Stockers And Order Fillers","Total","Total",28197,1723.3482748178,"good",0.00659255719301133,0.000402873249547585
+"1018",2022,"Region","TRN-Supervisors Of Transportation And Material Moving Workers","Male","White alone",1949,365.362424947818,"good",0.632792207792208,0.0865240938578527
+"1019",2022,"Region","TRN-Supervisors Of Transportation And Material Moving Workers","Male","Total",3080,462.910570211731,"good",0.743961352657005,0.0600627009526788
+"1020",2022,"Region","TRN-Supervisors Of Transportation And Material Moving Workers","Total","Total",4140,582.708366485758,"good",0.000967946475833135,0.000136195141834487
+"1021",2022,"Region","TRN-Taxi Drivers","Male","Black or African American alone",3740,840.760529934803,"good",0.411985018726592,0.0656681318940068
+"1022",2022,"Region","TRN-Taxi Drivers","Male","White alone",1915,464.508649980008,"good",0.210949548358669,0.0498991658792542
+"1023",2022,"Region","TRN-Taxi Drivers","Male","Total",9078,1211.59576868638,"good",0.891660937039583,0.0345409352955541
+"1024",2022,"Region","TRN-Taxi Drivers","Total","Total",10181,1242.81753160561,"good",0.00238035339866115,0.00029067795799032
+"1025",2022,"Region","TRN-Transportation Service Attendants","Male","Total",2040,498.597437640077,"good",0.850708924103419,0.0851489578388984
+"1026",2022,"Region","TRN-Transportation Service Attendants","Total","Total",2398,538.839455238061,"good",0.000560660784794169,0.000125996354846607
+"1027",2022,"Region","Unemployed, With No Work Experience In The Last 5 Years Or Earlier Or Never Worked","Female","Asian alone",1549,321.368759445438,"good",0.222653442575823,0.0462709516439181
+"1028",2022,"Region","Unemployed, With No Work Experience In The Last 5 Years Or Earlier Or Never Worked","Female","White alone",3368,587.7260641064,"good",0.484116716975708,0.0559752451026532
+"1029",2022,"Region","Unemployed, With No Work Experience In The Last 5 Years Or Earlier Or Never Worked","Female","Total",6957,822.966636379477,"good",0.53470140650219,0.044935226604649
+"1030",2022,"Region","Unemployed, With No Work Experience In The Last 5 Years Or Earlier Or Never Worked","Male","White alone",3259,616.684479579104,"good",0.538321770730096,0.0628592910258354
+"1031",2022,"Region","Unemployed, With No Work Experience In The Last 5 Years Or Earlier Or Never Worked","Male","Total",6054,801.819641852206,"good",0.46529859349781,0.044935226604649
+"1032",2022,"Region","Unemployed, With No Work Experience In The Last 5 Years Or Earlier Or Never Worked","Total","Total",13011,1134.24968760024,"good",0.00304201729397703,0.000265153772659057
+"1033",2022,"Region","Total","Total","Total",4277096,1738.55302019093,"good",1,0
+"1034",2022,"Region",NA,"Female","American Indian or Alaskan Native Alone",5807,644.128522678122,"good",0.00703637418921752,0.000780035580802284
+"1035",2022,"Region",NA,"Female","Asian alone",115722,2842.84900266968,"good",0.140220990860105,0.0033517052552816
+"1036",2022,"Region",NA,"Female","Black or African American alone",44827,2072.50556101878,"good",0.0543171251558556,0.00249172054670287
+"1037",2022,"Region",NA,"Female","Hispanic or Latino",97199,1679.1210085544,"good",0.117776568764896,0.00194993870860322
+"1038",2022,"Region",NA,"Female","Native Hawaiian and Other Pacific Islander alone",7467,762.142542553557,"good",0.00904780541947429,0.000916328543360154
+"1039",2022,"Region",NA,"Female","Some Other Race alone",4021,767.549666917392,"good",0.00487226805835089,0.00093018068063266
+"1040",2022,"Region",NA,"Female","Two or More Races",70505,2972.80682069215,"good",0.085431300535695,0.00352939070293883
+"1041",2022,"Region",NA,"Female","White alone",479735,4046.38701995975,"good",0.581297567016405,0.00328660497592658
+"1042",2022,"Region",NA,"Female","Total",825283,5224.14911081197,"good",0.545866495753292,0.00225189180697543
+"1043",2022,"Region",NA,"Male","American Indian or Alaskan Native Alone",4505,565.925546495517,"good",0.00656137397064349,0.000824495443099184
+"1044",2022,"Region",NA,"Male","Asian alone",83493,2085.30477103558,"good",0.121604616410863,0.00299705757849885
+"1045",2022,"Region",NA,"Male","Black or African American alone",43391,2243.82697366519,"good",0.0631974645860581,0.00316687028095873
+"1046",2022,"Region",NA,"Male","Hispanic or Latino",87995,1452.27546548856,"good",0.128161620987075,0.00190687870595514
+"1047",2022,"Region",NA,"Male","Native Hawaiian and Other Pacific Islander alone",6219,653.417937376225,"good",0.00905775465558977,0.000945707132870674
+"1048",2022,"Region",NA,"Male","Some Other Race alone",4100,801.828838279249,"good",0.00597150572245024,0.00116016800645863
+"1049",2022,"Region",NA,"Male","Two or More Races",66975,2572.71428856301,"good",0.0975467306734402,0.00363242678008181
+"1050",2022,"Region",NA,"Male","White alone",389916,2929.58328954328,"good",0.56789893299388,0.00323305353881562
+"1051",2022,"Region",NA,"Male","Total",686594,4666.0060216272,"good",0.454133504246708,0.00225189180697545
+"1052",2022,"Region",NA,"Total","Total",1511877,7157.8414631208,"good",0.353482128995936,0.00166618166196017

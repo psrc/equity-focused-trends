@@ -9,6 +9,10 @@ https://www.wsj.com/economy/jobs/workers-america-jobs-demographics-charts-94a5ff
 https://www.americanprogress.org/article/occupational-segregation-in-america/#interactive-visualization
 
 
+
+https://www.epi.org/publication/racial-representation-prof-occ/
+
+
 ```{r setup, include=FALSE}
 library(psrccensus)
 library(tidycensus)
@@ -16,24 +20,23 @@ library(dplyr)
 library(tidyr)
 library(psrcplot)
 library(tidyverse)
-
-```
-
-data dictionary
-```{r}
-pums_vars<-tidycensus::pums_variables%>%filter(survey=='acs5')%>%filter(year==2022)
+library(openxlsx)
 
 ```
 
 ```{r}
-acs_vars<-tidycensus::load_variables(2022, 'acs1', cache=TRUE)
+wb <- createWorkbook()
+xlsx_file <- "occupational_segregation.xlsx"
 ```
+
 
 ## Median Wage by Race and Sex, workers more than 30 hours per week
 ```{r}
 race_sex_wage<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("SEX", "PRACE", "WAGP", 'ESR', 'WKHP'))%>%filter(WKHP>30)
 
 ```
+
+
 ```{r}
 
 race_sex_wage_wrkr<-race_sex_wage%>%mutate(worker=case_when(str_detect(ESR, 'Armed') ~'Worker',
@@ -41,27 +44,30 @@ race_sex_wage_wrkr<-race_sex_wage%>%mutate(worker=case_when(str_detect(ESR, 'Arm
                                                             .default = 'Not Worker'))
 ```
 
+
 ```{r}
 race_sex_medwage<-psrc_pums_median(race_sex_wage_wrkr, stat_var='WAGP', group_vars=c('SEX', 'PRACE','worker'))
+
 ```
 
 Overall median wage for all workers who work more than 30 hours per week
 ```{r}
 med_wage<-psrc_pums_median(race_sex_wage_wrkr, stat_var='WAGP', group_vars=c('worker'))
-```
-
-```{r}
 med_wage_wrker<-med_wage%>%filter(worker=='Worker')%>%pull(WAGP_median)
-
-
 ```
 
 
-
-```{r}
+Median wage by race and sex
+```{r }
 race_sex_medwage_wrkr<-race_sex_medwage%>%filter(worker=='Worker')%>%filter(worker!='Total')%>%filter(PRACE!='Total') %>%filter(SEX != 'Total')%>%mutate(median_wage_rd=round(WAGP_median,-3))
 race_sex_medwage_wrkr<-race_sex_medwage_wrkr%>%mutate(PRACE_ordered=forcats::fct_reorder(PRACE, -median_wage_rd))
-psrcplot::static_bar_chart(t=race_sex_medwage_wrkr, y='PRACE', x='median_wage_rd', fill='SEX', est='currency', moe='WAGP_median_moe')+
+addWorksheet(wb = wb, sheetName = 'wages_race_gender', gridLines = FALSE)
+writeDataTable(wb = wb, sheet = 'wages_race_gender', x = race_sex_medwage_wrkr)
+
+```
+
+```{r }
+psrcplot::static_bar_chart(t=race_sex_medwage_wrkr, y='PRACE_ordered', x='median_wage_rd', fill='SEX', est='currency', color='psrc_pairs')+theme(axis.text=element_text(size=14))+
                           ggplot2::geom_hline(yintercept= med_wage_wrker, 
                                               linetype='dotdash', 
                                               linewidth=1, 
@@ -69,15 +75,50 @@ psrcplot::static_bar_chart(t=race_sex_medwage_wrkr, y='PRACE', x='median_wage_rd
                                               color='#00716c') +
                           ggplot2::annotate("text", 
                                             y=med_wage_wrker+5000, 
-                                            x=6, 
-                                            label="Region",
+                                            x=2.5, 
+                                            label=paste0("All Regional Workers: $", round(med_wage_wrker,-3)),
                                             angle='270', 
-                                            color='#00716c')
+                                            color='black')
+```
+
+```{r}
+female_wrkr<-race_sex_medwage_wrkr%>%filter(SEX =='Female')%>%mutate(PRACE_ordered=forcats::fct_reorder(PRACE, -median_wage_rd))
+male_wrkr<-race_sex_medwage_wrkr%>%filter(SEX=='Male')%>%mutate(PRACE_ordered=forcats::fct_reorder(PRACE, -median_wage_rd))
+```
+
+
+```{r }
+psrcplot::static_bar_chart(t=female_wrkr, y='PRACE_ordered', x='median_wage_rd', fill='PRACE_ordered', est='currency', color='pognbgy_10')+theme(axis.text=element_text(size=14))+
+                          ggplot2::geom_hline(yintercept= med_wage_wrker, 
+                                              linetype='dotdash', 
+                                              linewidth=1, 
+                                              show.legend = FALSE, 
+                                              color='#00716c') +
+                          ggplot2::annotate("text", 
+                                            y=med_wage_wrker+5000, 
+                                            x=5, 
+                                            label=paste0("All Regional Workers: $", round(med_wage_wrker,-3)),
+                                            angle='270', 
+                                            color='black')
+```
+```{r }
+psrcplot::static_bar_chart(t=male_wrkr, y='PRACE_ordered', x='median_wage_rd', fill='PRACE_ordered', est='currency', color='pognbgy_10')+theme(axis.text=element_text(size=14))+
+                          ggplot2::geom_hline(yintercept= med_wage_wrker, 
+                                              linetype='dotdash', 
+                                              linewidth=1, 
+                                              show.legend = FALSE, 
+                                              color='#00716c') +
+                          ggplot2::annotate("text", 
+                                            y=med_wage_wrker+5000, 
+                                            x=3, 
+                                            label=paste0("All Regional Workers: $", round(med_wage_wrker,-3)),
+                                            angle='270', 
+                                            color='black')
 ```
 
 
 
-## Top Occupation by Race and Sex
+## Occupation by Race and Sex
 
 ```{r}
 soc_gend_prace<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("SOCP", "SEX", "PRACE"))
@@ -90,43 +131,101 @@ esr_prace_count<-psrc_pums_count(esr_prace, group_vars=c("ESR", 'PRACE'))
 ```
 
 
-count how many by sex, race and occupation
+count how many by sex, race and occupation: this takes a long time to run
 ```{r}
-soc_gend_count_prace<-psrc_pums_count(soc_gend_prace, group_vars=c("SOCP", "SEX", 'PRACE'))
+soc_gend_count_prace<-psrc_pums_count(soc_gend_prace, group_vars=c("SOCP", "SEX", 'PRACE'), rr=TRUE)
 
 ```
-Top Occupation by Race and Gender (detailed)
+
+
+%>%filter(reliability=='good')
+### Top Occupation by Race and Sex (detailed)
 
 ```{r }
-job_grp_gender_race<-soc_gend_count_prace%>%
+job_grp_gender_race_1<-soc_gend_count_prace%>%
   group_by(SOCP, SEX, PRACE)%>%
   summarize(workers=sum(count))%>%
   filter(SEX!='Total')%>%filter(PRACE!='Total')%>%filter(SOCP!='Total')%>%
-  group_by(SEX, PRACE)%>%filter(workers==max(workers))%>%arrange(SOCP,SEX, PRACE)%>%
-  pivot_wider(id_cols=PRACE, names_from=SEX, values_from=SOCP)
+  mutate(occupation=substr(SOCP,5,52))%>%
+  group_by(SEX, PRACE)%>%filter(workers==max(workers))%>%arrange(occupation,SEX, PRACE)
+
+job_grp_gender_race<- as.data.frame(job_grp_gender_race_1%>%
+  pivot_wider(id_cols=PRACE, names_from=SEX, values_from=occupation))
 ```
+
+
 
 ```{r}
-write.csv(job_grp_gender_race, 'soc_gend_racecount.csv')
+addWorksheet(wb = wb, sheetName = 'common_occupation_sex_race', gridLines = FALSE)
+writeDataTable(wb = wb, sheet = 'common_occupation_sex_race', x = job_grp_gender_race)
 ```
 
+## Median Earnings by Occupation
 
-
-Median Earnings by Occupation, To find the top and bottom occupations
 ```{r}
 earnings_by_occ<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("SOCP", "WAGP"))
 ```
-only taking good reliability estimates
+
 ```{r}
-earn_by_occ_median<-psrc_pums_median(earnings_by_occ, stat_var="WAGP",group_vars= c('SOCP'),rr=TRUE)%>%filter(COUNTY=='Region' & reliability=='good')
+earn_by_occ_median<-psrc_pums_median(earnings_by_occ, stat_var="WAGP",group_vars= c('SOCP'),rr=TRUE)%>%filter(COUNTY=='Region')
 ```
+```{r}
+earn_by_occ_median<-earn_by_occ_median%>%filter(SOCP!='BUS-Buyers And Purchasing Agents, Farm Products')# there weren't any female observations there, but the reliability was good?
+```
+
+```{r}
+job_grp_gend_race_income<-left_join(job_grp_gender_race_1, earn_by_occ_median, by = 'SOCP')%>%ungroup%>% mutate(MedianWage=round(WAGP_median, -3))%>%drop_na()%>%mutate(occupation=forcats::fct_reorder(substr(SOCP,5,52), -MedianWage))%>%distinct(occupation, MedianWage)
+
+```
+
+```{r }
+psrcplot::static_bar_chart(t=job_grp_gend_race_income, x='MedianWage' , y='occupation', fill='occupation', est='currency', color='psrc_pairs')+theme(axis.text=element_text(size=12))+
+                          ggplot2::geom_hline(yintercept= med_wage_wrker, 
+                                              linetype='dotdash', 
+                                              linewidth=1, 
+                                              show.legend = FALSE, 
+                                              color='#00716c') +
+                          ggplot2::annotate("text", 
+                                            y=med_wage_wrker+5000, 
+                                            angle=270,
+                                            x=5, 
+                                            label=paste0("All Regional Workers: $", round(med_wage_wrker,-3)), 
+                                            color='black')
+```
+
+
+
+
+```{r}
+addWorksheet(wb = wb, sheetName = 'common_occupation_wages_1', gridLines = FALSE)
+writeDataTable(wb = wb, sheet = 'common_occupation_wages_1', x = job_grp_gend_race_income)
+```
+
+
+
 ## Top Ten Occupations by Median Wages
+
+## Median Earnings by Occupation
+
 ```{r}
-top_10<-earn_by_occ_median%>%top_n(n=10, wt=WAGP_median)%>%mutate(occupation=forcats::fct_reorder(substr(SOCP,5,25), -WAGP_median))%>%mutate(MedianWage=round(WAGP_median, -3))
+earnings_by_occ<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("SOCP", "WAGP"))
+```
+
+```{r}
+earn_by_occ_median<-psrc_pums_median(earnings_by_occ, stat_var="WAGP",group_vars= c('SOCP'),rr=TRUE)
+```
+```{r}
+earn_by_occ_median<-earn_by_occ_median%>%filter(SOCP!='BUS-Buyers And Purchasing Agents, Farm Products')# there weren't any female observations there, but the reliability was good?
+```
+```{r}
+top_10<-earn_by_occ_median%>%top_n(n=10, wt=WAGP_median)%>%mutate(occupation=forcats::fct_reorder(substr(SOCP,5,50), -WAGP_median))%>%mutate(MedianWage=round(WAGP_median, -3))
 
 ```
 
-workers by race in the top ten occupations was difficult to analyze (so many categories) Also Asian and white workers accounted for such a great share of the top professions, it was hard to see the other race categories; we could potentially summarize all other races?
+```{r}
+addWorksheet(wb = wb, sheetName = 'top10_occupations', gridLines = FALSE)
+writeDataTable(wb = wb, sheet = 'top10_occupations', x = top_10)
+```
 
 # Find the share of workers by sex in the top ten occupations
 
@@ -140,12 +239,33 @@ soc_sex_count<-psrc_pums_count(soc_sex, group_vars=c("SOCP",  'SEX'))%>%filter(C
 ```
 
 ```{r}
-share_occ_sex<-merge(soc_sex_count, top_10)%>%filter(SEX!='Total')%>%mutate(occupation=forcats::fct_reorder(substr(SOCP,5,25), -WAGP_median))
+share_occ_sex<-merge(soc_sex_count, top_10)%>%filter(SEX!='Total')%>%mutate(occupation=forcats::fct_reorder(substr(SOCP,5,50), -WAGP_median))
 ```
+
+```{r}
+addWorksheet(wb = wb, sheetName = 'share_top_10_sex', gridLines = FALSE)
+writeDataTable(wb = wb, sheet = 'share_top_10_sex', x = share_occ_sex)
+```
+
 ```{r}
 
-static_bar_chart(top_10, y='occupation', x='MedianWage', fill='COUNTY', est='currency' )
+static_bar_chart(top_10, y='occupation', x='MedianWage', fill='occupation', est='currency', color= 'psrc_pairs' )+theme(axis.text=element_text(size=12))+
+                          ggplot2::geom_hline(yintercept= med_wage_wrker, 
+                                              linetype='dotdash', 
+                                              linewidth=1, 
+                                              show.legend = FALSE, 
+                                              color='#00716c') +
+                          ggplot2::annotate("text", 
+                                            y=med_wage_wrker+5000, 
+                                            angle=270,
+                                            x=5, 
+                                            label=paste0("All Regional Workers: $", round(med_wage_wrker,-3)), 
+                                            color='black')
 ```
+
+
+
+
 
 Share of all Workers that is Female
 
@@ -160,23 +280,108 @@ worker_sex<- esr_sex%>%mutate(worker=case_when(str_detect(ESR, 'Armed') ~'Worker
 ```
 
 
+
+
 ```{r}
+
 share_wrkr_sex<- psrc_pums_count(worker_sex, group_vars=c( 'worker','SEX'))%>%filter(worker=='Worker' & SEX=='Female')%>%pull(share)
 ```
 
+
+
 ```{r}
-static_bar_chart(t=share_occ_sex, y= 'occupation', x='share', fill= 'SEX', pos='stack')+
+share_occ_sex<- share_occ_sex%>%filter(SEX=='Female')
+static_bar_chart(t=share_occ_sex, y= 'occupation', x='share', fill= 'occupation', pos='stack', color='psrc_pairs')+theme(axis.text=element_text(size=12))+
                           ggplot2::geom_hline(yintercept= share_wrkr_sex, 
                                               linetype='dotdash', 
                                               linewidth=1, 
                                               show.legend = FALSE, 
                                               color='#00716c') +
                           ggplot2::annotate("text", 
-                                            y=share_wrkr_sex, 
-                                            x=6, 
-                                            label="Female Share of all Workers",
+                                            y=share_wrkr_sex+.05, 
+                                            x=5, 
+                                            label=paste0("Female Share of all Workers: ", scales::percent(share_wrkr_sex)),
                                             angle='270', 
-                                            color='#00716c')
+                                            color='orange')
+```
+
+```{r}
+soc_race<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("SOCP", "PRACE"))
+
+
+
+```
+
+```{r}
+top_10_names<-top_10$SOCP
+soc_brace<-soc_race%>% mutate(BroadRace=case_when(
+                            PRACE =='Asian alone' ~'Asian and White alone',
+                            PRACE =='White alone' ~'Asian and White alone',
+                            .default  = 'People of Color, not Asian'))%>%
+  mutate(BroadRace=as.factor(BroadRace))%>%filter(SOCP %in% top_10_names)
+
+
+```
+
+
+```{r}
+soc_race_count<-psrc_pums_count(soc_brace, group_vars=c('SOCP',"BroadRace"))%>%filter(COUNTY=='Region')
+```
+
+```{r}
+share_occ_race_top<-merge(soc_race_count, top_10)%>%filter(BroadRace!='Total')%>%mutate(occupation=forcats::fct_reorder(substr(SOCP,5,50), -WAGP_median))%>%mutate(BroadRace=factor(BroadRace, level= c('People of Color, not Asian', 'Asian and White alone')))
+```
+
+```{r}
+addWorksheet(wb = wb, sheetName = 'share_top_10_race_1', gridLines = FALSE)
+writeDataTable(wb = wb, sheet = 'share_top_10_race_1', x = share_occ_race_top)
+```
+
+
+```{r}
+esr_race<-get_psrc_pums(span =5, dyear= 2022, level='p', vars= c("PRACE",  'ESR'))%>% mutate(BroadRace=case_when(
+                            PRACE =='Asian alone' ~'Asian and White alone',
+                            PRACE =='White alone' ~'White alone',
+                            .default  = 'People of Color, not Asian'))
+```
+
+```{r}
+worker_race<- esr_race%>%mutate(worker=case_when(str_detect(ESR, 'Armed') ~'Worker',
+                                                            str_detect(ESR, 'Civilian')~'Worker',
+                                                            .default = 'Not Worker'))
+```
+
+
+```{r}
+share_wrkr_race_HBAO<- psrc_pums_count(worker_race, group_vars=c( 'worker','BroadRace'))%>%filter(worker=='Worker')%>%filter(BroadRace=='People of Color, not Asian')
+
+share_wrkr_race_Asian<- psrc_pums_count(worker_race, group_vars=c( 'worker','BroadRace'))%>%filter(worker=='Worker')%>%filter(BroadRace=='Asian and White alone')
+
+
+```
+
+
+
+
+```{r}
+share_wrkr_race_HBAO<-share_wrkr_race_HBAO$share
+```
+
+
+
+```{r}
+static_bar_chart(t=share_occ_race_top%>%filter(BroadRace=='People of Color, not Asian'), y= 'occupation', x='share', fill= 'BroadRace', pos='stack', color='psrc_pairs')+
+                          ggplot2::geom_hline(yintercept= share_wrkr_race_HBAO, 
+                                              linetype='dotdash', 
+                                              linewidth=1, 
+                                              show.legend = FALSE, 
+                                              color='#00716c') +
+                          ggplot2::annotate("text", 
+                                            y=share_wrkr_race_HBAO+.02,
+                                            x=6, 
+                                            label=paste0("Regional Share of Workers: ", scales::percent(share_wrkr_race_HBAO)),
+                                            angle='270', 
+                                            color='orange')
 ```
 
 Bottom Ten Occupations
@@ -213,4 +418,47 @@ static_bar_chart(t=share_occ_sex, y= 'occupation', x='share', fill= 'SEX', pos='
                                             label="Female Share of all Workers",
                                             angle='270', 
                                             color='#00716c')
+```
+```{r}
+bottom_10_names<-bottom_10$SOCP
+soc_brace<-soc_race%>%mutate(BroadRace=case_when(
+                            PRACE =='Asian alone' ~'Asian and White alone',
+                            PRACE =='White alone' ~'Asian and White alone',
+                            .default  = 'People of Color, not Asian'))%>%
+  mutate(BroadRace=as.factor(BroadRace))%>%filter(SOCP %in% bottom_10_names)
+
+
+```
+
+
+```{r}
+soc_race_count<-psrc_pums_count(soc_brace, group_vars=c('SOCP',"BroadRace"))%>%filter(COUNTY=='Region')
+```
+
+
+```{r}
+share_occ_race_bottom<-merge(soc_race_count, bottom_10)%>%filter(BroadRace!='Total')%>%mutate(occupation=forcats::fct_reorder(substr(SOCP,5,50), -WAGP_median))%>%filter(BroadRace=='People of Color, not Asian')
+```
+
+
+
+
+```{r}
+static_bar_chart(t=share_occ_race_bottom, y= 'occupation', x='share', fill= 'BroadRace',  pos='stack')+
+                          ggplot2::geom_hline(yintercept= share_wrkr_race_HBAO, 
+                                              linetype='dotdash', 
+                                              linewidth=1, 
+                                              show.legend = FALSE, 
+                                              color='#00716c') +
+                          ggplot2::annotate("text", 
+                                            y=share_wrkr_race_HBAO+.1,
+                                            x=6, 
+                                            label=paste0("Region", share_wrkr_race_HBAO),
+                                            angle='270', 
+                                            color='#00716c')
+```
+
+
+```{r}
+saveWorkbook(wb=wb, file=xlsx_file, overwrite = TRUE)
 ```
