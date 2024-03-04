@@ -178,6 +178,10 @@ job_grp_gend_race_income<-left_join(job_grp_gender_race_1, earn_by_occ_median, b
 
 ```
 
+```{r}
+job_grp_gend_race_income_level<-job_grp_gend_race_income%>%group_by(SEX, PRACE)%>%summarize(MedianWage=max(MedianWage))%>%pivot_wider(id_cols=PRACE, names_from=SEX, values_from=MedianWage)
+```
+
 ```{r }
 psrcplot::static_bar_chart(t=job_grp_gend_race_income, x='MedianWage' , y='occupation', fill='occupation', est='currency', color='psrc_pairs')+theme(axis.text=element_text(size=12))+
                           ggplot2::geom_hline(yintercept= med_wage_wrker, 
