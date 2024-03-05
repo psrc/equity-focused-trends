@@ -5,13 +5,36 @@ library(tidyverse)
 # install psrccensus and get api key by going trough instructions on: https://psrc.github.io/psrccensus/articles/psrccensus.html
 Sys.getenv("CENSUS_API_KEY")
 
-# download 2022 5-year PUMS data with specified variables
 # more information on PUMS data: https://www.census.gov/programs-surveys/acs/microdata/documentation.html
 # 2022 5-year PUMS data dictionary: https://api.census.gov/data/2022/acs/acs5/pums/variables.html
+
+# download 2022 5-year PUMS data with specified variables
 pums_2022 <- get_psrc_pums(span = 5,
                            dyear = 2022,
-                           level = "p",
-                           vars = c("AGEP","PRACE","RAC1P",
-                                    "RAC2P"))
+                           level = "h",
+                           vars = c("AGEP",  # Age
+                                    "PRACE", # Race
+                                    "RAC1P", # Recoded detailed race code
+                                    "RAC2P", # Recoded detailed race code
+                                    "TEN",   # Tenure
+                                    "GRPIP", # Gross rent as a percentage of household income past 12 months
+                                    "HINCP"  # Household income
+                                    ))
 # create crosstabs
-pums_age_race <- pums_2022 %>% psrc_pums_count(., group_vars=c("AGEP","PRACE"))
+df_pums <- pums_2022 %>%
+  mutate(race_aapi = case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
+                               PRACE == "White alone" ~ "White alone",
+                               TRUE ~ PRACE),
+         rent_pct_income = factor(case_when(GRPIP < 30 ~"Less than 30 percent",
+                                            between(GRPIP,30,50) ~ "Between 30 and 50 percent",
+                                            GRPIP > 50 ~ "Greater than 50 percent",
+                                            TRUE ~ "No rent paid"),
+                                  levels=c("Greater than 50 percent",
+                                           "Between 30 and 50 percent",
+                                           "Less than 30 percent",
+                                           "No rent paid"))) %>% 
+  filter(race_aapi == "Asian or Pacific Islander") %>%
+  psrc_pums_count(., group_vars=c("PRACE","RAC2P","rent_pct_income"))
+
+race_population <- df_pums %>% filter(rent_pct_income=="Total")
+
