@@ -1,0 +1,153 @@
+---
+title: "AAPI Trend"
+author: "Brandon Wong"
+date: "2024-03-13"
+output: html_document
+---
+
+```{r, include=FALSE}
+library(psrccensus)
+library(psrcplot)
+library(tidyverse)
+library(ggplot2)
+
+# install psrccensus and get api key by going trough instructions on: https://psrc.github.io/psrccensus/articles/psrccensus.html
+Sys.getenv("f888d08b4cf518d8a5f7d4eb1fa050abb015ba37")
+
+# more information on PUMS data: https://www.census.gov/programs-surveys/acs/microdata/documentation.html
+# 2022 5-year PUMS data dictionary: https://api.census.gov/data/2022/acs/acs5/pums/variables.html
+```
+
+
+```{r, include=FALSE}
+# download 2022 5-year PUMS data with specified variables
+pums_2022 <- get_psrc_pums(span = 5,
+                           dyear = 2022,
+                           level = "h",
+                           vars = c("AGEP",  # Age
+                                    "PRACE", # Race
+                                    "RAC1P", # Recoded detailed race code
+                                    "RAC2P", # Recoded detailed race code
+                                    "TEN",   # Tenure
+                                    "GRPIP", # Gross rent as a percentage of household income past 12 months
+                                    "HINCP"  # Household income
+                           ))
+
+# create crosstabs
+df_pums <- pums_2022 %>%
+  mutate(race_aapi = case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
+                               PRACE == "White alone" ~ "White alone",
+                               TRUE ~ PRACE),
+         rent_pct_income = factor(case_when(GRPIP < 30 ~"Less than 30 percent",
+                                            between(GRPIP,30,50) ~ "Between 30 and 50 percent",
+                                            GRPIP > 50 ~ "Greater than 50 percent",
+                                            TRUE ~ "No rent paid"),
+                                  levels=c("Greater than 50 percent",
+                                           "Between 30 and 50 percent",
+                                           "Less than 30 percent",
+                                           "No rent paid"))) %>% 
+  filter(race_aapi == "Asian or Pacific Islander") %>%
+  psrc_pums_count(., group_vars=c("PRACE","RAC2P","rent_pct_income"))
+
+race_population <- df_pums %>% filter(rent_pct_income=="Total")
+```
+
+## Plot 1
+
+This plot displays Asian sub-groups who are cost burdened. This is defined by anyone paying 30% or more of their income for their rent expense.
+
+```{r echo=FALSE, fig.height=15, fig.width=15, warning=FALSE}
+# Making a Renter Cost Burden by Asian Sub-group stacked bar chart
+
+cost_burdened <- df_pums %>% filter(rent_pct_income =="Greater than 50 percent" | rent_pct_income =="Between 30 and 50 percent")
+
+ggplot(cost_burdened, aes(x = RAC2P, y=share, fill = rent_pct_income, label = round(share, 2))) + 
+          geom_bar(stat = "identity") +
+  geom_text(size = 5, position = position_stack(vjust = 0.5)) +
+  labs(title="Renter Cost Burden by Asian Sub-group populations") +
+  psrc_style() +
+  scale_fill_manual(values = psrc_colors$pognbgy_10) +
+  coord_flip()
+
+
+```
+
+## Plot 2 and 3
+
+These plots displays the percentage each Asian sub-group pays their income towards rent. 
+Both plots display the same data but in a 'stacked' or 'dodged' format.
+
+```{r echo=FALSE, warning=FALSE, , fig.width=25, fig.height=15}
+cost_burdened2 <- df_pums %>% 
+  filter(!rent_pct_income %in% c('Total')) %>%
+  filter(!RAC2P %in% c('Total'))
+
+#cost_burdened2$RAC2P = factor(cost_burdened2$RAC2P, levels = target2)
+
+# Design 1 (stacked barchart)
+ggplot(cost_burdened2, aes(x = RAC2P, y=share, fill = rent_pct_income, label = round(share, 2))) + 
+  geom_bar(stat = "identity") +
+  geom_text(size = 5, position = position_stack(vjust = 0.5)) +
+  labs(title="Rent percentage Income Asian Sub-Group Populations") +
+  psrc_style() +
+  scale_fill_manual(values = psrc_colors$pognbgy_10) +
+  theme(axis.text.x = element_text(angle=45, vjust=1, hjust=1))
+
+
+# Design 2 (dodge chart)
+
+ggplot(cost_burdened2, aes(x = RAC2P, y=share, fill = rent_pct_income)) + 
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title="Rent percentage Income Asian Sub-Group Populations") +
+  psrc_style() +
+  scale_fill_manual(values = psrc_colors$pognbgy_10) +
+  theme(axis.text.x = element_text(angle=45, vjust=1, hjust=1))
+
+```
+
+## Plot 4
+
+This plot displays Household renter income by the Top 10 Highest Asian populations.
+
+```{r echo=FALSE, warning=FALSE, , fig.width=20, fig.height=15}
+target <- c("Chinese, except Taiwanese, alone", "Asian Indian alone", "Filipino alone", "Korean alone", "Vietnamese alone", "Japanese alone", "Cambodian alone", "Taiwanese alone", "Samoan alone", "Chamorro alone")
+
+df_pums2 <- pums_2022 %>%
+  filter(TEN =="Rented") %>%
+  mutate(race_aapi = case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
+                               PRACE == "White alone" ~ "White alone",
+                               TRUE ~ PRACE),
+                  income = factor(case_when(HINCP < 25000 ~"Under $25k",
+                                            between(HINCP, 25000, 49999) ~ "$25K-$49.9K",
+                                            between(HINCP, 50000, 74999) ~ "$50K-$74.9K",
+                                            between(HINCP, 75000, 99999) ~ "$75K-99.9K",
+                                            between(HINCP, 100000, 149999) ~ "$100K-$149.9K",
+                                            between(HINCP, 150000, 199999) ~ "$150k-$199.9K",
+                                            HINCP > 200000 ~ "Over $200K",
+                                            TRUE ~ "No income"),
+                                  levels=c("Over $200K",
+                                           "$150k-$199.9K",
+                                           "$100K-$149.9K",
+                                           "$75K-99.9K",
+                                           "$50K-$74.9K",
+                                           "$25K-$49.9K",
+                                           "Under $25k"))) %>% 
+  filter(race_aapi == "Asian or Pacific Islander") %>%
+  psrc_pums_count(., group_vars=c("PRACE","RAC2P","income"))
+
+df_pums3 <-df_pums2 %>%  filter(!RAC2P %in% c('Total')) %>%
+  filter(!income %in% c('Total')) %>%
+  filter(RAC2P %in% target)
+
+df_pums3$RAC2P = factor(df_pums3$RAC2P, levels = target)
+
+ggplot(df_pums3, aes(x = RAC2P, y=share, fill = income, label = round(share, 2))) + 
+  geom_bar(stat = "identity") +
+  geom_text(size = 5, position = position_stack(vjust = 0.5)) +
+  labs(title="Renter Household Income by the Top 10 Highest Asian Populations") +
+  psrc_style() +
+  scale_fill_manual(values = psrc_colors$pognbgy_10) +
+  theme(axis.text.x = element_text(angle=45, vjust=1, hjust=1))
+
+
+```
