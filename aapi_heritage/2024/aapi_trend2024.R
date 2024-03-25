@@ -18,8 +18,15 @@ pums_2022 <- get_psrc_pums(span = 5,
                                     "RAC2P", # Recoded detailed race code
                                     "TEN",   # Tenure
                                     "GRPIP", # Gross rent as a percentage of household income past 12 months
-                                    "HINCP"  # Household income
-                                    ))
+                                    "HINCP",  # Household income
+                                    "HRACE" 
+                                    )) %>% 
+  # filter only AAPI renters
+  filter(TEN=="Rented",
+         # household race assigned to household
+         PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone")) 
+
+
 # create crosstabs
 df_pums <- pums_2022 %>%
   mutate(race_aapi = case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
@@ -32,9 +39,6 @@ df_pums <- pums_2022 %>%
                                   levels=c("Greater than 50 percent",
                                            "Between 30 and 50 percent",
                                            "Less than 30 percent",
-                                           "No rent paid"))) %>% 
-  filter(race_aapi == "Asian or Pacific Islander") %>%
-  psrc_pums_count(., group_vars=c("PRACE","RAC2P","rent_pct_income"))
+                                           "No rent paid")))
 
-race_population <- df_pums %>% filter(rent_pct_income=="Total")
 
