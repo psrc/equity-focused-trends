@@ -9,7 +9,7 @@ Sys.getenv("CENSUS_API_KEY")
 # 2022 5-year PUMS data dictionary: https://api.census.gov/data/2022/acs/acs5/pums/variables.html
 
 # download 2022 5-year PUMS data with specified variables
-pums_2022 <- get_psrc_pums(span = 5,
+pums_2022_h <- get_psrc_pums(span = 5,
                            dyear = 2022,
                            level = "h",
                            vars = c("AGEP",  # Age
@@ -21,7 +21,11 @@ pums_2022 <- get_psrc_pums(span = 5,
                                     "HINCP",  # Household income
                                     "HRACE",
                                     "BIN_POVRATIO" 
-                                    )) %>%
+                                    )) 
+
+
+# full dataset
+df_pums <- pums_2022_h %>%
   # make new variables
   mutate(race_aapi = case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
                                PRACE == "White alone" ~ "White alone",
@@ -35,24 +39,22 @@ pums_2022 <- get_psrc_pums(span = 5,
                                            "Less than 30 percent",
                                            "No rent paid")),
          income_poverty_level = case_when(BIN_POVRATIO %in% c("under 0.50","0.50 to 0.99")~"Income below 100% of poverty level",
-                                          TRUE~"Income above 100% of poverty level")) %>% 
-  # filter only AAPI renters
-  filter(TEN=="Rented",
-         # household race assigned to household
-         PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone")) 
+                                          TRUE~"Income above 100% of poverty level"))
 
 
 # ---- create "RAC2P_allpersons" variable: get households with at least one AAPI member ----
 pums_2022_p <- get_psrc_pums(span = 5,
                            dyear = 2022,
                            level = "p",
-                           vars = c("TYPEHUGQ",
+                           vars = c("AGEP",
+                                    "TYPEHUGQ",
                                     "PRACE", # Race
                                     "RAC2P", # Recoded detailed race code
                                     "HRACE"
                            )) %>% 
   # filter only AAPI renters
-  filter(TYPEHUGQ == "Housing unit",
+  filter(AGEP >= 15,
+         TYPEHUGQ == "Housing unit",
          PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone")) 
 
 df_all_rac2p <- pums_2022_p[['variables']] %>%
@@ -69,12 +71,31 @@ df_all_rac2p <- pums_2022_p[['variables']] %>%
                                       TRUE~all_rac2p)) %>%
   select(SERIALNO,RAC2P_allpersons)
 
-# final data
-pums_2022[['variables']] <- pums_2022[['variables']] %>%
+# AAPI renter dataset
+df_pums_renter_aapi <- df_pums %>% 
+  # filter only AAPI renters
+  filter(TEN=="Rented",
+         # household race assigned to household
+         PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone")) 
+
+df_pums_renter_aapi[['variables']] <- df_pums_renter_aapi[['variables']] %>%
   left_join(df_all_rac2p, by="SERIALNO")
+
+# use this line code in rmarkdown notebook to read in data from this script
+# source("aapi_trend2024.R")
 
 
 # ---- example crosstabs ---- 
-test <- psrc_pums_count(pums_2022, group_vars=c("RAC2P_allpersons","income_poverty_level"))
-test <- psrc_pums_count(pums_2022, group_vars=c("RAC2P"))
-test <- psrc_pums_median(pums_2022, stat_var = "HINCP", group_vars=c("RAC2P")) # warning is because Bhutanese alone has too few counts 
+tenture <- psrc_pums_count(df_pums, group_vars=c("PRACE","TEN"))
+
+
+#### replace"RAC2P" with "RAC2P_allpersons" for households with any AAPI member ####
+# total number of households in each subgroup
+hh_count <- psrc_pums_count(df_pums_renter_aapi, group_vars=c("PRACE","RAC2P")) %>%
+  filter(RAC2P!="Total")
+# share of households with income below 100% of poverty level
+poverty <- psrc_pums_count(df_pums_renter_aapi, group_vars=c("RAC2P","income_poverty_level")) %>%
+  filter(income_poverty_level=="Income below 100% of poverty level")
+# median income + poverty level
+income <- psrc_pums_median(df_pums_renter_aapi, stat_var = "HINCP", group_vars=c("RAC2P")) %>%
+  left_join(poverty, by=c("DATA_YEAR","COUNTY","RAC2P"))
