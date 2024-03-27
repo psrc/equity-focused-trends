@@ -48,9 +48,8 @@ pums_2022_p <- get_psrc_pums(span = 5,
                            level = "p",
                            vars = c("AGEP",
                                     "TYPEHUGQ",
-                                    "PRACE", # Race
-                                    "RAC2P", # Recoded detailed race code
-                                    "HRACE"
+                                    "PRACE",
+                                    "RAC2P"
                            )) %>% 
   # filter only AAPI renters
   filter(AGEP >= 15,
@@ -77,7 +76,6 @@ df_pums_renter_aapi <- df_pums %>%
   filter(TEN=="Rented",
          # household race assigned to household
          PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone")) 
-
 df_pums_renter_aapi[['variables']] <- df_pums_renter_aapi[['variables']] %>%
   left_join(df_all_rac2p, by="SERIALNO")
 
