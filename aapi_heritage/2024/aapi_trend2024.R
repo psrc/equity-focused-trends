@@ -19,16 +19,10 @@ pums_2022 <- get_psrc_pums(span = 5,
                                     "TEN",   # Tenure
                                     "GRPIP", # Gross rent as a percentage of household income past 12 months
                                     "HINCP",  # Household income
-                                    "HRACE" 
-                                    )) %>% 
-  # filter only AAPI renters
-  filter(TEN=="Rented",
-         # household race assigned to household
-         PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone")) 
-
-
-# create crosstabs
-df_pums <- pums_2022 %>%
+                                    "HRACE",
+                                    "BIN_POVRATIO" 
+                                    )) %>%
+  # make new variables
   mutate(race_aapi = case_when(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone") ~ "Asian or Pacific Islander",
                                PRACE == "White alone" ~ "White alone",
                                TRUE ~ PRACE),
@@ -39,6 +33,48 @@ df_pums <- pums_2022 %>%
                                   levels=c("Greater than 50 percent",
                                            "Between 30 and 50 percent",
                                            "Less than 30 percent",
-                                           "No rent paid")))
+                                           "No rent paid")),
+         income_poverty_level = case_when(BIN_POVRATIO %in% c("under 0.50","0.50 to 0.99")~"Income below 100% of poverty level",
+                                          TRUE~"Income above 100% of poverty level")) %>% 
+  # filter only AAPI renters
+  filter(TEN=="Rented",
+         # household race assigned to household
+         PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone")) 
 
 
+# ---- create "RAC2P_allpersons" variable: get households with at least one AAPI member ----
+pums_2022_p <- get_psrc_pums(span = 5,
+                           dyear = 2022,
+                           level = "p",
+                           vars = c("TYPEHUGQ",
+                                    "PRACE", # Race
+                                    "RAC2P", # Recoded detailed race code
+                                    "HRACE"
+                           )) %>% 
+  # filter only AAPI renters
+  filter(TYPEHUGQ == "Housing unit",
+         PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone")) 
+
+df_all_rac2p <- pums_2022_p[['variables']] %>%
+  group_by(SERIALNO) %>%
+  summarise(n_aapi = n(),
+            n_prace = length(unique(PRACE)),
+            n_rac2p = length(unique(RAC2P)),
+            all_prace = paste(unique(PRACE),collapse = "; "),
+            all_rac2p = paste(unique(RAC2P),collapse = "; ")) %>%
+  ungroup() %>%
+  mutate(RAC2P_allpersons = case_when(n_prace>1~"Multiple AAPI subgroups",
+                                      all_prace == "Asian alone" & n_rac2p>1~"Multiple Asian alone subgroups",
+                                      all_prace == "Native Hawaiian and Other Pacific Islander alone" & n_rac2p>1~"Multiple Native Hawaiian and Other Pacific Islander alone subgroups",
+                                      TRUE~all_rac2p)) %>%
+  select(SERIALNO,RAC2P_allpersons)
+
+# final data
+pums_2022[['variables']] <- pums_2022[['variables']] %>%
+  left_join(df_all_rac2p, by="SERIALNO")
+
+
+# ---- example crosstabs ---- 
+test <- psrc_pums_count(pums_2022, group_vars=c("RAC2P_allpersons","income_poverty_level"))
+test <- psrc_pums_count(pums_2022, group_vars=c("RAC2P"))
+test <- psrc_pums_median(pums_2022, stat_var = "HINCP", group_vars=c("RAC2P")) # warning is because Bhutanese alone has too few counts 
