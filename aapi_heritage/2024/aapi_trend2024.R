@@ -25,7 +25,7 @@ Sys.getenv("CENSUS_API_KEY")
 # ___AAPI PERSONS DATASETS___
 # correction from last discussion: don't filter to renters just yet
 # 6. df_pums_p_aapi_worker: all adults in AAPI households                       (use: occupation)
-
+#    - new variables: RAC2P_aapi_group10_household (workers in RAC2P_aapi_group10 households)
 
 # ---- full datasets ---- 
 
@@ -134,9 +134,10 @@ race_allpersons <- pums_2022_p[['variables']] %>%
   select(SERIALNO,PRACE_allpersons,RAC2P_allpersons)
 
 
-df_pums_aapi_allpersons <- df_pums
-df_pums_aapi_allpersons[['variables']] <- df_pums[['variables']] %>%
-  right_join(race_allpersons, by="SERIALNO") %>%
+df_pums_aapi_allpersons <- df_pums %>%
+  filter(SERIALNO %in% race_allpersons$SERIALNO)
+df_pums_aapi_allpersons[['variables']] <- df_pums_aapi_allpersons[['variables']] %>%
+  left_join(race_allpersons, by="SERIALNO") %>%
   mutate(
     # grouped race category: top 10 populous Asian subgroups, other Asian races and all Pacific Islander
     RAC2P_allpersons_aapi_group10 = case_when(PRACE_allpersons == "Asian" & RAC2P_allpersons %in% asian_top10$RAC2P~ RAC2P_allpersons,
@@ -149,15 +150,15 @@ df_pums_aapi_allpersons[['variables']] <- df_pums[['variables']] %>%
 # ---- 6. AAPI persons data for occupation ----
 # all adults in AAPI households
 # possible filtering alternatives: only AAPI adults
-df_pums_p_aapi_worker <- pums_2022_p
-df_pums_p_aapi_worker[['variables']] <- df_pums_p_aapi_worker[['variables']] %>% 
+df_pums_p_aapi_worker <- pums_2022_p %>% 
   filter(AGEP >= 15,
          # PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone"),
-         !is.na(SOCP3)) %>%
-  inner_join(df_pums_aapi[['variables']] %>% select(SERIALNO,PRACE,RAC2P,RAC2P_aapi_group10) %>%
-               rename(RAC2P_aapi_group10_houshold = RAC2P_aapi_group10), 
-             by="SERIALNO", suffix=c("","_houshold"))
-
+         !is.na(SOCP3),
+         SERIALNO %in% df_pums_aapi[['variables']]$SERIALNO)
+df_pums_p_aapi_worker[['variables']] <- df_pums_p_aapi_worker[['variables']] %>% 
+  left_join(df_pums_aapi[['variables']] %>% select(SERIALNO,PRACE,RAC2P,RAC2P_aapi_group10) %>%
+              rename(RAC2P_aapi_group10_houshold = RAC2P_aapi_group10), 
+            by="SERIALNO", suffix=c("","_houshold"))
 
 
 # --- example crosstabs ----
@@ -170,3 +171,21 @@ poverty <- psrc_pums_count(df_pums_renter_aapi, group_vars=c("RAC2P","income_pov
 # median income + poverty level
 income <- psrc_pums_median(df_pums_renter_aapi, stat_var = "HINCP", group_vars=c("RAC2P")) %>%
   left_join(poverty, by=c("DATA_YEAR","COUNTY","RAC2P"))
+
+# job share for each AAPI subgroup
+job3_region <- pums_2022_p %>% filter(AGEP >= 15, !is.na(SOCP3)) %>%
+  psrc_pums_count(., group_vars=c("SOCP3")) %>%
+  arrange(desc(share)) %>%
+  top_n(5, share)
+job3_by_aapi_race <- psrc_pums_count(df_pums_p_aapi_worker, group_vars=c("RAC2P_aapi_group10_houshold","SOCP3"))
+
+# top 5 occupations of each AAPI subgroup
+job3_region_top_5 <- job3_region %>%
+  arrange(desc(share)) %>%
+  top_n(5, share)
+job3_by_aapi_race_top_5 <- job3_by_aapi_race %>%
+  filter(SOCP3 != "Total") %>%
+  group_by(RAC2P_aapi_group10_houshold) %>%
+  arrange(desc(share), .by_group = TRUE) %>%
+  top_n(5, share)
+
