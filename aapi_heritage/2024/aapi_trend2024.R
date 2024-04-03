@@ -3,7 +3,7 @@ library(psrcplot)
 library(tidyverse)
 
 # install psrccensus and get api key by going trough instructions on: https://psrc.github.io/psrccensus/articles/psrccensus.html
-Sys.getenv("CENSUS_API_KEY")
+Sys.getenv("f888d08b4cf518d8a5f7d4eb1fa050abb015ba37")
 
 # more information on PUMS data: https://www.census.gov/programs-surveys/acs/microdata/documentation.html
 # 2022 5-year PUMS data dictionary: https://api.census.gov/data/2022/acs/acs5/pums/variables.html
@@ -133,7 +133,6 @@ race_allpersons <- pums_2022_p[['variables']] %>%
                                       all_prace=="Native Hawaiian and Other Pacific Islander alone"~ all_rac2p)) %>%
   select(SERIALNO,PRACE_allpersons,RAC2P_allpersons)
 
-
 df_pums_aapi_allpersons <- df_pums %>%
   filter(SERIALNO %in% race_allpersons$SERIALNO)
 df_pums_aapi_allpersons[['variables']] <- df_pums_aapi_allpersons[['variables']] %>%
@@ -144,8 +143,6 @@ df_pums_aapi_allpersons[['variables']] <- df_pums_aapi_allpersons[['variables']]
                                               PRACE_allpersons == "Asian"~ "Other Asian subgroups",
                                               TRUE~PRACE_allpersons
                                               ))
-
-
 
 # ---- 6. AAPI persons data for occupation ----
 # all adults in AAPI households
