@@ -14,7 +14,7 @@ source("aapi_trend2024.R")
 # earn_by_occ_median <- psrc_pums_median(pums_2022, stat_var="WAGP",group_vars= c('SOCP3'))%>%filter(COUNTY=='Region')
 tenure <- psrc_pums_count(df_pums, group_vars=c("PRACE","TEN"))
 renter <- psrc_pums_count(df_pums_renter_aapi, group_vars=c("PRACE","RAC2P","rent_pct_income"))
-m_income <- psrc_pums_median(df_pums, "HINCP") %>% filter(RAC2P != 'Total')
+# m_income <- psrc_pums_median(df_pums, "HINCP") %>% filter(RAC2P != 'Total')
 tot_hh_count <- psrc_pums_count(df_pums, group_vars = "RAC2P") %>% filter(RAC2P != 'Total')
 
 race_occ <- psrc_pums_count(df_pums, group_vars=c("PRACE","SOCP3", "SOCP5")) %>% filter(SOCP3!='Total')
@@ -37,12 +37,7 @@ top_10_occ <- job_race %>%
 ## Table 1
 This table displays the ordered population count of each Asian population who are renting in the region
 
-1. Do we only want to look at renters?
-
 ```{r, echo=FALSE, include=FALSE}
-
-# df[order(-df$var1)
-
 
 race_population <- hh_count %>% select(RAC2P, count, count_moe) %>%
   rename("Asian Population" = RAC2P, "Total" = count, "Margin of Error" = count_moe)
