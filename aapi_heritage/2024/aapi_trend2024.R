@@ -15,16 +15,15 @@ Sys.getenv("CENSUS_API_KEY")
 # 2. pums_2022_p: all persons
 # 
 # ___AAPI HOUSEHOLD DATASETS___
-# 3.df_pums_aapi: all AAPI households                                           (use: total household count/ tenure/ income)
+# 3.df_pums_aapi: all AAPI households                                                      (use: total household count/ tenure/ income)
 #   - new variables: RAC2P_aapi_group10 
 #     (grouped race category: top 10 populous Asian subgroups, other Asian 
 #      subgroups and NH&PI)
-# 4. df_pums_renter_aapi: all AAPI renter households                            (use: cost burden)
+# 4. df_pums_renter_aapi: all AAPI renter households                                       (use: cost burden)
 # 5. df_pums_aapi_allpersons: all households with any AAPI member
 # 
 # ___AAPI PERSONS DATASETS___
-# correction from last discussion: don't filter to renters just yet
-# 6. df_pums_p_aapi_worker: all adults in AAPI households                       (use: occupation)
+# 6. df_pums_p_aapi_renter_worker: (person-level) all adults in AAPI renters households    (use: occupation)
 #    - new variables: RAC2P_aapi_group10_household (workers in RAC2P_aapi_group10 households)
 
 # ---- full datasets ---- 
@@ -62,7 +61,7 @@ df_pums <- pums_2022_h %>%
                                            "Less than 30 percent",
                                            "No rent paid")),
          rent_pct_income_30 = factor(case_when(GRPIP < 30 ~"Less than 30 percent",
-                                            GRPIP > 30 ~ "Greater than 30 percent",
+                                            GRPIP >= 30 ~ "Greater than 30 percent",
                                             TRUE ~ "No rent paid"),
                                   levels=c("Greater than 30 percent",
                                            "Less than 30 percent",
@@ -90,7 +89,7 @@ asian_top10 <- df_pums %>%
   psrc_pums_count(., group_vars=c("PRACE","RAC2P")) %>%
   filter(!RAC2P %in% c("All combinations of Asian races only","Other Asian alone","Total")) %>%
   arrange(desc(count)) %>%
-  top_n(10,count)
+  top_n(8,count)
 
 
 ## ----- 3. AAPI households (householder) ----- 
@@ -156,13 +155,13 @@ df_pums_aapi_allpersons[['variables']] <- df_pums_aapi_allpersons[['variables']]
 # ---- 6. AAPI persons data for occupation ----
 # all adults in AAPI households
 # possible filtering alternatives: only AAPI adults
-df_pums_p_aapi_worker <- pums_2022_p %>% 
+df_pums_p_aapi_renter_worker <- pums_2022_p %>% 
   filter(AGEP >= 15,
          # PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone"),
          !is.na(SOCP3),
-         SERIALNO %in% df_pums_aapi[['variables']]$SERIALNO)
-df_pums_p_aapi_worker[['variables']] <- df_pums_p_aapi_worker[['variables']] %>% 
-  left_join(df_pums_aapi[['variables']] %>% select(SERIALNO,PRACE,RAC2P,RAC2P_aapi_group10) %>%
+         SERIALNO %in% df_pums_renter_aapi[['variables']]$SERIALNO)
+df_pums_p_aapi_renter_worker[['variables']] <- df_pums_p_aapi_renter_worker[['variables']] %>% 
+  left_join(df_pums_renter_aapi[['variables']] %>% select(SERIALNO,PRACE,RAC2P,RAC2P_aapi_group10) %>%
               rename(RAC2P_aapi_group10_houshold = RAC2P_aapi_group10), 
             by="SERIALNO", suffix=c("","_houshold"))
 
