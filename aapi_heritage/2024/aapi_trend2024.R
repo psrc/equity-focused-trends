@@ -61,6 +61,12 @@ df_pums <- pums_2022_h %>%
                                            "Between 30 and 50 percent",
                                            "Less than 30 percent",
                                            "No rent paid")),
+         rent_pct_income_30 = factor(case_when(GRPIP < 30 ~"Less than 30 percent",
+                                            GRPIP > 30 ~ "Greater than 30 percent",
+                                            TRUE ~ "No rent paid"),
+                                  levels=c("Greater than 30 percent",
+                                           "Less than 30 percent",
+                                           "No rent paid")),
          income_poverty_level = case_when(BIN_POVRATIO %in% c("under 0.50","0.50 to 0.99")~"Income below 100% of poverty level",
                                           TRUE~"Income above 100% of poverty level"))
 
