@@ -78,7 +78,8 @@ pums_2022_p <- get_psrc_pums(span = 5,
                                       "PRACE",
                                       "RAC2P",
                                       "SOCP3",
-                                      "SOCP5"
+                                      "SOCP5",
+                                      "TEN"
                              ))  
 
 # ---- AAPI households data ----
@@ -171,18 +172,18 @@ df_pums_p_aapi_renter_worker[['variables']] <- df_pums_p_aapi_renter_worker[['va
 hh_count <- psrc_pums_count(df_pums_renter_aapi, group_vars=c("PRACE","RAC2P")) %>%
   filter(RAC2P!="Total")
 # share of households with income below 100% of poverty level
-poverty <- psrc_pums_count(df_pums_renter_aapi, group_vars=c("RAC2P","income_poverty_level")) %>%
-  filter(income_poverty_level=="Income below 100% of poverty level")
+# poverty <- psrc_pums_count(df_pums_renter_aapi, group_vars=c("RAC2P","income_poverty_level")) %>%
+#   filter(income_poverty_level=="Income below 100% of poverty level")
 # median income + poverty level
-income <- psrc_pums_median(df_pums_renter_aapi, stat_var = "HINCP", group_vars=c("RAC2P")) %>%
-  left_join(poverty, by=c("DATA_YEAR","COUNTY","RAC2P"))
+# income <- psrc_pums_median(df_pums_renter_aapi, stat_var = "HINCP", group_vars=c("RAC2P")) %>%
+#   left_join(poverty, by=c("DATA_YEAR","COUNTY","RAC2P"))
 
-# job share for each AAPI subgroup
-job3_region <- pums_2022_p %>% filter(AGEP >= 15, !is.na(SOCP3)) %>%
+# job share for entire region and each AAPI subgroup
+job3_region <- pums_2022_p %>% filter(AGEP >= 15, !is.na(SOCP3), TEN=="Rented") %>%
   psrc_pums_count(., group_vars=c("SOCP3"))
-job3_by_aapi_race <- psrc_pums_count(df_pums_p_aapi_worker, group_vars=c("RAC2P_aapi_group10_houshold","SOCP3"))
+job3_by_aapi_race <- psrc_pums_count(df_pums_p_aapi_renter_worker, group_vars=c("RAC2P_aapi_group10_houshold","SOCP3"))
 
-# top 5 occupations of each AAPI subgroup
+# top 5 occupations of entire region and each AAPI subgroup
 job3_region_top_5 <- job3_region %>%
   arrange(desc(share)) %>%
   top_n(5, share)
