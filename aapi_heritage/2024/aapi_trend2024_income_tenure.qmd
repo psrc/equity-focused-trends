@@ -1,0 +1,256 @@
+---
+title: "AAPI trend: renters cost burden"
+date: today
+format: 
+  html:
+    mainfont: Poppins
+    theme: [cosmo, custom.scss]
+    toc: true
+    df-print: kable
+    warning: false
+    echo: false
+---
+
+```{r}
+library(kableExtra)
+source("aapi_trend2024.R")
+
+install_psrc_fonts()
+```
+
+```{r}
+hh_count <- psrc_pums_count(df_pums_aapi, group_vars=c("RAC2P_aapi_group10"))
+hh_count_allpersons <- psrc_pums_count(df_pums_aapi_allpersons,
+                                       group_vars=c("RAC2P_allpersons_aapi_group10"))
+
+df_table <- hh_count %>% select(DATA_YEAR:count)%>%
+  full_join(hh_count_allpersons %>% select(DATA_YEAR:count) %>% 
+              rename(RAC2P_aapi_group10 = RAC2P_allpersons_aapi_group10),
+            by = c("DATA_YEAR","COUNTY","RAC2P_aapi_group10"), 
+            suffix = c("_householder","_allmembers")) %>%
+  arrange(desc(count_householder)) %>%
+  select(-c("COUNTY")) %>%
+  mutate_at(vars(count_householder,count_allmembers), ~scales::number(., accuracy=100, big.mark = ",")) %>%
+  mutate(RAC2P_aapi_group10 = str_replace(RAC2P_aapi_group10," alone|, alone",""))
+
+kbl(df_table)%>%
+  kable_styling(bootstrap_options = c("striped", "hover"), html_font = "Poppins") %>%
+  column_spec(c(3), background = psrc_colors$purples_inc[1]) %>%
+  column_spec(c(4), background = psrc_colors$greens_inc[1])
+```
+
+
+## household share
+:::{.panel-tabset}
+### original
+```{r, fig.height=3.5, fig.width=6}
+#| out-width: 700px
+
+data_type_fill <- c("householder" = psrc_colors$pgnobgy_5[1], "all members" = psrc_colors$pgnobgy_5[2])
+
+ggplot(hh_count %>% filter(RAC2P_aapi_group10!="Total"), aes(x=reorder(RAC2P_aapi_group10,share), y=share, fill="householder")) +
+  geom_col() +
+  geom_text(aes(y=share,label=scales::percent(share, accuracy = 0.1)), hjust=-0.5)+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe), width=0.2) +
+  scale_y_continuous(labels=scales::percent)+
+  scale_fill_manual(values = data_type_fill)+
+  coord_flip()+
+  psrc_style() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color="#cbcbcb")
+  ) +
+  labs(title = "Household share by AAPI subgroups", caption = "data: AAPI households by householder race", x="AAPI subgroups")
+```
+### comparison
+```{r, fig.height=5, fig.width=6}
+#| out-width: 700px
+
+df_plot <- hh_count %>% mutate(data_type = "householder") %>%
+  add_row(hh_count_allpersons %>%
+            rename(RAC2P_aapi_group10 = RAC2P_allpersons_aapi_group10) %>% 
+            mutate(data_type = "all members")) %>%
+  filter(RAC2P_aapi_group10!="Total")
+
+comparison_plot <- function(df_plot, title_text, caption_text, order_var = share){
+  print(
+    ggplot(df_plot, aes(x=reorder(RAC2P_aapi_group10,{{order_var}}), y=share, fill = data_type)) +
+      geom_col(position = "dodge") +
+      geom_text(aes(y=share,label=scales::percent(share, accuracy = 0.1)), hjust=-0.6, 
+                position = position_dodge(0.9))+
+      geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                    width=0.2, position=position_dodge(.9)) +
+      scale_y_continuous(labels=scales::percent)+
+      scale_fill_manual(values = data_type_fill)+
+      coord_flip()+
+      psrc_style() +
+      theme(
+        panel.grid.major.y = element_blank(),
+        panel.grid.major.x = element_line(color="#cbcbcb")
+      ) +
+      labs(title = title_text, caption = caption_text, x="AAPI subgroups")
+  )
+}
+comparison_plot(df_plot, "Household share by AAPI subgroups","data: AAPI households by householder race and by all members")
+
+```
+:::
+
+## home ownership
+:::{.panel-tabset}
+### original
+```{r, fig.height=3.5, fig.width=6}
+#| out-width: 700px
+
+tenure <- psrc_pums_count(df_pums_aapi, group_vars=c("RAC2P_aapi_group10","tenure")) %>%
+  # add regional total
+  add_row(psrc_pums_count(df_pums, group_vars=c("tenure")) %>%
+            mutate(RAC2P_aapi_group10 = "Region", .after="COUNTY")) %>%
+  filter(tenure=="owner") %>%
+  arrange(share) %>%
+  mutate(order = case_when(RAC2P_aapi_group10 != "Region"~row_number(),
+                           TRUE~100))
+ggplot(tenure, aes(x=reorder(RAC2P_aapi_group10,order),y=share)) +
+  geom_col(aes(y=share, fill="householder")) +
+  geom_text(aes(y=share,label=scales::percent(share, accuracy = 1)), hjust=1.6, color="white")+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                width=0.2, position = position_dodge(0.9)) +
+  scale_y_continuous(labels=scales::percent)+
+  scale_fill_manual(values = data_type_fill)+
+  coord_flip()+
+  psrc_style() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color="#cbcbcb")
+  ) +
+  labs(title = "Home ownership by AAPI subgroups", caption = "data: all households (for regional homeownership) and AAPI households by householder race", x="AAPI subgroups")
+  
+```
+
+### comparison
+```{r, fig.height=5, fig.width=6}
+#| out-width: 700px
+
+tenure_allperons <- psrc_pums_count(df_pums_aapi_allpersons, group_vars=c("RAC2P_allpersons_aapi_group10","tenure")) %>%
+  # add regional total
+  add_row(psrc_pums_count(df_pums, group_vars=c("tenure")) %>%
+            mutate(RAC2P_allpersons_aapi_group10 = "Region", .after="COUNTY")) %>%
+  filter(tenure=="owner") %>%
+  arrange(share) %>%
+  mutate(order = case_when(RAC2P_allpersons_aapi_group10 != "Region"~row_number(),
+                           TRUE~100))
+df_plot <- tenure %>% mutate(data_type = "householder") %>%
+  add_row(tenure_allperons %>%
+            rename(RAC2P_aapi_group10 = RAC2P_allpersons_aapi_group10) %>% 
+            mutate(data_type = "all members")) %>%
+  filter(RAC2P_aapi_group10!="Total")
+
+comparison_plot(df_plot, "Home ownership by AAPI subgroups","data: AAPI households by householder race and by all members",order)
+  
+```
+:::
+
+## income
+
+:::{.panel-tabset}
+
+### and poverty level
+```{r}
+poverty <- psrc_pums_count(df_pums_aapi, group_vars=c("RAC2P_aapi_group10","income_poverty_level")) %>%
+  filter(income_poverty_level=="Income below 100% of poverty level")
+# median income + poverty level
+income <- psrc_pums_median(df_pums_aapi, stat_var = "HINCP", group_vars=c("RAC2P_aapi_group10")) %>%
+  left_join(poverty, by=c("DATA_YEAR","COUNTY","RAC2P_aapi_group10")) %>%
+  filter(RAC2P_aapi_group10!="Total")
+
+poverty_region <- psrc_pums_count(df_pums, group_vars=c("income_poverty_level")) %>%
+  filter(income_poverty_level=="Income below 100% of poverty level")
+# median income + poverty level
+income_region <- psrc_pums_median(df_pums, stat_var = "HINCP") %>%
+  left_join(poverty_region, by=c("DATA_YEAR","COUNTY")) %>%
+  mutate(RAC2P_aapi_group10 = "Region", .after="COUNTY") 
+
+df_plot <- income_region %>%
+  add_row(income) %>%
+  arrange(HINCP_median) %>%
+  mutate(order = case_when(RAC2P_aapi_group10 != "Region"~row_number(),
+                           TRUE~100))
+
+coeff <- 500000
+
+ggplot(df_plot %>% mutate(group_var = "Median income"), 
+       aes(x=reorder(RAC2P_aapi_group10,order), group=group_var)) +
+  # bars
+  geom_col(aes( y=share, fill="share of households below 100% poverty level")) +
+  geom_text(aes(y=share,label=scales::percent(share, accuracy = 0.1)), hjust=1.1, color="white")+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe), width=0.2) +
+  # line
+  geom_line( aes(y=HINCP_median / coeff, linetype=group_var), size=0.3,color="#626567") +
+  geom_point( aes(y=HINCP_median / coeff, shape=group_var),color="#626567")+
+  geom_errorbar(aes(ymin=(HINCP_median-HINCP_median_moe) / coeff, 
+                    ymax=(HINCP_median+HINCP_median_moe) / coeff), 
+                width=0.2,color="#626567", size=0.3) +
+  
+  scale_y_continuous(
+    name = "share of households below 100% poverty level",
+    labels=scales::percent,
+    breaks = c(0,0.2,0.4), 
+    minor_breaks = c(0.1,0.3),
+    sec.axis = sec_axis(~.*coeff, name="Median Income", labels=scales::label_comma(),
+                        breaks = c(0,50000,100000,150000,200000))) + 
+  scale_fill_manual(values = c("share of households below 100% poverty level" = psrc_colors$pgnobgy_5[1]))+
+  coord_flip()+
+  psrc_style() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color="#cbcbcb"),
+    panel.grid.minor.x = element_line(color="#cbcbcb")
+  ) +
+  labs(title = "Income and by AAPI subgroups and poverty level", caption = "data: AAPI households by householder race", x="AAPI subgroups")
+```
+
+
+### and home ownership
+```{r}
+# median income + tenure
+income <- psrc_pums_median(df_pums_aapi, stat_var = "HINCP", group_vars=c("RAC2P_aapi_group10")) %>%
+  add_row(psrc_pums_median(df_pums, stat_var = "HINCP") %>% mutate(RAC2P_aapi_group10 = "Region", .after="COUNTY") ) %>%
+  left_join(tenure, by=c("DATA_YEAR","COUNTY","RAC2P_aapi_group10")) %>%
+  filter(RAC2P_aapi_group10!="Total") %>%
+  arrange(HINCP_median) %>%
+  mutate(order = case_when(RAC2P_aapi_group10 != "Region"~row_number(),
+                           TRUE~100))
+
+coeff <- 125000
+ggplot(income %>% mutate(group_var = "Median income"), 
+       aes(x=reorder(RAC2P_aapi_group10,order), group=group_var)) +
+  # bars
+  geom_col(aes( y=share, fill="home ownership")) +
+  geom_text(aes(y=share,label=scales::percent(share, accuracy = 0.1)), hjust=1.1, color="white")+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe), width=0.2) +
+  # line
+  geom_line( aes(y=HINCP_median / coeff, linetype=group_var), size=0.3,color="#626567") +
+  geom_point( aes(y=HINCP_median / coeff, shape=group_var),color="#626567")+
+  geom_errorbar(aes(ymin=(HINCP_median-HINCP_median_moe) / coeff, 
+                    ymax=(HINCP_median+HINCP_median_moe) / coeff), 
+                width=0.2,color="#626567", size=0.3) +
+  
+  scale_y_continuous(
+    name = "share of households below 100% poverty level",
+    labels=scales::percent,
+    # breaks = c(0,0.2,0.4), 
+    # minor_breaks = c(0.1,0.3),
+    sec.axis = sec_axis(~.*coeff, name="Median Income", labels=scales::label_comma(),
+                        # breaks = c(0,50000,100000,150000,200000)
+                        ) ) + 
+  scale_fill_manual(values = c("home ownership" = psrc_colors$pgnobgy_5[1]))+
+  coord_flip()+
+  psrc_style() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color="#cbcbcb"),
+    panel.grid.minor.x = element_line(color="#cbcbcb")
+  ) +
+  labs(title = "Income and home ownership by AAPI subgroups", caption = "data: AAPI households by householder race", x="AAPI subgroups")
+```
+:::
