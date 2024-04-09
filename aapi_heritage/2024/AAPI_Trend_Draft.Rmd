@@ -13,7 +13,7 @@ source("aapi_trend2024.R")
 
 # earn_by_occ_median <- psrc_pums_median(pums_2022, stat_var="WAGP",group_vars= c('SOCP3'))%>%filter(COUNTY=='Region')
 tenure <- psrc_pums_count(df_pums, group_vars=c("PRACE","TEN"))
-renter <- psrc_pums_count(df_pums_renter_aapi, group_vars=c("PRACE","RAC2P","rent_pct_income"))
+renter <- psrc_pums_count(df_pums_renter_aapi, group_vars=c("PRACE","RAC2P_aapi_group10","rent_pct_income"), rr=TRUE)
 # m_income <- psrc_pums_median(df_pums, "HINCP") %>% filter(RAC2P != 'Total')
 tot_hh_count <- psrc_pums_count(df_pums, group_vars = "RAC2P") %>% filter(RAC2P != 'Total')
 
@@ -57,7 +57,7 @@ This plot displays Asian sub-groups who are cost burdened. This is defined by an
 3. Possibly look into a relative reliability score?
 4. Is it okay to only show data for renters? (some ethnicities are excluded)
 
-```{r echo=FALSE, fig.height=15, fig.width=7, warning=FALSE}
+```{r echo=FALSE, fig.height=5, fig.width=7, warning=FALSE}
 # Making a Renter Cost Burden by Asian Sub-group stacked bar chart
 
 cost_burdened <- renter %>% 
@@ -66,23 +66,24 @@ cost_burdened <- renter %>%
   group_by(RAC2P) %>%
   summarize(across(c(count, count_moe, share, share_moe), sum)) %>% # aggregates all numerical values based on race
   dplyr::mutate(perc = paste0(sprintf("%4.1f", share * 100), "%")) %>% # adds a percentage column to the cost burdened share
-  left_join(race_population,by=c("RAC2P"="Asian Population"))
+  inner_join(asian_top10,by=c("RAC2P"="RAC2P"))
+
 
 # Version 1 (ordered by Total Households)
-ggplot(cost_burdened, aes(x = reorder(RAC2P, Total, Ascending=TRUE), y=share, label = round(share, 2))) + 
+ggplot(cost_burdened, aes(x = reorder(RAC2P, count.y, Ascending=TRUE), y=share.x, label = round(share.x, 2))) + 
           geom_bar(stat = "identity", position = "dodge") +
-  geom_errorbar(aes(ymin=share-share_moe, ymax=share + share_moe), position = "dodge") +
+  geom_errorbar(aes(ymin=share.x-share_moe.x, ymax=share.x + share_moe.x), position = "dodge") +
   geom_text(aes(label=perc), size = 5,  hjust = -0.1, size = 2, position = position_dodge(width = 1)) +
   labs(title="Renter Cost Burden by Asian Populations") +
   xlab("") +
-  psrc_style() +
   scale_fill_manual(values = psrc_colors$pognbgy_10) +
+  psrc_style() +
   coord_flip()
 
 # Version 2 (ordered by most cost burdened)
-ggplot(cost_burdened, aes(x = reorder(RAC2P, share, Ascending=TRUE), y=share, label = round(share, 2))) + 
+ggplot(cost_burdened, aes(x = reorder(RAC2P, share.x, Ascending=TRUE), y=share.x, label = round(share.x, 2))) + 
           geom_bar(stat = "identity", position = "dodge") +
-  geom_errorbar(aes(ymin=share-share_moe, ymax=share + share_moe), position = "dodge") +
+  geom_errorbar(aes(ymin=share.x-share_moe.x, ymax=share.x + share_moe.x), position = "dodge") +
   geom_text(aes(label=perc), size = 5,  hjust = -0.1, size = 2, position = position_dodge(width = 1)) +
   labs(title="Renter Cost Burden by Asian Populations") +
   xlab("") +
@@ -91,9 +92,9 @@ ggplot(cost_burdened, aes(x = reorder(RAC2P, share, Ascending=TRUE), y=share, la
   coord_flip()
 
 # Table
-cb_tbl <- cost_burdened %>% select(RAC2P, perc, Total) %>% 
-  arrange(.,desc(Total)) %>% 
-  rename("Race"=RAC2P, "Percentage Cost Burdened"=perc, "Total Households"=Total)
+cb_tbl <- cost_burdened %>% select(RAC2P, perc, count.y) %>% 
+  arrange(.,desc(count.y)) %>% 
+  rename("Race"=RAC2P, "Percentage Cost Burdened"=perc, "Total Households"=count.y)
 kable(cb_tbl)
 ```
 
@@ -107,7 +108,7 @@ This plot displays median household income by Asian sub-group. However it is med
 3. add an asian alone bar and 
 4. below poverty line 
 
-```{r, echo=FALSE, fig.height=15, fig.width=15, warning=FALSE}
+```{r, echo=FALSE, include=FALSE, fig.height=15, fig.width=15, warning=FALSE}
 # version 1 (ordered by Total Households)
 m_inc <- m_income %>% left_join(tot_hh_count,by=c("RAC2P"="RAC2P"))
 
@@ -153,18 +154,30 @@ filter for renter cost burden before their occupation
 3. create a facet chart by occupation
 
 ```{r, fig.height=15, fig.width=15, warning=FALSE}
-target <- c("one EAT-Cooks and Food Preparation Workers", "FIN-Financial Specialists", "EAT-Food and Beverage Serving Workers", "PRS-Motor Vehicle Operators", "MGR-Operations Specialties Managers", "ENG-Engineers", "MED-Healthcare Diagnosing or Treating Practitioners", "FIN-Business Operations Specialists", "MGR-Other Management Occupations", "CMM-Computer Specialists")
 
-job_grp_race <- job_grp_race %>% filter(SOCP3 %in% target)
+job_df <- job3_by_aapi_race %>% 
+            inner_join(job3_region,by=c("SOCP3"="SOCP3"))
 
-job_grp_race$SOCP3 = factor(job_grp_race$SOCP3, levels=target)
+# version 1
+sp <- ggplot(job_df, aes(x = SOCP3, y=share.x, label = round(share.x, 2))) + 
+        geom_bar(stat = "identity") +
+        geom_text(size = 2, position = position_stack(vjust = 0.5)) +
+        labs(title="Top 10 most Common Jobs for Asian Populations") +
+        psrc_style() +
+        theme(axis.text.x = element_text(vjust=1, hjust=1))
 
-ggplot(job_grp_race, aes(x = SOCP3, y=share, fill = RAC2P, label = round(share, 2))) + 
-  geom_bar(stat = "identity") +
-  geom_text(size = 2, position = position_stack(vjust = 0.5)) +
-  labs(title="Top 10 most Common Jobs for Asian Populations") +
-  psrc_style() +
-  theme(axis.text.x = element_text(vjust=1, hjust=1)) +
-  coord_flip()
+sp + facet_wrap( ~ RAC2P_aapi_group10_houshold, ncol=2)
+
+# version 2
+sp2 <- ggplot(job_df, aes(x = RAC2P_aapi_group10_houshold, y=share.x, label = round(share.x, 2))) + 
+        geom_bar(stat = "identity") +
+        geom_text(size = 2, position = position_stack(vjust = 0.5)) +
+        labs(title="Top 10 most Common Jobs for Asian Populations") +
+        psrc_style() +
+        theme(axis.text.x = element_text(vjust=1, hjust=1)) +
+        coord_flip()
+
+sp2 + facet_wrap( ~ SOCP3, ncol=2)
+
 ```
 
