@@ -39,10 +39,8 @@ pums_2022_h <- get_psrc_pums(span = 5,
                                       "TEN",   # Tenure
                                       "GRPIP", # Gross rent as a percentage of household income past 12 months
                                       "HINCP",  # Household income
-                                      "BIN_POVRATIO"#,
-                                      # "SOCP3",
-                                      # "SOCP5"
-                             )) 
+                                      "BIN_POVRATIO",
+                                      "SOCP3")) 
 ## ----- 1. households ----- 
 df_pums <- pums_2022_h %>%
   # make new variables
@@ -90,7 +88,7 @@ asian_top10 <- df_pums %>%
   psrc_pums_count(., group_vars=c("PRACE","RAC2P")) %>%
   filter(!RAC2P %in% c("All combinations of Asian races only","Other Asian alone","Total")) %>%
   arrange(desc(count)) %>%
-  top_n(8,count)
+  top_n(7,count)
 
 
 ## ----- 3. AAPI households (householder) ----- 
@@ -166,6 +164,7 @@ df_pums_p_aapi_renter_worker[['variables']] <- df_pums_p_aapi_renter_worker[['va
               rename(RAC2P_aapi_group10_houshold = RAC2P_aapi_group10), 
             by="SERIALNO", suffix=c("","_houshold"))
 
+  
 
 # --- example crosstabs ----
 # total number of households in each subgroup
@@ -178,18 +177,36 @@ hh_count <- psrc_pums_count(df_pums_renter_aapi, group_vars=c("PRACE","RAC2P")) 
 # income <- psrc_pums_median(df_pums_renter_aapi, stat_var = "HINCP", group_vars=c("RAC2P")) %>%
 #   left_join(poverty, by=c("DATA_YEAR","COUNTY","RAC2P"))
 
-# job share for entire region and each AAPI subgroup
+# job share for renters in entire region and each AAPI subgroup
 job3_region <- pums_2022_p %>% filter(AGEP >= 15, !is.na(SOCP3), TEN=="Rented") %>%
   psrc_pums_count(., group_vars=c("SOCP3"))
 job3_by_aapi_race <- psrc_pums_count(df_pums_p_aapi_renter_worker, group_vars=c("RAC2P_aapi_group10_houshold","SOCP3"))
 
-# top 5 occupations of entire region and each AAPI subgroup
+# top 5 occupations of renters in entire region and each AAPI subgroup
 job3_region_top_5 <- job3_region %>%
+  filter(SOCP3 != "Total") %>%
   arrange(desc(share)) %>%
-  top_n(5, share)
+  top_n(5, share) %>%
+  mutate(RAC2P_aapi_group10_houshold = "Region", .after="COUNTY")
 job3_by_aapi_race_top_5 <- job3_by_aapi_race %>%
   filter(SOCP3 != "Total") %>%
   group_by(RAC2P_aapi_group10_houshold) %>%
   arrange(desc(share), .by_group = TRUE) %>%
-  top_n(5, share)
+  top_n(5, share) %>%
+  ungroup() %>%
+  add_row(job3_region_top_5)
+  
 
+# attach median income to top 5 occupations of entire region
+test <- df_pums_renter_aapi %>%
+  filter(SOCP3 %in% job3_by_aapi_race_top_5$SOCP3) %>%
+  psrc_pums_median(., stat_var = "HINCP", group_vars=c("RAC2P_aapi_group10","SOCP3"))
+test2 <- df_pums %>%
+  filter(TEN=="Rented",
+         SOCP3 %in% job3_region_top_5$SOCP3) %>%
+  psrc_pums_median(., stat_var = "HINCP", group_vars=c("SOCP3")) %>%
+  mutate(RAC2P_aapi_group10 = "Region", .after="COUNTY")
+
+
+job3_by_aapi_race_top_5_income <- job3_by_aapi_race_top_5 %>%
+  left_join(test %>% add_row(test2), by=c("DATA_YEAR","COUNTY","RAC2P_aapi_group10_houshold"="RAC2P_aapi_group10","SOCP3"))
