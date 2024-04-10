@@ -254,3 +254,4 @@ ggplot(income %>% mutate(group_var = "Median income"),
   labs(title = "Income and home ownership by AAPI subgroups", caption = "data: AAPI households by householder race", x="AAPI subgroups")
 ```
 :::
+
