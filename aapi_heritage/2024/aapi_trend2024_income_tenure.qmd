@@ -124,8 +124,65 @@ ggplot(tenure, aes(x=reorder(RAC2P_aapi_group10,order),y=share)) +
     panel.grid.major.x = element_line(color="#cbcbcb")
   ) +
   labs(title = "Home ownership by AAPI subgroups", caption = "data: all households (for regional homeownership) and AAPI households by householder race", x="AAPI subgroups")
+ 
+
+tenure2 <- tenure %>%
+  select(DATA_YEAR:tenure,share,order) %>%
+  add_row(
+    tenure%>%
+      select(DATA_YEAR:tenure,share,order) %>%
+      mutate(tenure = "renter",
+             share = 1-share)) %>%
+  mutate(tenure = factor(tenure, levels=c("renter","owner")),
+         text_position = case_when(tenure=="owner"~share,
+                                   tenure=="renter"~1))
   
+ggplot(tenure2, aes(x=reorder(RAC2P_aapi_group10,order),y=share)) +
+  geom_col(aes(y=share, fill=tenure),position="stack") +
+  geom_text(aes(y=text_position,label=scales::percent(share, accuracy = 1)), hjust=1.2, color="white")+
+  # geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+  #               width=0.2, position = position_dodge(0.9)) +
+  scale_y_continuous(labels=scales::percent)+
+  # scale_fill_manual(values = data_type_fill)+
+  coord_flip()+
+  psrc_style() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color="#cbcbcb")
+  ) +
+  labs(title = "Tenure by AAPI subgroups", x="AAPI subgroups")
+
+
 ```
+
+```{r}
+tenure_hrace <- psrc_pums_count(df_pums, group_vars=c("RAC1P","tenure")) %>%
+  # add regional total
+  add_row(psrc_pums_count(df_pums, group_vars=c("tenure")) %>%
+            mutate(RAC1P = "Region", .after="COUNTY")) %>%
+  filter(tenure=="owner") %>%
+  arrange(share) %>%
+  mutate(order = case_when(RAC1P != "Region"~row_number(),
+                           TRUE~100),
+         RAC1P = case_when(RAC1P=="American Indian and Alaska Native tribes specified; or American Indian or Alaska Native, not specified and no other races"~"American Indian or Alaska Native",
+                           TRUE~RAC1P))
+                           
+ggplot(tenure_hrace, aes(x=reorder(RAC1P,order),y=share)) +
+  geom_col(aes(y=share), fill=data_type_fill["householder"]) +
+  geom_text(aes(y=share,label=scales::percent(share, accuracy = 1)), hjust=1.6, color="white")+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                width=0.2, position = position_dodge(0.9)) +
+  scale_y_continuous(labels=scales::percent)+
+  coord_flip()+
+  psrc_style() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color="#cbcbcb")
+  ) +
+  labs(title = "Home ownership by race", x="Race")
+
+```
+
 
 ### comparison
 ```{r, fig.height=5, fig.width=6}
@@ -254,4 +311,58 @@ ggplot(income %>% mutate(group_var = "Median income"),
   labs(title = "Income and home ownership by AAPI subgroups", caption = "data: AAPI households by householder race", x="AAPI subgroups")
 ```
 :::
+
+
+### renters income
+```{r}
+renters_income <- psrc_pums_median(df_pums %>% filter(TEN=="Rented"), stat_var = "HINCP") %>%
+  mutate(RAC2P_aapi_group10 = "Region")
+# median income of AAPI renters
+renters_income_aapi <- psrc_pums_median(df_pums_renter_aapi, stat_var = "HINCP", group_vars=c("RAC2P_aapi_group10")) %>%
+  filter(RAC2P_aapi_group10 != "Total") %>%
+  add_row(renters_income) %>%
+  arrange(HINCP_median) %>%
+  mutate(order = case_when(RAC2P_aapi_group10 != "Region"~row_number(),
+                           TRUE~100))
+
+ggplot(renters_income_aapi, aes(x=reorder(RAC2P_aapi_group10,order))) +
+  geom_col(aes(y=HINCP_median), fill=data_type_fill["householder"]) +
+  geom_text(aes(y=HINCP_median,label=scales::number(HINCP_median, accuracy = 1000, big.mark = ",")), 
+            hjust=1.6, color="white")+
+  geom_errorbar(aes(ymin=HINCP_median-HINCP_median_moe, ymax=HINCP_median+HINCP_median_moe),
+                width=0.2, position = position_dodge(0.9)) +
+  scale_y_continuous(labels=scales::label_number(accuracy = 1000, big.mark = ","))+
+  coord_flip()+
+  psrc_style() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color="#cbcbcb")
+  ) +
+  labs(title = "Median income for renters by AAPI subgroups", x="AAPI subgroups", y="median income")
+ 
+
+```
+
+## occupation wage
+
+```{r, fig.width=12, fig.height=5}
+job3_top_5_wage <- pums_2022_p %>%
+  filter(SOCP3 %in% c(job3_region_top_5$SOCP3,job3_by_aapi_race_top_5$SOCP3)) %>%
+  psrc_pums_median(., stat_var = "WAGP", group_vars=c("SOCP3")) %>%
+  filter(SOCP3!="Total")
+
+ggplot(job3_top_5_wage, aes(x=reorder(SOCP3,WAGP_median),y=WAGP_median)) +
+  geom_col(aes(y=WAGP_median), fill=data_type_fill["householder"]) +
+  geom_text(aes(y=WAGP_median,label=scales::number(WAGP_median, accuracy = 1000, big.mark = ",")), hjust=1.2, color="white")+
+  geom_errorbar(aes(ymin=WAGP_median-WAGP_median_moe, ymax=WAGP_median+WAGP_median_moe),
+                width=0.2, position = position_dodge(0.9)) +
+  scale_y_continuous(labels=scales::label_number(big.mark = ","))+
+  coord_flip()+
+  psrc_style() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color="#cbcbcb")
+  ) +
+  labs(title = "Median wage by occupation", x="Occupation (SOCP3)", y="Median wage")
+```
 
