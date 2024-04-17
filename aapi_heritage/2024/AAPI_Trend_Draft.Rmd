@@ -29,29 +29,6 @@ cost_burdened <- renter %>%
   summarize(across(c(count, count_moe, share, share_moe), sum)) %>% # aggregates all numerical values based on race
   dplyr::mutate(perc = paste0(sprintf("%4.1f", share * 100), "%")) # adds a percentage column to the cost burdened share
 
-
-# Version 1 (ordered by Total Households)
-ggplot(cost_burdened, aes(x = reorder(RAC2P_aapi_group10, count, Ascending=TRUE), y=share, fill=RAC2P_aapi_group10, label = round(share, 2))) + 
-  geom_col(stat = "identity", position = "dodge") +
-  geom_errorbar(aes(ymin=share-share_moe, ymax=share + share_moe), position = "dodge") +
-  geom_text(aes(label=perc), size = 5,  hjust = -0.1, size = 2, position = position_dodge(width = 1)) +
-  labs(title="Renter Cost Burden by Asian Populations") +
-  xlab("") +
-  psrc_style() +
-  scale_fill_manual(values = psrc_colors$psrc_pairs) +
-  coord_flip()
-
-# Version 2 (ordered by most cost burdened)
-ggplot(cost_burdened, aes(x = reorder(RAC2P_aapi_group10, share, Ascending=TRUE), y=share, fill=RAC2P_aapi_group10, label = round(share, 2))) + 
-          geom_bar(stat = "identity", position = "dodge") +
-  geom_errorbar(aes(ymin=share-share_moe, ymax=share + share_moe), position = "dodge") +
-  geom_text(aes(label=perc), size = 5,  hjust = -0.1, size = 2, position = position_dodge(width = 1)) +
-  scale_fill_manual(values = psrc_colors$pgnobgy_10) +
-  labs(title="Renter Cost Burden by Asian Populations") +
-  xlab("") +
-  psrc_style() +
-  coord_flip()
-
 # Version 3
 
 ggplot(cost_burdened, aes(x=reorder(RAC2P_aapi_group10, share), y=share, fill=RAC2P_aapi_group10)) +
@@ -72,6 +49,7 @@ filter for renter cost burden before their occupation
 ```{r, fig.height=15, fig.width=15, warning=FALSE}
 
 library(data.table)
+library(kableExtra)
 
 job_df <- job3_by_aapi_race %>% 
   group_by(RAC2P_aapi_group10_houshold) %>% 
@@ -89,15 +67,19 @@ setDT(job_df)
 
 job_df <- job_df[, lapply(.SD, paste0, collapse=""), by=RAC2P_aapi_group10_houshold]
 
-knitr::kable(job_df)
+kbl(job_df) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover"), html_font = "Poppins") %>%
+  column_spec(c(2), background = psrc_colors$greens_inc[1]) %>% 
+  column_spec(c(3), background = psrc_colors$purples_inc[1]) %>%
+  column_spec(c(4), background = psrc_colors$greens_inc[1]) %>% 
+  column_spec(c(5), background = psrc_colors$purples_inc[1]) %>% 
+  column_spec(c(6), background = psrc_colors$greens_inc[1])
 
 job3_region_top_5_edit <- job3_region %>%
   filter(SOCP3!="Total") %>%
   arrange(desc(share)) %>%
   top_n(5, share)
 
-
-# hh_median <- psrc_pums_median(df_pums_p_aapi_renter_worker, stat_var = "HINCP", group_vars=c("PRACE","RAC2P_aapi_group10","rent_pct_income_30"))
 
 ```
 
