@@ -74,6 +74,7 @@ pums_2022_p <- get_psrc_pums(span = 5,
                              vars = c("AGEP",
                                       "TYPEHUGQ",
                                       "PRACE",
+                                      "RAC1P",
                                       "RAC2P",
                                       "SOCP3",
                                       "SOCP5",
@@ -99,9 +100,13 @@ df_pums_aapi <- df_pums %>%
     # grouped race category: top 10 populous Asian subgroups, other Asian races and all Pacific Islander
     RAC2P_aapi_group10 = case_when(PRACE == "Native Hawaiian and Other Pacific Islander alone" ~ "Native Hawaiian and Other Pacific Islander",
                                    PRACE == "Asian alone" & RAC2P %in% asian_top10$RAC2P~ RAC2P,
-                                   PRACE == "Asian alone"~ "Other Asian subgroups"#,
-                                   #TRUE ~ PRACE
-    ))
+                                   PRACE == "Asian alone"~ "Other Asian subgroups"),
+    RAC2P_income = case_when(PRACE == "Native Hawaiian and Other Pacific Islander alone" ~ "Native Hawaiian and Other Pacific Islander",
+                             RAC2P %in% c("Asian Indian alone","Cambodian alone","Chinese, except Taiwanese, alone",
+                                          "Filipino alone","Japanese alone","Korean alone","Laotian alone","Pakistani alone",
+                                          "Taiwanese alone","Thai alone","Vietnamese alone")~RAC2P,
+                             RAC2P == "All combinations of Asian races only"~"Two or more Asian",
+                             TRUE~"Other Asian"))
 
 ## ----- 4. AAPI renter households (householder) -----
 df_pums_renter_aapi <- df_pums_aapi %>% filter(TEN=="Rented")
@@ -189,4 +194,58 @@ job3_by_aapi_race_top_5 <- job3_by_aapi_race %>%
   top_n(5, share) %>%
   ungroup() %>%
   add_row(job3_region_top_5)
-  
+
+# income characteristics
+
+# get all subgroups with more than 5000 population
+per_count_5000 <- psrc_pums_count(df_pums_p, group_vars=c("RAC1P","RAC2P")) %>%
+  filter(RAC1P=="Asian alone",
+         count>5000) 
+
+df_pums_p <- pums_2022_p %>%
+  mutate(RAC2P_income = case_when(PRACE == "Native Hawaiian and Other Pacific Islander alone" ~ "Native Hawaiian and Other Pacific Islander",
+                                  RAC2P == "All combinations of Asian races only"~"Two or more Asian",
+                                  RAC2P == "Other Asian alone"~"Other Asian",
+                                  RAC2P %in% per_count_5000$RAC2P ~RAC2P,
+                                  TRUE~"Other Asian"))
+per_count <- psrc_pums_count(df_pums_p, group_vars=c("RAC1P","RAC2P_income")) %>%
+  filter(RAC1P=="Asian alone")
+poverty <- psrc_pums_count(df_pums_aapi, group_vars=c("RAC2P_income","income_poverty_level")) %>%
+  filter(income_poverty_level=="Income below 100% of poverty level")
+# median income + poverty level
+income <- psrc_pums_median(df_pums_aapi, stat_var = "HINCP", group_vars=c("RAC2P_income"))
+
+test <- per_count %>%
+  left_join(income, by=c("DATA_YEAR","COUNTY","RAC2P_income")) %>%
+  left_join(poverty, by=c("DATA_YEAR","COUNTY","RAC2P_income"), suffix = c(".population",".below_poverty")) %>%
+  filter(RAC2P_income!="Total") %>%
+  mutate(RAC2P_income = str_replace(RAC2P_income," alone|, alone",""),
+         RAC2P_income = factor(RAC2P_income, levels=c("Asian Indian","Cambodian","Chinese, except Taiwanese",
+                                                      "Filipino","Japanese","Korean","Laotian","Pakistani",
+                                                      "Taiwanese","Thai","Vietnamese","Two or more Asian","Other Asian"))) %>%
+  arrange(RAC2P_income)
+
+per_count <- psrc_pums_count(df_pums_p, group_vars=c("RAC1P")) %>%
+  filter(RAC1P=="Asian alone")
+poverty <- psrc_pums_count(df_pums, group_vars=c("RAC1P","income_poverty_level")) %>%
+  filter(income_poverty_level=="Income below 100% of poverty level")
+# median income + poverty level
+income <- psrc_pums_median(df_pums, stat_var = "HINCP", group_vars=c("RAC1P"))
+
+test2 <- per_count %>%
+  left_join(income, by=c("DATA_YEAR","COUNTY","RAC1P")) %>%
+  left_join(poverty, by=c("DATA_YEAR","COUNTY","RAC1P"), suffix = c(".population",".below_poverty")) %>%
+  rename(RAC2P_income = RAC1P) %>%
+  mutate(RAC1P = "Asian alone", .before="RAC2P_income") %>%
+  add_row(test) %>%
+  select(c("DATA_YEAR","RAC2P_income","count.population","count_moe.population",
+           "share.below_poverty","share_moe.below_poverty","HINCP_median","HINCP_median_moe")) %>%
+  mutate(`count.population` = scales::number(`count.population`,accuracy=100,big.mark = ","),
+         `count_moe.population` = scales::number(`count_moe.population`,accuracy=1,big.mark = ","),
+         `share.below_poverty` =  scales::percent(`share.below_poverty`,accuracy=0.1),
+         `share_moe.below_poverty` =  scales::percent(`share_moe.below_poverty`,accuracy=0.1),
+         HINCP_median = scales::number(HINCP_median,accuracy=100,big.mark = ","),
+         HINCP_median_moe = scales::number(HINCP_median_moe,accuracy=1,big.mark = ","))
+
+# library(openxlsx)
+# write.xlsx(test2, 'income_character.xlsx')
