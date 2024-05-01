@@ -111,52 +111,6 @@ df_pums_aapi <- df_pums %>%
 ## ----- 4. AAPI renter households (householder) -----
 df_pums_renter_aapi <- df_pums_aapi %>% filter(TEN=="Rented")
 
-## ----- 5. AAPI households (any AAPI member in household) ----- 
-
-# create "RAC2P_allpersons" variable: get households with at least one AAPI member
-race_allpersons <- pums_2022_p[['variables']] %>% 
-  # filter only AAPI adults
-  filter(AGEP >= 15,
-         TYPEHUGQ == "Housing unit",
-         PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone")) %>%
-  group_by(SERIALNO) %>%
-  summarise(n_aapi = n(),
-            n_prace = length(unique(PRACE)),
-            n_rac2p = length(unique(RAC2P)),
-            all_prace = paste(unique(PRACE),collapse = "; "),
-            all_rac2p = paste(unique(RAC2P),collapse = "; ")) %>%
-  ungroup() %>%
-  # at least one of AAPI member in household
-  mutate(PRACE_allpersons = case_when(# both Asian and PI race in household
-    n_prace>1~"Multiple AAPI races",
-    # at least one AAPI member in household
-    all_prace=="Asian alone"~ "Asian",
-    all_prace=="Native Hawaiian and Other Pacific Islander alone"~ "Native Hawaiian and Other Pacific Islander"),
-    RAC2P_allpersons = case_when(# both Asian and PI race in household
-      n_prace>1~"Multiple AAPI races", 
-      # multiple asian subgroups in household
-      all_prace == "Asian alone" & n_rac2p>1~"Multiple Asian subgroups", 
-      # multiple PI subgroups in household
-      all_prace == "Native Hawaiian and Other Pacific Islander alone" & n_rac2p>1~"Multiple Native Hawaiian and Other Pacific Islander subgroups",
-      # at least one AAPI member in household
-      all_prace=="Asian alone"~ all_rac2p,
-      all_prace=="Native Hawaiian and Other Pacific Islander alone"~ all_rac2p)) %>%
-  select(SERIALNO,PRACE_allpersons,RAC2P_allpersons)
-
-
-df_pums_aapi_allpersons <- df_pums %>%
-  filter(SERIALNO %in% race_allpersons$SERIALNO)
-df_pums_aapi_allpersons[['variables']] <- df_pums_aapi_allpersons[['variables']] %>%
-  left_join(race_allpersons, by="SERIALNO") %>%
-  mutate(
-    # grouped race category: top 10 populous Asian subgroups, other Asian races and all Pacific Islander
-    RAC2P_allpersons_aapi_group10 = case_when(PRACE_allpersons == "Asian" & RAC2P_allpersons %in% asian_top10$RAC2P~ RAC2P_allpersons,
-                                              PRACE_allpersons == "Asian"~ "Other Asian subgroups",
-                                              TRUE~PRACE_allpersons
-    ))
-
-
-
 # ---- 6. AAPI persons data for occupation ----
 # all adults in AAPI households
 # possible filtering alternatives: only AAPI adults
