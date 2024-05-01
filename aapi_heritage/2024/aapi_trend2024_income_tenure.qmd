@@ -16,6 +16,7 @@ library(kableExtra)
 source("aapi_trend2024.R")
 
 install_psrc_fonts()
+data_type_fill <- c("householder" = psrc_colors$pgnobgy_5[1], "all members" = psrc_colors$pgnobgy_5[2])
 ```
 
 ```{r}
@@ -46,7 +47,6 @@ kbl(df_table)%>%
 ```{r, fig.height=3.5, fig.width=6}
 #| out-width: 700px
 
-data_type_fill <- c("householder" = psrc_colors$pgnobgy_5[1], "all members" = psrc_colors$pgnobgy_5[2])
 
 ggplot(hh_count %>% filter(RAC2P_aapi_group10!="Total"), aes(x=reorder(RAC2P_aapi_group10,share), y=share, fill="householder")) +
   geom_col() +
@@ -156,23 +156,23 @@ ggplot(tenure2, aes(x=reorder(RAC2P_aapi_group10,order),y=share)) +
 ```
 
 ```{r}
-tenure_hrace <- psrc_pums_count(df_pums, group_vars=c("RAC1P","tenure")) %>%
+tenure_hrace <- psrc_pums_count(df_pums, group_vars=c("PRACE","tenure")) %>%
   # add regional total
   add_row(psrc_pums_count(df_pums, group_vars=c("tenure")) %>%
-            mutate(RAC1P = "Region", .after="COUNTY")) %>%
+            mutate(PRACE = "Region", .after="COUNTY")) %>%
   filter(tenure=="owner") %>%
   arrange(share) %>%
-  mutate(order = case_when(RAC1P != "Region"~row_number(),
+  mutate(order = case_when(PRACE != "Region"~row_number(),
                            TRUE~100),
-         RAC1P = case_when(RAC1P=="American Indian and Alaska Native tribes specified; or American Indian or Alaska Native, not specified and no other races"~"American Indian or Alaska Native",
-                           TRUE~RAC1P))
+         PRACE = case_when(PRACE=="Hispanic or Latino"~"Hispanic or Latinx",
+                           TRUE~PRACE))
                            
-ggplot(tenure_hrace, aes(x=reorder(RAC1P,order),y=share)) +
+ggplot(tenure_hrace, aes(x=reorder(PRACE,order),y=share)) +
   geom_col(aes(y=share), fill=data_type_fill["householder"]) +
   geom_text(aes(y=share,label=scales::percent(share, accuracy = 1)), hjust=1.6, color="white")+
   geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
                 width=0.2, position = position_dodge(0.9)) +
-  scale_y_continuous(labels=scales::percent)+
+  scale_y_continuous(labels=scales::percent, limits = c(0,0.8))+
   coord_flip()+
   psrc_style() +
   theme(
