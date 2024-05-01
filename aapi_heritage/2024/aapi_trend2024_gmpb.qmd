@@ -1,0 +1,138 @@
+---
+title: "AAPI trend: GMPB presentation June 2024"
+date: today
+format: 
+  html:
+    mainfont: Poppins
+    theme: [cosmo, custom.scss]
+    toc: true
+    df-print: kable
+    warning: false
+    echo: false
+---
+
+```{r}
+library(kableExtra)
+library(openxlsx)
+source("aapi_data_gmpb.R")
+
+install_psrc_fonts()
+# data_type_fill <- c("householder" = psrc_colors$pgnobgy_5[1], "all members" = psrc_colors$pgnobgy_5[2])
+```
+
+
+## home ownership
+```{r, fig.width=8, fig.height=4}
+tenure_prace <- psrc_pums_count(
+  df_pums %>% mutate(PRACE = case_when(PRACE %in% c("Some Other Race alone", "Two or More Races")~"Other",
+                                       TRUE~PRACE)), 
+  group_vars=c("PRACE","tenure")) %>%
+  # add regional total
+  add_row(psrc_pums_count(df_pums, group_vars=c("tenure")) %>%
+            mutate(PRACE = "Region", .after="COUNTY")) %>%
+  filter(tenure=="owner") %>%
+  arrange(share) %>%
+  mutate(order = case_when(PRACE != "Region"~row_number(),
+                           TRUE~100),
+         PRACE = case_when(PRACE=="Hispanic or Latino"~"Hispanic or Latinx",
+                           TRUE~PRACE))
+                           
+ggplot(tenure_prace, aes(x=reorder(PRACE,order),y=share)) +
+  geom_col(aes(y=share), fill=psrc_colors$pgnobgy_5[1]) +
+  geom_text(aes(y=share,label=scales::percent(share, accuracy = 1)), hjust=1.6, color="white")+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                width=0.2, position = position_dodge(0.9)) +
+  scale_y_continuous(labels=scales::percent, limits = c(0,0.8))+
+  coord_flip()+
+  psrc_style() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color="#cbcbcb")
+  ) +
+  labs(title = "Home ownership by race", x="Race")
+
+```
+- check asian indian tenure
+  1. [2021 5-year acs table](https://data.census.gov/table/ACSDT5YSPT2021.B25003?t=-04:Owner/Renter%20(Tenure)&g=040XX00US53) for WA: 25,369/47,096=53.8%
+  2. 2021 5-year PUMS for PSRC region: 0.5345213
+  3. 2015 5-year acs table for WA: 12,918/27,118=47.6%
+
+```{r, fig.width=8, fig.height=4}
+#| out-width: 700px
+tenure_subgroup <- psrc_pums_count(df_pums_aapi, group_vars=c("COUNTY","RAC2P","tenure")) %>%
+  filter(RAC2P=="Asian Indian alone")
+tenure_subgroup <- psrc_pums_count(df_pums_aapi, group_vars=c("RAC2P_aapi_group10","tenure")) %>%
+  filter(tenure=="owner") %>%
+  # add regional total
+  add_row(tenure_prace %>%
+            filter(PRACE %in% c("Region","Asian alone")) %>%
+            rename(RAC2P_aapi_group10 = PRACE) %>%
+            select(-c("order"))) %>%
+  arrange(share) %>%
+  mutate(order = case_when(RAC2P_aapi_group10 == "Region"~100,
+                           RAC2P_aapi_group10 == "Asian alone"~99,
+                           TRUE~row_number()))
+ggplot(tenure_subgroup, aes(x=reorder(RAC2P_aapi_group10,order),y=share)) +
+  geom_col(aes(y=share), fill=psrc_colors$pgnobgy_5[1]) +
+  geom_text(aes(y=share,label=scales::percent(share, accuracy = 1)), hjust=1.6, color="white")+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                width=0.2, position = position_dodge(0.9)) +
+  scale_y_continuous(labels=scales::percent)+
+  coord_flip()+
+  psrc_style() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color="#cbcbcb")
+  ) +
+  labs(title = "Home ownership by AAPI subgroups", x="AAPI subgroups")
+
+```
+
+
+## income
+
+```{r, fig.width=8, fig.height=6}
+income <- psrc_pums_median(df_pums, group_vars="PRACE", stat_var = "HINCP") %>%
+  filter(PRACE %in% c("Total","Asian alone")) %>%
+  mutate(RAC2P_aapi_group10 = ifelse(PRACE=="Total", "Region","Asian alone"), .after="COUNTY") %>% 
+  add_row(
+    psrc_pums_median(df_pums_aapi, stat_var = "HINCP", group_vars=c("RAC2P_aapi_group10")) %>%
+      filter(RAC2P_aapi_group10!="Total")) %>%
+  select(-c("PRACE")) %>%
+  arrange(HINCP_median) %>%
+  mutate(order = case_when(RAC2P_aapi_group10 == "Region"~100,
+                           RAC2P_aapi_group10 == "Asian alone"~99,
+                           TRUE~row_number()))
+
+
+ggplot(income, aes(x=reorder(RAC2P_aapi_group10,order))) +
+  geom_col(aes( y=HINCP_median), fill=psrc_colors$pgnobgy_5[1]) +
+  geom_text(aes(y=HINCP_median,label=scales::number(HINCP_median, accuracy = 1000,big.mark = ",")), 
+            hjust=1.1, color="white")+
+  geom_errorbar(aes(ymin=HINCP_median-HINCP_median_moe, ymax=HINCP_median+HINCP_median_moe), width=0.2) +
+  scale_y_continuous(labels=scales::label_number(big.mark = ","))+
+  coord_flip()+
+  psrc_style() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color="#cbcbcb")
+  ) +
+  labs(title = "Median income and by AAPI subgroups", x="AAPI subgroups")
+```
+
+```{r}
+# save to spreadsheet
+
+wb <- createWorkbook()
+
+addWorksheet(wb, "tenure (race)")
+addWorksheet(wb, "tenure")
+addWorksheet(wb, "income")
+
+writeData(wb, "tenure (race)", tenure_prace)
+writeData(wb, "tenure", tenure_subgroup)
+writeData(wb, "income", income)
+
+saveWorkbook(wb, "aapi_2024.xlsx", overwrite = TRUE)
+```
+
