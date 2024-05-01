@@ -10,7 +10,19 @@ source("aapi_trend2024.R")
 
 
 ```{r, include = FALSE, warning=FALSE}
-renter <- psrc_pums_count(df_pums_renter_aapi, group_vars=c("PRACE","RAC2P_aapi_group10","rent_pct_income_30"), rr=TRUE)
+df_pums_renter_all_race <- df_pums %>% filter(TEN=="Rented")
+
+renter <- psrc_pums_count(df_pums_renter_aapi, group_vars=c("PRACE","RAC2P_aapi_group10","rent_pct_income_30"), rr=TRUE) %>% 
+    add_row(psrc_pums_count(df_pums_renter_all_race, group_vars=c("PRACE", "rent_pct_income_30")) %>% 
+               mutate(RAC2P_aapi_group10 = "Asian alone", .after="COUNTY")) %>% 
+    filter(PRACE == "Asian alone") %>% 
+    add_row(psrc_pums_count(df_pums, group_vars=c("rent_pct_income_30")) %>%
+           mutate(RAC2P_aapi_group10 = "Region", .after="COUNTY"))
+
+
+all_race_renter <- psrc_pums_count(df_pums_renter_all_race, group_vars=c("PRACE","rent_pct_income_30"), rr=TRUE) %>% 
+      add_row(psrc_pums_count(df_pums, group_vars=c("rent_pct_income_30")) %>%
+           mutate(PRACE = "Region", .after="COUNTY"))
 
 ```
 
@@ -33,15 +45,37 @@ cost_burdened <- renter %>%
 
 ggplot(cost_burdened, aes(x=reorder(RAC2P_aapi_group10, share), y=share, fill=RAC2P_aapi_group10)) +
   geom_col()+
-  geom_text(aes(y=share, label=scales::percent(share, accuracy = 0.1)), size = 5, hjust=-0.5)+
+  geom_text(aes(y=share, label=scales::percent(share, accuracy = 0.1)), size = 7, hjust=-0.5)+
   geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe), width=0.2) +
   scale_y_continuous(labels=scales::percent)+
   scale_fill_manual(values = psrc_colors$pgnobgy_10)+
   coord_flip()+
   psrc_style() +
-  labs(title = "Renter Cost Burden by APPI subgroups", caption = "data: AAPI Renter households by householder race", x="AAPI subgroups")
+  labs(title = "Renter Cost Burden by APPI subgroups", caption = "data: AAPI Renter households by householder race", x="AAPI subgroups") +
+  theme(axis.title = element_blank(), plot.title = element_text(size = 30), legend.position = "none", axis.text = element_text(size= 20), plot.caption = element_text(size = 20))
 ```
+## Plot 2
+```{r echo=FALSE, fig.height=10, fig.width=20, warning=FALSE}
+cost_burdened_all_race <- all_race_renter %>% 
+  filter(rent_pct_income_30 == "Greater than 30 percent") %>%
+  select(PRACE, count, count_moe, share, share_moe, reliability) %>% 
+  group_by(PRACE) %>%
+  summarize(across(c(count, count_moe, share, share_moe), sum)) %>% # aggregates all numerical values based on race
+  dplyr::mutate(perc = paste0(sprintf("%4.1f", share * 100), "%")) # adds a percentage column to the cost burdened share
 
+
+ggplot(cost_burdened_all_race, aes(x=reorder(PRACE, share), y=share, fill=PRACE)) +
+  geom_col()+
+  geom_text(aes(y=share, label=scales::percent(share, accuracy = 0.1)), size = 7, hjust=-0.5)+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe), width=0.2) +
+  scale_y_continuous(labels=scales::percent)+
+  scale_fill_manual(values = psrc_colors$pgnobgy_10)+
+  coord_flip() +
+  psrc_style() +
+  labs(title = "Renter Cost Burden by Race/Ethnicity", caption = "data: Renter households by householder race", x="All Races/Ethnicities") +
+  theme(axis.title = element_blank(), plot.title = element_text(size = 30), legend.position = "none", axis.text = element_text(size= 20), plot.caption = element_text(size = 20))
+
+```
 ## Plot 3
 Most common jobs by in the region and the share of Asian populations within those jobs
 filter for renter cost burden before their occupation
@@ -51,13 +85,26 @@ filter for renter cost burden before their occupation
 library(data.table)
 library(kableExtra)
 
+  
+job3_by_asian_alone <- psrc_pums_count(df_pums_p_aapi_renter_worker %>% filter(RAC2P_aapi_group10_household!="Native Hawaiian and Other Pacific Islander"), group_vars=c("SOCP3")) %>%
+  arrange(desc(count))
+
+
+job3_by_aapi_race <- psrc_pums_count(df_pums_p_aapi_renter_worker, group_vars=c("RAC2P_aapi_group10_household","SOCP3")) %>%
+  mutate(PRACE="Asian alone", .before="RAC2P_aapi_group10_household") %>% 
+  add_row(psrc_pums_count(df_pums_renter_all_race, group_vars=c("PRACE", "SOCP3")) %>%
+            mutate(RAC2P_aapi_group10_household = "Asian alone", .after="COUNTY")) %>% 
+  filter(PRACE == "Asian alone") %>% 
+  add_row(psrc_pums_count(df_pums, group_vars=c("SOCP3")) %>%
+           mutate(RAC2P_aapi_group10_household = "Region", .after="COUNTY"))
+
 job_df <- job3_by_aapi_race %>% 
-  group_by(RAC2P_aapi_group10_houshold) %>% 
+  group_by(RAC2P_aapi_group10_household) %>% 
   filter(SOCP3!="Total") %>%
   slice_max(count, n= 5) %>%
   mutate(occupation = str_c("Top_Occupation_", row_number())) %>% 
   spread(occupation, SOCP3) %>% 
-  select(RAC2P_aapi_group10_houshold, Top_Occupation_1, Top_Occupation_2, Top_Occupation_3, Top_Occupation_4, Top_Occupation_5) %>%
+  select(RAC2P_aapi_group10_household, Top_Occupation_1, Top_Occupation_2, Top_Occupation_3, Top_Occupation_4, Top_Occupation_5) %>%
   mutate(across(everything(), as.character)) %>% 
   replace(is.na(.), "") %>% 
   mutate(across(everything(), as.factor))
@@ -65,7 +112,7 @@ job_df <- job3_by_aapi_race %>%
 
 setDT(job_df)
 
-job_df <- job_df[, lapply(.SD, paste0, collapse=""), by=RAC2P_aapi_group10_houshold]
+job_df <- job_df[, lapply(.SD, paste0, collapse=""), by=RAC2P_aapi_group10_household]
 
 kbl(job_df) %>% 
   kable_styling(bootstrap_options = c("striped", "hover"), html_font = "Poppins") %>%
