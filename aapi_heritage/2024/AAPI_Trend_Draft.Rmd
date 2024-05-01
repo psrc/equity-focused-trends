@@ -40,9 +40,7 @@ cost_burdened <- renter %>%
   select(RAC2P_aapi_group10, count, count_moe, share, share_moe, reliability) %>% 
   group_by(RAC2P_aapi_group10) %>%
   summarize(across(c(count, count_moe, share, share_moe), sum)) %>% # aggregates all numerical values based on race
-  dplyr::mutate(perc = paste0(sprintf("%4.0f", share * 100))) # adds a percentage column to the cost burdened share
-
-# Version 3
+  dplyr::mutate(perc = paste0(sprintf("%4.0f", share * 100)))
 
 ggplot(cost_burdened, aes(x=reorder(RAC2P_aapi_group10, share), y=share, fill=RAC2P_aapi_group10)) +
   geom_col()+
@@ -57,7 +55,7 @@ ggplot(cost_burdened, aes(x=reorder(RAC2P_aapi_group10, share), y=share, fill=RA
 ```
 
 ## Plot 2
-This plot displays all races/ethnicities who are cost burdened. This is defined by anyone paying 30% or more of their income for their rent expense.
+This plot displays all races/ethnicity who are cost burdened. This is defined by anyone paying 30% or more of their income for their rent expense.
 ```{r echo=FALSE, fig.height=10, fig.width=20, warning=FALSE}
 
 cost_burdened_all_race <- all_race_renter %>% 
@@ -65,8 +63,7 @@ cost_burdened_all_race <- all_race_renter %>%
   select(PRACE, count, count_moe, share, share_moe, reliability) %>% 
   group_by(PRACE) %>%
   summarize(across(c(count, count_moe, share, share_moe), sum)) %>% # aggregates all numerical values based on race
-  dplyr::mutate(perc = paste0(sprintf("%4.0f", share * 100))) # adds a percentage column to the cost burdened share
-
+  dplyr::mutate(perc = paste0(sprintf("%4.0f", share * 100)))
 
 ggplot(cost_burdened_all_race, aes(x=reorder(PRACE, share), y=share, fill=PRACE)) +
   geom_col()+
@@ -106,9 +103,9 @@ job_df <- job3_by_aapi_race %>%
   group_by(RAC2P_aapi_group10_household) %>% 
   filter(SOCP3!="Total") %>%
   slice_max(count, n= 5) %>%
-  mutate(occupation = str_c("Top_Occupation_", row_number())) %>% 
+  mutate(occupation = str_c("Occupation ", row_number())) %>% 
   spread(occupation, SOCP3) %>% 
-  select(RAC2P_aapi_group10_household, Top_Occupation_1, Top_Occupation_2, Top_Occupation_3, Top_Occupation_4, Top_Occupation_5) %>%
+  select(RAC2P_aapi_group10_household, 'Occupation 1', 'Occupation 2', 'Occupation 3', 'Occupation 4', 'Occupation 5')   %>%
   mutate(across(everything(), as.character)) %>% 
   replace(is.na(.), "") %>% 
   mutate(across(everything(), as.factor))
@@ -116,7 +113,8 @@ job_df <- job3_by_aapi_race %>%
 
 setDT(job_df)
 
-job_df <- job_df[, lapply(.SD, paste0, collapse=""), by=RAC2P_aapi_group10_household]
+job_df <- job_df[, lapply(.SD, paste0, collapse=""), by=RAC2P_aapi_group10_household] %>% 
+  rename_at(1, ~'AAPI Subgroup')
 
 kbl(job_df) %>% 
   kable_styling(bootstrap_options = c("striped", "hover"), html_font = "Poppins") %>%
@@ -125,14 +123,41 @@ kbl(job_df) %>%
   column_spec(c(4), background = psrc_colors$greens_inc[1]) %>% 
   column_spec(c(5), background = psrc_colors$purples_inc[1]) %>% 
   column_spec(c(6), background = psrc_colors$greens_inc[1])
-
-job3_region_top_5_edit <- job3_region %>%
-  filter(SOCP3!="Total") %>%
-  arrange(desc(share)) %>%
-  top_n(5, share)
-
-
 ```
+
+
+```{r, fig.height=15, fig.width=15, warning=FALSE}
+
+# tbl for AAPI subgroup
+cost_burdened2 <- renter %>% 
+  filter(rent_pct_income_30 == "Greater than 30 percent") %>%
+  select(RAC2P_aapi_group10, count, count_moe, share, share_moe, reliability) %>% 
+  group_by(RAC2P_aapi_group10) %>%
+  summarize(across(c(count, count_moe, share, share_moe), sum)) %>% # aggregates all numerical values based on race
+  dplyr::mutate(Percentage = share * 100) %>%
+  select(RAC2P_aapi_group10, Percentage) %>% 
+  arrange(desc(Percentage))
+  
+  cost_burdened2$Percentage <- round(cost_burdened2$Percentage, 0)
+  
+# tbl for Race/Ethnicity
+  
+  cost_burdened_all_race2 <- all_race_renter %>% 
+  filter(rent_pct_income_30 == "Greater than 30 percent") %>%
+  select(PRACE, count, count_moe, share, share_moe, reliability) %>% 
+  group_by(PRACE) %>%
+  summarize(across(c(count, count_moe, share, share_moe), sum)) %>% # aggregates all numerical values based on race
+  dplyr::mutate(Percentage = share * 100) %>%
+  select(PRACE, Percentage) %>% 
+  arrange(desc(Percentage))
+
+  cost_burdened_all_race2$Percentage <- round(cost_burdened_all_race2$Percentage, 0)
+  
+  
+```
+
+
+
 ```{r, fig.height=15, fig.width=15, warning=FALSE}
 library(openxlsx)
 wb <- createWorkbook()
@@ -141,8 +166,8 @@ addWorksheet(wb, "Cost Burdened (AAPI)")
 addWorksheet(wb, "Cost Burdened (All Race)")
 addWorksheet(wb, "Occupation")
  
-writeData(wb, "Cost Burdened (AAPI)", cost_burdened)
-writeData(wb, "Cost Burdened (All Race)", cost_burdened_all_race)
+writeData(wb, "Cost Burdened (AAPI)", cost_burdened2)
+writeData(wb, "Cost Burdened (All Race)", cost_burdened_all_race2)
 writeData(wb, "Occupation", job_df)
  
 saveWorkbook(wb, "aapi_2024_2.xlsx", overwrite = TRUE)
