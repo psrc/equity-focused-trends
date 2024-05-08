@@ -65,7 +65,11 @@ df_pums <- pums_2022_h %>%
                                            "Less than 30 percent",
                                            "No rent paid")),
          income_poverty_level = case_when(BIN_POVRATIO %in% c("under 0.50","0.50 to 0.99")~"Income below 100% of poverty level",
-                                          TRUE~"Income above 100% of poverty level"))
+                                          TRUE~"Income above 100% of poverty level"),
+         PRACE = case_when(PRACE=="Hispanic or Latino"~"Hispanic/Latinx",
+                           PRACE=="American Indian or Alaskan Native Alone"~"American Indian or Alaskan Native alone",
+                           PRACE %in% c("Some Other Race alone", "Two or More Races")~"Other",
+                           TRUE~PRACE))
 
 ## ----- 2. persons ----- 
 pums_2022_p <- get_psrc_pums(span = 5,
@@ -98,16 +102,18 @@ df_pums_aapi <- df_pums %>%
   filter(PRACE %in% c("Asian alone","Native Hawaiian and Other Pacific Islander alone")) %>%
   mutate(
     # grouped race category: top 10 populous Asian subgroups, other Asian races and all Pacific Islander
-    RAC2P_aapi_group10 = case_when(PRACE == "Native Hawaiian and Other Pacific Islander alone" ~ "Native Hawaiian and Other Pacific Islander",
+    RAC2P_aapi_group10 = case_when(PRACE == "Native Hawaiian and Other Pacific Islander alone" ~ "Native Hawaiian and Other Pacific Islander alone",
                                    PRACE == "Asian alone" & RAC2P %in% asian_top10$RAC2P~ RAC2P,
                                    PRACE == "Asian alone"~ "Other Asian subgroups"),
-    RAC2P_income = case_when(PRACE == "Native Hawaiian and Other Pacific Islander alone" ~ "Native Hawaiian and Other Pacific Islander",
+    RAC2P_income = case_when(PRACE == "Native Hawaiian and Other Pacific Islander alone" ~ "Native Hawaiian and Other Pacific Islander alone",
                              RAC2P %in% c("Asian Indian alone","Cambodian alone","Chinese, except Taiwanese, alone",
                                           "Filipino alone","Japanese alone","Korean alone","Laotian alone","Pakistani alone",
                                           "Taiwanese alone","Thai alone","Vietnamese alone")~RAC2P,
                              RAC2P == "All combinations of Asian races only"~"Two or more Asian",
                              TRUE~"Other Asian"))
 
+## ----- 4. All renter households -----
+df_pums_renter <- df_pums %>% filter(TEN=="Rented")
 ## ----- 4. AAPI renter households (householder) -----
 df_pums_renter_aapi <- df_pums_aapi %>% filter(TEN=="Rented")
 
@@ -125,27 +131,3 @@ df_pums_p_aapi_renter_worker[['variables']] <- df_pums_p_aapi_renter_worker[['va
             by="SERIALNO", suffix=c("","_houshold"))
 
   
-
-# --- example crosstabs ----
-# total number of households in each subgroup
-hh_count <- psrc_pums_count(df_pums_renter_aapi, group_vars=c("PRACE","RAC2P")) %>%
-  filter(RAC2P!="Total")
-# job share for renters in entire region and each AAPI subgroup
-job3_region <- pums_2022_p %>% filter(AGEP >= 15, !is.na(SOCP3), TEN=="Rented") %>%
-  psrc_pums_count(., group_vars=c("SOCP3"))
-job3_by_aapi_race <- psrc_pums_count(df_pums_p_aapi_renter_worker, group_vars=c("PRACE","RAC2P_aapi_group10_household","SOCP3"))
-
-# top 5 occupations of renters in entire region and each AAPI subgroup
-job3_region_top_5 <- job3_region %>%
-  filter(SOCP3 != "Total") %>%
-  arrange(desc(share)) %>%
-  top_n(5, share) %>%
-  mutate(RAC2P_aapi_group10_household = "Region", .after="COUNTY")
-job3_by_aapi_race_top_5 <- job3_by_aapi_race %>%
-  filter(SOCP3 != "Total") %>%
-  group_by(RAC2P_aapi_group10_household) %>%
-  arrange(desc(share), .by_group = TRUE) %>%
-  top_n(5, share) %>%
-  ungroup() %>%
-  add_row(job3_region_top_5)
-

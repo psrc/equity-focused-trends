@@ -1,0 +1,173 @@
+---
+title: "AAPI trend: deep dive on Asian Indian home ownership"
+date: today
+format: 
+  html:
+    mainfont: Poppins
+    theme: cosmo
+    toc: true
+    df-print: kable
+    warning: false
+    echo: false
+---
+
+```{r, include=FALSE}
+library(kableExtra)
+source("aapi_trend2024.R")
+
+install_psrc_fonts()
+```
+
+## Home ownership
+
+```{r, fig.height=3, fig.width=4.5}
+#| out-width: 750px
+
+tenure <- psrc_pums_count(df_pums_aapi, group_vars=c("RAC2P_aapi_group10","tenure")) %>%
+  # add regional total
+  add_row(psrc_pums_count(df_pums, group_vars=c("tenure")) %>%
+            mutate(RAC2P_aapi_group10 = "Region", .after="COUNTY")) %>%
+  filter(tenure=="owner") %>%
+  arrange(share) %>%
+  mutate(order = case_when(RAC2P_aapi_group10 != "Region"~row_number(),
+                           TRUE~100))
+ggplot(tenure, aes(x=reorder(RAC2P_aapi_group10,order),y=share)) +
+  geom_col(aes(y=share), fill=psrc_colors$pgnobgy_5[1]) +
+  geom_text(aes(y=share,label=scales::percent(share, accuracy = 1)), hjust=1.6, color="white")+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                width=0.2, position = position_dodge(0.9)) +
+  scale_y_continuous(labels=scales::percent)+
+  coord_flip()+
+  psrc_style() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color="#cbcbcb")
+  ) +
+  labs(title = "Home Ownership Rate by AAPI Subgroups", caption = "Source: U.S. Census Bureau, American Community Survey, 2022 5-Year Public Use Microdata Sample", x="")
+```
+
+```{r, fig.height=3, fig.width=4.5}
+#| out-width: 750px
+tenure_race <- psrc_pums_count(df_pums, group_vars=c("PRACE","tenure")) %>%
+  # add regional total
+  add_row(psrc_pums_count(df_pums, group_vars=c("tenure")) %>%
+            mutate(PRACE = "Region", .after="COUNTY")) %>%
+  filter(tenure=="owner") %>%
+  arrange(share) %>%
+  mutate(order = case_when(PRACE != "Region"~row_number(),
+                           TRUE~100))
+                           
+ggplot(tenure_race, aes(x=reorder(PRACE,order),y=share)) +
+  geom_col(aes(y=share), fill=psrc_colors$pgnobgy_5[1]) +
+  geom_text(aes(y=share,label=scales::percent(share, accuracy = 1)), hjust=1.6, color="white")+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                width=0.2, position = position_dodge(0.9)) +
+  scale_y_continuous(labels=scales::percent, limits = c(0,0.8))+
+  coord_flip()+
+  psrc_style() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color="#cbcbcb")
+  ) +
+  labs(title = "Home Ownership Rate by Race/Ethnicity", caption = "Source: U.S. Census Bureau, American Community Survey, 2022 5-Year Public Use Microdata Sample", x="", y="")
+
+```
+
+
+## Income
+```{r, fig.height=3, fig.width=4.5}
+#| out-width: 750px
+income <- psrc_pums_median(df_pums, group_vars="PRACE", stat_var = "HINCP") %>%
+  filter(PRACE %in% c("Total","Asian alone")) %>%
+  mutate(RAC2P_aapi_group10 = ifelse(PRACE=="Total", "Region","Asian alone"), .after="COUNTY") %>% 
+  add_row(
+    psrc_pums_median(df_pums_aapi, stat_var = "HINCP", group_vars=c("RAC2P_aapi_group10")) %>%
+      filter(RAC2P_aapi_group10!="Total")) %>%
+  select(-c("PRACE")) %>%
+  arrange(HINCP_median) %>%
+  mutate(order = case_when(RAC2P_aapi_group10 == "Region"~100,
+                           RAC2P_aapi_group10 == "Asian alone"~99,
+                           TRUE~row_number()))
+
+
+ggplot(income, aes(x=reorder(RAC2P_aapi_group10,order))) +
+  geom_col(aes( y=HINCP_median), fill=psrc_colors$pgnobgy_5[1]) +
+  geom_text(aes(y=HINCP_median,label=scales::number(HINCP_median, accuracy = 1000,big.mark = ",")),
+            hjust=1.1, color="white")+
+  geom_errorbar(aes(ymin=HINCP_median-HINCP_median_moe, ymax=HINCP_median+HINCP_median_moe), width=0.2) +
+  scale_y_continuous(labels=scales::label_number(big.mark = ","))+
+  coord_flip()+
+  psrc_style() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color="#cbcbcb")
+  ) +
+  labs(title = "Household Median Income by AAPI Subgroups", caption = "Source: U.S. Census Bureau, American Community Survey, 2022 5-Year Public Use Microdata Sample", x="", y="")
+```
+
+## Poverty level
+
+```{r, fig.height=3, fig.width=4.5}
+#| out-width: 750px
+poverty <- psrc_pums_count(df_pums_aapi, group_vars=c("RAC2P_aapi_group10","income_poverty_level")) %>%
+  filter(income_poverty_level=="Income below 100% of poverty level") %>%
+  arrange(share) %>%
+  add_row(psrc_pums_count(df_pums, group_vars=c("PRACE","income_poverty_level")) %>%
+          filter(income_poverty_level=="Income below 100% of poverty level",
+                 PRACE =="Asian alone") %>%
+          rename(RAC2P_aapi_group10 = PRACE)) %>%
+  add_row(psrc_pums_count(df_pums, group_vars=c("income_poverty_level")) %>%
+            filter(income_poverty_level=="Income below 100% of poverty level") %>%
+            mutate(RAC2P_aapi_group10 = "Region", .after="COUNTY")) %>%
+  mutate(order = row_number())
+
+ggplot(poverty, aes(x=reorder(RAC2P_aapi_group10,order),y=share)) +
+  geom_col(aes(y=share), fill=psrc_colors$pgnobgy_5[1]) +
+  geom_text(aes(y=share,label=scales::percent(share, accuracy = 1)), hjust=1.6, color="white")+
+  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+                width=0.2, position = position_dodge(0.9)) +
+  scale_y_continuous(labels=scales::percent)+
+  coord_flip()+
+  psrc_style() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color="#cbcbcb")
+  ) +
+  labs(title = "Poverty Rate by AAPI Subgroups (Income below 100% of poverty level)", caption = "Source: U.S. Census Bureau, American Community Survey, 2022 5-Year Public Use Microdata Sample", x="", y="")
+```
+
+## Age
+
+```{r, fig.height=3, fig.width=4.5}
+#| out-width: 750px
+df_pums_p_aapi <- df_pums_p %>% 
+  filter(SERIALNO %in% df_pums_aapi[['variables']]$SERIALNO)
+df_pums_p_aapi[['variables']] <- df_pums_p_aapi[['variables']] %>% 
+  left_join(df_pums_aapi[['variables']] %>% select(SERIALNO,PRACE,RAC2P,RAC2P_aapi_group10) %>%
+              rename(RAC2P_aapi_group10_household = RAC2P_aapi_group10), 
+            by="SERIALNO", suffix=c("","_houshold"))
+
+age_race <- df_pums_p_aapi %>% psrc_pums_mean(stat_var = "AGEP", group_vars = "RAC2P_aapi_group10_household") %>%
+  filter(RAC2P_aapi_group10_household!="Total") %>%
+  arrange(AGEP_mean) %>%
+  add_row(df_pums_p %>% psrc_pums_mean(stat_var = "AGEP", group_vars = "PRACE") %>%
+            mutate(PRACE = ifelse(PRACE=="Total", "Region",PRACE)) %>%
+            filter(PRACE %in% c("Region","Asian alone")) %>%
+            rename(RAC2P_aapi_group10_household = PRACE)) %>%
+  mutate(order = row_number())
+
+ggplot(age_race, aes(x=reorder(RAC2P_aapi_group10_household,order))) +
+  geom_col(aes( y=AGEP_mean), fill=psrc_colors$pgnobgy_5[1]) +
+  geom_text(aes(y=AGEP_mean,label=scales::number(AGEP_mean, accuracy = 1)),
+            hjust=1.7, color="white")+
+  geom_errorbar(aes(ymin=AGEP_mean-AGEP_mean_moe, ymax=AGEP_mean+AGEP_mean_moe), width=0.2) +
+  # scale_y_continuous(labels=scales::label_number(big.mark = ","))+
+  coord_flip()+
+  psrc_style() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color="#cbcbcb")
+  ) +
+  labs(title = "Average Age by AAPI Subgroups", caption = "Source: U.S. Census Bureau, American Community Survey, 2022 5-Year Public Use Microdata Sample", x="", y="")
+```
+  

@@ -31,25 +31,22 @@ tenure_prace <- psrc_pums_count(
   add_row(psrc_pums_count(df_pums, group_vars=c("tenure")) %>%
             mutate(PRACE = "Region", .after="COUNTY")) %>%
   filter(tenure=="owner") %>%
-  arrange(share) %>%
-  mutate(order = case_when(PRACE != "Region"~row_number(),
-                           TRUE~100),
-         PRACE = case_when(PRACE=="Hispanic or Latino"~"Hispanic or Latinx",
-                           TRUE~PRACE))
+  select(all_of(c("PRACE","share"))) %>%
+  mutate(share = round(share*100,0))
                            
-ggplot(tenure_prace, aes(x=reorder(PRACE,order),y=share)) +
-  geom_col(aes(y=share), fill=psrc_colors$pgnobgy_5[1]) +
-  geom_text(aes(y=share,label=scales::percent(share, accuracy = 1)), hjust=1.6, color="white")+
-  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
-                width=0.2, position = position_dodge(0.9)) +
-  scale_y_continuous(labels=scales::percent, limits = c(0,0.8))+
-  coord_flip()+
-  psrc_style() +
-  theme(
-    panel.grid.major.y = element_blank(),
-    panel.grid.major.x = element_line(color="#cbcbcb")
-  ) +
-  labs(title = "Home ownership by race", x="Race")
+# ggplot(tenure_prace, aes(x=reorder(PRACE,order),y=share)) +
+#   geom_col(aes(y=share), fill=psrc_colors$pgnobgy_5[1]) +
+#   geom_text(aes(y=share,label=scales::percent(share, accuracy = 1)), hjust=1.6, color="white")+
+#   geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+#                 width=0.2, position = position_dodge(0.9)) +
+#   scale_y_continuous(labels=scales::percent, limits = c(0,0.8))+
+#   coord_flip()+
+#   psrc_style() +
+#   theme(
+#     panel.grid.major.y = element_blank(),
+#     panel.grid.major.x = element_line(color="#cbcbcb")
+#   ) +
+#   labs(title = "Home ownership by race", x="Race")
 
 ```
 - check asian indian tenure
@@ -59,32 +56,27 @@ ggplot(tenure_prace, aes(x=reorder(PRACE,order),y=share)) +
 
 ```{r, fig.width=8, fig.height=4}
 #| out-width: 700px
-tenure_subgroup <- psrc_pums_count(df_pums_aapi, group_vars=c("COUNTY","RAC2P","tenure")) %>%
-  filter(RAC2P=="Asian Indian alone")
 tenure_subgroup <- psrc_pums_count(df_pums_aapi, group_vars=c("RAC2P_aapi_group10","tenure")) %>%
+  mutate(share = round(share*100,0)) %>%
   filter(tenure=="owner") %>%
   # add regional total
   add_row(tenure_prace %>%
             filter(PRACE %in% c("Region","Asian alone")) %>%
-            rename(RAC2P_aapi_group10 = PRACE) %>%
-            select(-c("order"))) %>%
-  arrange(share) %>%
-  mutate(order = case_when(RAC2P_aapi_group10 == "Region"~100,
-                           RAC2P_aapi_group10 == "Asian alone"~99,
-                           TRUE~row_number()))
-ggplot(tenure_subgroup, aes(x=reorder(RAC2P_aapi_group10,order),y=share)) +
-  geom_col(aes(y=share), fill=psrc_colors$pgnobgy_5[1]) +
-  geom_text(aes(y=share,label=scales::percent(share, accuracy = 1)), hjust=1.6, color="white")+
-  geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
-                width=0.2, position = position_dodge(0.9)) +
-  scale_y_continuous(labels=scales::percent)+
-  coord_flip()+
-  psrc_style() +
-  theme(
-    panel.grid.major.y = element_blank(),
-    panel.grid.major.x = element_line(color="#cbcbcb")
-  ) +
-  labs(title = "Home ownership by AAPI subgroups", x="AAPI subgroups")
+            rename(RAC2P_aapi_group10 = PRACE)) %>%
+  select(all_of(c("RAC2P_aapi_group10","share")))
+# ggplot(tenure_subgroup, aes(x=reorder(RAC2P_aapi_group10,order),y=share)) +
+#   geom_col(aes(y=share), fill=psrc_colors$pgnobgy_5[1]) +
+#   geom_text(aes(y=share,label=scales::percent(share, accuracy = 1)), hjust=1.6, color="white")+
+#   geom_errorbar(aes(ymin=share-share_moe, ymax=share+share_moe),
+#                 width=0.2, position = position_dodge(0.9)) +
+#   scale_y_continuous(labels=scales::percent)+
+#   coord_flip()+
+#   psrc_style() +
+#   theme(
+#     panel.grid.major.y = element_blank(),
+#     panel.grid.major.x = element_line(color="#cbcbcb")
+#   ) +
+#   labs(title = "Home ownership by AAPI subgroups", x="AAPI subgroups")
 
 ```
 
@@ -102,23 +94,55 @@ income <- psrc_pums_median(df_pums, group_vars="PRACE", stat_var = "HINCP") %>%
   arrange(HINCP_median) %>%
   mutate(order = case_when(RAC2P_aapi_group10 == "Region"~100,
                            RAC2P_aapi_group10 == "Asian alone"~99,
-                           TRUE~row_number()))
+                           TRUE~row_number())) %>%
+  select(all_of(c("RAC2P_aapi_group10","HINCP_median"))) %>%
+  mutate(HINCP_median = round(HINCP_median,0))
 
 
-ggplot(income, aes(x=reorder(RAC2P_aapi_group10,order))) +
-  geom_col(aes( y=HINCP_median), fill=psrc_colors$pgnobgy_5[1]) +
-  geom_text(aes(y=HINCP_median,label=scales::number(HINCP_median, accuracy = 1000,big.mark = ",")), 
-            hjust=1.1, color="white")+
-  geom_errorbar(aes(ymin=HINCP_median-HINCP_median_moe, ymax=HINCP_median+HINCP_median_moe), width=0.2) +
-  scale_y_continuous(labels=scales::label_number(big.mark = ","))+
-  coord_flip()+
-  psrc_style() +
-  theme(
-    panel.grid.major.y = element_blank(),
-    panel.grid.major.x = element_line(color="#cbcbcb")
-  ) +
-  labs(title = "Median income and by AAPI subgroups", x="AAPI subgroups")
+# ggplot(income, aes(x=reorder(RAC2P_aapi_group10,order))) +
+#   geom_col(aes( y=HINCP_median), fill=psrc_colors$pgnobgy_5[1]) +
+#   geom_text(aes(y=HINCP_median,label=scales::number(HINCP_median, accuracy = 1000,big.mark = ",")), 
+#             hjust=1.1, color="white")+
+#   geom_errorbar(aes(ymin=HINCP_median-HINCP_median_moe, ymax=HINCP_median+HINCP_median_moe), width=0.2) +
+#   scale_y_continuous(labels=scales::label_number(big.mark = ","))+
+#   coord_flip()+
+#   psrc_style() +
+#   theme(
+#     panel.grid.major.y = element_blank(),
+#     panel.grid.major.x = element_line(color="#cbcbcb")
+#   ) +
+#   labs(title = "Median income and by AAPI subgroups", x="AAPI subgroups")
 ```
+
+## cost burden
+
+```{r}
+
+# renter cost burden by aapi subgroups
+renter_aapi <- psrc_pums_count(df_pums_renter_aapi, group_vars=c("RAC2P_aapi_group10","rent_pct_income_30")) %>% 
+  # asian alone
+  add_row(psrc_pums_count(df_pums_renter, group_vars=c("PRACE", "rent_pct_income_30")) %>% 
+            rename(RAC2P_aapi_group10 = PRACE) %>%
+            filter(RAC2P_aapi_group10 =="Asian alone")) %>% 
+  # region
+  add_row(psrc_pums_count(df_pums_renter, group_vars=c("rent_pct_income_30")) %>%
+         mutate(RAC2P_aapi_group10 = "Region", .after="COUNTY")) %>%
+  filter(rent_pct_income_30 == "Greater than 30 percent") %>%
+  arrange(share) %>%
+  select(all_of(c("RAC2P_aapi_group10","share"))) %>%
+  mutate(share = round(share*100,0))
+
+# renter cost burden by race/ethnicity
+renter <- psrc_pums_count(df_pums_renter, group_vars=c("PRACE", "rent_pct_income_30")) %>% 
+  # region
+  add_row(psrc_pums_count(df_pums_renter, group_vars=c("rent_pct_income_30")) %>%
+         mutate(PRACE = "Region", .after="COUNTY")) %>%
+  filter(rent_pct_income_30 == "Greater than 30 percent") %>%
+  arrange(desc(share)) %>%
+  select(all_of(c("PRACE","share"))) %>%
+  mutate(share = round(share*100,0))
+```
+
 
 ```{r}
 # save to spreadsheet
@@ -128,11 +152,17 @@ wb <- createWorkbook()
 addWorksheet(wb, "tenure (race)")
 addWorksheet(wb, "tenure")
 addWorksheet(wb, "income")
+addWorksheet(wb, "cost burden (race)")
+addWorksheet(wb, "cost burden")
+
 
 writeData(wb, "tenure (race)", tenure_prace)
 writeData(wb, "tenure", tenure_subgroup)
 writeData(wb, "income", income)
+writeData(wb, "cost burden (race)", renter)
+writeData(wb, "cost burden", renter_aapi)
 
 saveWorkbook(wb, "aapi_2024.xlsx", overwrite = TRUE)
 ```
+
 
