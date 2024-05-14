@@ -11,18 +11,24 @@ source("aapi_trend2024.R")
 
 ```{r, include = FALSE, warning=FALSE}
 
-
 renter <- psrc_pums_count(df_pums_renter_aapi, group_vars=c("PRACE","RAC2P_aapi_group10","rent_pct_income_30"), rr=TRUE) %>% 
-    add_row(psrc_pums_count(df_pums_renter_all_race, group_vars=c("PRACE", "rent_pct_income_30")) %>% 
+    add_row(psrc_pums_count(df_pums_renter, group_vars=c("PRACE", "rent_pct_income_30")) %>% 
                mutate(RAC2P_aapi_group10 = "Asian alone", .after="COUNTY")) %>% 
     filter(PRACE == "Asian alone") %>% 
-    add_row(psrc_pums_count(df_pums, group_vars=c("rent_pct_income_30")) %>%
+    add_row(psrc_pums_count(df_pums_renter, group_vars=c("rent_pct_income_30")) %>%
            mutate(RAC2P_aapi_group10 = "Region", .after="COUNTY"))
 
-df_pums_renter_all_race <- df_pums %>% filter(TEN=="Rented")
 
-all_race_renter <- psrc_pums_count(df_pums_renter_all_race, group_vars=c("PRACE","rent_pct_income_30"), rr=TRUE) %>% 
-      add_row(psrc_pums_count(df_pums, group_vars=c("rent_pct_income_30")) %>%
+tenure_prace <- psrc_pums_count(df_pums_renter %>% mutate(PRACE = case_when(PRACE %in% c("Some Other Race alone", "Two or More Races")~"Other",
+                                       TRUE~PRACE)), 
+  group_vars=c("PRACE","rent_pct_income_30")) %>% 
+  mutate(PRACE = case_when(PRACE=="Hispanic or Latino"~"Hispanic or Latinx",
+                           TRUE~PRACE)) %>% 
+  add_row(psrc_pums_count(df_pums_renter, group_vars=c("rent_pct_income_30")) %>%
+           mutate(PRACE = "Region", .after="COUNTY"))
+
+all_race_renter <- psrc_pums_count(df_pums_renter, group_vars=c("PRACE","rent_pct_income_30"), rr=TRUE) %>%
+    add_row(psrc_pums_count(df_pums, group_vars=c("rent_pct_income_30")) %>%
            mutate(PRACE = "Region", .after="COUNTY"))
 
 ```
@@ -58,9 +64,9 @@ ggplot(cost_burdened, aes(x=reorder(RAC2P_aapi_group10, share), y=share, fill=RA
 This plot displays all races/ethnicity who are cost burdened. This is defined by anyone paying 30% or more of their income for their rent expense.
 ```{r echo=FALSE, fig.height=10, fig.width=20, warning=FALSE}
 
-cost_burdened_all_race <- all_race_renter %>% 
+cost_burdened_all_race <- tenure_prace %>% 
   filter(rent_pct_income_30 == "Greater than 30 percent") %>%
-  select(PRACE, count, count_moe, share, share_moe, reliability) %>% 
+  select(PRACE, count, count_moe, share, share_moe) %>% 
   group_by(PRACE) %>%
   summarize(across(c(count, count_moe, share, share_moe), sum)) %>% # aggregates all numerical values based on race
   dplyr::mutate(perc = paste0(sprintf("%4.0f", share * 100)))
@@ -103,13 +109,21 @@ job_df <- job3_by_aapi_race %>%
   group_by(RAC2P_aapi_group10_household) %>% 
   filter(SOCP3!="Total") %>%
   slice_max(count, n= 5) %>%
-  mutate(occupation = str_c("Occupation ", row_number())) %>% 
+  mutate(occupation = str_c("Occupation_", row_number())) %>% 
   spread(occupation, SOCP3) %>% 
-  select(RAC2P_aapi_group10_household, 'Occupation 1', 'Occupation 2', 'Occupation 3', 'Occupation 4', 'Occupation 5')   %>%
-  mutate(across(everything(), as.character)) %>% 
-  replace(is.na(.), "") %>% 
+  select(RAC2P_aapi_group10_household, 'Occupation_1', 'Occupation_2', 'Occupation_3', 'Occupation_4', 'Occupation_5')   %>%
+  mutate(across(everything(), as.character)) %>%
+  mutate(across(c('Occupation_1'),substr, 5, nchar(Occupation_1))) %>%
+  mutate(across(everything(), as.character)) %>%
+  mutate(across(c('Occupation_2'),substr, 5, nchar(Occupation_2))) %>% 
+  mutate(across(everything(), as.character)) %>%
+  mutate(across(c('Occupation_3'),substr, 5, nchar(Occupation_3))) %>% 
+  mutate(across(everything(), as.character)) %>%
+  mutate(across(c('Occupation_4'),substr, 5, nchar(Occupation_4))) %>%
+  mutate(across(everything(), as.character)) %>%
+  mutate(across(c('Occupation_5'),substr, 5, nchar(Occupation_5))) %>% 
+  replace(is.na(.), "") %>%
   mutate(across(everything(), as.factor))
-  
 
 setDT(job_df)
 
