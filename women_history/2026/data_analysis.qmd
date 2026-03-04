@@ -1,0 +1,386 @@
+---
+title: "March Women's History Month Blog Post"
+date: today
+format: 
+  html:
+    mainfont: Poppins
+    theme: [cosmo, ../custom.scss]
+    toc: true
+    df-print: kable
+    fig-asp: .7
+    fig-width: 4
+    warning: false
+    echo: false
+---
+
+```{r}
+#| include: false
+
+library(tidyverse)
+library(psrc.travelsurvey)
+library(psrccensus)
+library(psrcplot)
+install_psrc_fonts()
+
+source("load_data.R")
+
+pums_source <- "Source: 2019-2023 American Community Survey (ACS) 5-Year Public Use Microdata Sample (PUMS) data"
+hts_source <- "Puget Sound Regional Council (PSRC) 2017-2023 Household Travel Survey"
+```
+
+
+# median person's earnings by gender and race and ethnicity
+
+- only include full-time workers working more than 35hr/wk
+- the results show that median earnings of male full-time workers are higher than female full-time workers in some racial groups, including 
+  - Asian
+  - Hispanic or Latino
+  - Some Other Race
+  - Two or More Races
+  - White 
+- while median earnings are statistically equal in other racial groups
+  - American Indian or Alaskan Native
+  - Black or African American
+  - Native Hawaiian and Other Pacific Islander
+
+::: {.callout-note}
+categories that female and male full-time workers have statistically equal median earnings (moe bars overlapping) due to low sample size: 
+
+- American Indian or Alaskan Native
+- Black or African American
+- Native Hawaiian and Other Pacific Islander
+:::
+
+
+:::{.panel-tabset}
+
+## chart
+
+```{r}
+#| fig-width: 5
+#| fig-asp: 0.6
+#| out-width: "75%"
+#| fig-align: "center"
+
+ggplot(df_income_sex_race, aes(x=fct_rev(RAC1P_psrc), y=PERNP_35hr_median, fill=SEX_psrc)) +
+  geom_col(position = position_dodge(), width = 0.8) +
+  geom_text(aes(label=PERNP_35hr_format),
+            hjust = -0.1,
+            position = position_dodge(0.8)) +
+  coord_flip() +
+  scale_fill_manual(values = psrc_colors$pgnobgy_5) +
+  scale_y_continuous(limits = c(0,127000)) +
+  psrc_style() +
+  theme(panel.grid.major.y = element_blank(),
+        axis.title = element_blank(),
+        axis.text.x = element_blank())+
+  labs(caption = pums_source)
+
+```
+
+## chart with margin of error
+
+```{r}
+#| fig-width: 5
+#| fig-asp: 0.6
+#| out-width: "75%"
+#| fig-align: "center"
+
+ggplot(df_income_sex_race, aes(x=fct_rev(RAC1P_psrc), y=PERNP_35hr_median, fill=SEX_psrc)) +
+  geom_col(position = position_dodge(), width = 0.8) +
+  geom_errorbar(aes(ymin = PERNP_35hr_median - PERNP_35hr_median_moe, ymax = PERNP_35hr_median + PERNP_35hr_median_moe),
+                position = position_dodge(0.8),
+                width = 0.4) +
+  coord_flip() +
+  scale_fill_manual(values = psrc_colors$pgnobgy_5) +
+  scale_y_continuous(limits = c(0,127000)) +
+  psrc_style() +
+  theme(panel.grid.major.y = element_blank(),
+        axis.title = element_blank(),
+        axis.text.x = element_blank())+
+  labs(caption = pums_source)
+
+```
+
+## data
+
+```{r}
+#| tbl-cap: "median earnings by gender and race and ethnicity (workers working more than 35hr/wk) <br> [Source: 2019-2023 American Community Survey (ACS) 5-Year Public Use Microdata Sample (PUMS) data]"
+
+df_income_sex_race %>% 
+  mutate(PERNP_35hr_median = round(PERNP_35hr_median)) %>%
+  pivot_wider(id_cols = "RAC1P_psrc", names_from = "SEX_psrc", values_from = c("PERNP_35hr_median"))
+```
+
+:::
+
+# share of women in occupations
+
+- only include full-time workers working more than 35hr/wk
+- female workers hold 41% of the total full-time workforce
+- note that there may be a range of earnings within the same occupation. female workers in the highest paying occupation may not earn as much as male workers in the same occupation
+
+:::{.panel-tabset}
+
+## chart
+
+- two versions of the same chart: one ordered by highest paying occupations, the other ordered by share of female
+
+```{r}
+#| fig-width: 4
+#| fig-asp: 1
+#| out-width: "100%"
+#| fig-align: "center"
+#| layout-ncol: 2
+#| fig-cap: 
+#|   - "order by highest paying occupations"
+#|   - "order by share of female"
+
+df <- df_share_workers_35hr_sex %>%
+  left_join(df_income_occupation %>% 
+              select(SOCP2,PERNP_35hr_median,PERNP_35hr_format) %>%
+              mutate(SOCP2 = ifelse(SOCP2 == "Total","All Occupations", SOCP2)), 
+            by = c("SOCP2_35hr"="SOCP2")) 
+
+
+ggplot(df %>% filter(SEX_psrc=="Female"), aes(x=fct_relevel(reorder(SOCP2_35hr,PERNP_35hr_median),"All Occupations", after = Inf))) +
+  geom_col(aes(y=share)) +
+  geom_text(aes(y=share,label=share_format), 
+            hjust = 0) +
+  geom_text(aes(y=0.9,label=PERNP_35hr_format), 
+            hjust = 0) +
+  coord_flip() +
+  scale_fill_manual(values = psrc_colors$pgnobgy_5)+
+  scale_y_continuous(labels = scales::percent, limits = c(0,1.12)) +
+  psrc_style() +
+  theme(panel.grid.major.y = element_blank(),
+        axis.title = element_blank(),
+        axis.text.x = element_blank())+
+  labs(caption = pums_source)
+
+ggplot(df %>% filter(SEX_psrc=="Female"), aes(x=fct_relevel(reorder(SOCP2_35hr,share), "All Occupations", after = Inf))) +
+  geom_col(aes(y=share)) +
+  geom_text(aes(y=share,label=share_format), 
+            hjust = 0) +
+  coord_flip() +
+  scale_fill_manual(values = psrc_colors$pgnobgy_5)+
+  scale_y_continuous(labels = scales::percent, limits = c(0,0.92)) +
+  psrc_style() +
+  theme(panel.grid.major.y = element_blank(),
+        axis.title = element_blank(),
+        axis.text.x = element_blank())+
+  labs(caption = pums_source)
+```
+
+## data
+
+```{r}
+#| tbl-cap: share of women by occupations (workers working more than 35hr/wk) [2019-2023 ACS 5-year PUMS data]
+
+df %>% 
+  # mutate(share_pct = percent_format(share)) %>%
+  arrange(desc(PERNP_35hr_median)) %>%
+  pivot_wider(id_cols = c("SOCP2_35hr","PERNP_35hr_format"), names_from = "SEX_psrc", values_from = "share") %>%
+  mutate(Female = percent_format(Female),
+         Male = percent_format(Male))
+```
+
+:::
+
+<!-- # HTS gender categories -->
+
+<!-- ```{r} -->
+<!-- #| tbl-cap: share of men and women [PSRC 2017-2023 Household Travel Survey] -->
+
+<!-- psrc_hts_stat(df_hts,  -->
+<!--               analysis_unit="person",  -->
+<!--               group_vars=c("gender_final"), -->
+<!--               incl_na = FALSE) %>% -->
+<!--   mutate(prop_pct = percent_format(prop)) %>% -->
+<!--   pivot_wider(id_cols = "gender_final", names_from = "survey_year", values_from = "prop_pct") -->
+<!-- ``` -->
+
+
+#	trip purpose by gender
+
+- this chart shows the share of trips by trip purpose for female and male
+- the results show that men makes more Work/School trips than women across all survey years, but the gap is narrowing over time
+- in 2017/2019, women makes more Errand/Other, Escort trips than men
+- in 2021, women makes more Shop trips than men
+
+::: {.callout-note}
+list of trip purposes that have statistically significant differences in share of trips between female and male:
+
+- 2017/2019: 
+  - f>m: Errand/Other, Escort
+  - m>f: Work/School
+- 2021:
+  - f>m: Shop
+  - m>f: Work/School
+- 2023:
+  - f>m: 
+  - m>f: Work/School
+
+:::
+
+:::{.panel-tabset}
+
+## chart
+
+```{r}
+#| fig-width: 7
+#| fig-asp: 0.4
+#| out-width: "90%"
+#| fig-align: "center"
+
+df <- psrc_hts_stat(df_hts, 
+                     analysis_unit="trip", 
+                     group_vars=c("gender_final", "purpose_custom"),
+                     incl_na = FALSE) %>%
+  mutate(prop_pct = percent_format(prop),
+         prop_pct1 = percent_format(prop,1),
+         purpose_custom_format = str_replace_all(purpose_custom,"/","\n"))
+
+ggplot(df, aes(x=purpose_custom_format, y=prop, fill=gender_final)) +
+  geom_col(position = position_dodge(), width=0.8) +
+  facet_wrap(~ survey_year, ncol=4)+
+  geom_text(aes(label=prop_pct1),
+            vjust = -0.5,
+            position = position_dodge(0.8)) +
+  scale_fill_manual(values = psrc_colors$pgnobgy_5)+
+  scale_y_continuous(labels = scales::percent, limits = c(0,0.37)) +
+  psrc_style() +
+  theme(panel.grid.major.y = element_blank(),
+        axis.title = element_blank())+
+  labs(caption = hts_source)
+
+
+```
+
+## chart with margin of error
+
+```{r}
+#| fig-width: 7
+#| fig-asp: 0.6
+#| out-width: "90%"
+#| fig-align: "center"
+
+ggplot(df, aes(x=purpose_custom_format, y=prop, fill=gender_final)) +
+  geom_col(position = position_dodge(),width = 0.8) +
+  geom_errorbar(aes(ymin = prop - prop_moe, ymax = prop + prop_moe),
+                position = position_dodge(0.8),
+                width = 0.4) +
+  facet_wrap(~ survey_year, ncol=4)+
+  scale_fill_manual(values = psrc_colors$pgnobgy_5)+
+  scale_y_continuous(labels = scales::percent, limits = c(0,0.37)) +
+  psrc_style() +
+  theme(panel.grid.major.y = element_blank(),
+        axis.title = element_blank())+
+  labs(caption = hts_source)
+
+
+```
+
+## data
+
+```{r}
+#| tbl-cap: trip purpose by gender [Puget Sound Regional Council (PSRC) 2017-2023 Household Travel Survey]
+
+df %>%
+  pivot_wider(id_cols = c("survey_year","gender_final"), names_from = "purpose_custom", values_from = "prop_pct")
+```
+
+:::
+
+# mode share by gender
+
+- the chart shows the trip mode shares by gender
+- the results show that women drive more than men in 2017/2019 and 2023
+- men bike (in all years), walk (in 2017/2019 and 2023) and use transit (in 2023) more than women
+- may pose the question: does this imply that women may have greater safety concerns when using these travel modes?
+
+::: {.callout-note}
+list of modes that have statistically significant differences in mode share between female and male:
+
+- 2017/2019: 
+  - f>m: Drive
+  - m>f: Bike/Micromobility, Walk
+- 2021:
+  - f>m: 
+  - m>f: Bike/Micromobility
+- 2023:
+  - f>m: Drive
+  - m>f: Bike/Micromobility, Transit, Walk
+
+:::
+
+:::{.panel-tabset}
+
+## chart
+
+```{r}
+#| fig-width: 7
+#| fig-asp: 0.4
+#| out-width: "90%"
+#| fig-align: "center"
+
+df <- psrc_hts_stat(df_hts, 
+                     analysis_unit="trip", 
+                     group_vars=c("gender_final", "mode_class_5"),
+                     incl_na = FALSE) %>%
+  mutate(prop_pct = percent_format(prop),
+         prop_pct1 = percent_format(prop,1),
+         mode_class_5_format = str_replace_all(mode_class_5,"/","\n") 
+  )
+test <- df %>% mutate(ymin = prop - prop_moe, ymax = prop + prop_moe)
+
+ggplot(df, aes(x=mode_class_5_format, y=prop, fill=gender_final)) +
+  geom_col(position = position_dodge(),width=0.8) +
+  facet_wrap(~ survey_year, ncol=4)+
+  geom_text(aes(label=prop_pct1),
+            vjust = -0.5,
+            position = position_dodge(0.8)) +
+  scale_fill_manual(values = psrc_colors$pgnobgy_5)+
+  scale_y_continuous(labels = scales::percent, limits = c(0,0.87)) +
+  psrc_style() +
+  theme(panel.grid.major.y = element_blank(),
+        axis.title = element_blank())+
+  labs(caption = hts_source)
+```
+
+## chart with margin of error
+
+```{r}
+#| fig-width: 7
+#| fig-asp: 0.6
+#| out-width: "90%"
+#| fig-align: "center"
+
+ggplot(df, aes(x=mode_class_5_format, y=prop, fill=gender_final)) +
+  geom_col(position = position_dodge(),width = 0.8) +
+  geom_errorbar(aes(ymin = prop - prop_moe, ymax = prop + prop_moe),
+                position = position_dodge(0.8),
+                width = 0.4) +
+  facet_wrap(~ survey_year, ncol=4)+
+  scale_fill_manual(values = psrc_colors$pgnobgy_5)+
+  scale_y_continuous(labels = scales::percent, limits = c(0,0.87)) +
+  psrc_style() +
+  theme(panel.grid.major.y = element_blank(),
+        axis.title = element_blank())+
+  labs(caption = hts_source)
+
+
+```
+
+## data
+
+```{r}
+#| tbl-cap: mode share by gender [Puget Sound Regional Council (PSRC) 2017-2023 Household Travel Survey]
+
+df %>%
+  pivot_wider(id_cols = c("survey_year","gender_final"), names_from = "mode_class_5", values_from = "prop_pct")
+
+```
+
+:::
+
